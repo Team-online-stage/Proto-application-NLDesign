@@ -162,13 +162,13 @@
                                         </div>
                                     </li>
                                 {% endif %}
-                                {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
+                                {% if program.educationalCredentialAwarded is defined and program.educationalCredentialAwarded is not empty %}
                                     <li class="definition-list__item ">
                                         <div class="definition-list__title">
                                             {{ 'toegekende educatieve referentie na succesvolle afronding'|trans|capitalize }}
                                         </div>
                                         <div class="definition-list__description">
-                                            <p>{{ program.occupationalCredentialAwarded }}</p>
+                                            <p>{{ program.educationalCredentialAwarded }}</p>
                                         </div>
                                     </li>
                                 {% endif %}
