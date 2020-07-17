@@ -119,10 +119,9 @@ class ProcessController extends AbstractController
             if ($session->get('request') && array_key_exists('properties', $session->get('request')) && array_key_exists('properties', $resource['request'])) {
                 $request = $resource['request'];
                 $request['properties'] = array_merge($session->get('request', [])['properties'], $resource['request']['properties']);
-            } elseif(array_key_exists ('request',$resource)) {
+            } elseif (array_key_exists('request', $resource)) {
                 $request = $resource['request'];
-            }
-            else{
+            } else {
                 // Let retry this
                 return $this->redirect($this->generateUrl('app_process_load', ['id'=>$id]));
             }
