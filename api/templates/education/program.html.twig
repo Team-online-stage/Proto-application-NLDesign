@@ -37,7 +37,7 @@
 
                 <div class="col-xl-9 col-lg-8 col-md-9">
 
-                    {% if applicationDeadline is defined %}
+                    {% if program.applicationDeadline is defined %}
                     <div class="notification notification--warning">
                         <div class="notification__content">
                             <div class="notification__type">LET OP</div>
@@ -54,20 +54,34 @@
                             <ul class="definition-list">
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
-                                        Onderwijslocatiecode
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>99X999</p>
-                                    </div>
-                                </li>
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
                                         Naam
                                     </div>
                                     <div class="definition-list__description">
-                                        <p>Locatie Terheijdenseweg
+                                        <p>{{ program.name }}
                                     </div>
                                 </li>
+                                {% if program.provider is defined and program.provider is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Aanbieder
+                                        </div>
+                                        <div class="definition-list__description">
+                                            {% set provider = commonground_resource(program.provider) %}
+                                            <p>{{ provider.name }}</p>
+                                            <p>{{ provider.description }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if program.programPrerequisites is defined and program.programPrerequisites is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            <span>Functie vereisten</span>
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.programPrerequisites }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
                                 {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
@@ -88,6 +102,46 @@
                                     </div>
                                 </li>
                                 {% endif %}
+                                {% if program.occupationalCategory is defined and program.occupationalCategory is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Opleidingsniveau
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.occupationalCategory }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if program.timeToComplete is defined and program.timeToComplete is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Looptijd
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.timeToComplete }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if program.educationalProgramMode is defined and program.educationalProgramMode is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Dienstverband
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.educationalProgramMode }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if program.trainingSalary is defined and program.trainingSalary is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Salaris
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.trainingSalary }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
                                 {% if program.description is defined and program.description is not empty %}
                                 <li class="definition-list__item ">
                                     <div class="definition-list__title">
@@ -97,6 +151,26 @@
                                         <p>{{ program.description }}</p>
                                     </div>
                                 </li>
+                                {% endif %}
+                                {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
+                                    <li class="definition-list__item ">
+                                        <div class="definition-list__title">
+                                            {{ 'toegekende beroeps referentie na succesvolle afronding'|trans|capitalize }}
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.occupationalCredentialAwarded }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
+                                    <li class="definition-list__item ">
+                                        <div class="definition-list__title">
+                                            {{ 'toegekende educatieve referentie na succesvolle afronding'|trans|capitalize }}
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.occupationalCredentialAwarded }}</p>
+                                        </div>
+                                    </li>
                                 {% endif %}
                             </ul>
                         </div>
