@@ -74,7 +74,20 @@
                                             <span>Cursus vereisten</span>
                                         </div>
                                         <div class="definition-list__description">
-                                            <p>{{ course.coursePrerequisites }}</p>
+                                            {% for prerequisiteUrl in course.coursePrerequisites %}
+                                                {% set prerequisite = commonground_resource(prerequisiteUrl) %}
+                                                <p>
+                                                    {% if prerequisite['@type'] == 'Course' %}
+                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
+                                                    {% elseif prerequisite['@type'] == 'Program' %}
+                                                        Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
+                                                    {% else %}
+                                                        <a href="/education/programs">
+                                                    {% endif %}
+                                                        {{ prerequisite.name }}
+                                                    </a>
+                                                </p>
+                                            {% endfor %}
                                         </div>
                                     </li>
                                 {% endif %}
