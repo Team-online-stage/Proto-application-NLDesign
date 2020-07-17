@@ -75,10 +75,23 @@
                                 {% if program.programPrerequisites is defined and program.programPrerequisites is not empty %}
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
-                                            <span>Functie vereisten</span>
+                                            <span>Programma vereisten</span>
                                         </div>
                                         <div class="definition-list__description">
-                                            <p>{{ program.programPrerequisites }}</p>
+                                            {% for prerequisiteUrl in program.programPrerequisites %}
+                                                {% set prerequisite = commonground_resource(prerequisiteUrl) %}
+                                                <p>
+                                                    {% if prerequisite['@type'] == 'Course' %}
+                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
+                                                    {% elseif prerequisite['@type'] == 'Program' %}
+                                                        Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
+                                                    {% else %}
+                                                        <a href="/education/programs">
+                                                    {% endif %}
+                                                        {{ prerequisite.name }}
+                                                    </a>
+                                                </p>
+                                            {% endfor %}
                                         </div>
                                     </li>
                                 {% endif %}
@@ -105,7 +118,7 @@
                                 {% if program.occupationalCategory is defined and program.occupationalCategory is not empty %}
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
-                                            Opleidingsniveau
+                                            Programma categorie
                                         </div>
                                         <div class="definition-list__description">
                                             <p>{{ program.occupationalCategory }}</p>
@@ -115,7 +128,7 @@
                                 {% if program.timeToComplete is defined and program.timeToComplete is not empty %}
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
-                                            Looptijd
+                                            Programmaduur
                                         </div>
                                         <div class="definition-list__description">
                                             <p>{{ program.timeToComplete }}</p>
@@ -125,7 +138,7 @@
                                 {% if program.educationalProgramMode is defined and program.educationalProgramMode is not empty %}
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
-                                            Dienstverband
+                                            Werktijd
                                         </div>
                                         <div class="definition-list__description">
                                             <p>{{ program.educationalProgramMode }}</p>
@@ -135,7 +148,7 @@
                                 {% if program.trainingSalary is defined and program.trainingSalary is not empty %}
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
-                                            Salaris
+                                            Vergoeding
                                         </div>
                                         <div class="definition-list__description">
                                             <p>{{ program.trainingSalary }}</p>
