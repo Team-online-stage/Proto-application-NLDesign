@@ -206,11 +206,21 @@ class TenderController extends AbstractController
 
             if (isset($_POST['like'])) {
 
-                $resource['author'] = $variables['user']['@id'];
-                $resource['resource'] = $variables['resource']['@id'];
-                $resource['organization'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'4d1eded3-fbdf-438f-9536-8747dd8ab591']);
+                // Check if author already liked this resource
+                $likeOfAuthor = $commonGroundService->getResource(['component'=>'rc', 'type'=>'likes'], ['author'=>$variables['user']['@id']])['hydra:member'];
 
-                $resource = $commonGroundService->createResource($resource, ['component' => 'rc', 'type' => 'likes']);
+                if(isset($likeOfAuthor) && !empty($likeOfAuthor)){
+                    foreach($likeOfAuthor as $like){
+                        $like = $commonGroundService->deleteResource($like, 'https://rc.dev.zuid-drecht.nl/likes/'.$like['id']);
+                    }
+                } else {
+
+                    $resource['author'] = $variables['user']['@id'];
+                    $resource['resource'] = $variables['resource']['@id'];
+                    $resource['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '4d1eded3-fbdf-438f-9536-8747dd8ab591']);
+
+                    $resource = $commonGroundService->createResource($resource, ['component' => 'rc', 'type' => 'likes']);
+                }
 
             }
 
