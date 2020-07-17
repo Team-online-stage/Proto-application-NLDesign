@@ -37,7 +37,7 @@
 
                 <div class="col-xl-9 col-lg-8 col-md-9">
 
-                    {% if program.applicationDeadline is defined %}
+                    {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
                     <div class="notification notification--warning">
                         <div class="notification__content">
                             <div class="notification__type">LET OP</div>
