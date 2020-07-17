@@ -57,7 +57,7 @@
                                         Naam
                                     </div>
                                     <div class="definition-list__description">
-                                        <p>{{ program.name }}
+                                        <p>{{ program.name }}</p>
                                     </div>
                                 </li>
                                 {% if program.provider is defined and program.provider is not empty %}
@@ -151,6 +151,16 @@
                                         <p>{{ program.description }}</p>
                                     </div>
                                 </li>
+                                {% endif %}
+                                {% if program.numberOfCredits is defined and program.numberOfCredits is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Te behalen punten
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.numberOfCredits }}</p>
+                                        </div>
+                                    </li>
                                 {% endif %}
                                 {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
                                     <li class="definition-list__item ">

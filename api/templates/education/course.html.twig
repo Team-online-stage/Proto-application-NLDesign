@@ -52,28 +52,33 @@
                             <ul class="definition-list">
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
-                                        Onderwijslocatiecode
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>99X999</p>
-                                    </div>
-                                </li>
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
                                         Naam
                                     </div>
                                     <div class="definition-list__description">
-                                        <p>Locatie Terheijdenseweg
+                                        <p>{{ course.name }}</p>
                                     </div>
                                 </li>
+                                {% if course.courseCode is defined and course.courseCode is not empty %}
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
-                                        <span>Begindatum</span>
+                                        Cursus code
                                     </div>
                                     <div class="definition-list__description">
-                                        <p>01-05-1990</p>
+                                        <p>{{ course.courseCode }}</p>
                                     </div>
                                 </li>
+                                {% endif %}
+                                {% if course.coursePrerequisites is defined and course.coursePrerequisites is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Cursus vereisten
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ course.coursePrerequisites }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if course.description is defined and course.description is not empty %}
                                 <li class="definition-list__item ">
                                     <div class="definition-list__title">
                                         {{ 'description'|trans|capitalize }}
@@ -82,6 +87,37 @@
                                         <p>{{ course.description }}</p>
                                     </div>
                                 </li>
+                                {% endif %}
+                                {% if course.numberOfCredits is defined and course.numberOfCredits is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Te behalen punten
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ course.numberOfCredits }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if course.occupationalCredentialAwarded is defined and course.occupationalCredentialAwarded is not empty %}
+                                    <li class="definition-list__item ">
+                                        <div class="definition-list__title">
+                                            {{ 'toegekende beroeps referentie na succesvolle afronding'|trans|capitalize }}
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.occupationalCredentialAwarded }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                                {% if course.educationalCredentialAwarded is defined and course.educationalCredentialAwarded is not empty %}
+                                    <li class="definition-list__item ">
+                                        <div class="definition-list__title">
+                                            {{ 'toegekende educatieve referentie na succesvolle afronding'|trans|capitalize }}
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ course.educationalCredentialAwarded }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
