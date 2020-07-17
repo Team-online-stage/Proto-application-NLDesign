@@ -216,14 +216,16 @@
                                     <textarea class="input__control input__control--text" id="what_did_you_expect"></textarea>
                                 </div>
 
-                                <aside class="hint">
-                                    <span class="hint__title">Inloggen</span>
-                                    <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
-                                </aside>
-
-                                <div class="input">
-                                    <button class="btn btn--primary">Verzenden <i class="icon icon-arr-forward"></i></button>
-                                </div>
+                                {% if user is defined and user is not null %}
+                                    <div class="input">
+                                        <button class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
+                                    </div>
+                                {% else %}
+                                    <aside class="hint">
+                                        <span class="hint__title">Inloggen</span>
+                                        <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
+                                    </aside>
+                                {% endif %}
                             </form>
                         </div>
                     </div>
