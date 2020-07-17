@@ -57,7 +57,7 @@
                                         Naam
                                     </div>
                                     <div class="definition-list__description">
-                                        <p>{{ program.name }}
+                                        <p>{{ program.name }}</p>
                                     </div>
                                 </li>
                                 {% if program.provider is defined and program.provider is not empty %}
@@ -152,6 +152,16 @@
                                     </div>
                                 </li>
                                 {% endif %}
+                                {% if program.numberOfCredits is defined and program.numberOfCredits is not empty %}
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Te behalen punten
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.numberOfCredits }}</p>
+                                        </div>
+                                    </li>
+                                {% endif %}
                                 {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
                                     <li class="definition-list__item ">
                                         <div class="definition-list__title">
@@ -162,13 +172,13 @@
                                         </div>
                                     </li>
                                 {% endif %}
-                                {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
+                                {% if program.educationalCredentialAwarded is defined and program.educationalCredentialAwarded is not empty %}
                                     <li class="definition-list__item ">
                                         <div class="definition-list__title">
                                             {{ 'toegekende educatieve referentie na succesvolle afronding'|trans|capitalize }}
                                         </div>
                                         <div class="definition-list__description">
-                                            <p>{{ program.occupationalCredentialAwarded }}</p>
+                                            <p>{{ program.educationalCredentialAwarded }}</p>
                                         </div>
                                     </li>
                                 {% endif %}
@@ -216,14 +226,16 @@
                                     <textarea class="input__control input__control--text" id="what_did_you_expect"></textarea>
                                 </div>
 
-                                <aside class="hint">
-                                    <span class="hint__title">Inloggen</span>
-                                    <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
-                                </aside>
-
-                                <div class="input">
-                                    <button class="btn btn--primary">Verzenden <i class="icon icon-arr-forward"></i></button>
-                                </div>
+                                {% if user is defined and user is not null %}
+                                    <div class="input">
+                                        <button class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
+                                    </div>
+                                {% else %}
+                                    <aside class="hint">
+                                        <span class="hint__title">Inloggen</span>
+                                        <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
+                                    </aside>
+                                {% endif %}
                             </form>
                         </div>
                     </div>
