@@ -33,7 +33,7 @@
 
             {% elseif stage.sections is defined and stage.sections is not null %}
 
-                {% for section in stage.sections %}
+                {% for section in stage.sections|sort((a, b) => a.orderNumber <=> b.orderNumber) %}
                     <div class="content-background">
                         <div class="content">
                             <h2>{{ section.name|capitalize }}</h2>
