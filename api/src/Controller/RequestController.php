@@ -26,7 +26,7 @@ class RequestController extends AbstractController
     /**
      * @Route("/load/{id}/{resumeRequest}", defaults={"resumeRequest"="start"})
      */
-    public function loadAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params,  $resumeRequest)
+    public function loadAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $resumeRequest)
     {
 
         //$variables = $applicationService->getVariables();
