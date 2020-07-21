@@ -118,7 +118,7 @@
 
             {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
                 <div class="col-md-6" style="padding-right: 0px;">
-                    <a class="btn btn--primary btn--block" href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Terug naar {{ stage.previous.name }}</a>
+                    <a class="btn btn--primary btn--block" href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Vorige</a>
                 </div>
             {% endif %}
 
