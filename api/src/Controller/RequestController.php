@@ -26,11 +26,13 @@ class RequestController extends AbstractController
     /**
      * @Route("/load/{id}/{resumeRequest}", defaults={"resumeRequest"="start"})
      */
-    public function loadAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug, $resumeRequest)
+    public function loadAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params,  $resumeRequest)
     {
 
         //$variables = $applicationService->getVariables();
         $loadedRequest = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], ['extend'=>'processType']);
+
+//        var_dump($loadedRequest);
 
         $session->set('request', $loadedRequest);
         if (isset($resumeRequest)) {

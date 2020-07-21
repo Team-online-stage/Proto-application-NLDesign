@@ -58,7 +58,7 @@ class ProcessController extends AbstractController
      * @Route("/{id}/{slug}", name="app_process_slug", defaults={"slug"="instruction"})
      * @Template
      */
-    public function loadAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug, $resumeRequest)
+    public function loadAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = "instruction", $resumeRequest)
     {
         $variables = $applicationService->getVariables();
 
@@ -67,6 +67,10 @@ class ProcessController extends AbstractController
         } else {
             $variables['request'] = $session->get('request', false);
         }
+
+        var_dump($id);
+        var_dump($slug);
+        var_dump($resumeRequest);
 
         if (isset($resumeRequest)) {
             $variables['resumeRequest'] = $resumeRequest;
