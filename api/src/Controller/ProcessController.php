@@ -76,10 +76,7 @@ class ProcessController extends AbstractController
                 $slug = $resumeRequest;
             }
         }
-
-        var_dump($id);
-        var_dump($slug);
-        var_dump($resumeRequest);
+        
 //        // Get former created requests from this user
 //        $variables['request'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['submitters.brp' => $variables['user']['@id'], 'order[dateCreated]'=>'desc'])['hydra:member'];
 
