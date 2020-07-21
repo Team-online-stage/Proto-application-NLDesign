@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use function GuzzleHttp\Promise\all;
@@ -59,11 +58,11 @@ class ProcessController extends AbstractController
      * @Route("/{id}/{slug}", name="app_process_slug", defaults={"slug"="instruction"})
      * @Template
      */
-    public function loadAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'instruction', $resumeRequest)
+    public function loadAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug, $resumeRequest)
     {
         $variables = $applicationService->getVariables();
 
-        if ($slug != "instruction" || ($slug == "instruction" && $resumeRequest == "start")) {
+        if ($slug != 'instruction' || ($slug == 'instruction' && $resumeRequest == 'start')) {
             $variables['request'] = $session->remove('request');
         } else {
             $variables['request'] = $session->get('request', false);
@@ -72,11 +71,11 @@ class ProcessController extends AbstractController
         if (isset($resumeRequest)) {
             $variables['resumeRequest'] = $resumeRequest;
 
-            if ($resumeRequest != "see" && $resumeRequest != "resume" && $resumeRequest != "start") {
+            if ($resumeRequest != 'see' && $resumeRequest != 'resume' && $resumeRequest != 'start') {
                 $slug = $resumeRequest;
             }
         }
-        
+
 //        // Get former created requests from this user
 //        $variables['request'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['submitters.brp' => $variables['user']['@id'], 'order[dateCreated]'=>'desc'])['hydra:member'];
 
