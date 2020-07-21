@@ -68,6 +68,10 @@ class ProcessController extends AbstractController
             $variables['request'] = $session->get('request', false);
         }
 
+        var_dump($id);
+        var_dump($slug);
+        var_dump($resumeRequest);
+
         if (isset($resumeRequest)) {
             $variables['resumeRequest'] = $resumeRequest;
 
