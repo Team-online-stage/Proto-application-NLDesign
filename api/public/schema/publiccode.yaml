@@ -6,15 +6,7 @@ url: "https://github.com/ConductionNL/pan"
 landingURL: "www.zuid-drecht.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-releaseDate: "2020-16-07"
-=======
-releaseDate: "2020-17-07"
->>>>>>> Stashed changes
-=======
-releaseDate: "2020-17-07"
->>>>>>> development
+releaseDate: "2020-21-07"
 logo: www.zuid-drecht.nl 
 monochromeLogo: img/logo-mono.svg
 
