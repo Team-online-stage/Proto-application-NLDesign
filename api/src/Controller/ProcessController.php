@@ -7,6 +7,7 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use function GuzzleHttp\Promise\all;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -61,6 +62,14 @@ class ProcessController extends AbstractController
         $variables = $applicationService->getVariables();
 
         $variables['request'] = $session->get('request', false);
+
+        // Get former created requests from this user
+        $variables['request'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['submitters.brp' => $variables['user']['@id'], 'order[dateCreated]'=>'desc'])['hydra:member'];
+
+        // If there are more then 1 we will use the last created request
+        if (!empty($variables['request']) && $variables['request'] > 0) {
+            $variables['request'] = $variables['request'][0];
+        }
 
         if (!$variables['request']) {
             $variables['request'] = ['properties'=>[]];
