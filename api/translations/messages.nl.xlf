@@ -117,6 +117,10 @@
         <source>type</source>
         <target>type</target>
       </trans-unit>
+      <trans-unit id="AbH2sOa" resname="see">
+        <source>see</source>
+        <target>bekijken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
