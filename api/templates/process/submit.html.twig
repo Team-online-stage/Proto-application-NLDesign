@@ -35,14 +35,18 @@
                                             {% if 'http' in subItem %}
                                                 <li>{{ commonground_resource(subItem).name|capitalize }}</li>
                                             {% else %}
+                                                {% if subItem != '' %}
                                                 <li>{{ subItem|capitalize }}</li>
+                                                {% endif %}
                                             {% endif %}
                                             {% endfor %}
                                         {% else %}
                                             {% if 'http' in item %}
                                                 <li>{{ commonground_resource(item).name|capitalize }}</li>
                                             {% else %}
+                                                {% if item != '' %}
                                                 <li>{{ item|capitalize }}</li>
+                                                {% endif %}
                                             {% endif %}
                                         {% endif %}
                                         {% endfor %}
