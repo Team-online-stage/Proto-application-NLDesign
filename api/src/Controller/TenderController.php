@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * The Tender controller handles any calls for tenders.
+ * The Tender test handles any calls for tenders.
  *
  * Class TenderController
  *
