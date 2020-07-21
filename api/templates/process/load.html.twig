@@ -109,9 +109,12 @@
 
             {% if slug == 'instruction' %}
                 <div class="col-md-12 no-padding">
-                    {% if request is defined and request.reference is defined %}
+                    {% if resumeRequest is defined and resumeRequest == 'resume' %}
                         <a class="btn btn--block"
                            href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">Hervatten</a>
+                    {% elseif resumeRequest is defined and resumeRequest == 'see' %}
+                        <a class="btn btn--block"
+                           href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'see'|trans|capitalize }}</a>
                     {% else %}
                         <a class="btn btn--block"
                            href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">Beginnen</a>
