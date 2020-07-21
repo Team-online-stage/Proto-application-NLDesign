@@ -2,7 +2,7 @@
 {% set offers = commonground_resource_list({'component':'pdc', 'type':'offers'}, property.query)["hydra:member"] %}
 <div class="input input--horizontal">
     <div>
-        <label class="input__label" for="{{ property.id }}">{{ property.title }}</label>
+        <label class="input__label" for="{{ property.id }}">{{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
     </div>
     {% if property.type == 'string'%}
     {% for offer in offers %}
