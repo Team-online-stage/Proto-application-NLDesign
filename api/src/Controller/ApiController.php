@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * The API controller handles all requests that should be redirected to a component for the benefit of AJAX Calls.
+ * The API test handles all requests that should be redirected to a component for the benefit of AJAX Calls.
  *
  * Class ApiController
  *
