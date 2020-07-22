@@ -62,18 +62,18 @@ class ProcessController extends AbstractController
     {
         $variables = $applicationService->getVariables();
 
-        if ($slug != 'instruction' || ($slug == 'instruction' && $resumeRequest == 'start') || ($slug == 'instruction' && $resumeRequest != 'start')) {
-            $variables['request'] = $session->remove('request');
-        } else {
-            $variables['request'] = $session->get('request', false);
-        }
-
         if (isset($resumeRequest)) {
             $variables['resumeRequest'] = $resumeRequest;
 
             if ($resumeRequest != 'see' && $resumeRequest != 'resume' && $resumeRequest != 'start') {
                 $slug = $resumeRequest;
             }
+        }
+
+        if ($resumeRequest == 'start' || ($resumeRequest != 'start' && $resumeRequest != 'resume' && $slug == 'instruction')) {
+            $variables['request'] = $session->remove('request');
+        } else {
+            $variables['request'] = $session->get('request', false);
         }
 
 //        // Get former created requests from this user
