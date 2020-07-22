@@ -407,7 +407,7 @@ class EducationController extends AbstractController
 
         // Lets find an appoptiate slug
         $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/organisatie']);
-        $variables['resource'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'organizations', 'id' => $id]);
+        $variables['resource'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
 
         if ($template && array_key_exists('content', $template)) {
             $content = $template['content'];

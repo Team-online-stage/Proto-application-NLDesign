@@ -1,5 +1,5 @@
 <br>
-<label class="input__label" for="voornaam">Adres</label>
+<label class="input__label" for="voornaam">{{ property.title }}</label>
 <div style="display: flex; margin-bottom: 20px;">
     {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
         <input class="input__control input__control--text" style="" id="locationProperty" type="text" name="request[properties][{{ property.name }}]"
