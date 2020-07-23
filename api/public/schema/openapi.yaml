@@ -2478,8 +2478,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: zuid-drecht.nl
-    url: pan.dev.zuid-drecht.nl
+    name: westfriesland.commonground.nu
+    url: pan.dev.westfriesland.commonground.nu
 externalDocs:
   -
     description: 'OAS Documentatie'
