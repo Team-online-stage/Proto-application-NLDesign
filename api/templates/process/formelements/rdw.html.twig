@@ -1,4 +1,3 @@
-{{ section.description }}
 
 
 <div class="row">
@@ -7,13 +6,24 @@
 {#        <input class="input__control input__control--text" id="{{ property.slug }}" type="text" name="properties[{{ property.slug }}]" required>#}
 {#    </div>#}
     <div class="col-sm-12 col-lg-6">
-        <label class="input__label" for="postalCode">Kenteken</label>
-        <input class="input__control input__control--text" id="kenteken"  type="text">
-        <input type="hidden" name="request[properties][{{ property.name }}]" id="kentekenInput">
+        <label class="input__label" for="postalCode">{{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
+        <input class="input__control input__control--text" id="kenteken"  type="text" {% if property.required is defined and property.required %}required{% endif %}
+            {% if request['properties'][property.name] is defined and  request['properties'][property.name] %}
+            value="{{  request['properties'][property.name] }}"
+            {% endif %}>
+        <input type="hidden" name="request[properties][{{ property.name }}]" id="kentekenInput"
+            {% if request['properties'][property.name] is defined and  request['properties'][property.name] %}
+            value="{{  request['properties'][property.name] }}"
+            {% endif %}>
     </div>
     <div class="col-sm-12 col-lg-2">
         <br>
-        <button type="button" onclick="getBagKeys()" style="width: 100%; color: black; background-color: #f9e11e" class="btn btn-primary">Zoeken</button>
+        <div style="display: flex;">
+            <button type="button" id="searchButton" onclick="getBagKeys()" style="width: 100%; color: black; background-color: #f9e11e" class="btn btn-primary">Zoeken</button>
+            <button type="button" id="confirmButton" onclick="confirmCar()" style="width: 100%;" class="btn btn-primary">Bevestigen</button>
+            <button type="button" id="changeButton" onclick="changeCar()" style="width: 100%;" class="btn btn-primary">Aanpassen</button>
+
+        </div>
     </div>
 </div>
 
@@ -33,17 +43,16 @@
 
 <script>
     $('.spinner').hide();
+    $('#confirmButton').hide();
+    $('#changeButton').hide();
 
     function getBagKeys(){
         $('.spinner').show();
         let kentekenInput = document.getElementById('kenteken');
         let kenteken = document.getElementById('kenteken').value;
+        let input = document.getElementById('kentekenInput');
         kenteken = kenteken.toUpperCase();
         kenteken = kenteken.replace(/-|\s/g,"")
-
-        input.value = kenteken;
-
-
         console.log(kenteken);
 
 
@@ -91,7 +100,7 @@
                     $('#tr4').append('<th scope="row">Kleur:</th> <td style="text-transform: lowercase">'+ result[0]['eerste_kleur'] +'</td>');
                     $('#tbody').append('</tr>');
                     $('#autoInfo').append('</tbody>');
-                    $('#autoInfo').append('<button class="btn btn-primary" type="button" onclick="confirmCar('+kenteken+')"></button>');
+                    $('#confirmButton').show();
                 }else{
                     $('#autoInfo').append('<p>Er is geen auto gevonden aan de hand van het meegegeven kenteken nummer.</p>');
                     kentekenInput.value = '';
@@ -104,9 +113,29 @@
 
     }
 
-    function confirmCar(kenteken){
-        let input = document.getElementById('kentekenInput');
-        input.value = kenteken;
+    function confirmCar(){
+        let input = document.getElementById('kenteken');
+        let value = document.getElementById('kentekenInput');
+        let kenteken = input.value;
+        kenteken = kenteken.toUpperCase();
+        kenteken = kenteken.replace(/-|\s/g,"")
+        value.value = kenteken;
+        $('#searchButton').hide();
+        input.setAttribute('disabled', 'disabled');
+        $('#changeButton').show();
+        $('#confirmButton').hide();
+    }
+
+    function changeCar() {
+        let list = document.getElementById('autoInfo');
+        while(list.firstChild){
+            list.firstChild.remove();
+        }
+
+        let input = document.getElementById('kenteken');
+        input.removeAttribute('disabled')
+        $('#searchButton').show();
+        $('#changeButton').hide();
     }
 
 </script>
