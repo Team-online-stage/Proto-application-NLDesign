@@ -28,21 +28,25 @@
                             {% if property is iterable %}
                                 {% for key, value in property %}
                                     {% if value is iterable %}
-                                        <ul>
+                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 50%; margin-left: 0px;">
                                     {% for item in value %}
                                         {% if item is iterable %}
                                         {% for subItem in item %}
                                             {% if 'http' in subItem %}
                                                 <li>{{ commonground_resource(subItem).name|capitalize }}</li>
                                             {% else %}
+                                                {% if subItem != '' %}
                                                 <li>{{ subItem|capitalize }}</li>
+                                                {% endif %}
                                             {% endif %}
                                             {% endfor %}
                                         {% else %}
                                             {% if 'http' in item %}
                                                 <li>{{ commonground_resource(item).name|capitalize }}</li>
                                             {% else %}
+                                                {% if item != '' %}
                                                 <li>{{ item|capitalize }}</li>
+                                                {% endif %}
                                             {% endif %}
                                         {% endif %}
                                         {% endfor %}
