@@ -24,14 +24,14 @@
                 {% endif %}
                 {% if user is defined and user is not empty %}
                     {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedIn is defined %}
-                        {% set loggedIn = commonground_resource(application.defaultConfiguration.configuration.loggedIn) %}
+                        {% set loggedInMenu = commonground_resource(application.defaultConfiguration.configuration.loggedIn) %}
                         <li class="nav__item nav__item--parent">
                             <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px"
                                                                                class="fas fa-user"></i>{{ user.naam.voornamen }} {{ user.naam.geslachtsnaam }}
                             </a>
                             <ul class="nav__submenu"
                                 style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
-                                {% for item in loggedIn.menuItems %}
+                                {% for item in loggedInMenu.menuItems %}
                                     <li class="nav__item" style="text-align: center">
                                         <a href="{{ item.href }}" title="Home" class="nav__link">
                                             <span>{{ item.name }}</span>
