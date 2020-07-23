@@ -143,7 +143,6 @@
 
     <div class="col-md-4  col-sm-12">
 
-
         {% if slug != 'instruction' %}
 
             <div class="content-background">
@@ -347,8 +346,14 @@
         <div class="notification__content">
             <h2 class="notification__title">U bent niet ingelogd</h2>
             <span>U dient ingelogd te zijn om een process te starten.</span><br>
-            <span>Klik <a
-                    href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
+            {% if application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
+                <span>Klik <a
+                        href="{{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
+            {% else %}
+                <span>Klik <a
+                        href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
+            {% endif %}
+
         </div>
     </div>
 </div>
@@ -450,8 +455,13 @@
 
             {% if slug == 'instruction' %}
                 <div class="col-md-12 no-padding">
-                    <a class="btn btn--block"
-                       href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">Inloggen</a>
+                    {% if application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
+                        <a class="btn btn--block"
+                           href="{{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">Inloggen</a>
+                    {% else %}
+                        <a class="btn btn--block"
+                           href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">Inloggen</a>
+                    {% endif %}
                 </div><!-- /.col -->
             {% elseif slug != 'submit' %}
                 <div class="col-md-6" style="padding-left: 0px;">
