@@ -31,15 +31,15 @@ class UserController extends AbstractController
      * @Route("/logout")
      * @Template
      */
-    public function logoutAction(Session $session)
+    public function logoutAction(Session $session, Request $request)
     {
+
         $session->set('requestType', null);
         $session->set('request', null);
         $session->set('user', null);
         $session->set('employee', null);
         $session->set('contact', null);
 
-        $this->addFlash('info', 'U bent uitgelogd');
 
         return $this->redirect($this->generateUrl('app_default_index'));
     }
