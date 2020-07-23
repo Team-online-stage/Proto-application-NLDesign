@@ -180,6 +180,11 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: app-web
+            -   name: APP_INTERNAL
+                valueFrom:
+                    configMapKeyRef:
+                        name: {{ template "fullname" . }}
+                        key: app-internal
             
             # bla bla      
             - name: CORS_ALLOW_ORIGIN
