@@ -5,7 +5,7 @@
         <label class="input__label" for="{{ property.id }}">{{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
     </div>
     {% if property.type == 'string'%}
-    <select id="offer" style="min-width: 100% !important;" class="input__control input__control--m input__control--select ">
+    <select id="offer" name="request[properties][{{ property.name }}]" style="min-width: 100% !important;" class="input__control input__control--m input__control--select ">
         {% for offer in offers %}
             {% if request.properties[property.name] is defined and request.properties[property.name] == offer['@id'] %}
                 <option value="{{ offer['@id'] }}" name="request[properties][{{ property.name }}]" selected>
@@ -18,7 +18,7 @@
                     {% endif %}
                 </option>
             {% else %}
-                <option value="{{ offer['@id'] }}" name="request[properties][{{ property.name }}]">
+                <option value="{{ offer['@id'] }}">
                     {% if offer.price != 0 %}
                         {% if offer.priceCurrency == 'EUR' %}
                             {{ offer.name|capitalize }} {{ ' - ' }} €{{ offer.price }}{% if offer.price matches '/^\\d+$/' %}{{ ',-' }}{% else %}{% endif %}
