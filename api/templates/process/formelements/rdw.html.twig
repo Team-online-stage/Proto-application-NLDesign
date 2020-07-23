@@ -36,7 +36,6 @@
 
     function getBagKeys(){
         $('.spinner').show();
-        let input = document.getElementById('kentekenInput');
         let kentekenInput = document.getElementById('kenteken');
         let kenteken = document.getElementById('kenteken').value;
         kenteken = kenteken.toUpperCase();
@@ -91,8 +90,8 @@
                     $('#tbody').append('<tr id="tr4">');
                     $('#tr4').append('<th scope="row">Kleur:</th> <td style="text-transform: lowercase">'+ result[0]['eerste_kleur'] +'</td>');
                     $('#tbody').append('</tr>');
-
                     $('#autoInfo').append('</tbody>');
+                    $('#autoInfo').append('<button class="btn btn-primary" type="button" onclick="confirmCar('+kenteken+')"></button>');
                 }else{
                     $('#autoInfo').append('<p>Er is geen auto gevonden aan de hand van het meegegeven kenteken nummer.</p>');
                     kentekenInput.value = '';
@@ -105,5 +104,9 @@
 
     }
 
+    function confirmCar(kenteken){
+        let input = document.getElementById('kentekenInput');
+        input.value = kenteken;
+    }
 
 </script>
