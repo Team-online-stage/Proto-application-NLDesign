@@ -1,265 +1,271 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-<div class="container">
-
-    <!-- the alert box -->
-
     <div class="container">
-        <section class="row">
-            <div class="col-xl-9 col-xl-offset-3 col-lg-8 col-lg-offset-4 col-md-9 col-md-offset-3 col-xs-12">
-                <header class="content__header">
-                    <h1 class="content__header-title">{{ program.name|capitalize }}</h1>
-                </header>
-            </div>
-        </section>
 
-        <article>
-            <div class="row">
-                <aside class="col-xl-3 col-lg-4 col-md-3 col-sm-modal">
-                    <nav class="sidenav">
-                        <ul>
-                            <li class="sidenav__item">
-                                <a href="{{ path('app_education_programs') }}">
-                                    Introductie
-                                </a>
-                            </li>
-                            {% for program in resources %}
-                            <li class="sidenav__item {% if id is defined and id == program.id %}sidenav__item--active{% endif %}">
-                                <a href="{{ path('app_education_program', {id: program.id}) }}">
-                                    {{ program.name|capitalize }}
-                                </a>
-                            </li>
-                            {% endfor %}
-                        </ul>
-                    </nav>
-                </aside>
+        <!-- the alert box -->
 
-                <div class="col-xl-9 col-lg-8 col-md-9">
+        <div class="container">
+            <section class="row">
+                <div class="col-xl-9 col-xl-offset-3 col-lg-8 col-lg-offset-4 col-md-9 col-md-offset-3 col-xs-12">
+                    <header class="content__header">
+                        <h1 class="content__header-title">{{ program.name|capitalize }}</h1>
+                    </header>
+                </div>
+            </section>
 
-                    {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
-                    <div class="notification notification--warning">
-                        <div class="notification__content">
-                            <div class="notification__type">LET OP</div>
-                            <h2 class="notification__title">Voor dit progamma geld een aanmeldings deadline</h2>
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    <div class="content-background">
-                        <div class="content">
-                            <div class="edit-section">
-                                <h2>Algemene gegevens</h2>
-                            </div>
-                            <ul class="definition-list">
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        Naam
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ program.name }}</p>
-                                    </div>
+            <article>
+                <div class="row">
+                    <aside class="col-xl-3 col-lg-4 col-md-3 col-sm-modal">
+                        <nav class="sidenav">
+                            <ul>
+                                <li class="sidenav__item">
+                                    <a href="{{ path('app_education_programs') }}">
+                                        Introductie
+                                    </a>
                                 </li>
-                                {% if program.provider is defined and program.provider is not empty %}
-                                    <li class="definition-list__item definition-list__item--horizontal">
-                                        <div class="definition-list__title">
-                                            Aanbieder
-                                        </div>
-                                        <div class="definition-list__description">
-                                            {% set provider = commonground_resource(program.provider) %}
-                                            <p>Naam: {{ provider.name }}</p>
-                                            <p>Omschrijving: {{ provider.description }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.programPrerequisites is defined and program.programPrerequisites is not empty %}
-                                    <li class="definition-list__item definition-list__item--horizontal">
-                                        <div class="definition-list__title">
-                                            <span>Programma vereisten</span>
-                                        </div>
-                                        <div class="definition-list__description">
-                                            {% for prerequisiteUrl in program.programPrerequisites %}
-                                                {% set prerequisite = commonground_resource(prerequisiteUrl) %}
-                                                <p>
-                                                    {% if prerequisite['@type'] == 'Course' %}
-                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
-                                                    {% elseif prerequisite['@type'] == 'Program' %}
-                                                        Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
-                                                    {% else %}
-                                                        <a href="/education/programs">
-                                                    {% endif %}
-                                                        {{ prerequisite.name }}
-                                                    </a>
-                                                </p>
-                                            {% endfor %}
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        <span>Aanmelden vóór</span>
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ program.applicationDeadline|date("d-m-Y", "Europe/Paris") }}</p>
-                                    </div>
-                                </li>
-                                {% endif %}
-                                {% if program.startDate is defined and program.startDate is not empty %}
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        <span>Begindatum</span>
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ program.startDate|date("d-m-Y", "Europe/Paris") }}</p>
-                                    </div>
-                                </li>
-                                {% endif %}
-                                {% if program.occupationalCategory is defined and program.occupationalCategory is not empty %}
-                                    <li class="definition-list__item definition-list__item--horizontal">
-                                        <div class="definition-list__title">
-                                            Programma categorie
-                                        </div>
-                                        <div class="definition-list__description">
-                                            <p>{{ program.occupationalCategory }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.timeToComplete is defined and program.timeToComplete is not empty %}
-                                    <li class="definition-list__item definition-list__item--horizontal">
-                                        <div class="definition-list__title">
-                                            Programmaduur
-                                        </div>
-                                        <div class="definition-list__description">
-                                            <p>{{ program.timeToComplete }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.educationalProgramMode is defined and program.educationalProgramMode is not empty %}
-                                    <li class="definition-list__item definition-list__item--horizontal">
-                                        <div class="definition-list__title">
-                                            Werktijd
-                                        </div>
-                                        <div class="definition-list__description">
-                                            <p>{{ program.educationalProgramMode }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.trainingSalary is defined and program.trainingSalary is not empty %}
-                                    <li class="definition-list__item definition-list__item--horizontal">
-                                        <div class="definition-list__title">
-                                            Vergoeding
-                                        </div>
-                                        <div class="definition-list__description">
-                                            <p>{{ program.trainingSalary }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.description is defined and program.description is not empty %}
-                                <li class="definition-list__item ">
-                                    <div class="definition-list__title">
-                                        {{ 'description'|trans|capitalize }}
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ program.description }}</p>
-                                    </div>
-                                </li>
-                                {% endif %}
-                                {% if program.numberOfCredits is defined and program.numberOfCredits is not empty %}
-                                    <li class="definition-list__item definition-list__item--horizontal">
-                                        <div class="definition-list__title">
-                                            Te behalen punten
-                                        </div>
-                                        <div class="definition-list__description">
-                                            <p>{{ program.numberOfCredits }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
-                                    <li class="definition-list__item ">
-                                        <div class="definition-list__title">
-                                            {{ 'toegekende beroeps referentie na succesvolle afronding'|trans|capitalize }}
-                                        </div>
-                                        <div class="definition-list__description">
-                                            <p>{{ program.occupationalCredentialAwarded }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                                {% if program.educationalCredentialAwarded is defined and program.educationalCredentialAwarded is not empty %}
-                                    <li class="definition-list__item ">
-                                        <div class="definition-list__title">
-                                            {{ 'toegekende educatieve referentie na succesvolle afronding'|trans|capitalize }}
-                                        </div>
-                                        <div class="definition-list__description">
-                                            <p>{{ program.educationalCredentialAwarded }}</p>
-                                        </div>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div style="height:20px;"></div>
-
-                    <div class="content-background background--hemelblauw">
-                        <div class="content">
-                            <h2>{{ 'courses'|trans|capitalize }}</h2>
-                            <ul class="list list--links list--chevrons columns">
-                                {% for course in program.courses %}
-                                    <li>
-                                        <a href="{{ path('app_education_course', {id: course.id}) }}">
-                                            {{ course.name|capitalize }}
+                                {% for program in resources %}
+                                    <li class="sidenav__item {% if id is defined and id == program.id %}sidenav__item--active{% endif %}">
+                                        <a href="{{ path('app_education_program', {id: program.id}) }}">
+                                            {{ program.name|capitalize }}
                                         </a>
                                     </li>
                                 {% endfor %}
                             </ul>
-                        </div>
-                    </div>
+                        </nav>
+                    </aside>
 
-                    <div style="height:20px;"></div>
+                    <div class="col-xl-9 col-lg-8 col-md-9">
 
-                    <div class="collapse" role="status">
-                        <div x-uno-collapse="" class="collapse__header">
-                            <i class="collapse__indicator">
-                                <span class="screenreader-only" data-contracted-i18n="ingeklapt" data-expanded-i18n="uitgeklapt"></span>
-                            </i>
-                            <span class="collapse__title">Inschrijven voor dit programma</span>
-                        </div>
-                        <div class="collapse__details collapse__details--open">
-                            <h2>Motieer uw inschrijving</h2>
-
-                            <form>
-                                <div class="input">
-                                    <label class="input__label" for="reason_visit">Waarom wilt u zich inschrijven voor dit programma?</label>
-                                    <textarea class="input__control input__control--text" id="reason_visit"></textarea>
+                        {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
+                            <div class="notification notification--warning">
+                                <div class="notification__content">
+                                    <div class="notification__type">LET OP</div>
+                                    <h2 class="notification__title">Voor dit progamma geld een aanmeldings deadline</h2>
                                 </div>
+                            </div>
+                        {% endif %}
 
-                                <div class="input">
-                                    <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
-                                    <textarea class="input__control input__control--text" id="what_did_you_expect"></textarea>
+                        <div class="content-background">
+                            <div class="content">
+                                <div class="edit-section">
+                                    <h2>Algemene gegevens</h2>
                                 </div>
+                                <ul class="definition-list">
+                                    <li class="definition-list__item definition-list__item--horizontal">
+                                        <div class="definition-list__title">
+                                            Naam
+                                        </div>
+                                        <div class="definition-list__description">
+                                            <p>{{ program.name }}</p>
+                                        </div>
+                                    </li>
+                                    {% if program.provider is defined and program.provider is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                Aanbieder
+                                            </div>
+                                            <div class="definition-list__description">
+                                                {% if "http" in program.provider %}
+                                                    {% set provider = commonground_resource(program.provider) %}
+                                                    {% if provider is defined and provider is not empty %}
+                                                        <p>Naam: {{ provider.name }}</p>
+                                                        {% if provider.description is defined and provider.description is not empty %}
+                                                            <p>Omschrijving: {{ provider.description }}</p>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.programPrerequisites is defined and program.programPrerequisites is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                <span>Programma vereisten</span>
+                                            </div>
+                                            <div class="definition-list__description">
+                                                {% for prerequisiteUrl in program.programPrerequisites %}
+                                                    {% set prerequisite = commonground_resource(prerequisiteUrl) %}
+                                                    <p>
+                                                        {% if prerequisite['@type'] == 'Course' %}
+                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
+                                                            {% elseif prerequisite['@type'] == 'Program' %}
+                                                            Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
+                                                                {% else %}
+                                                                <a href="/education/programs">
+                                                                    {% endif %}
+                                                                    {{ prerequisite.name }}
+                                                                </a>
+                                                    </p>
+                                                {% endfor %}
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                <span>Aanmelden vóór</span>
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.applicationDeadline|date("d-m-Y", "Europe/Paris") }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.startDate is defined and program.startDate is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                <span>Begindatum</span>
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.startDate|date("d-m-Y", "Europe/Paris") }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.occupationalCategory is defined and program.occupationalCategory is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                Programma categorie
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.occupationalCategory }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.timeToComplete is defined and program.timeToComplete is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                Programmaduur
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.timeToComplete }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.educationalProgramMode is defined and program.educationalProgramMode is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                Werktijd
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.educationalProgramMode }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.trainingSalary is defined and program.trainingSalary is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                Vergoeding
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.trainingSalary }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.description is defined and program.description is not empty %}
+                                        <li class="definition-list__item ">
+                                            <div class="definition-list__title">
+                                                {{ 'description'|trans|capitalize }}
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.description }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.numberOfCredits is defined and program.numberOfCredits is not empty %}
+                                        <li class="definition-list__item definition-list__item--horizontal">
+                                            <div class="definition-list__title">
+                                                Te behalen punten
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.numberOfCredits }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
+                                        <li class="definition-list__item ">
+                                            <div class="definition-list__title">
+                                                {{ 'toegekende beroeps referentie na succesvolle afronding'|trans|capitalize }}
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.occupationalCredentialAwarded }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                    {% if program.educationalCredentialAwarded is defined and program.educationalCredentialAwarded is not empty %}
+                                        <li class="definition-list__item ">
+                                            <div class="definition-list__title">
+                                                {{ 'toegekende educatieve referentie na succesvolle afronding'|trans|capitalize }}
+                                            </div>
+                                            <div class="definition-list__description">
+                                                <p>{{ program.educationalCredentialAwarded }}</p>
+                                            </div>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
 
-                                {% if user is defined and user is not null %}
+                        <div style="height:20px;"></div>
+
+                        <div class="content-background background--hemelblauw">
+                            <div class="content">
+                                <h2>{{ 'courses'|trans|capitalize }}</h2>
+                                <ul class="list list--links list--chevrons columns">
+                                    {% for course in program.courses %}
+                                        <li>
+                                            <a href="{{ path('app_education_course', {id: course.id}) }}">
+                                                {{ course.name|capitalize }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div style="height:20px;"></div>
+
+                        <div class="collapse" role="status">
+                            <div x-uno-collapse="" class="collapse__header">
+                                <i class="collapse__indicator">
+                                    <span class="screenreader-only" data-contracted-i18n="ingeklapt" data-expanded-i18n="uitgeklapt"></span>
+                                </i>
+                                <span class="collapse__title">Inschrijven voor dit programma</span>
+                            </div>
+                            <div class="collapse__details collapse__details--open">
+                                <h2>Motiveer uw inschrijving</h2>
+
+                                <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
                                     <div class="input">
-                                        <button class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
+                                        <label class="input__label" for="reason_visit">Waarom wilt u zich inschrijven voor dit programma?</label>
+                                        <textarea class="input__control input__control--text"></textarea>
                                     </div>
-                                {% else %}
-                                    <aside class="hint">
-                                        <span class="hint__title">Inloggen</span>
-                                        <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
-                                    </aside>
-                                {% endif %}
-                            </form>
-                        </div>
-                    </div>
 
+                                    <div class="input">
+                                        <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
+                                        <textarea class="input__control input__control--text"></textarea>
+                                    </div>
+
+                                    {% if user is defined and user is not null %}
+                                        <div class="input">
+                                            <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
+                                        </div>
+                                    {% else %}
+                                        <aside class="hint">
+                                            <span class="hint__title">Inloggen</span>
+                                            <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
+                                        </aside>
+                                    {% endif %}
+                                </form>
+                            </div>
+                        </div>
+
+
+                    </div>
 
                 </div>
+            </article>
+        </div>
 
-            </div>
-        </article>
     </div>
-
-</div>
 
 {% endblock %}
