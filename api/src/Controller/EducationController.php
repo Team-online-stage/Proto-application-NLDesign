@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use phpDocumentor\Reflection\Types\Array_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -80,6 +81,41 @@ class EducationController extends AbstractController
         $variables['program'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'programs', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'programs'], $variables['query'])['hydra:member'];
 
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $oldParticipant = [];
+            $participant = [];
+            $participant['programs'] = [];
+            if(count($participants) > 0) //if this user is already a participant
+            {
+                //get the programs from this participant
+                $oldParticipant = $participants[0];
+                foreach($oldParticipant['programs'] as $program)
+                {
+                    array_push($participant['programs'], $program['@id']);
+                }
+            }
+
+            //add this program to the participant
+            array_push($participant['programs'], $variables['program']['@id']);
+
+            //update the existing participant
+            if(array_key_exists('@id', $oldParticipant))
+            {
+                $commonGroundService->updateResource($participant, $oldParticipant['@id']);
+            }
+            else
+            {//or if this user isn't a participant yet, create one
+                $participant['person'] = $variables['user']['@id'];
+                $commonGroundService->createResource($participant, ['component' => 'edu', 'type' => 'participants']);
+            }
+            return $this->redirectToRoute('app_education_program', ['id' => $variables['program']['id']]);
+        }
         return $variables;
     }
 
