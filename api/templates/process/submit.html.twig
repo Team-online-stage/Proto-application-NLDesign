@@ -71,7 +71,11 @@
                                     {% endif #}
                                 {% else %}
                                     {% if 'http' in property %}
-                                        {{ commonground_resource(property).name|capitalize }}
+                                        {% if commonground_resource(property)['@type'] == 'Adres' %}
+                                            {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
+                                        {% else %}
+                                            {{ commonground_resource(property).name|capitalize }}
+                                        {% endif %}
                                     {% else %}
                                     {{ property|capitalize }}
                                     {% endif %}
@@ -145,7 +149,7 @@
             {% endif %}
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title">
-                    Addres
+                    Adres
                 </div>
                 <div class="definition-list__description">
                     <p>
