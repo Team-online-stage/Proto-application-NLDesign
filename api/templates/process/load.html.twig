@@ -156,7 +156,7 @@
                             {% endfor %}
                         {% endfor %}
                     {% endfor %}
-                    {% if request.properties|length != 0 %}
+                    {%  if request.properties is defined and request.properties is not empty and request.properties|length != 0 %}
                         {% set value = request.properties|length / counter * 100 %}
                     {% else %}
                         {% set value = 0 %}
@@ -215,6 +215,7 @@
                                     </p>
                                 </div>
                             </li>
+                            {% if request.properties is defined and request.properties is not empty %}
                             {% for key, property in request.properties %}
                                 <li class="definition-list__item definition-list__item--horizontal">
 
@@ -285,6 +286,7 @@
 
                                 </li>
                             {% endfor %}
+                            {% endif %}
                         </ul>
                     {% endif %}
 
