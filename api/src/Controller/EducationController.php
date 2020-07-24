@@ -6,7 +6,6 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use phpDocumentor\Reflection\Types\Array_;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -91,12 +90,10 @@ class EducationController extends AbstractController
             $oldParticipant = [];
             $participant = [];
             $participant['programs'] = [];
-            if(count($participants) > 0) //if this user is already a participant
-            {
+            if(count($participants) > 0) { //if this user is already a participant
                 //get the programs from this participant
                 $oldParticipant = $participants[0];
-                foreach($oldParticipant['programs'] as $program)
-                {
+                foreach($oldParticipant['programs'] as $program) {
                     array_push($participant['programs'], $program['@id']);
                 }
             }
@@ -105,12 +102,9 @@ class EducationController extends AbstractController
             array_push($participant['programs'], $variables['program']['@id']);
 
             //update the existing participant
-            if(array_key_exists('@id', $oldParticipant))
-            {
+            if(array_key_exists('@id', $oldParticipant)) {
                 $commonGroundService->updateResource($participant, $oldParticipant['@id']);
-            }
-            else
-            {//or if this user isn't a participant yet, create one
+            } else { //or if this user isn't a participant yet, create one
                 $participant['person'] = $variables['user']['@id'];
                 $commonGroundService->createResource($participant, ['component' => 'edu', 'type' => 'participants']);
             }
