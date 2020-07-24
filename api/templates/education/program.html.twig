@@ -67,8 +67,12 @@
                                         </div>
                                         <div class="definition-list__description">
                                             {% set provider = commonground_resource(program.provider) %}
-                                            <p>Naam: {{ provider.name }}</p>
-                                            <p>Omschrijving: {{ provider.description }}</p>
+                                            {% if provider is defined and provider is not empty %}
+                                                <p>Naam: {{ provider.name }}</p>
+                                                {% if provider.description is defined and provider.description is not empty %}
+                                                    <p>Omschrijving: {{ provider.description }}</p>
+                                                {% endif %}
+                                            {% endif %}
                                         </div>
                                     </li>
                                 {% endif %}
@@ -226,22 +230,22 @@
                             <span class="collapse__title">Inschrijven voor dit programma</span>
                         </div>
                         <div class="collapse__details collapse__details--open">
-                            <h2>Motieer uw inschrijving</h2>
+                            <h2>Motiveer uw inschrijving</h2>
 
-                            <form>
+                            <form method="post" action="{{ path('app_education_program') }}">
                                 <div class="input">
                                     <label class="input__label" for="reason_visit">Waarom wilt u zich inschrijven voor dit programma?</label>
-                                    <textarea class="input__control input__control--text" id="reason_visit"></textarea>
+                                    <textarea class="input__control input__control--text"></textarea>
                                 </div>
 
                                 <div class="input">
                                     <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
-                                    <textarea class="input__control input__control--text" id="what_did_you_expect"></textarea>
+                                    <textarea class="input__control input__control--text"></textarea>
                                 </div>
 
                                 {% if user is defined and user is not null %}
                                     <div class="input">
-                                        <button class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
+                                        <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
                                     </div>
                                 {% else %}
                                     <aside class="hint">
