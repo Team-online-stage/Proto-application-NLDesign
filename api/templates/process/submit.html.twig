@@ -20,7 +20,7 @@
                 <li class="definition-list__item definition-list__item--horizontal">
 
                     <div class="definition-list__title">
-                        {{ key|capitalize }}
+                        {{ key|capitalize|replace({"_":" "}) }}
                     </div>
 
                     <div class="definition-list__description">
