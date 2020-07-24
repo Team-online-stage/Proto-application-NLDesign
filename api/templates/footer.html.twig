@@ -41,7 +41,7 @@
                             {% endif %}
                             {# lets deal with templates #}
                             {% if footer2['@type'] == 'Template' %}
-                                {{ footer2.content|raw }}
+                                {{ include(template_from_string(footer2.content|raw)) }}
                             {% endif %}
                         </div>
                     {% endif %}
