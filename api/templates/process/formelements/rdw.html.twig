@@ -20,9 +20,6 @@
         <br>
         <div style="display: flex;">
             <button type="button" id="searchButton" onclick="getBagKeys()" style="width: 100%; color: black; background-color: #f9e11e" class="btn btn-primary">Zoeken</button>
-            <button type="button" id="confirmButton" onclick="confirmCar()" style="width: 100%;" class="btn btn-primary">Bevestigen</button>
-            <button type="button" id="changeButton" onclick="changeCar()" style="width: 100%;" class="btn btn-primary">Aanpassen</button>
-
         </div>
     </div>
 </div>
@@ -53,6 +50,7 @@
         let input = document.getElementById('kentekenInput');
         kenteken = kenteken.toUpperCase();
         kenteken = kenteken.replace(/-|\s/g,"")
+        input.value = kenteken;
         console.log(kenteken);
 
 
@@ -102,7 +100,7 @@
                     $('#autoInfo').append('</tbody>');
                     $('#confirmButton').show();
                 }else{
-                    $('#autoInfo').append('<p>Er is geen auto gevonden aan de hand van het meegegeven kenteken nummer.</p>');
+                    $('#autoInfo').append('<p>Er is geen auto gevonden aan de hand van het meegegeven kenteken.</p>');
                     kentekenInput.value = '';
                     input.value = '';
                 }

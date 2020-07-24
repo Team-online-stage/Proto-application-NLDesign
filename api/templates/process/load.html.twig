@@ -219,7 +219,7 @@
                                 <li class="definition-list__item definition-list__item--horizontal">
 
                                     <div class="definition-list__title" style="max-width: 100%;">
-                                        {{ key|capitalize }}
+                                        {{ key|capitalize|replace({"_":" "}) }}
                                     </div>
 
                                     <div class="definition-list__description">
@@ -290,6 +290,44 @@
 
                 </div>
             </div>
+        {% else %}
+{#            {% set loadedRequests = commonground_resource_list({'component':'vrc','type':'requests'}, {'processType':process['@id'],'submitters.brp':user['@id']})['hydra:member'] %}#}
+{#        <div class="content-background">#}
+{#            <div class="content">#}
+{#                <h2>Bestaande verzoeken</h2>#}
+{#                <table class="table table-hover">#}
+{#                    <thead>#}
+{#                    <tr>#}
+{#                        <th scope="col">{{ 'created'|trans|capitalize }}</th>#}
+{#                        <th scope="col">{{ 'modified'|trans|capitalize }}</th>#}
+{#                        <th scope="col">{{ 'status'|trans|capitalize }}</th>#}
+{#                        <th scope="col"></th>#}
+{#                    </tr>#}
+{#                    </thead>#}
+{#                    <tbody>#}
+{#                    {% for resource in loadedRequests %}#}
+{#                        <tr>#}
+{#                            <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>#}
+{#                            <td>{% if resource.dateModified is defined and resource.dateModified is not null %}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>#}
+{#                            <td>{{ resource.status|trans|capitalize }}</td>#}
+{#                            {% if resource.status != 'submitted' %}#}
+{#                                {% set resumeRequest = 'resume' %}#}
+{#                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"#}
+{#                                       href="{{ path('app_request_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'resume'|trans|capitalize }}</b></a>#}
+{#                                </td>#}
+{#                            {% else %}#}
+{#                                {% set resumeRequest = 'see' %}#}
+{#                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"#}
+{#                                       href="{{ path('app_request_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'see'|trans|capitalize }}</b></a>#}
+{#                                </td>#}
+{#                            {% endif %}#}
+
+{#                        </tr>#}
+{#                    {% endfor %}#}
+{#                    </tbody>#}
+{#                </table>#}
+{#            </div>#}
+{#        </div>#}
         {% endif %}
 
         <!--
@@ -513,6 +551,7 @@
                 </ul>
             </div>
         </div>
+
     {% endif %}
     {% endif %}
     {% endblock %}
