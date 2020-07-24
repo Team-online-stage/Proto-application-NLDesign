@@ -232,30 +232,49 @@
                                 <span class="collapse__title">Inschrijven voor dit programma</span>
                             </div>
                             <div class="collapse__details collapse__details--open">
-                                <h2>Motiveer uw inschrijving</h2>
-
-                                <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
-                                    <div class="input">
-                                        <label class="input__label" for="reason_visit">Waarom wilt u zich inschrijven voor dit programma?</label>
-                                        <textarea class="input__control input__control--text"></textarea>
-                                    </div>
-
-                                    <div class="input">
-                                        <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
-                                        <textarea class="input__control input__control--text"></textarea>
-                                    </div>
-
-                                    {% if user is defined and user is not null %}
-                                        <div class="input">
-                                            <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
-                                        </div>
-                                    {% else %}
-                                        <aside class="hint">
-                                            <span class="hint__title">Inloggen</span>
-                                            <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
-                                        </aside>
+                                {% if user is defined and user is not null %}
+                                    {% set ingeschreven = false %}
+                                    {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
+                                    {% if participants|length > 0 %}
+                                        {% set participant = participants[0] %}
+                                        {% if participant.programs is defined and participant.programs is not null %}
+                                            {% for participantProgram in participant.programs %}
+                                                {% if participantProgram.id == program.id %}
+                                                    {% set ingeschreven = true %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% endif %}
                                     {% endif %}
-                                </form>
+
+                                    {% if ingeschreven == false %}
+                                        <h2>Motiveer uw inschrijving</h2>
+
+                                        <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
+                                            <div class="input">
+                                                <label class="input__label" for="reason_visit">Waarom wilt u zich inschrijven voor dit programma?</label>
+                                                <textarea class="input__control input__control--text"></textarea>
+                                            </div>
+
+                                            <div class="input">
+                                                <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
+                                                <textarea class="input__control input__control--text"></textarea>
+                                            </div>
+                                            <div class="input">
+                                                <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
+                                            </div>
+                                        </form>
+                                        {% else %}
+                                            <aside class="hint">
+                                                <span class="hint__title">Ingeschreven</span>
+                                                <p>U bent al ingeschreven voor dit programma.</p>
+                                            </aside>
+                                        {% endif %}
+                                {% else %}
+                                    <aside class="hint">
+                                        <span class="hint__title">Inloggen</span>
+                                        <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
+                                    </aside>
+                                {% endif %}
                             </div>
                         </div>
 
