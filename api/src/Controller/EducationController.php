@@ -80,58 +80,7 @@ class EducationController extends AbstractController
         $variables['program'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'programs', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'programs'], $variables['query'])['hydra:member'];
 
-        // Lets find an appropriate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/program']);
-
-        // Lets see if there is a post to procces
-        if ($request->isMethod('POST')) {
-            $resource = $request->request->all();
-
-            //check if this user is a participant
-            //...
-            //$resource = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants', 'id' => *ID_HERE* ]);
-
-            //add program to the participant
-            array_push($resource['programs'], $variables['program']['@id']);
-
-            //if this user isn't a participant yet create one
-            $resource['person'] = $variables['user']['@id'];
-            $resource = $commonGroundService->createResource($resource, ['component' => 'edu', 'type' => 'participants']);
-            //else update the existing one
-            //$resource = $commonGroundService->updateResource($resource, ['component' => 'edu', 'type' => 'participants', 'id' => $resource['id']]);
-
-            $id = $variables['program']['id'];
-
-            return $this->redirectToRoute('app_education_program', ['id' => $id]);
-
-//                if (key_exists('@component', $resource)) {
-//                    // Passing the variables to the resource
-//                    $configuration = $commonGroundService->saveResource($resource, ['component' => $resource['@component'], 'type' => $resource['@type']]);
-//                }
-        }
-
-        var_dump($template);
-        die;
-
-        if ($template && array_key_exists('content', $template)) {
-            $content = $template['content'];
-        }
-
-        // Create the template
-        if ($content) {
-            $template = $this->get('twig')->createTemplate($content);
-            $template = $template->render($variables);
-        } else {
-            $template = $this->render('404.html.twig', $variables);
-
-            return $template;
-        }
-
-        return $response = new Response(
-            $template,
-            Response::HTTP_OK,
-            ['content-type' => 'text/html']
-        );
+        return $variables;
     }
 
     /**

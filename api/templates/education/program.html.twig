@@ -66,11 +66,13 @@
                                             Aanbieder
                                         </div>
                                         <div class="definition-list__description">
-                                            {% set provider = commonground_resource(program.provider) %}
-                                            {% if provider is defined and provider is not empty %}
-                                                <p>Naam: {{ provider.name }}</p>
-                                                {% if provider.description is defined and provider.description is not empty %}
-                                                    <p>Omschrijving: {{ provider.description }}</p>
+                                            {% if "http" in program.provider %}
+                                                {% set provider = commonground_resource(program.provider) %}
+                                                {% if provider is defined and provider is not empty %}
+                                                    <p>Naam: {{ provider.name }}</p>
+                                                    {% if provider.description is defined and provider.description is not empty %}
+                                                        <p>Omschrijving: {{ provider.description }}</p>
+                                                    {% endif %}
                                                 {% endif %}
                                             {% endif %}
                                         </div>
