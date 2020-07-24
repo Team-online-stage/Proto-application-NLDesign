@@ -16,6 +16,7 @@
                         </p>
                     </div>
                 </li>
+                {% if request.properties is defined and request.properties is not empty %}
             {% for key, property in request.properties %}
                 <li class="definition-list__item definition-list__item--horizontal">
 
@@ -86,6 +87,7 @@
 
                 </li>
             {% endfor %}
+                {% endif %}
             </ul>
         {% endif %}
 
