@@ -111,7 +111,7 @@ class EducationController extends AbstractController
 
             return $this->redirectToRoute('app_education_program', ['id' => $variables['program']['id']]);
         }
-        
+
         return $variables;
     }
 
