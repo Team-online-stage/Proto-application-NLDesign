@@ -219,7 +219,7 @@
                                 <li class="definition-list__item definition-list__item--horizontal">
 
                                     <div class="definition-list__title" style="max-width: 100%;">
-                                        {{ key|capitalize }}
+                                        {{ key|capitalize|replace({"_":" "}) }}
                                     </div>
 
                                     <div class="definition-list__description">
