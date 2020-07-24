@@ -470,4 +470,20 @@ class EducationController extends AbstractController
             ['content-type' => 'text/html']
         );
     }
+
+    /**
+     * @Route("/overzicht")
+     * @Template
+     */
+    public function overzichtAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        return $variables;
+    }
 }
