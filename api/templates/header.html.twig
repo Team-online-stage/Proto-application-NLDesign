@@ -1,7 +1,11 @@
-	<header class="header header--transparent"  role="banner">
-        <div class="header-logo header-logo--bzk">
+<header class="header header--transparent" role="banner">
+    <div class="header-logo header-logo--bzk">
+        {% if application is defined and application.id == '86ca72d4-b40e-45cf-bb8c-1a17ba65ad52' %}
+            <img src="/images/conduction/banner.jpg">
+        {% else %}
             <a href="/" title="">
                 <span class="screenreader-only">ministerie van onderwijs, cultuur en wetenschap, naar de homepage</span>
             </a>
-        </div>
-    </header>
+        {% endif %}
+    </div>
+</header>
