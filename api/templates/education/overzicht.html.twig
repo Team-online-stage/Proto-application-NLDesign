@@ -15,7 +15,7 @@
                     <div class="edit-section">
                         <h1>Ingeschreven programma's</h1>
                     </div>
-                    {% if participant.programs is defined and participant.programs is not null %}
+                    {% if participant.programs is defined and participant.programs is not empty %}
                         {% for program in participant.programs %}
                             <div class="content-background">
                                 <div class="content ">
@@ -47,7 +47,7 @@
                                                         <span class="screenreader-only" data-contracted-i18n="ingeklapt"
                                                               data-expanded-i18n="uitgeklapt"></span>
                                                     </i>
-                                                    <span class="collapse__title">Courses</span>
+                                                    <span class="collapse__title">Cursussen</span>
                                                 </div>
                                                 <div class="collapse__details collapse__details--closed">
                                                     {% if program.courses is defined and program.courses is not empty %}
@@ -69,7 +69,7 @@
                                                                                         <a href="{{ path('app_education_course', {id: course.id}) }}"
                                                                                            rel="noopener" class="btn btn--primary"
                                                                                            target="_blank">
-                                                                                            Bekijk deze course
+                                                                                            Bekijk deze cursus
                                                                                             <span class="btn__icon icon icon-arr-forward" title="" role=""></span>
                                                                                         </a>
                                                                                     </div>
@@ -81,7 +81,7 @@
                                                             {% endfor %}
                                                         </ul>
                                                     {% else %}
-                                                        <p style="color:lightgray">Er zijn geen courses.</p>
+                                                        <p style="color:lightgray">Er zijn geen cursussen voor dit programma.</p>
                                                     {% endif %}
                                                 </div>
                                             </div>
@@ -94,18 +94,171 @@
                             <div style="height: 20px;"></div>
                         {% endfor %}
                     {% else %}
-                        <aside class="hint">
-                            <span class="hint__title">Ingeschreven</span>
-                            <p>U bent nog niet ingeschreven voor een program.</p>
-                        </aside>
+                        <div class="notification notification--warning">
+                            <div class="notification__content">
+                                <span class="notification__title">U bent nog niet ingeschreven voor een programma.</span>
+                                <span>Klik <a
+                                        href="/education/programs">hier</a> om programma's te bekijken.</span>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div style="height:20px;"></div>
+
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="edit-section">
+                        <h1>Ingeschreven cursussen</h1>
+                    </div>
+                    {% if participant.courses is defined and participant.courses is not empty %}
+                        {% for course in participant.courses %}
+                            <div class="content-background">
+                                <div class="content ">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <h2>{{ course.name|capitalize }}</h2>
+                                            <p>{{ course.description|capitalize }}</p>
+                                            <div class="col-sm-12 col-sm-offset-2 col-md-8">
+                                                <div style="display: flex; flex-direction: column; justify-items: center;">
+                                                    <a href="{{ path('app_education_course', {id: course.id}) }}"
+                                                       rel="noopener" class="btn btn--primary"
+                                                       target="_blank">
+                                                        Bekijk deze cursus
+                                                        <span class="btn__icon icon icon-arr-forward" title="" role=""></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <img src="https://picsum.photos/350/250" alt="tender" width="100%">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <br>
+                                            <div class="collapse" role="status">
+                                                <div x-uno-collapse="" class="collapse__header">
+                                                    <i class="collapse__indicator">
+                                                        <span class="screenreader-only" data-contracted-i18n="ingeklapt"
+                                                              data-expanded-i18n="uitgeklapt"></span>
+                                                    </i>
+                                                    <span class="collapse__title">Programma's</span>
+                                                </div>
+                                                <div class="collapse__details collapse__details--closed">
+                                                    {% if course.programs is defined and course.programs is not empty %}
+                                                        <ul class="list list--card list--card-small">
+                                                            {% for program in course.programs %}
+                                                                <li class="card card--small">
+                                                                    <div class="card__content">
+                                                                        <div class="card__body">
+                                                                            <div class="row" style=" height: 100%; width: 100%;">
+                                                                                <div class="col-sm-12 col-md-8" style="padding-right: 0px;">
+                                                                                    <span class="card__title">{{ program.name }}</span>
+                                                                                    {% if program.description is defined and program.description is not empty %}
+                                                                                        <br>
+                                                                                        <span>{{ program.description }}</span>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <div class="col-sm-12 col-md-4">
+                                                                                    <div style="display: flex; flex-direction: column; justify-items: center;">
+                                                                                        <a href="{{ path('app_education_program', {id: program.id}) }}"
+                                                                                           rel="noopener" class="btn btn--primary"
+                                                                                           target="_blank">
+                                                                                            Bekijk dit programma
+                                                                                            <span class="btn__icon icon icon-arr-forward" title="" role=""></span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% else %}
+                                                        <p style="color:lightgray">Er zijn geen programma's bij deze cursus.</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <br>
+                                            <div class="collapse" role="status">
+                                                <div x-uno-collapse="" class="collapse__header">
+                                                    <i class="collapse__indicator">
+                                                        <span class="screenreader-only" data-contracted-i18n="ingeklapt"
+                                                              data-expanded-i18n="uitgeklapt"></span>
+                                                    </i>
+                                                    <span class="collapse__title">Activiteiten</span>
+                                                </div>
+                                                <div class="collapse__details collapse__details--closed">
+                                                    {% if course.activities is defined and course.activities is not empty %}
+                                                        <ul class="list list--card list--card-small">
+                                                            {% for activity in course.activities %}
+                                                                <li class="card card--small">
+                                                                    <div class="card__content">
+                                                                        <div class="card__body">
+                                                                            <div class="row" style=" height: 100%; width: 100%;">
+                                                                                <div class="col-sm-12 col-md-8" style="padding-right: 0px;">
+                                                                                    <span class="card__title">{{ activity.name }}</span>
+                                                                                    {% if activity.description is defined and activity.description is not empty %}
+                                                                                        <br>
+                                                                                        <span>{{ activity.description }}</span>
+                                                                                    {% endif %}
+                                                                                </div>
+                                                                                <div class="col-sm-12 col-md-4">
+                                                                                    <div style="display: flex; flex-direction: column; justify-items: center;">
+                                                                                        <a href="{{ path('app_education_activity', {id: activity.id}) }}"
+                                                                                           rel="noopener" class="btn btn--primary"
+                                                                                           target="_blank">
+                                                                                            Bekijk deze activiteit
+                                                                                            <span class="btn__icon icon icon-arr-forward" title="" role=""></span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    {% else %}
+                                                        <p style="color:lightgray">Er zijn geen activiteiten bij deze cursus.</p>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Page Break -->
+                            <div style="height: 20px;"></div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="notification notification--warning">
+                            <div class="notification__content">
+                                <span class="notification__title">U bent nog niet ingeschreven voor een cursus.</span>
+                                <span>Klik <a
+                                        href="/education/courses">hier</a> om cursussen te bekijken.</span>
+                            </div>
+                        </div>
                     {% endif %}
                 </div>
             </div>
         {% else %}
-            <aside class="hint">
-                <span class="hint__title">Ingeschreven</span>
-                <p>U bent nog niet als 'participant' geregistreerd.</p>
-            </aside>
+            <div class="notification notification--warning">
+                <div class="notification__content">
+                    <span class="notification__title">U bent nog nergens voor ingeschreven.</span>
+                    <span>Klik <a
+                            href="/education/programs">hier</a> om programma's te bekijken.</span>
+                </div>
+            </div>
         {% endif %}
     {% else %}
         <div class="notification notification--warning">
