@@ -1,0 +1,101 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Mijn Overzicht</h1>
+    {% if user is defined and user is not null %}
+        {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
+        {% if participants|length > 0 %}
+            {% set participant = participants[0] %}
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="edit-section">
+                        <h2>Ingeschreven programs</h2>
+                    </div>
+                    {% if participant.programs is defined and participant.programs is not null %}
+                        {% for program in participant.programs %}
+                            <li class="card card--small">
+                                <div class="card__content">
+                                    <div class="card__thumb"></div>
+                                    <div class="card__body">
+                                        <div class="row" style=" height: 100%; width: 100%;">
+                                            <div class="col-sm-10" style="padding-right: 0px;">
+                                                <span class="card__title">{{ program.name }}</span><br>
+                                                <span>{{ program.description }}</span>
+                                                <div class="collapse" role="status">
+                                                    <div x-uno-collapse="" class="collapse__header">
+                                                        <i class="collapse__indicator">
+                                                            <span class="screenreader-only" data-contracted-i18n="ingeklapt" data-expanded-i18n="uitgeklapt"></span>
+                                                        </i>
+                                                        <span class="collapse__title">Courses</span>
+                                                    </div>
+                                                    <div class="collapse__details collapse__details--closed">
+                                                        {% if program.courses is defined and program.courses is not empty %}
+                                                            <ul class="list list--card list--card-small">
+                                                                {% for course in program.courses %}
+                                                                    <li class="card card--small">
+                                                                        <div class="card__content">
+                                                                            <div class="card__body">
+                                                                                <div class="row" style=" height: 100%; width: 100%;">
+                                                                                    <div class="col-sm-12" style="padding-right: 0px;">
+                                                                                        <span class="card__title">{{ course.name }}</span>
+                                                                                        {% if course.description is defined and course.description is not empty %}
+                                                                                            <br>
+                                                                                            <span>{{ course.description }}</span>
+                                                                                        {% endif %}
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% else %}
+                                                            <p style="color:lightgray">Er zijn geen courses.</p>
+                                                        {% endif %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <aside class="hint">
+                            <span class="hint__title">Ingeschreven</span>
+                            <p>U bent nog niet ingeschreven voor een program.</p>
+                        </aside>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
+            <aside class="hint">
+                <span class="hint__title">Ingeschreven</span>
+                <p>U bent nog niet als 'participant' geregistreerd.</p>
+            </aside>
+        {% endif %}
+    {% else %}
+        <div class="notification notification--warning">
+            <div class="notification__content">
+                <h2 class="notification__title">U bent niet ingelogd</h2>
+                <span>U dient ingelogd te zijn om uw overzicht te kunnen bekijken.</span><br>
+                <span>Klik <a
+                        href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
+            </div>
+        </div>
+    {% endif %}
+
+    <script>
+        // Load collapse component
+        System.import('/uno/components/collapse/collapse.js').then(function (module) {
+            // Select all collapsible elements on the page
+            var collapses = document.querySelectorAll('[x-uno-collapse]');
+            // Initialize all collapses
+            for (var i = 0; i < collapses.length; i++) {
+                new module.Collapse(collapses.item(i));
+            }
+        });
+    </script>
+{% endblock %}
