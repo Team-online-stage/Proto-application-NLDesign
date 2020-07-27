@@ -152,6 +152,38 @@ class EducationController extends AbstractController
         $variables['course'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses'], $variables['query'])['hydra:member'];
 
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $oldParticipant = [];
+            $participant = [];
+            $participant['courses'] = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                //get the courses from this participant
+                $oldParticipant = $participants[0];
+                foreach ($oldParticipant['courses'] as $course) {
+                    array_push($participant['courses'], $course['@id']);
+                }
+            }
+
+            //add this course to the participant
+            array_push($participant['courses'], $variables['course']['@id']);
+
+            //update the existing participant
+            if (array_key_exists('@id', $oldParticipant)) {
+                $commonGroundService->updateResource($participant, $oldParticipant['@id']);
+            } else { //or if this user isn't a participant yet, create one
+                $participant['person'] = $variables['user']['@id'];
+                $commonGroundService->createResource($participant, ['component' => 'edu', 'type' => 'participants']);
+            }
+
+            return $this->redirectToRoute('app_education_course', ['id' => $variables['course']['id']]);
+        }
+
         return $variables;
     }
 
@@ -207,9 +239,6 @@ class EducationController extends AbstractController
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
-
-        // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/studenten']); // Lets see if there is a post to procces
 
         // Get resource
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], $variables['query'])['hydra:member'];
@@ -277,9 +306,6 @@ class EducationController extends AbstractController
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
 
-        // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/tutorials']); // Lets see if there is a post to procces
-
         // Get resource
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses'], $variables['query'])['hydra:member'];
 
@@ -346,9 +372,6 @@ class EducationController extends AbstractController
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
 
-        // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/stages']); // Lets see if there is a post to procces
-
         // Get resource
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'programs'], $variables['query'])['hydra:member'];
 
@@ -414,9 +437,6 @@ class EducationController extends AbstractController
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
-
-        // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/organisaties']); // Lets see if there is a post to procces
 
         // Get resource
         $variables['resources'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations'], $variables['query'])['hydra:member'];
