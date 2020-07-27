@@ -28,6 +28,15 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/digispoof")
+     * @Template
+     */
+    public function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        return $this->redirect($this->generateUrl('app_default_index'));
+    }
+
+    /**
      * @Route("/logout")
      * @Template
      */

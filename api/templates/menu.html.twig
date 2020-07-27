@@ -112,7 +112,7 @@
                                             <span>Inwoner</span>
                                         </a>
                                     {% else %}
-                                        <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                        <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
                                             <span>Inwoner</span>
                                         </a>
