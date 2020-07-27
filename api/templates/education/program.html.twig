@@ -3,6 +3,13 @@
 {% block content %}
     <div class="container">
 
+        {% if user is defined and user is not null %}
+            {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
+            {% if participants|length > 0 %}
+                {% set participant = participants[0] %}
+            {% endif %}
+        {% endif %}
+
         <!-- the alert box -->
 
         <div class="container">
@@ -89,7 +96,12 @@
                                             </div>
                                         </li>
                                     {% endif %}
+
+                                    {% set meetsPrerequisites = true %}
                                     {% if program.programPrerequisites is defined and program.programPrerequisites is not empty %}
+                                        {% if participant is not defined or participant is null %}
+                                            {% set meetsPrerequisites = false %}
+                                        {% endif %}
                                         <li class="definition-list__item definition-list__item--horizontal">
                                             <div class="definition-list__title">
                                                 <span>Programma vereisten</span>
@@ -97,17 +109,41 @@
                                             <div class="definition-list__description">
                                                 {% for prerequisiteUrl in program.programPrerequisites %}
                                                     {% set prerequisite = commonground_resource(prerequisiteUrl) %}
+                                                    {% set meetsPrerequisite = false %}
                                                     <p>
                                                         {% if prerequisite['@type'] == 'Course' %}
-                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
-                                                            {% elseif prerequisite['@type'] == 'Program' %}
+                                                            {% if participant is defined and participant is not null %}
+                                                                {% if participant.courses is defined and participant.courses is not null %}
+                                                                    {% for participantCourse in participant.courses %}
+                                                                        {% if participantCourse.id == prerequisite.id %}
+                                                                            <i class="fas fa-check"></i>
+                                                                            {% set meetsPrerequisite = true %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            {% endif %}
+                                                            Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
+                                                        {% elseif prerequisite['@type'] == 'Program' %}
+                                                            {% if participant is defined and participant is not null %}
+                                                                {% if participant.programs is defined and participant.programs is not null %}
+                                                                    {% for participantProgram in participant.programs %}
+                                                                        {% if participantProgram.id == prerequisite.id %}
+                                                                            <i class="fas fa-check"></i>
+                                                                            {% set meetsPrerequisite = true %}
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                {% endif %}
+                                                            {% endif %}
                                                             Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
-                                                                {% else %}
-                                                                <a href="/education/programs">
-                                                                    {% endif %}
-                                                                    {{ prerequisite.name }}
-                                                                </a>
+                                                        {% else %}
+                                                            <a href="/education/programs">
+                                                        {% endif %}
+                                                            {{ prerequisite.name }}
+                                                        </a>
                                                     </p>
+                                                    {% if meetsPrerequisite == false %}
+                                                        {% set meetsPrerequisites = false %}
+                                                    {% endif %}
                                                 {% endfor %}
                                             </div>
                                         </li>
@@ -245,9 +281,7 @@
                             <div class="collapse__details collapse__details--open">
                                 {% if user is defined and user is not null %}
                                     {% set ingeschreven = false %}
-                                    {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
-                                    {% if participants|length > 0 %}
-                                        {% set participant = participants[0] %}
+                                    {% if participant is defined and participant is not null %}
                                         {% if participant.programs is defined and participant.programs is not null %}
                                             {% for participantProgram in participant.programs %}
                                                 {% if participantProgram.id == program.id %}
@@ -259,22 +293,29 @@
 
                                     {% if ingeschreven == false %}
                                         {% if deadline == false %}
-                                            <h2>Motiveer uw inschrijving</h2>
+                                            {% if meetsPrerequisites == true %}
+                                                <h2>Motiveer uw inschrijving</h2>
 
-                                            <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
-                                                <div class="input">
-                                                    <label class="input__label" for="reason_visit">Waarom wilt u zich inschrijven voor dit programma?</label>
-                                                    <textarea class="input__control input__control--text"></textarea>
-                                                </div>
+                                                <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
+                                                    <div class="input">
+                                                        <label class="input__label" for="reason_visit">Waarom wilt u zich inschrijven voor dit programma?</label>
+                                                        <textarea class="input__control input__control--text"></textarea>
+                                                    </div>
 
-                                                <div class="input">
-                                                    <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
-                                                    <textarea class="input__control input__control--text"></textarea>
-                                                </div>
-                                                <div class="input">
-                                                    <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
-                                                </div>
-                                            </form>
+                                                    <div class="input">
+                                                        <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
+                                                        <textarea class="input__control input__control--text"></textarea>
+                                                    </div>
+                                                    <div class="input">
+                                                        <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
+                                                    </div>
+                                                </form>
+                                            {% else %}
+                                                <aside class="hint">
+                                                    <span class="hint__title">Vereisten</span>
+                                                    <p>U voldoet nog niet aan alle vereisten voor dit programma.</p>
+                                                </aside>
+                                            {% endif %}
                                         {% else %}
                                             <aside class="hint">
                                                 <span class="hint__title">Deadline</span>
