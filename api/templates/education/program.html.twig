@@ -10,6 +10,38 @@
             {% endif %}
         {% endif %}
 
+        {% set meetsPrerequisites = true %}
+        {% if program.programPrerequisites is defined and program.programPrerequisites is not empty %}
+            {% if participant is not defined or participant is null %}
+                {% set meetsPrerequisites = false %}
+            {% else %}
+                {% for prerequisiteUrl in program.programPrerequisites %}
+                    {% set prerequisite = commonground_resource(prerequisiteUrl) %}
+                    {% set meetsPrerequisite = false %}
+                    {% if prerequisite['@type'] == 'Course' %}
+                        {% if participant.courses is defined and participant.courses is not null %}
+                            {% for participantCourse in participant.courses %}
+                                {% if participantCourse.id == prerequisite.id %}
+                                    {% set meetsPrerequisite = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% elseif prerequisite['@type'] == 'Program' %}
+                        {% if participant.programs is defined and participant.programs is not null %}
+                            {% for participantProgram in participant.programs %}
+                                {% if participantProgram.id == prerequisite.id %}
+                                    {% set meetsPrerequisite = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    {% endif %}
+                    {% if meetsPrerequisite == false %}
+                        {% set meetsPrerequisites = false %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+
         <!-- the alert box -->
 
         <div class="container">
@@ -43,6 +75,15 @@
                     </aside>
 
                     <div class="col-xl-9 col-lg-8 col-md-9">
+                        {% if meetsPrerequisites == false %}
+                            <div class="notification notification--warning">
+                                <div class="notification__content">
+                                    <div class="notification__type">LET OP</div>
+                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor dit programma</h2>
+                                </div>
+                            </div>
+                        {% endif %}
+
                         {% set deadline = false %}
                         {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
                             {% set today = 'now'|date("d-m-Y", "Europe/Paris") %}
@@ -97,42 +138,35 @@
                                         </li>
                                     {% endif %}
 
-                                    {% set meetsPrerequisites = true %}
                                     {% if program.programPrerequisites is defined and program.programPrerequisites is not empty %}
-                                        {% if participant is not defined or participant is null %}
-                                            {% set meetsPrerequisites = false %}
-                                        {% endif %}
                                         <li class="definition-list__item definition-list__item--horizontal">
                                             <div class="definition-list__title">
-                                                <span>Programma vereisten</span>
+                                                {% if meetsPrerequisites == false %}
+                                                    <span>Programma vereisten</span>
+                                                {% else %}
+                                                    Programma vereisten
+                                                {% endif %}
                                             </div>
                                             <div class="definition-list__description">
                                                 {% for prerequisiteUrl in program.programPrerequisites %}
                                                     {% set prerequisite = commonground_resource(prerequisiteUrl) %}
-                                                    {% set meetsPrerequisite = false %}
                                                     <p>
                                                         {% if prerequisite['@type'] == 'Course' %}
-                                                            {% if participant is defined and participant is not null %}
-                                                                {% if participant.courses is defined and participant.courses is not null %}
-                                                                    {% for participantCourse in participant.courses %}
-                                                                        {% if participantCourse.id == prerequisite.id %}
-                                                                            <i class="fas fa-check"></i>
-                                                                            {% set meetsPrerequisite = true %}
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                {% endif %}
+                                                            {% if participant.courses is defined and participant.courses is not null %}
+                                                                {% for participantCourse in participant.courses %}
+                                                                    {% if participantCourse.id == prerequisite.id %}
+                                                                        <i class="fas fa-check"></i>
+                                                                    {% endif %}
+                                                                {% endfor %}
                                                             {% endif %}
                                                             Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
                                                         {% elseif prerequisite['@type'] == 'Program' %}
-                                                            {% if participant is defined and participant is not null %}
-                                                                {% if participant.programs is defined and participant.programs is not null %}
-                                                                    {% for participantProgram in participant.programs %}
-                                                                        {% if participantProgram.id == prerequisite.id %}
-                                                                            <i class="fas fa-check"></i>
-                                                                            {% set meetsPrerequisite = true %}
-                                                                        {% endif %}
-                                                                    {% endfor %}
-                                                                {% endif %}
+                                                            {% if participant.programs is defined and participant.programs is not null %}
+                                                                {% for participantProgram in participant.programs %}
+                                                                    {% if participantProgram.id == prerequisite.id %}
+                                                                        <i class="fas fa-check"></i>
+                                                                    {% endif %}
+                                                                {% endfor %}
                                                             {% endif %}
                                                             Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
                                                         {% else %}
@@ -141,9 +175,6 @@
                                                             {{ prerequisite.name }}
                                                         </a>
                                                     </p>
-                                                    {% if meetsPrerequisite == false %}
-                                                        {% set meetsPrerequisites = false %}
-                                                    {% endif %}
                                                 {% endfor %}
                                             </div>
                                         </li>
@@ -161,7 +192,7 @@
                                     {% if program.startDate is defined and program.startDate is not empty %}
                                         <li class="definition-list__item definition-list__item--horizontal">
                                             <div class="definition-list__title">
-                                                <span>Begindatum</span>
+                                                Begindatum
                                             </div>
                                             <div class="definition-list__description">
                                                 <p>{{ program.startDate|date("d-m-Y", "Europe/Paris") }}</p>
@@ -211,7 +242,7 @@
                                     {% if program.description is defined and program.description is not empty %}
                                         <li class="definition-list__item ">
                                             <div class="definition-list__title">
-                                                {{ 'description'|trans|capitalize }}
+                                                {{ 'description'|capitalize }}
                                             </div>
                                             <div class="definition-list__description">
                                                 <p>{{ program.description }}</p>
@@ -231,7 +262,7 @@
                                     {% if program.occupationalCredentialAwarded is defined and program.occupationalCredentialAwarded is not empty %}
                                         <li class="definition-list__item ">
                                             <div class="definition-list__title">
-                                                {{ 'toegekende beroeps referentie na succesvolle afronding'|trans|capitalize }}
+                                                {{ 'toegekende beroeps referentie na succesvolle afronding'|capitalize }}
                                             </div>
                                             <div class="definition-list__description">
                                                 <p>{{ program.occupationalCredentialAwarded }}</p>
@@ -241,7 +272,7 @@
                                     {% if program.educationalCredentialAwarded is defined and program.educationalCredentialAwarded is not empty %}
                                         <li class="definition-list__item ">
                                             <div class="definition-list__title">
-                                                {{ 'toegekende educatieve referentie na succesvolle afronding'|trans|capitalize }}
+                                                {{ 'toegekende educatieve referentie na succesvolle afronding'|capitalize }}
                                             </div>
                                             <div class="definition-list__description">
                                                 <p>{{ program.educationalCredentialAwarded }}</p>
@@ -256,7 +287,7 @@
 
                         <div class="content-background background--hemelblauw">
                             <div class="content">
-                                <h2>{{ 'courses'|trans|capitalize }}</h2>
+                                <h2>{{ 'courses'|capitalize }}</h2>
                                 <ul class="list list--links list--chevrons columns">
                                     {% for course in program.courses %}
                                         <li>
