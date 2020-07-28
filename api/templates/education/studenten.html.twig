@@ -1,35 +1,34 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Stages</h1>
+    <h1>Studenten</h1>
     <div class="row">
         <div class="col-sm-8">
-            {% if resources is not empty %}
-                <ul class="list list--card list--card-small">
-                    {% for stage in resources %}
+            {% if user is defined and user is not null %}
+                {% if resources is not empty %}
+                    <ul class="list list--card list--card-small">
+                    {% for student in resources %}
+                        {% set person = commonground_resource(student.person) %}
                         <li class="card card--small">
                             <div class="card__content">
                                 <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>
                                 <div class="card__body">
                                     <div class="row" style=" height: 100%; width: 100%;">
                                         <div class="col-sm-8" style="padding-right: 0px;">
-                                            {% if stage.title is defined and stage.title is not empty %}
-                                                <span class="card__title">{{ stage.title }}</span><br>
+                                            {% if person['@type'] == 'Ingeschrevenpersoon' %}
+                                                <span class="card__title">{{ person.naam.voornamen }} {{ person.naam.geslachtsnaam }}</span><br>
+                                                <span>{{ person.naam.aanschrijfwijze }}</span>
+                                            {% elseif person['@type'] == 'Person' %}
+                                                <span class="card__title">{{ person.name }}</span><br>
+                                                <span>{{ person.formalName }}</span>
                                             {% else %}
-                                                <span class="card__title">{{ stage.name }}</span><br>
+                                                <span class="card__title">{{ person.name }}</span><br>
                                             {% endif %}
-                                            <span>{{ stage.description }}</span>
                                         </div>
                                         <div class="col-sm-4">
                                             <div style="float: right;">
                                                 <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                    {% if stage.employmentType is defined and stage.employmentType is not empty %}
-                                                        <p style="margin: 0;">werktijd: {{ stage.employmentType }}</p>
-                                                    {% endif %}
-                                                    {% if stage.jobStartDate is defined and stage.jobStartDate is not empty %}
-                                                        <p style="margin: 0;">startdatum: {{ stage.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
-                                                    {% endif %}
-                                                    <a href="{{ path('app_education_stage', {id: stage.id}) }}">lees meer</a>
+                                                    <a href="{{ path('app_education_student', {id: student.id}) }}">lees meer</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -38,9 +37,12 @@
                             </div>
                         </li>
                     {% endfor %}
+                {% else %}
+                    <p>Er zijn op dit moment geen studenten.</p>
+                {% endif %}
                 </ul>
             {% else %}
-                <p>Er zijn op dit moment geen stages</p>
+                <h2>U moet eerst inloggen voordat u deze pagina kunt bekijken!</h2>
             {% endif %}
         </div>
     </div>
