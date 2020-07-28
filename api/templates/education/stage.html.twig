@@ -1,0 +1,115 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <header class="content__header">
+        <a class="backlink" href="/education/stages">Stages</a>
+    </header>
+    <div class="row">
+        {# if user is defined and user is not null #}
+        <div class="col-sm-12 col-lg-8">
+            <div class="content-background">
+                <div class="content ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>{{ resource.name|capitalize }}</h1>
+                            <p>{{ resource.description|capitalize }}</p>
+                            <b>Onderwijsvorm: </b>{{ resource.occupationalCategory|capitalize }}
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/350/250" alt="tender" width="100%">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <br>
+                            <div class="collapse" role="status">
+                                <div x-uno-collapse="" class="collapse__header">
+                                    <i class="collapse__indicator">
+                                            <span class="screenreader-only" data-contracted-i18n="ingeklapt"
+                                                  data-expanded-i18n="uitgeklapt"></span>
+                                    </i>
+                                    <span class="collapse__title">courses</span>
+                                </div>
+                                <div class="collapse__details collapse__details--closed">
+                                    {% if resource.courses is defined and resource.courses is not empty %}
+                                        <ul class="list list--card list--card-small">
+                                            {% for course in resource.courses %}
+                                                <li class="card card--small">
+                                                    <div class="card__content">
+                                                        <div class="card__body">
+                                                            <div class="row" style=" height: 100%; width: 100%;">
+                                                                <div class="col-sm-12" style="padding-right: 0px;">
+                                                                    <span class="card__title">{{ course.name }}</span><br>
+                                                                    <span>{{ course.description }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% else %}
+                                        <p style="color:lightgray">Er zijn nog geen courses.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-lg-4">
+            <div class="content-background">
+                <div class="content ">
+                    <h1>Kenmerken</h1>
+                    {% if resource.submitters is defined and resource.submitters is not empty %}
+                        <b>Aangemaakt
+                            door:</b>{% for submitter in resource.submitters %} {{ submitter }},{% endfor %}
+                        <br>
+                    {% endif %}
+                    {% if resource.dateSubmitted is defined and resource.dateSubmitted is not empty %}
+                        <b>Ingediend op: </b>{{ resource.dateSubmitted|date("d-m-Y H:i", "Europe/Paris") }}
+                        <br>
+                    {% endif %}
+                    {% if resource.budget is defined and resource.budget is not empty %}
+                        <b>Beschikbaar budget: </b>&euro; {{ resource.budget }},-
+                        <br>
+                    {% endif %}
+                    {% if resource.dateClose is defined and resource.dateClose is not empty %}
+                        <b>Datum van beëindiging: </b>{{ resource.dateClose|date("d-m-Y H:i", "Europe/Paris") }}
+                        <br>
+                    {% endif %}
+                    {% if resource.kind is defined and resource.kind is not empty %}
+                        <b>Type: </b>{{ resource.kind }}
+                        <br>
+                    {% endif %}
+                    {% if resource.documents is defined and resource.documents is not empty %}
+                        <br>
+                        <h3>Documenten</h3>
+                        <ul class="list list--links list--chevrons">
+                            {% for document in resource.documents %}
+                                <li><a href="#">{{ document }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {# else %}
+            <h2>U bent nog niet ingelogd!</h2>
+        {% endif #}
+    </div>
+
+    <script>
+        // Load collapse component
+        System.import('/uno/components/collapse/collapse.js').then(function (module) {
+            // Select all collapsible elements on the page
+            var collapses = document.querySelectorAll('[x-uno-collapse]');
+            // Initialize all collapses
+            for (var i = 0; i < collapses.length; i++) {
+                new module.Collapse(collapses.item(i));
+            }
+        });
+    </script>
+
+{% endblock %}
