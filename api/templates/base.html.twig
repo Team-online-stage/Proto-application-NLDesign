@@ -8,7 +8,11 @@
         <title>Common-ground</title>
         {#        <i class="fas fa-book"#}
     {% else %}
-        <title> {% if application is not empty %}{{ application['name'] }}{% else %} Applicatie{% endif %}</title>
+        <title> {% if application is not empty %}
+                {% if slug is defined and slug is not empty %}
+                    {{ slug|capitalize }} |
+                {% endif %}
+                {{ application['name'] }}{% else %} Applicatie{% endif %}</title>
     {% endif %}
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -129,54 +133,54 @@
 
     {% if application is defined and application.id == '3f44c00e-d919-4f89-bd4c-b730c9b2620a' and slug is defined and slug == 'home' %}
     <main class="skiplink-target main" id="content" tabindex="-1" style="padding-top: 0px">
-{% else %}
-    <main class="skiplink-target main" id="content" tabindex="-1">
-        {% endif %}
-        <div class="container">
+        {% else %}
+        <main class="skiplink-target main" id="content" tabindex="-1">
+            {% endif %}
+            <div class="container">
 
-            <!-- the alert box -->
-            {% for label, messages in app.flashes() %}
-                {% for message in messages %}
-                    <div class="notification notification--{{ label }}">
-                        <div class="notification__content">
-                            <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                <!-- the alert box -->
+                {% for label, messages in app.flashes() %}
+                    {% for message in messages %}
+                        <div class="notification notification--{{ label }}">
+                            <div class="notification__content">
+                                <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                            </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 {% endfor %}
-            {% endfor %}
 
-            {% block content %}
+                {% block content %}
 
-            {% endblock %}
+                {% endblock %}
 
-        </div>
-    </main>
+            </div>
+        </main>
 
-    {% include "footer.html.twig" %}
+        {% include "footer.html.twig" %}
 
-    <script src="/js/highlight.pack.js"></script>
+        <script src="/js/highlight.pack.js"></script>
 
-    <script>
-        // Load collapse component
-        System['import']('/uno/components/collapse/collapse.js').then(function (m) {
+        <script>
+            // Load collapse component
+            System['import']('/uno/components/collapse/collapse.js').then(function (m) {
 
-            //gebruikt unieke id van de nav om te voorkomen dat example collapses ook automatisch geactiveerd worden.
-            new m.Collapse(document.querySelector('#search-trigger'));
-        });
-        // Load nav component
-        System.import('/uno/components/navigation/navigation.js').then(function (module) {
-            var navs = document.querySelectorAll('.top-nav-autoresize');
-            // Initialize all navs
-            for (var i = 0; i < navs.length; i++) {
-                new module.AutoResizeNavigation(navs.item(i));
-            }
-            var submenus = document.querySelectorAll('.nav--submenu');
-            // Initialize all submenus
-            for (var i = 0; i < submenus.length; i++) {
-                new module.SubMenuNavigation(submenus.item(i));
-            }
-        });
-    </script>
+                //gebruikt unieke id van de nav om te voorkomen dat example collapses ook automatisch geactiveerd worden.
+                new m.Collapse(document.querySelector('#search-trigger'));
+            });
+            // Load nav component
+            System.import('/uno/components/navigation/navigation.js').then(function (module) {
+                var navs = document.querySelectorAll('.top-nav-autoresize');
+                // Initialize all navs
+                for (var i = 0; i < navs.length; i++) {
+                    new module.AutoResizeNavigation(navs.item(i));
+                }
+                var submenus = document.querySelectorAll('.nav--submenu');
+                // Initialize all submenus
+                for (var i = 0; i < submenus.length; i++) {
+                    new module.SubMenuNavigation(submenus.item(i));
+                }
+            });
+        </script>
 
 </div>
 
