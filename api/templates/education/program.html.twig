@@ -86,19 +86,20 @@
                     </aside>
 
                     <div class="col-xl-9 col-lg-8 col-md-9">
-                        {% if meetsPrerequisites == false %}
-                            <div class="notification notification--warning">
-                                <div class="notification__content">
-                                    <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor dit programma</h2>
+                        {% if user is defined and user is not null %}
+                            {% if meetsPrerequisites == false %}
+                                <div class="notification notification--warning">
+                                    <div class="notification__content">
+                                        <div class="notification__type">LET OP</div>
+                                        <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor dit programma</h2>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endif %}
 
                         {% set deadline = false %}
                         {% if program.applicationDeadline is defined and program.applicationDeadline is not empty %}
-                            {% set today = 'now'|date("d-m-Y", "Europe/Paris") %}
-                            {% if program.applicationDeadline|date("d-m-Y", "Europe/Paris") <= today %}
+                            {% if program.applicationDeadline|date('Y-m-d') <= 'now'|date('Y-m-d') %}
                                 {% set deadline = true %}
                             {% endif %}
 

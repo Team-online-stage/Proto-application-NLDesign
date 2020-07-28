@@ -46,20 +46,22 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12">
 
-                        {% if registeredForCourse == false %}
-                            <div class="notification notification--warning">
-                                <div class="notification__content">
-                                    <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U bent nog niet ingeschreven voor de cursus van deze activiteit</h2>
+                        {% if user is defined and user is not null%}
+                            {% if registeredForCourse == false %}
+                                <div class="notification notification--warning">
+                                    <div class="notification__content">
+                                        <div class="notification__type">LET OP</div>
+                                        <h2 class="notification__title">U bent nog niet ingeschreven voor de cursus van deze activiteit</h2>
+                                    </div>
                                 </div>
-                            </div>
-                        {% elseif resultSubmitted == false %}
-                            <div class="notification notification--warning">
-                                <div class="notification__content">
-                                    <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U moet voor deze activiteit nog een resultaat indienen</h2>
+                            {% elseif resultSubmitted == false %}
+                                <div class="notification notification--warning">
+                                    <div class="notification__content">
+                                        <div class="notification__type">LET OP</div>
+                                        <h2 class="notification__title">U moet voor deze activiteit nog een resultaat indienen</h2>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endif %}
 
                         <div class="content-background">
