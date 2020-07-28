@@ -86,13 +86,15 @@
                     </aside>
 
                     <div class="col-xl-9 col-lg-8 col-md-9">
-                        {% if meetsPrerequisites == false %}
-                            <div class="notification notification--warning">
-                                <div class="notification__content">
-                                    <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze cursus</h2>
+                        {% if user is defined and user is not null %}
+                            {% if meetsPrerequisites == false %}
+                                <div class="notification notification--warning">
+                                    <div class="notification__content">
+                                        <div class="notification__type">LET OP</div>
+                                        <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze cursus</h2>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endif %}
 
                         <div class="content-background">
