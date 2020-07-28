@@ -20,8 +20,8 @@
                     {% set meetsPrerequisite = false %}
                     {% if prerequisite['@type'] == 'Course' %}
                         {% if participant.courses is defined and participant.courses is not null %}
-                            {% for participantCourse in participant.courses %}
-                                {% if participantCourse.id == prerequisite.id %}
+                            {% for course in participant.courses %}
+                                {% if course.id == prerequisite.id %}
                                     {% set meetsPrerequisite = true %}
                                 {% endif %}
                             {% endfor %}
@@ -37,6 +37,17 @@
                     {% endif %}
                     {% if meetsPrerequisite == false %}
                         {% set meetsPrerequisites = false %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+
+        {% set registered = false %}
+        {% if participant is defined and participant is not null %}
+            {% if participant.programs is defined and participant.programs is not null %}
+                {% for participantProgram in participant.programs %}
+                    {% if participantProgram.id == program.id %}
+                        {% set registered = true %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
@@ -153,8 +164,8 @@
                                                     <p>
                                                         {% if prerequisite['@type'] == 'Course' %}
                                                             {% if participant.courses is defined and participant.courses is not null %}
-                                                                {% for participantCourse in participant.courses %}
-                                                                    {% if participantCourse.id == prerequisite.id %}
+                                                                {% for course in participant.courses %}
+                                                                    {% if course.id == prerequisite.id %}
                                                                         <i class="fas fa-check"></i>
                                                                     {% endif %}
                                                                 {% endfor %}
@@ -311,18 +322,7 @@
                             </div>
                             <div class="collapse__details collapse__details--open">
                                 {% if user is defined and user is not null %}
-                                    {% set ingeschreven = false %}
-                                    {% if participant is defined and participant is not null %}
-                                        {% if participant.programs is defined and participant.programs is not null %}
-                                            {% for participantProgram in participant.programs %}
-                                                {% if participantProgram.id == program.id %}
-                                                    {% set ingeschreven = true %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% endif %}
-
-                                    {% if ingeschreven == false %}
+                                    {% if registered == false %}
                                         {% if deadline == false %}
                                             {% if meetsPrerequisites == true %}
                                                 <h2>Motiveer uw inschrijving</h2>
