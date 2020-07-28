@@ -28,8 +28,8 @@
                         {% endif %}
                     {% elseif prerequisite['@type'] == 'Program' %}
                         {% if participant.programs is defined and participant.programs is not null %}
-                            {% for participantProgram in participant.programs %}
-                                {% if participantProgram.id == prerequisite.id %}
+                            {% for program in participant.programs %}
+                                {% if program.id == prerequisite.id %}
                                     {% set meetsPrerequisite = true %}
                                 {% endif %}
                             {% endfor %}
@@ -37,6 +37,17 @@
                     {% endif %}
                     {% if meetsPrerequisite == false %}
                         {% set meetsPrerequisites = false %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endif %}
+
+        {% set registered = false %}
+        {% if participant is defined and participant is not null %}
+            {% if participant.courses is defined and participant.courses is not null %}
+                {% for participantCourse in participant.courses %}
+                    {% if participantCourse.id == course.id %}
+                        {% set registered = true %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
@@ -75,13 +86,15 @@
                     </aside>
 
                     <div class="col-xl-9 col-lg-8 col-md-9">
-                        {% if meetsPrerequisites == false %}
-                            <div class="notification notification--warning">
-                                <div class="notification__content">
-                                    <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze cursus</h2>
+                        {% if user is defined and user is not null %}
+                            {% if meetsPrerequisites == false %}
+                                <div class="notification notification--warning">
+                                    <div class="notification__content">
+                                        <div class="notification__type">LET OP</div>
+                                        <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze cursus</h2>
+                                    </div>
                                 </div>
-                            </div>
+                            {% endif %}
                         {% endif %}
 
                         <div class="content-background">
@@ -133,8 +146,8 @@
                                                             Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
                                                         {% elseif prerequisite['@type'] == 'Program' %}
                                                             {% if participant.programs is defined and participant.programs is not null %}
-                                                                {% for participantProgram in participant.programs %}
-                                                                    {% if participantProgram.id == prerequisite.id %}
+                                                                {% for program in participant.programs %}
+                                                                    {% if program.id == prerequisite.id %}
                                                                         <i class="fas fa-check"></i>
                                                                     {% endif %}
                                                                 {% endfor %}
@@ -219,6 +232,13 @@
                                 <ul class="list list--subjects columns">
                                     {% for activity in course.activities %}
                                         <li>
+                                            {% if participant.results is defined and participant.results is not empty %}
+                                                {% for result in participant.results %}
+                                                    {% if result.activity.id == activity.id%}
+                                                        <i class="fas fa-check"></i>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
                                             <a href="{{ path('app_education_activity', {id: activity.id}) }}" class="list__link">
                                                 {{ activity.name|capitalize }}
                                             </a>
@@ -240,18 +260,7 @@
                             </div>
                             <div class="collapse__details collapse__details--open">
                                 {% if user is defined and user is not null %}
-                                    {% set ingeschreven = false %}
-                                    {% if participant is defined and participant is not null %}
-                                        {% if participant.courses is defined and participant.courses is not null %}
-                                            {% for participantCourse in participant.courses %}
-                                                {% if participantCourse.id == course.id %}
-                                                    {% set ingeschreven = true %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% endif %}
-
-                                    {% if ingeschreven == false %}
+                                    {% if registered == false %}
                                         {% if meetsPrerequisites == true %}
                                             <form method="post" action="{{ path('app_education_course', {id: course.id}) }}">
                                                 <div class="input">
