@@ -224,6 +224,29 @@ class EducationController extends AbstractController
         $variables['activity'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'activities', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'activities'], $variables['query'])['hydra:member'];
 
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $participant = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                $participant = $participants[0];
+
+                //add name, activity and participant to the new result resource
+                $resource['name'] = $variables['activity']['name'];
+                $resource['activity'] = $variables['activity']['@id'];
+                $resource['participant'] = $participant['@id'];
+
+                //create the result for this participant
+                $commonGroundService->createResource($resource, ['component' => 'edu', 'type' => 'results']);
+            }
+
+            return $this->redirectToRoute('app_education_activity', ['id' => $variables['activity']['id']]);
+        }
+
         return $variables;
     }
 
