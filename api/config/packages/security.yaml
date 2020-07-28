@@ -3,13 +3,15 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [CommongroundApplicationProvider, CommongroundDigispoofProvider, CommongroundUserProvider]
+                providers: [CommongroundApplicationProvider, CommongroundDigispoofProvider, CommongroundEherkeningProvider, CommongroundUserProvider]
         commongroundApplicationProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider
         commongroundUserProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider
         commongroundDigispoofProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundDigispoofProvider
+        commongroundEherkeningProvider:
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundEherkeningProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js|docs)/
@@ -35,6 +37,24 @@ security:
                     - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
+                entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
+        eherkening:
+            anonymous: ~
+            pattern: ^/eherkening
+            form_login:
+                login_path: app_user_eherkening
+                check_path: app_user_eherkening
+            logout:
+                path: app_user_logout2
+                target: app_user_eherkening
+            stateless: false
+            provider: commongroundEherkeningProvider
+            guard:
+                authenticators:
+                    - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundEherkeningAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
         main:
             anonymous: ~

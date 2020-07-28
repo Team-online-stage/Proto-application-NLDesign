@@ -33,7 +33,20 @@ class UserController extends AbstractController
      */
     public function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->redirect($this->generateUrl('app_default_index'));
+        $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
+
+        return $this->redirect($redirect .'?responceUrl='.$request->query->get('response').'&backUrl='. $request->query->get('back_url'));
+    }
+
+    /**
+     * @Route("/eherkening")
+     * @Template
+     */
+    public function EherkeningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
+
+        return $this->redirect($redirect .'?responceUrl='.$request->query->get('response').'&backUrl='. $request->query->get('back_url'));
     }
 
     /**
