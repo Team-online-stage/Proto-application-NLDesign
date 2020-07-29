@@ -83,7 +83,7 @@
                                     {% if activity.description is defined and activity.description is not empty %}
                                         <li class="definition-list__item ">
                                             <div class="definition-list__title">
-                                                {{ 'description'|capitalize }}
+                                                {{ 'beschrijving'|capitalize }}
                                             </div>
                                             <div class="definition-list__description">
                                                 <p>{{ activity.description }}</p>
@@ -93,6 +93,28 @@
                                 </ul>
                             </div>
                         </div>
+
+                        <div style="height:20px;"></div>
+
+                        {% if activity.tests is defined and activity.tests is not empty %}
+                            <div class="content-background">
+                                <div class="content">
+                                    <h2>{{ 'testen'|capitalize }}</h2>
+                                    <ul class="list list--subjects columns">
+                                        {% for test in activity.tests %}
+                                            <li>
+                                                <a href="{{ path('app_education_test', {id: test.id}) }}" class="list__link">
+                                                    {{ test.name|capitalize }}
+                                                </a>
+                                                {% if test.description is defined and test.description is not empty %}
+                                                    <p> {{ test.description}}</p>
+                                                {% endif %}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
 
                         <div style="height:20px;"></div>
 

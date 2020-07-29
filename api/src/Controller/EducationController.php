@@ -320,7 +320,7 @@ class EducationController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get Resource
-        $variables['resource'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id]);
+        $variables['stage'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id]);
 
         return $variables;
     }
@@ -375,6 +375,46 @@ class EducationController extends AbstractController
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/tests")
+     * @Template
+     */
+    public function testsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'tests'], $variables['query'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/tests/{id}")
+     * @Template
+     */
+    public function testAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['id'] = $id;
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['test'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'tests', 'id' => $id], $variables['query']);
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'tests'], $variables['query'])['hydra:member'];
 
         return $variables;
     }
