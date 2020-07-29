@@ -81,14 +81,20 @@
                                     {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
                                         <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Inwoner</span>
+                                            <span>Persoon</span>
                                         </a>
                                     {% else %}
                                         <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Inwoner</span>
+                                            <span>Persoon</span>
                                         </a>
                                     {% endif %}
+                                </li>
+                                <li class="nav__item" style="text-align: center">
+                                        <a href=" {{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                           title="Home" class="nav__link">
+                                            <span>Bedrijf</span>
+                                        </a>
                                 </li>
                                 {% for item in loggedOut.menuItems %}
                                     <li class="nav__item" style="text-align: center">
@@ -109,14 +115,20 @@
                                     {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
                                         <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Inwoner</span>
+                                            <span>Persoon</span>
                                         </a>
                                     {% else %}
-                                        <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                        <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Inwoner</span>
+                                            <span>Persoon</span>
                                         </a>
                                     {% endif %}
+                                </li>
+                                <li class="nav__item" style="text-align: center">
+                                    <a href=" {{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                       title="Home" class="nav__link">
+                                        <span>Bedrijf</span>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
