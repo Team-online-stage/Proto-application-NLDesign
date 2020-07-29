@@ -35,7 +35,7 @@ class UserController extends AbstractController
     {
         $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
 
-        return $this->redirect($redirect .'?responceUrl='.$request->query->get('response').'&backUrl='. $request->query->get('back_url'));
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
     }
 
     /**
@@ -46,7 +46,7 @@ class UserController extends AbstractController
     {
         $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
 
-        return $this->redirect($redirect .'?responceUrl='.$request->query->get('response').'&backUrl='. $request->query->get('back_url'));
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
     }
 
     /**
