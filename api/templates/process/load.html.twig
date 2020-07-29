@@ -112,8 +112,9 @@
             {% if slug == 'instruction' %}
                 <div class="col-md-12 no-padding">
                     {% if resumeRequest is defined and resumeRequest == 'resume' %}
+                        {% set nextStage = commonground_resource(request.currentStage) %}
                         <a class="btn btn--block"
-                           href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">Hervatten</a>
+                           href="{{ path('app_process_slug',{id: process.id, slug:  nextStage.slug}) }}">Hervatten</a>
                     {% elseif resumeRequest is defined and resumeRequest == 'see' %}
                         <a class="btn btn--block"
                            href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'see'|trans|capitalize }}</a>
@@ -176,7 +177,7 @@
                     <ul class="list list--timeline list--timeline-compact">
                         <li class="list__item {% if stage.slug == 'instruction' %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete' %}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete' %}
                                 <a
-                                href="{{ path('app_process_slug',{id:process.id,slug:'instruction'}) }}">{{ 'instruction'|trans|capitalize }}</a>{% else %}{{ 'instruction'|trans|capitalize }}{% endif %}
+                                href="{{ path('app_process_slug',{id:process.id,slug:'instruction', resumeRequest:'resume'}) }}">{{ 'instruction'|trans|capitalize }}</a>{% else %}{{ 'instruction'|trans|capitalize }}{% endif %}
                         </li>
                         {% for iteratedStage in process.stages %}
                             <li class="list__item {% if stage.slug == iteratedStage.slug %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete' %}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete' %}
@@ -624,7 +625,7 @@
                 <ul class="list list--timeline list--timeline-compact">
                     <li class="list__item {% if stage.slug == 'instruction' %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete' %}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete' %}
                             <a
-                            href="{{ path('app_process_slug',{id:process.id,slug:'instruction'}) }}">{{ 'instruction'|trans|capitalize }}</a>{% else %}{{ 'instruction'|trans|capitalize }}{% endif %}
+                            href="{{ path('app_process_slug',{id:process.id,slug:'instruction', resumeRequest:'resume'}) }}">{{ 'instruction'|trans|capitalize }}</a>{% else %}{{ 'instruction'|trans|capitalize }}{% endif %}
                     </li>
                     {% for iteratedStage in process.stages %}
                         <li class="list__item {% if stage.slug == iteratedStage.slug %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete' %}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete' %}
