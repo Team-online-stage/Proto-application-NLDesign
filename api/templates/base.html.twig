@@ -132,13 +132,6 @@
                 {% endfor %}
             {% endfor %}
 
-            <form action="{{ path('app_user_eherkenning') }}" method="post">
-                <input type="text" name="bsn">
-                <input type="text" name="kvk">
-                <input type="submit" value="indienen">
-                <input type="hidden" name="back_url" value="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">
-            </form>
-
           {% block content %}
 
           {% endblock %}

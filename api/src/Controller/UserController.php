@@ -39,10 +39,10 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/eherkening")
+     * @Route("/eherkenning")
      * @Template
      */
-    public function EherkeningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
 
@@ -60,6 +60,7 @@ class UserController extends AbstractController
         $session->set('user', null);
         $session->set('employee', null);
         $session->set('contact', null);
+        $session->set('company', null);
 
         return $this->redirect($this->generateUrl('app_default_index'));
     }

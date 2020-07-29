@@ -3,15 +3,15 @@ security:
     providers:
         chain_provider:
             chain:
-                providers: [CommongroundApplicationProvider, CommongroundDigispoofProvider, CommongroundEherkeningProvider, CommongroundUserProvider]
+                providers: [CommongroundApplicationProvider, CommongroundDigispoofProvider, CommongroundEherkenningProvider, CommongroundUserProvider]
         commongroundApplicationProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider
         commongroundUserProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider
         commongroundDigispoofProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundDigispoofProvider
-        commongroundEherkeningProvider:
-            id: Conduction\CommonGroundBundle\Security\User\CommongroundEherkeningProvider
+        commongroundEherkenningProvider:
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundEherkenningProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js|docs)/
@@ -38,23 +38,23 @@ security:
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
-        eherkening:
+        eherkenning:
             anonymous: ~
-            pattern: ^/eherkening
+            pattern: ^/eherkenning
             form_login:
-                login_path: app_user_eherkening
-                check_path: app_user_eherkening
+                login_path: app_user_eherkenning
+                check_path: app_user_eherkenning
             logout:
                 path: app_user_logout2
-                target: app_user_eherkening
+                target: app_user_eherkenning
             stateless: false
-            provider: commongroundEherkeningProvider
+            provider: commongroundEherkenningProvider
             guard:
                 authenticators:
                     - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
-                    - Conduction\CommonGroundBundle\Security\CommongroundEherkeningAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundEherkenningAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
         main:
             anonymous: ~

@@ -10,6 +10,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use GuzzleHttp\Client;
 
 class ApplicationService
 {
@@ -54,8 +55,23 @@ class ApplicationService
         if ($bsn || $bsn = $this->request->query->get('bsn')) {
             $user = $this->commonGroundService->getResource(['component'=>'brp', 'type'=>'ingeschrevenpersonen', 'id'=>$bsn]);
             $this->session->set('user', $user);
+
+        }
+        $kvk = $this->request->get('kvk');
+        if ($kvk || $kvk = $this->request->query->get('kvk')) {
+            $client = new Client([
+                // Base URI is used with relative requests
+                'base_uri' => 'https://api.kvk.nl',
+                // You can set any number of default request options.
+                'timeout'  => 2.0,
+            ]);
+
+            $response = $client->request('GET', '/api/v2/testsearch/companies?q=test&mainBranch=true&branch=false&branchNumber='.$kvk);
+            $company = json_decode($response->getBody()->getContents(), true);
+            $this->session->set('company', $company['data']['items'][0]);
         }
         $variables['user'] = $this->session->get('user');
+        $variables['company'] = $this->session->get('company');
 
         // Let handle posible request creation
         $requestType = $this->request->request->get('requestType');
