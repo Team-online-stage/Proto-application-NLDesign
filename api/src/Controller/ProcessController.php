@@ -55,7 +55,7 @@ class ProcessController extends AbstractController
      *
      * @Route("/{id}", defaults={"resumeRequest"="start"})
      * @Route("/{id}/{resumeRequest}", name="app_process_resume", defaults={"resumeRequest"="start"})
-     * @Route("/{id}/{slug}", name="app_process_slug", defaults={"slug"="instruction"})
+     * @Route("/{id}/{slug}/{resumeRequest}", name="app_process_slug", defaults={"slug"="instruction", "resumeRequest"="start"})
      * @Template
      */
     public function loadAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $resumeRequest, string $slug = 'instruction')

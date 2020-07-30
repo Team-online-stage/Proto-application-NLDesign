@@ -10,13 +10,13 @@
                 <div class="content ">
                     <div class="row">
                         <div class="col-md-6">
-                            {% if resource.title is defined and resource.title is not empty %}
-                                <h1>{{ resource.title|capitalize }}</h1>
+                            {% if stage.title is defined and stage.title is not empty %}
+                                <h1>{{ stage.title|capitalize }}</h1>
                             {% else %}
-                                <h1>{{ resource.name|capitalize }}</h1>
+                                <h1>{{ stage.name|capitalize }}</h1>
                             {% endif %}
-                            {% if resource.description is defined and resource.description is not empty %}
-                                <p>{{ resource.description }}</p>
+                            {% if stage.description is defined and stage.description is not empty %}
+                                <p>{{ stage.description }}</p>
                             {% endif %}
                         </div>
                         <div class="col-md-6">
@@ -34,46 +34,46 @@
                                 Naam
                             </div>
                             <div class="definition-list__description">
-                                <p>{{ resource.name }}</p>
+                                <p>{{ stage.name }}</p>
                             </div>
                         </li>
-                        {% if resource.jobStartDate is defined and resource.jobStartDate is not empty %}
+                        {% if stage.jobStartDate is defined and stage.jobStartDate is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
                                     Startdatum
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ resource.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
+                                    <p>{{ stage.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
                                 </div>
                             </li>
                         {% endif %}
-                        {% if resource.validThrough is defined and resource.validThrough is not empty %}
+                        {% if stage.validThrough is defined and stage.validThrough is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
                                     <span>Deze vactature is geldig tot</span>
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ resource.validThrough|date("d-m-Y", "Europe/Paris") }}</p>
+                                    <p>{{ stage.validThrough|date("d-m-Y", "Europe/Paris") }}</p>
                                 </div>
                             </li>
                         {% endif %}
-                        {% if resource.employmentType is defined and resource.employmentType is not empty %}
+                        {% if stage.employmentType is defined and stage.employmentType is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
                                     Werktijd
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ resource.employmentType}}</p>
+                                    <p>{{ stage.employmentType}}</p>
                                 </div>
                             </li>
                         {% endif %}
-                        {% if resource.standardHours is defined and resource.standardHours is not empty %}
+                        {% if stage.standardHours is defined and stage.standardHours is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
                                     Uren per week
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ resource.standardHours}} uur</p>
+                                    <p>{{ stage.standardHours}} uur</p>
                                 </div>
                             </li>
                         {% endif %}
