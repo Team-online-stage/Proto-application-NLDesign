@@ -71,7 +71,7 @@
                             <ul>
                                 <li class="sidenav__item">
                                     <a href="{{ path('app_education_programs') }}">
-                                        Introductie
+                                        Over Tutorials
                                     </a>
                                 </li>
                                 {% for program in resources %}
@@ -91,7 +91,7 @@
                                 <div class="notification notification--warning">
                                     <div class="notification__content">
                                         <div class="notification__type">LET OP</div>
-                                        <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor dit programma</h2>
+                                        <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze tutorial</h2>
                                     </div>
                                 </div>
                             {% endif %}
@@ -108,9 +108,9 @@
                                     <div class="notification__type">LET OP</div>
                                     <h2 class="notification__title">
                                         {% if deadline == false %}
-                                            Voor dit progamma geld een aanmeldings deadline
+                                            Voor deze tutorial geld een aanmeldings deadline
                                         {% else %}
-                                            De aanmeldings deadline voor dit programma is verlopen
+                                            De aanmeldings deadline voor deze tutorial is verlopen
                                         {% endif %}
                                     </h2>
                                 </div>
@@ -137,15 +137,28 @@
                                                 Aanbieder
                                             </div>
                                             <div class="definition-list__description">
-                                                {% if "http" in program.provider %}
-                                                    {% set provider = commonground_resource(program.provider) %}
-                                                    {% if provider is defined and provider is not empty %}
-                                                        <p>Naam: {{ provider.name }}</p>
-                                                        {% if provider.description is defined and provider.description is not empty %}
-                                                            <p>Omschrijving: {{ provider.description }}</p>
+                                                <div class="row">
+                                                    {% if "http" in program.provider %}
+                                                        {% set provider = commonground_resource(program.provider) %}
+                                                        {% if provider is defined and provider is not empty %}
+                                                            <div class="col-sm-6">
+                                                                <p>Naam: {{ provider.name }}</p>
+                                                            </div>
+                                                            <div class="col-sm-6">
+                                                                <div style="float: right;">
+                                                                    <div style="display: flex; flex-direction: column; justify-items: center;">
+                                                                        <a href="{{ path('app_education_organisatie', {id: provider.id}) }}">Lees meer over {{ provider.name }}</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            {% if provider.description is defined and provider.description is not empty %}
+                                                                <div class="col-sm-12">
+                                                                    <p>Omschrijving: {{ provider.description }}</p>
+                                                                </div>
+                                                            {% endif %}
                                                         {% endif %}
                                                     {% endif %}
-                                                {% endif %}
+                                                </div>
                                             </div>
                                         </li>
                                     {% endif %}
@@ -154,9 +167,9 @@
                                         <li class="definition-list__item definition-list__item--horizontal">
                                             <div class="definition-list__title">
                                                 {% if meetsPrerequisites == false %}
-                                                    <span>Programma vereisten</span>
+                                                    <span>Tutorial vereisten</span>
                                                 {% else %}
-                                                    Programma vereisten
+                                                    Tutorial vereisten
                                                 {% endif %}
                                             </div>
                                             <div class="definition-list__description">
@@ -180,7 +193,7 @@
                                                                     {% endif %}
                                                                 {% endfor %}
                                                             {% endif %}
-                                                            Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
+                                                            Tutorial: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
                                                         {% else %}
                                                             <a href="/education/programs">
                                                         {% endif %}
@@ -214,7 +227,7 @@
                                     {% if program.occupationalCategory is defined and program.occupationalCategory is not empty %}
                                         <li class="definition-list__item definition-list__item--horizontal">
                                             <div class="definition-list__title">
-                                                Programma categorie
+                                                Tutorial categorie
                                             </div>
                                             <div class="definition-list__description">
                                                 <p>{{ program.occupationalCategory }}</p>
@@ -224,7 +237,7 @@
                                     {% if program.timeToComplete is defined and program.timeToComplete is not empty %}
                                         <li class="definition-list__item definition-list__item--horizontal">
                                             <div class="definition-list__title">
-                                                Programmaduur
+                                                Tutorialduur
                                             </div>
                                             <div class="definition-list__description">
                                                 <p>{{ program.timeToComplete }}</p>
@@ -319,14 +332,26 @@
                                 <i class="collapse__indicator">
                                     <span class="screenreader-only" data-contracted-i18n="ingeklapt" data-expanded-i18n="uitgeklapt"></span>
                                 </i>
-                                <span class="collapse__title">Inschrijven voor dit programma</span>
+                                <span class="collapse__title">Inschrijven voor deze tutorial</span>
                             </div>
                             <div class="collapse__details collapse__details--open">
                                 {% if user is defined and user is not null %}
                                     {% if registered == false %}
                                         {% if deadline == false %}
                                             {% if meetsPrerequisites == true %}
+                                                <h2>Motiveer uw inschrijving</h2>
+
                                                 <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
+                                                    <div class="input">
+                                                        <label class="input__label" for="reason_visit">Waarom heeft u zich ingeschreven voor deze tutorial? <span style="color: red">*</span></label>
+                                                        <textarea class="input__control input__control--text" required=""></textarea>
+                                                    </div>
+
+                                                    <div class="input">
+                                                        <label class="input__label" for="what_did_you_expect">Wat verwacht u van deze tutorial? <span style="color: red">*</span></label>
+                                                        <textarea class="input__control input__control--text" required=""></textarea>
+                                                    </div>
+
                                                     <div class="input">
                                                         <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
                                                     </div>
@@ -334,45 +359,26 @@
                                             {% else %}
                                                 <aside class="hint">
                                                     <span class="hint__title">Vereisten</span>
-                                                    <p>U voldoet nog niet aan alle vereisten voor dit programma.</p>
+                                                    <p>U voldoet nog niet aan alle vereisten voor deze tutorial.</p>
                                                 </aside>
                                             {% endif %}
                                         {% else %}
                                             <aside class="hint">
                                                 <span class="hint__title">Deadline</span>
-                                                <p>De aanmeldings deadline voor dit programma is verlopen.</p>
+                                                <p>De aanmeldings deadline voor deze tutorial is verlopen.</p>
                                             </aside>
                                         {% endif %}
                                     {% else %}
                                         <aside class="hint">
                                             <span class="hint__title">Ingeschreven</span>
-                                            <p>U bent al ingeschreven voor dit programma.</p>
+                                            <p>U bent al ingeschreven voor deze tutorial.</p>
                                         </aside>
-
-                                        <h2>Motiveer uw inschrijving</h2>
-
-                                        <form method="post" > {# action="{{ path('app_education_program', {id: program.id}) }}" #}
-                                            <div class="input">
-                                                <label class="input__label" for="reason_visit">Waarom heeft u zich ingeschreven voor dit programma?</label>
-                                                <textarea class="input__control input__control--text"></textarea>
-                                            </div>
-
-                                            <div class="input">
-                                                <label class="input__label" for="what_did_you_expect">Wat verwacht u van het programma?</label>
-                                                <textarea class="input__control input__control--text"></textarea>
-                                            </div>
-
-                                            <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
-                                                <div class="input">
-                                                    <button type="submit" class="btn btn--primary">verzenden <i class="icon icon-arr-forward"></i></button>
-                                                </div>
-                                            </form>
-                                        </form>
                                     {% endif %}
                                 {% else %}
                                     <aside class="hint">
                                         <span class="hint__title">Inloggen</span>
-                                        <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.</p>
+                                        <p>U dient eerst in te loggen voordat u zich voor deze tutorial kunt inschrijven.<br>
+                                            Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
                                     </aside>
                                 {% endif %}
                             </div>
