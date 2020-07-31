@@ -12,7 +12,7 @@ info:
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/pan.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
+    'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
   /audit_trails:
@@ -2379,20 +2379,28 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         example: '2020-07-30 11:12:10'
 =======
         example: '2020-07-31 08:03:11'
 >>>>>>> Stashed changes
+=======
+        example: '2020-07-31 07:46:04'
+>>>>>>> development
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         example: '2020-07-30 11:12:10'
 =======
         example: '2020-07-31 08:03:11'
 >>>>>>> Stashed changes
+=======
+        example: '2020-07-31 07:46:04'
+>>>>>>> development
     required: []
   AuditTrail-write:
     properties:
@@ -2440,20 +2448,28 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         example: '2020-07-30 11:12:10'
 =======
         example: '2020-07-31 08:03:11'
 >>>>>>> Stashed changes
+=======
+        example: '2020-07-31 07:46:04'
+>>>>>>> development
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
+<<<<<<< HEAD
 <<<<<<< Updated upstream
         example: '2020-07-30 11:12:10'
 =======
         example: '2020-07-31 08:03:11'
 >>>>>>> Stashed changes
+=======
+        example: '2020-07-31 07:46:04'
+>>>>>>> development
     required: []
   ChangeLog-write:
     properties:
