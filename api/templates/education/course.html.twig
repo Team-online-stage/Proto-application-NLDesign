@@ -166,7 +166,7 @@
                                     {% if course.description is defined and course.description is not empty %}
                                     <li class="definition-list__item ">
                                         <div class="definition-list__title">
-                                            {{ 'description'|capitalize }}
+                                            {{ 'beschrijving'|capitalize }}
                                         </div>
                                         <div class="definition-list__description">
                                             <p>{{ course.description }}</p>
@@ -242,12 +242,33 @@
                                             <a href="{{ path('app_education_activity', {id: activity.id}) }}" class="list__link">
                                                 {{ activity.name|capitalize }}
                                             </a>
-                                            <p> {{ activity.description}}</p>
+                                            {% if activity.description is defined and activity.description is not empty %}
+                                                <p> {{ activity.description}}</p>
+                                            {% endif %}
                                         </li>
                                     {% endfor %}
                                 </ul>
                             </div>
                         </div>
+
+                        <div style="height:20px;"></div>
+
+                        {% if course.tests is defined and course.tests is not empty %}
+                            <div class="content-background">
+                                <div class="content">
+                                    <h2>{{ 'testen'|capitalize }}</h2>
+                                    <ul class="list list--links list--chevrons columns">
+                                        {% for test in course.tests %}
+                                            <li>
+                                                <a href="{{ path('app_education_test', {id: test.id}) }}">
+                                                    {{ test.name|capitalize }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
 
                         <div style="height:20px;"></div>
 

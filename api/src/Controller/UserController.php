@@ -28,6 +28,28 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/digispoof")
+     * @Template
+     */
+    public function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
+
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
+    }
+
+    /**
+     * @Route("/eherkenning")
+     * @Template
+     */
+    public function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
+
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
+    }
+
+    /**
      * @Route("/logout")
      * @Template
      */
@@ -38,6 +60,7 @@ class UserController extends AbstractController
         $session->set('user', null);
         $session->set('employee', null);
         $session->set('contact', null);
+        $session->set('company', null);
 
         return $this->redirect($this->generateUrl('app_default_index'));
     }
