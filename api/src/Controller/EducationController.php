@@ -416,6 +416,31 @@ class EducationController extends AbstractController
         $variables['test'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'tests', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'tests'], $variables['query'])['hydra:member'];
 
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $participant = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                $participant = $participants[0];
+
+                $testResult = [];
+                //add name, activity and participant to the new testResult resource
+                $testResult['name'] = $variables['test']['name'];
+                $testResult['description'] = 'Dit is een test testResult waarvan de ingevoerde antwoorden nog niet zijn opgeslagen.';
+                $testResult['test'] = $variables['test']['@id'];
+                $testResult['participant'] = $participant['@id'];
+
+                //create the testResult for this participant
+                $commonGroundService->createResource($testResult, ['component' => 'edu', 'type' => 'test_results']);
+            }
+
+            return $this->redirectToRoute('app_education_test', ['id' => $variables['test']['id']]);
+        }
+
         return $variables;
     }
 }
