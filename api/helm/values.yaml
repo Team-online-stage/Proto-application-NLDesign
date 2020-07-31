@@ -24,7 +24,7 @@ settings:
   unit: Common-Ground
   env: dev
   web: false
-  internal: 
+  internal: false
   debug: 1
   cache: 1
   replicaCount: 1
