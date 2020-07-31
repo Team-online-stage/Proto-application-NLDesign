@@ -36,7 +36,7 @@
                                             <span class="screenreader-only" data-contracted-i18n="ingeklapt"
                                                   data-expanded-i18n="uitgeklapt"></span>
                                     </i>
-                                    <span class="collapse__title">Programma's</span>
+                                    <span class="collapse__title">Tutorials</span>
                                 </div>
                                 <div class="collapse__details collapse__details--closed">
                                     {% if resource.programs is defined and resource.programs is not empty %}
@@ -55,7 +55,7 @@
                                                                             <a href="{{ path('app_education_program', {id: program.id}) }}"
                                                                                rel="noopener" class="btn btn--primary"
                                                                                target="_blank">
-                                                                                Bekijk dit programma
+                                                                                Bekijk deze tutorial
                                                                                 <span class="btn__icon icon icon-arr-forward" title="" role=""></span>
                                                                             </a>
                                                                         </div>
@@ -127,6 +127,7 @@
     </div>
     {% else %}
         <h2>U moet eerst inloggen voordat u deze pagina kunt bekijken!</h2>
+        Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.
     {% endif %}
     </div>
 
