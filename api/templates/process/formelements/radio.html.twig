@@ -1,4 +1,4 @@
-
+<label class="input__label" for="{{ property.id }}">{{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
 <fieldset class="input">
 
     {% if property.enum is defined and property.enum is not empty and property.type == 'string'%}
