@@ -24,7 +24,7 @@
                                             <div style="float: right;">
                                                 <div style="display: flex; flex-direction: column; justify-items: center;">
                                                     {% if stage.employmentType is defined and stage.employmentType is not empty %}
-                                                        <p style="margin: 0;">werktijd: {{ stage.employmentType }}</p>
+                                                        <p style="margin: 0;">dienstverband: {{ stage.employmentType }}</p>
                                                     {% endif %}
                                                     {% if stage.jobStartDate is defined and stage.jobStartDate is not empty %}
                                                         <p style="margin: 0;">startdatum: {{ stage.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
