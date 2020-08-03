@@ -250,25 +250,6 @@
 
                     <div style="height:20px;"></div>
 
-                    {% if course.tests is defined and course.tests is not empty %}
-                        <div class="content-background">
-                            <div class="content">
-                                <h2>{{ 'testen'|capitalize }}</h2>
-                                <ul class="list list--links list--chevrons columns">
-                                    {% for test in course.tests %}
-                                        <li>
-                                            <a href="{{ path('app_education_test', {id: test.id}) }}">
-                                                {{ test.name|capitalize }}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div style="height:20px;"></div>
-
                     <div class="collapse" role="status">
                         <div x-uno-collapse="" class="collapse__header">
                             <i class="collapse__indicator">
