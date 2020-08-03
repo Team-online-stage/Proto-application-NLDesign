@@ -1,5 +1,5 @@
 <div style="margin-bottom: 20px;">
-    <h3>{{ property.name }}</h3>
+    <h3>{{ property.name }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</h3>
 {% if property.minItems is defined and property.minItems is not empty %}
 
 {% set count = 1 %}

@@ -171,12 +171,12 @@ parameters:
     # nlx-out
     env(APP_COMMONGROUND_NLX_OUT_LOCATION): "https://nlx-out.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_NLX_OUT_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-    # ProcesTypeCatalogus
-    env(APP_COMMONGROUND_PTC_LOCATION): "https://ptc.%env(APP_ENV)%"
-    env(APP_COMMONGROUND_PTC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
     # StufService
     env(APP_COMMONGROUND_STUF_LOCATION): "https://stuf.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_STUF_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+    
+    #DigiSpoof
+    env(APP_COMMONGROUND_DS_LOCATION): "https://ds.%env(APP_DOMAIN)%"
 
     # Test for commonground component by array
     common_ground.components:
@@ -244,6 +244,8 @@ parameters:
         rdw:
             location: "%env(APP_COMMONGROUND_RDW_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_RDW_APIKEY)%"
+        ds:
+            location: "%env(APP_COMMONGROUND_DS_LOCATION)%"
 
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
@@ -304,6 +306,7 @@ twig:
         app_container: "%env(APP_CONTAINER)%"
         app_repro: "%env(APP_REPRO)%"
         app_web: "%env(APP_WEB)%"
+        app_internal: "%env(APP_INTERNAL)%"
         app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
 
         # Security Details

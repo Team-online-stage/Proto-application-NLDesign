@@ -24,6 +24,7 @@ settings:
   unit: {{ organization_unit }}
   env: {{ app_env }}
   web: {{ app_web }}
+  internal: {{ app_internal }}
   debug: {{ app_debug }}
   cache: {{ app_debug }}
   replicaCount: 1
@@ -105,6 +106,15 @@ mercure:
   service:
     type: NodePort
     port: 80
+
+redis:
+    port: 6379
+    version: 5.0
+    memory: 100Mi
+    cpu: 100m
+    limits:
+        memory: 200Mi
+        cpu: 250m
 
 ingress:
   annotations:

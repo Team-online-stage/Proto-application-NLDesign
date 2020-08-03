@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * The Request controller handles any calls that have not been picked up by another controller, and wel try to handle the slug based against the wrc.
+ * The Request test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
  *
  * Class RequestController
  *
@@ -24,12 +24,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class RequestController extends AbstractController
 {
     /**
-     * @Route("/load/{id}")
+     * @Route("/load/{id}/{resumeRequest}", defaults={"resumeRequest"="start"})
      */
-    public function loadAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function loadAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $resumeRequest)
     {
+
         //$variables = $applicationService->getVariables();
         $loadedRequest = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], ['extend'=>'processType']);
+
+//        var_dump($loadedRequest);
+
+        $session->set('request', $loadedRequest);
+        if (isset($resumeRequest)) {
+            return $this->redirect($this->generateUrl('app_process_resume', ['id'=>$loadedRequest['processType']['id'], 'resumeRequest'=>$resumeRequest]));
+        }
 
         return $this->redirect($this->generateUrl('app_process_load', ['id'=>$loadedRequest['processType']['id']]));
     }

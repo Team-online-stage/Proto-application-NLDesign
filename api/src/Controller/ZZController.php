@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * The ZZ controller handles any calls that have not been picked up by another controller, and wel try to handle the slug based against the wrc.
+ * The ZZ test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
  *
  * Class ZZController
  *
@@ -42,6 +42,8 @@ class ZZController extends AbstractController
         // Lets also provide any or all id
         $slug_parts = explode('/', $slug);
         $variables['id'] = end($slug_parts);
+
+        $variables['slug'] = $slug;
 
         // Lets find an appoptiate slug
         $template = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id'=> $params->get('app_id').'/'.$slug]);

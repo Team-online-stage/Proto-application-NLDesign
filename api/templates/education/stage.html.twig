@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <header class="content__header">
+        <a class="backlink" href="/education/stages">Stages</a>
+    </header>
+    <div class="row">
+        <div class="col-sm-12 col-lg-8">
+            <div class="content-background">
+                <div class="content ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% if stage.title is defined and stage.title is not empty %}
+                                <h1>{{ stage.title|capitalize }}</h1>
+                            {% else %}
+                                <h1>{{ stage.name|capitalize }}</h1>
+                            {% endif %}
+                            {% if stage.description is defined and stage.description is not empty %}
+                                <p>{{ stage.description }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/350/250" alt="tender" width="100%">
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="edit-section">
+                        <h2>Algemene informatie</h2>
+                    </div>
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Naam
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ stage.name }}</p>
+                            </div>
+                        </li>
+                        {% if stage.jobStartDate is defined and stage.jobStartDate is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Startdatum
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ stage.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if stage.validThrough is defined and stage.validThrough is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    <span>Deze vactature is geldig tot</span>
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ stage.validThrough|date("d-m-Y", "Europe/Paris") }}</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if stage.employmentType is defined and stage.employmentType is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Werktijd
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ stage.employmentType}}</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if stage.standardHours is defined and stage.standardHours is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Uren per week
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ stage.standardHours}} uur</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
