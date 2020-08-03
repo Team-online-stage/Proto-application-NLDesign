@@ -13,17 +13,17 @@
 
         <ul class="list list--timeline list--timeline-compact">
             {% if process.id == 'a8b8ce49-d5db-4270-9e42-4b47902fc817' %}
-                <li class="list__item"><b>{{ 'introduction'|trans|capitalize }}</b></li>
+                <li class="list__item list__item--active"><b>{{ 'instruction'|trans|capitalize }}</b></li>
             {% endif %}
             {% for iteratedStage in process.stages %}
-                <li class="list__item">
+                <li class="list__item list__item--active">
                     <b>{{ iteratedStage.name|capitalize }}</b>{% if iteratedStage.sections|length == 1 %} ({{ iteratedStage.sections|length }} vraag) {% else %} ({{ iteratedStage.sections|length }} vragen) {% endif %}
                 </li>
             {% endfor %}
-            <li class="list__item"><b>{{ 'submit'|trans|capitalize }}</b></li>
+            <li class="list__item list__item--active"><b>{{ 'submit'|trans|capitalize }}</b></li>
             {% if process.id == 'a8b8ce49-d5db-4270-9e42-4b47902fc817' %}
-                <li class="list__item"><b>In behandeling</b></li>
-                <li class="list__item"><b>Uitsluitsel</b></li>
+                <li class="list__item list__item--disabled"><b>In behandeling</b></li>
+                <li class="list__item list__item--disabled"><b>Uitsluitsel</b></li>
             {% endif %}
         </ul>
     </div>
