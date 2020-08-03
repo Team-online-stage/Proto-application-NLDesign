@@ -183,7 +183,7 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
+                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% elseif prerequisite['@type'] == 'Program' %}
                                                         {% if participant.programs is defined and participant.programs is not null %}
                                                             {% for participantProgram in participant.programs %}
@@ -192,12 +192,10 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Tutorial: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
+                                                        Tutorial: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% else %}
-                                                        <a href="/education/programs">
-                                                    {% endif %}
                                                         {{ prerequisite.name }}
-                                                    </a>
+                                                    {% endif %}
                                                 </p>
                                             {% endfor %}
                                         </div>
@@ -358,7 +356,38 @@
                                         {% else %}
                                             <aside class="hint">
                                                 <span class="hint__title">Vereisten</span>
-                                                <p>U voldoet nog niet aan alle vereisten voor deze tutorial.</p>
+                                                <p>U moet eerst de volgende tutorials en cursussen afgerond hebben voordat u zich voor deze tutorial kunt inschrijven: </p>
+                                                {% for prerequisiteUrl in program.programPrerequisites %}
+                                                    {% set prerequisite = commonground_resource(prerequisiteUrl) %}
+                                                    <p>
+                                                        {% set meetsPrerequisite = false %}
+                                                        {% if prerequisite['@type'] == 'Course' %}
+                                                            {% if participant.courses is defined and participant.courses is not null %}
+                                                                {% for course in participant.courses %}
+                                                                    {% if course.id == prerequisite.id %}
+                                                                        {% set meetsPrerequisite = true %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                            {% if meetsPrerequisite == false %}
+                                                                Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                            {% endif %}
+                                                        {% elseif prerequisite['@type'] == 'Program' %}
+                                                            {% if participant.programs is defined and participant.programs is not null %}
+                                                                {% for participantProgram in participant.programs %}
+                                                                    {% if participantProgram.id == prerequisite.id %}
+                                                                        {% set meetsPrerequisite = true %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
+                                                            {% if meetsPrerequisite == false %}
+                                                                Tutorial: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                            {% endif %}
+                                                        {% else %}
+                                                            {{ prerequisite.name }}
+                                                        {% endif %}
+                                                    </p>
+                                                {% endfor %}
                                             </aside>
                                         {% endif %}
                                     {% else %}
