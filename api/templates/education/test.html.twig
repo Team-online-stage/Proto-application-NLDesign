@@ -15,9 +15,6 @@
         <section class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="content">
-                    {% if test.course is defined and test.course is not empty %}
-                        <a class="backlink" href="{{ path('app_education_course', {id: test.course.id}) }}">{{ test.course.name|capitalize }}</a>
-                    {% endif %}
                     {% if test.activity is defined and test.activity is not empty %}
                         <a class="backlink" href="{{ path('app_education_activity', {id: test.activity.id}) }}">{{ test.activity.name|capitalize }}</a>
                     {% endif %}
@@ -38,17 +35,6 @@
                             {% endif %}
 
                             {% if user is defined and user is not null %}
-                                {% set registeredForCourse = false %}
-                                {% if test.course is defined and test.course is not empty %}
-                                    {% if participant.courses is defined and participant.courses is not null %}
-                                        {% for course in participant.courses %}
-                                            {% if course.id == test.course.id %}
-                                                {% set registeredForCourse = true %}
-                                            {% endif %}
-                                        {% endfor %}
-                                    {% endif %}
-                                {% endif %}
-
                                 {% set registeredForActivityCourse = false %}
                                 {% if test.activity is defined and test.activity is not empty %}
                                     {% if participant.courses is defined and participant.courses is not null %}
@@ -69,7 +55,7 @@
                                     {% endfor %}
                                 {% endif %}
 
-                                {% if registeredForCourse == true or registeredForActivityCourse == true %}
+                                {% if registeredForActivityCourse == true %}
                                     {% if resultSubmitted == false %}
                                         {% if test.stages is defined and test.stages is not empty %}
                                             <div style="height:20px;"></div>
@@ -126,30 +112,15 @@
                                         </div>
                                     {% endif %}
                                 {% else %}
-                                    {% if registeredForCourse == false %}
-                                        {% if test.course is defined and test.course is not empty %}
-                                            <div class="notification notification--warning">
-                                                <div class="notification__content">
-                                                    <h2 class="notification__title">Niet ingeschreven</h2>
-                                                    <span>U bent nog niet ingeschreven voor de cursus van deze test.</span><br>
-                                                    <span>Klik <a
-                                                            href="{{ path('app_education_course', {id: test.course.id}) }}">hier</a> om deze cursus te bekijken.</span>
-                                                </div>
+                                    {% if test.activity is defined and test.activity is not empty %}
+                                        <div class="notification notification--warning">
+                                            <div class="notification__content">
+                                                <h2 class="notification__title">Niet ingeschreven</h2>
+                                                <span>U bent nog niet ingeschreven voor de cursus die hoort bij de activiteit van deze test.</span><br>
+                                                <span>Klik <a
+                                                        href="{{ path('app_education_course', {id: test.activity.course.id}) }}">hier</a> om deze cursus te bekijken.</span>
                                             </div>
-                                        {% endif %}
-                                    {% endif %}
-
-                                    {% if registeredForActivityCourse == false %}
-                                        {% if test.activity is defined and test.activity is not empty %}
-                                            <div class="notification notification--warning">
-                                                <div class="notification__content">
-                                                    <h2 class="notification__title">Niet ingeschreven</h2>
-                                                    <span>U bent nog niet ingeschreven voor de cursus die hoort bij de activiteit van deze test.</span><br>
-                                                    <span>Klik <a
-                                                            href="{{ path('app_education_course', {id: test.activity.course.id}) }}">hier</a> om deze cursus te bekijken.</span>
-                                                </div>
-                                            </div>
-                                            {% endif %}
+                                        </div>
                                     {% endif %}
                                 {% endif %}
                             {% else %}
