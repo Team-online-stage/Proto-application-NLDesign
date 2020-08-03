@@ -1,28 +1,7 @@
 <header class="header header--transparent" role="banner">
     <div class="header-logo header-logo--bzk">
-        {# Banner voor commonground #}
-        {% if application is defined and application.id == '86ca72d4-b40e-45cf-bb8c-1a17ba65ad52' %}
-            <img src="/images/conduction/banner.jpg">
-            {# Banner/Logo voor West-Friesland #}
-        {% elseif application is defined and application.id == '3f44c00e-d919-4f89-bd4c-b730c9b2620a' %}
-            <div class="container">
-                    <img id="linkToHome" src="https://regiowestfriesland.nl/sites/default/files/logo.png" style="padding-left: 5px">
-            </div>
-            {# Als standaard het logo van de Rijksoverheid #}
-        {% else %}
             <a href="/" title="">
                 <span class="screenreader-only">ministerie van onderwijs, cultuur en wetenschap, naar de homepage</span>
             </a>
-        {% endif %}
     </div>
 </header>
-
-{# Script to make West-Friesland logo clickable without interferring with NL-Design's a:before styling #}
-{% if application is defined and application.id == '3f44c00e-d919-4f89-bd4c-b730c9b2620a' %}
-<script type="text/javascript">
-    document.getElementById("linkToHome").onclick = function () {
-        location.href = "/";
-    };
-    document.getElementById("linkToHome").style.cursor = "pointer";
-</script>
-{% endif %}
