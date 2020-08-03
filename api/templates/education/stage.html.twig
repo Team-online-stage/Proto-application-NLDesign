@@ -50,17 +50,31 @@
                         {% if stage.validThrough is defined and stage.validThrough is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
-                                    <span>Deze vactature is geldig tot</span>
+                                    <span>Sluitings datum</span>
                                 </div>
                                 <div class="definition-list__description">
                                     <p>{{ stage.validThrough|date("d-m-Y", "Europe/Paris") }}</p>
                                 </div>
                             </li>
                         {% endif %}
+                        {% if stage.jobLocationType is defined and stage.jobLocationType is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Vorm
+                                </div>
+                                <div class="definition-list__description">
+                                    {% if stage.jobLocationType == 'TELECOMMUTE' %}
+                                        <p>online</p>
+                                    {% else %}
+                                        <p>{{ stage.jobLocationType}}</p>
+                                    {% endif %}
+                                </div>
+                            </li>
+                        {% endif %}
                         {% if stage.employmentType is defined and stage.employmentType is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
-                                    Werktijd
+                                    Dienstverband
                                 </div>
                                 <div class="definition-list__description">
                                     <p>{{ stage.employmentType}}</p>
