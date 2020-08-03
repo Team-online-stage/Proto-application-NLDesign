@@ -332,9 +332,9 @@
                             <span class="collapse__title">Inschrijven voor deze tutorial</span>
                         </div>
                         <div class="collapse__details collapse__details--open">
-                            {% if user is defined and user is not null %}
-                                {% if registered == false %}
-                                    {% if deadline == false %}
+                            {% if registered == false %}
+                                {% if deadline == false %}
+                                    {% if user is defined and user is not null %}
                                         {% if meetsPrerequisites == true %}
                                             <h2>Motiveer uw inschrijving</h2>
 
@@ -392,21 +392,21 @@
                                         {% endif %}
                                     {% else %}
                                         <aside class="hint">
-                                            <span class="hint__title">Deadline</span>
-                                            <p>De aanmeldings deadline voor deze tutorial is verlopen.</p>
+                                            <span class="hint__title">Inloggen</span>
+                                            <p>U dient eerst in te loggen voordat u zich voor deze tutorial kunt inschrijven.<br>
+                                                Klik <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
                                         </aside>
                                     {% endif %}
                                 {% else %}
                                     <aside class="hint">
-                                        <span class="hint__title">Ingeschreven</span>
-                                        <p>U bent al ingeschreven voor deze tutorial.</p>
+                                        <span class="hint__title">Deadline</span>
+                                        <p>De aanmeldings deadline voor deze tutorial is verlopen.</p>
                                     </aside>
                                 {% endif %}
                             {% else %}
                                 <aside class="hint">
-                                    <span class="hint__title">Inloggen</span>
-                                    <p>U dient eerst in te loggen voordat u zich voor deze tutorial kunt inschrijven.<br>
-                                        Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
+                                    <span class="hint__title">Ingeschreven</span>
+                                    <p>U bent al ingeschreven voor deze tutorial.</p>
                                 </aside>
                             {% endif %}
                         </div>
