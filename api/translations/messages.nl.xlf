@@ -107,7 +107,7 @@
       </trans-unit>
       <trans-unit id="WpL28In" resname="instruction">
         <source>instruction</source>
-        <target>instructies</target>
+        <target>instructie</target>
       </trans-unit>
       <trans-unit id="YFQKuu_" resname="this request is currently">
         <source>this request is currently</source>

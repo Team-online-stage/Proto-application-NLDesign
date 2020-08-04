@@ -44,7 +44,7 @@ class UserController extends AbstractController
      */
     public function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
+        $redirect = $commonGroundService->cleanUrl(['component' => 'eh']);
 
         return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
     }

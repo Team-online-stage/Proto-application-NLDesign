@@ -2,6 +2,19 @@
 <!DOCTYPE html>
 <html lang="nl-NL">
 <head>
+
+    {% if application['defaultConfiguration']['configuration']['googleTagId'] is defined and application['defaultConfiguration']['configuration']['googleTagId'] is not empty %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ application['defaultConfiguration']['configuration']['googleTagId'] }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{{ application['defaultConfiguration']['configuration']['googleTagId'] }}');
+    </script>
+    {% endif %}
+
     <meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
     {% if application is defined and application is not empty and application.name == 'Commonground.nu' %}
@@ -118,6 +131,7 @@
         {{ application['style']['css']|raw }}
         {% endif %}
     </style>
+
 </head>
 </html>
 <body>
@@ -133,9 +147,10 @@
 
     {% if application is defined and application.id == '3f44c00e-d919-4f89-bd4c-b730c9b2620a' and slug is defined and slug == 'home' %}
     <main class="skiplink-target main" id="content" tabindex="-1" style="padding-top: 0px">
-        {% else %}
-        <main class="skiplink-target main" id="content" tabindex="-1">
-            {% endif %}
+    {% else %}
+    <main class="skiplink-target main" id="content" tabindex="-1">
+    {% endif %}
+
             <div class="container">
 
                 <!-- the alert box -->
@@ -184,8 +199,11 @@
 
 </div>
 
+{% if application['defaultConfiguration']['configuration']['hubspotId'] is defined and application'defaultConfiguration']['configuration']['hubspotId'] is not empty %}
 <!-- Start of HubSpot Embed Code -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/6108438.js"></script>
+<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/{{ application'defaultConfiguration']['configuration']['hubspotId'] }}.js"></script>
 <!-- End of HubSpot Embed Code -->
+{% endif %}
+
 </body>
 </html>
