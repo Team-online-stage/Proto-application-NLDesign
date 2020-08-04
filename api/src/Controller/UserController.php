@@ -24,7 +24,7 @@ class UserController extends AbstractController
      */
     public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return [];
+        return $this->redirect($this->generateUrl('app_default_index'));
     }
 
     /**
