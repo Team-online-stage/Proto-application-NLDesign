@@ -1,0 +1,95 @@
+<div class="content-background" style="margin-top: 20px;">
+    <div class="content">
+        <h2>
+            {{ 'properties'|trans|capitalize }}
+        </h2>
+
+        {% if request is defined and request is not null %}
+            <ul class="definition-list">
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title" style="max-width: 100%">
+                        {{ 'status'|trans|capitalize }}
+                    </div>
+                    <div class="definition-list__description">
+                        <p>
+                            {{ request['status']|trans|capitalize }}
+                        </p>
+                    </div>
+                </li>
+                {% if request.properties is defined and request.properties is not empty %}
+                    {% for key, property in request.properties %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+
+                            <div class="definition-list__title" style="max-width: 100%;">
+                                {{ key|capitalize|replace({"_":" "}) }}
+                            </div>
+
+                            <div class="definition-list__description">
+                                <p>
+                                    {% if property is iterable %}
+                                    {% for key, value in property %}
+                                    {% if value is iterable %}
+                                <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 100%; margin-left: 0px;">
+                                    {% for item in value %}
+                                        {% if item is iterable %}
+                                            {% for subItem in item %}
+                                                {% if 'http' in subItem %}
+                                                    <li>{{ commonground_resource(subItem).name|capitalize }}</li>
+                                                {% else %}
+                                                    {% if subItem != '' %}
+                                                        <li>{{ subItem|capitalize }}</li>
+                                                    {% endif %}
+                                                {% endif %}
+                                            {% endfor %}
+                                        {% else %}
+                                            {% if 'http' in item %}
+                                                <li>{{ commonground_resource(item).name|capitalize }}</li>
+                                            {% else %}
+                                                {% if item != '' %}
+                                                    <li>{{ item|capitalize }}</li>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
+                                {% else %}
+                                    {% if 'http' in value %}
+                                        {{ commonground_resource(value).name }}<br>
+                                    {% else %}
+                                        {{ value|capitalize }}<br>
+                                    {% endif %}
+                                {% endif %}
+                                {% endfor %}
+                                {# else %}
+                                    {% if commonground_is_resource(property) %}
+                                        {% set property = commonground_resource(property) %}
+                                        {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
+                                            {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
+                                        {% elseif property.reference is defined %}
+                                            {{ property.reference }}
+                                        {% elseif property.name is defined %}
+                                            {{ property.name }}
+                                        {% endif #}
+                                {% else %}
+                                    {% if 'http' in property %}
+                                        {% if commonground_resource(property)['@type'] == 'Adres' %}
+                                            {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
+                                        {% else %}
+                                            {{ commonground_resource(property).name|capitalize }}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ property|capitalize }}
+                                    {% endif %}
+                                    {# endif #}
+                                {% endif %}
+                                </p>
+                            </div>
+
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        {% endif %}
+
+    </div>
+</div>
