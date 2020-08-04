@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="edit-section">
-                        <h1>Ingeschreven tutorials</h1>
+                        <h1>Ingeschreven programma's</h1>
                     </div>
                     {% if participant.programs is defined and participant.programs is not empty %}
                         <div class="row">
@@ -54,9 +54,9 @@
                     {% else %}
                         <div class="notification notification--warning">
                             <div class="notification__content">
-                                <span class="notification__title">U bent nog niet ingeschreven voor een tutorial.</span>
+                                <span class="notification__title">U bent nog niet ingeschreven voor een programma.</span>
                                 <span>Klik <a
-                                        href="/education/programs">hier</a> om tutorials te bekijken.</span>
+                                        href="/education/programs">hier</a> om programma's te bekijken.</span>
                             </div>
                         </div>
                     {% endif %}
@@ -68,7 +68,7 @@
             <div class="row">
                 <div class="col-sm-8">
                     <div class="edit-section">
-                        <h1>Ingeschreven cursussen</h1>
+                        <h1>Ingeschreven tutorials</h1>
                     </div>
                     {% if participant.courses is defined and participant.courses is not empty %}
                         <div class="row">
@@ -88,7 +88,7 @@
                                                             {% if course.programs is defined and course.programs is not empty %}
                                                                 <br><br>
                                                                 {% for program in course.programs %}
-                                                                    <p>Tutorial: {{ program.name }}</p>
+                                                                    <p>Programma: {{ program.name }}</p>
                                                                 {% endfor %}
                                                             {% endif %}
                                                         </div>
@@ -115,9 +115,9 @@
                     {% else %}
                         <div class="notification notification--warning">
                             <div class="notification__content">
-                                <span class="notification__title">U bent nog niet ingeschreven voor een cursus.</span>
+                                <span class="notification__title">U bent nog niet ingeschreven voor een tutorial.</span>
                                 <span>Klik <a
-                                        href="/education/courses">hier</a> om cursussen te bekijken.</span>
+                                        href="/education/courses">hier</a> om tutorials te bekijken.</span>
                             </div>
                         </div>
                     {% endif %}
@@ -128,7 +128,7 @@
                 <div class="notification__content">
                     <span class="notification__title">U bent nog nergens voor ingeschreven.</span>
                     <span>Klik <a
-                            href="/education/programs">hier</a> om tutorials te bekijken.</span>
+                            href="/education/programs">hier</a> om programma's te bekijken.</span>
                 </div>
             </div>
         {% endif %}

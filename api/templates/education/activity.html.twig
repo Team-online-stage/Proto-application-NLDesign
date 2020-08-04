@@ -50,7 +50,7 @@
                             <div class="notification notification--warning">
                                 <div class="notification__content">
                                     <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U bent nog niet ingeschreven voor de cursus van deze activiteit</h2>
+                                    <h2 class="notification__title">U bent nog niet ingeschreven voor de tutorial van deze activiteit</h2>
                                 </div>
                             </div>
                         {% elseif resultSubmitted == false %}
@@ -153,8 +153,8 @@
                                     {% endif %}
                                 {% else %}
                                     <aside class="hint">
-                                        <span class="hint__title">Cursus</span>
-                                        <p>U bent nog niet ingeschreven voor <a href="{{ path('app_education_course', {id: activity.course.id}) }}">de cursus van deze activiteit</a>.</p>
+                                        <span class="hint__title">Tutorial</span>
+                                        <p>U bent nog niet ingeschreven voor <a href="{{ path('app_education_course', {id: activity.course.id}) }}">de tutorial van deze activiteit</a>.</p>
                                     </aside>
                                 {% endif %}
                             {% else%}
