@@ -33,8 +33,8 @@ class ContactMomentController extends AbstractController
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
-        $variables['received'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'],['receiver' => $variables['user']['person']])['hydra:member'];
-        $variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'],['sender' => $variables['user']['person']])['hydra:member'];
+        $variables['received'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $variables['user']['person']])['hydra:member'];
+        $variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['sender' => $variables['user']['person']])['hydra:member'];
 
         return $variables;
     }
@@ -47,7 +47,7 @@ class ContactMomentController extends AbstractController
     public function startAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
-        $variables['resource'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments', 'id' => $id ]);
+        $variables['resource'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments', 'id' => $id]);
 
         return $variables;
     }
@@ -60,7 +60,7 @@ class ContactMomentController extends AbstractController
     public function viewAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
-        $variables['resource'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments', 'id' => $id ]);
+        $variables['resource'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments', 'id' => $id]);
 
         return $variables;
     }
