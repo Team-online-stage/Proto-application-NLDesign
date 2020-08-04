@@ -2,7 +2,7 @@
 
 {% block content %}
     <header class="content__header">
-        <a class="backlink" href="/education/stages">Stages</a>
+        <a class="backlink" href="/education/internships">Stages</a>
     </header>
     <div class="row">
         <div class="col-sm-12 col-lg-8">
@@ -10,13 +10,13 @@
                 <div class="content ">
                     <div class="row">
                         <div class="col-md-6">
-                            {% if stage.title is defined and stage.title is not empty %}
-                                <h1>{{ stage.title|capitalize }}</h1>
+                            {% if internship.title is defined and internship.title is not empty %}
+                                <h1>{{ internship.title|capitalize }}</h1>
                             {% else %}
-                                <h1>{{ stage.name|capitalize }}</h1>
+                                <h1>{{ internship.name|capitalize }}</h1>
                             {% endif %}
-                            {% if stage.description is defined and stage.description is not empty %}
-                                <p>{{ stage.description }}</p>
+                            {% if internship.description is defined and internship.description is not empty %}
+                                <p>{{ internship.description }}</p>
                             {% endif %}
                         </div>
                         <div class="col-md-6">
@@ -34,46 +34,60 @@
                                 Naam
                             </div>
                             <div class="definition-list__description">
-                                <p>{{ stage.name }}</p>
+                                <p>{{ internship.name }}</p>
                             </div>
                         </li>
-                        {% if stage.jobStartDate is defined and stage.jobStartDate is not empty %}
+                        {% if internship.jobStartDate is defined and internship.jobStartDate is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
                                     Startdatum
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ stage.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
+                                    <p>{{ internship.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
                                 </div>
                             </li>
                         {% endif %}
-                        {% if stage.validThrough is defined and stage.validThrough is not empty %}
+                        {% if internship.validThrough is defined and internship.validThrough is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
-                                    <span>Deze vactature is geldig tot</span>
+                                    <span>Sluitings datum</span>
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ stage.validThrough|date("d-m-Y", "Europe/Paris") }}</p>
+                                    <p>{{ internship.validThrough|date("d-m-Y", "Europe/Paris") }}</p>
                                 </div>
                             </li>
                         {% endif %}
-                        {% if stage.employmentType is defined and stage.employmentType is not empty %}
+                        {% if internship.jobLocationType is defined and internship.jobLocationType is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
-                                    Werktijd
+                                    Vorm
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ stage.employmentType}}</p>
+                                    {% if internship.jobLocationType == 'TELECOMMUTE' %}
+                                        <p>online</p>
+                                    {% else %}
+                                        <p>{{ internship.jobLocationType}}</p>
+                                    {% endif %}
                                 </div>
                             </li>
                         {% endif %}
-                        {% if stage.standardHours is defined and stage.standardHours is not empty %}
+                        {% if internship.employmentType is defined and internship.employmentType is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Dienstverband
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ internship.employmentType}}</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% if internship.standardHours is defined and internship.standardHours is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title">
                                     Uren per week
                                 </div>
                                 <div class="definition-list__description">
-                                    <p>{{ stage.standardHours}} uur</p>
+                                    <p>{{ internship.standardHours}} uur</p>
                                 </div>
                             </li>
                         {% endif %}

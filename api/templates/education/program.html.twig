@@ -70,7 +70,7 @@
                         <ul>
                             <li class="sidenav__item">
                                 <a href="{{ path('app_education_programs') }}">
-                                    Over Tutorials
+                                    Over Programma's
                                 </a>
                             </li>
                             {% for program in resources %}
@@ -90,7 +90,7 @@
                             <div class="notification notification--warning">
                                 <div class="notification__content">
                                     <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze tutorial</h2>
+                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor dit programma</h2>
                                 </div>
                             </div>
                         {% endif %}
@@ -107,9 +107,9 @@
                                 <div class="notification__type">LET OP</div>
                                 <h2 class="notification__title">
                                     {% if deadline == false %}
-                                        Voor deze tutorial geld een aanmeldings deadline
+                                        Voor dit programma geld een aanmeldings deadline
                                     {% else %}
-                                        De aanmeldings deadline voor deze tutorial is verlopen
+                                        De aanmeldings deadline voor dit programma is verlopen
                                     {% endif %}
                                 </h2>
                             </div>
@@ -146,7 +146,7 @@
                                                         <div class="col-sm-6">
                                                             <div style="float: right;">
                                                                 <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                                    <a href="{{ path('app_education_organisatie', {id: provider.id}) }}">Lees meer over {{ provider.name }}</a>
+                                                                    <a href="{{ path('app_education_organization', {id: provider.id}) }}">Lees meer over {{ provider.name }}</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -166,9 +166,9 @@
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
                                             {% if meetsPrerequisites == false %}
-                                                <span>Tutorial vereisten</span>
+                                                <span>Programma vereisten</span>
                                             {% else %}
-                                                Tutorial vereisten
+                                                Programma vereisten
                                             {% endif %}
                                         </div>
                                         <div class="definition-list__description">
@@ -183,7 +183,7 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                        Tutorial: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% elseif prerequisite['@type'] == 'Program' %}
                                                         {% if participant.programs is defined and participant.programs is not null %}
                                                             {% for participantProgram in participant.programs %}
@@ -192,7 +192,7 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Tutorial: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                        Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% else %}
                                                         {{ prerequisite.name }}
                                                     {% endif %}
@@ -224,7 +224,7 @@
                                 {% if program.occupationalCategory is defined and program.occupationalCategory is not empty %}
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
-                                            Tutorial categorie
+                                            Programma categorie
                                         </div>
                                         <div class="definition-list__description">
                                             <p>{{ program.occupationalCategory }}</p>
@@ -234,7 +234,7 @@
                                 {% if program.timeToComplete is defined and program.timeToComplete is not empty %}
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
-                                            Tutorialduur
+                                            Programmaduur
                                         </div>
                                         <div class="definition-list__description">
                                             <p>{{ program.timeToComplete }}</p>
@@ -309,7 +309,7 @@
 
                     <div class="content-background background--hemelblauw">
                         <div class="content">
-                            <h2>{{ 'cursussen'|capitalize }}</h2>
+                            <h2>{{ 'tutorials'|capitalize }}</h2>
                             <ul class="list list--links list--chevrons columns">
                                 {% for course in program.courses %}
                                     <li>
@@ -329,23 +329,23 @@
                             <i class="collapse__indicator">
                                 <span class="screenreader-only" data-contracted-i18n="ingeklapt" data-expanded-i18n="uitgeklapt"></span>
                             </i>
-                            <span class="collapse__title">Inschrijven voor deze tutorial</span>
+                            <span class="collapse__title">Inschrijven voor dit programma</span>
                         </div>
                         <div class="collapse__details collapse__details--open">
-                            {% if user is defined and user is not null %}
-                                {% if registered == false %}
-                                    {% if deadline == false %}
+                            {% if registered == false %}
+                                {% if deadline == false %}
+                                    {% if user is defined and user is not null %}
                                         {% if meetsPrerequisites == true %}
                                             <h2>Motiveer uw inschrijving</h2>
 
                                             <form method="post" action="{{ path('app_education_program', {id: program.id}) }}">
                                                 <div class="input">
-                                                    <label class="input__label" for="reason_visit">Waarom heeft u zich ingeschreven voor deze tutorial? <span style="color: red">*</span></label>
+                                                    <label class="input__label" for="reason_visit">Waarom heeft u zich ingeschreven voor dit programma? <span style="color: red">*</span></label>
                                                     <textarea class="input__control input__control--text" required=""></textarea>
                                                 </div>
 
                                                 <div class="input">
-                                                    <label class="input__label" for="what_did_you_expect">Wat verwacht u van deze tutorial? <span style="color: red">*</span></label>
+                                                    <label class="input__label" for="what_did_you_expect">Wat verwacht u van dit programma? <span style="color: red">*</span></label>
                                                     <textarea class="input__control input__control--text" required=""></textarea>
                                                 </div>
 
@@ -356,7 +356,7 @@
                                         {% else %}
                                             <aside class="hint">
                                                 <span class="hint__title">Vereisten</span>
-                                                <p>U moet eerst de volgende tutorials en cursussen afgerond hebben voordat u zich voor deze tutorial kunt inschrijven: </p>
+                                                <p>U moet eerst de volgende programma's en tutorials afgerond hebben voordat u zich voor dit programma kunt inschrijven: </p>
                                                 {% for prerequisiteUrl in program.programPrerequisites %}
                                                     {% set prerequisite = commonground_resource(prerequisiteUrl) %}
                                                     <p>
@@ -370,7 +370,7 @@
                                                                 {% endfor %}
                                                             {% endif %}
                                                             {% if meetsPrerequisite == false %}
-                                                                Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                                Tutorial: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                             {% endif %}
                                                         {% elseif prerequisite['@type'] == 'Program' %}
                                                             {% if participant.programs is defined and participant.programs is not null %}
@@ -381,7 +381,7 @@
                                                                 {% endfor %}
                                                             {% endif %}
                                                             {% if meetsPrerequisite == false %}
-                                                                Tutorial: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                                Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                             {% endif %}
                                                         {% else %}
                                                             {{ prerequisite.name }}
@@ -392,21 +392,21 @@
                                         {% endif %}
                                     {% else %}
                                         <aside class="hint">
-                                            <span class="hint__title">Deadline</span>
-                                            <p>De aanmeldings deadline voor deze tutorial is verlopen.</p>
+                                            <span class="hint__title">Inloggen</span>
+                                            <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.<br>
+                                                Klik <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
                                         </aside>
                                     {% endif %}
                                 {% else %}
                                     <aside class="hint">
-                                        <span class="hint__title">Ingeschreven</span>
-                                        <p>U bent al ingeschreven voor deze tutorial.</p>
+                                        <span class="hint__title">Deadline</span>
+                                        <p>De aanmeldings deadline voor dit programma is verlopen.</p>
                                     </aside>
                                 {% endif %}
                             {% else %}
                                 <aside class="hint">
-                                    <span class="hint__title">Inloggen</span>
-                                    <p>U dient eerst in te loggen voordat u zich voor deze tutorial kunt inschrijven.<br>
-                                        Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
+                                    <span class="hint__title">Ingeschreven</span>
+                                    <p>U bent al ingeschreven voor dit programma.</p>
                                 </aside>
                             {% endif %}
                         </div>
