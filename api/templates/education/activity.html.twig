@@ -50,7 +50,7 @@
                             <div class="notification notification--warning">
                                 <div class="notification__content">
                                     <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U bent nog niet ingeschreven voor de cursus van deze activiteit</h2>
+                                    <h2 class="notification__title">U bent nog niet ingeschreven voor de tutorial van deze activiteit</h2>
                                 </div>
                             </div>
                         {% elseif resultSubmitted == false %}
@@ -153,15 +153,15 @@
                                     {% endif %}
                                 {% else %}
                                     <aside class="hint">
-                                        <span class="hint__title">Cursus</span>
-                                        <p>U bent nog niet ingeschreven voor <a href="{{ path('app_education_course', {id: activity.course.id}) }}">de cursus van deze activiteit</a>.</p>
+                                        <span class="hint__title">Tutorial</span>
+                                        <p>U bent nog niet ingeschreven voor <a href="{{ path('app_education_course', {id: activity.course.id}) }}">de tutorial van deze activiteit</a>.</p>
                                     </aside>
                                 {% endif %}
                             {% else%}
                                 <aside class="hint">
                                     <span class="hint__title">Inloggen</span>
                                     <p>U dient eerst in te loggen voordat u een resultaat kunt indienen.<br>
-                                        Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
+                                        Klik <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
                                 </aside>
                             {% endif %}
                         </div>

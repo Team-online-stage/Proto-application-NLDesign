@@ -70,7 +70,7 @@
                         <ul>
                             <li class="sidenav__item">
                                 <a href="{{ path('app_education_courses') }}">
-                                    Over Cursussen
+                                    Over Tutorials
                                 </a>
                             </li>
                             {% for course in resources %}
@@ -90,7 +90,7 @@
                             <div class="notification notification--warning">
                                 <div class="notification__content">
                                     <div class="notification__type">LET OP</div>
-                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze cursus</h2>
+                                    <h2 class="notification__title">U voldoet nog niet aan de (start)voorwaarden voor deze tutorial</h2>
                                 </div>
                             </div>
                         {% endif %}
@@ -113,7 +113,7 @@
                                 {% if course.courseCode is defined and course.courseCode is not empty %}
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
-                                        Cursus code
+                                        Tutorial code
                                     </div>
                                     <div class="definition-list__description">
                                         <p>{{ course.courseCode }}</p>
@@ -125,9 +125,9 @@
                                     <li class="definition-list__item definition-list__item--horizontal">
                                         <div class="definition-list__title">
                                             {% if meetsPrerequisites == false %}
-                                                <span>Cursus vereisten</span>
+                                                <span>Tutorial vereisten</span>
                                             {% else %}
-                                                Cursus vereisten
+                                                Tutorial vereisten
                                             {% endif %}
                                         </div>
                                         <div class="definition-list__description">
@@ -142,7 +142,7 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Cursus: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">
+                                                        Tutorial: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% elseif prerequisite['@type'] == 'Program' %}
                                                         {% if participant.programs is defined and participant.programs is not null %}
                                                             {% for program in participant.programs %}
@@ -151,12 +151,10 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Tutorial: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">
+                                                        Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% else %}
-                                                        <a href="/education/programs">
-                                                    {% endif %}
                                                         {{ prerequisite.name }}
-                                                    </a>
+                                                    {% endif %}
                                                 </p>
                                             {% endfor %}
                                         </div>
@@ -210,7 +208,7 @@
 
                     <div class="content-background background--hemelblauw">
                         <div class="content">
-                            <h2>{{ 'tutorials'|capitalize }}</h2>
+                            <h2>{{ 'programma\'s'|capitalize }}</h2>
                             <ul class="list list--links list--chevrons columns">
                                 {% for program in course.programs %}
                                     <li>
@@ -252,31 +250,12 @@
 
                     <div style="height:20px;"></div>
 
-                    {% if course.tests is defined and course.tests is not empty %}
-                        <div class="content-background">
-                            <div class="content">
-                                <h2>{{ 'testen'|capitalize }}</h2>
-                                <ul class="list list--links list--chevrons columns">
-                                    {% for test in course.tests %}
-                                        <li>
-                                            <a href="{{ path('app_education_test', {id: test.id}) }}">
-                                                {{ test.name|capitalize }}
-                                            </a>
-                                        </li>
-                                    {% endfor %}
-                                </ul>
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    <div style="height:20px;"></div>
-
                     <div class="collapse" role="status">
                         <div x-uno-collapse="" class="collapse__header">
                             <i class="collapse__indicator">
                                 <span class="screenreader-only" data-contracted-i18n="ingeklapt" data-expanded-i18n="uitgeklapt"></span>
                             </i>
-                            <span class="collapse__title">Inschrijven voor deze cursus</span>
+                            <span class="collapse__title">Inschrijven voor deze tutorial</span>
                         </div>
                         <div class="collapse__details collapse__details--open">
                             {% if user is defined and user is not null %}
@@ -290,20 +269,51 @@
                                     {% else %}
                                         <aside class="hint">
                                             <span class="hint__title">Vereisten</span>
-                                            <p>U voldoet nog niet aan alle vereisten voor deze cursus.</p>
+                                            <p>U moet eerst de volgende programma's en tutorials afgerond hebben voordat u zich voor deze tutorial kunt inschrijven: </p>
+                                            {% for prerequisiteUrl in course.coursePrerequisites %}
+                                                {% set prerequisite = commonground_resource(prerequisiteUrl) %}
+                                                <p>
+                                                    {% set meetsPrerequisite = false %}
+                                                    {% if prerequisite['@type'] == 'Course' %}
+                                                        {% if participant.courses is defined and participant.courses is not null %}
+                                                            {% for course in participant.courses %}
+                                                                {% if course.id == prerequisite.id %}
+                                                                    {% set meetsPrerequisite = true %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                        {% if meetsPrerequisite == false %}
+                                                            Tutorial: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                        {% endif %}
+                                                    {% elseif prerequisite['@type'] == 'Program' %}
+                                                        {% if participant.programs is defined and participant.programs is not null %}
+                                                            {% for participantProgram in participant.programs %}
+                                                                {% if participantProgram.id == prerequisite.id %}
+                                                                    {% set meetsPrerequisite = true %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                        {% if meetsPrerequisite == false %}
+                                                            Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                        {% endif %}
+                                                    {% else %}
+                                                        {{ prerequisite.name }}
+                                                    {% endif %}
+                                                </p>
+                                            {% endfor %}
                                         </aside>
                                     {% endif %}
                                 {% else %}
                                     <aside class="hint">
                                         <span class="hint__title">Ingeschreven</span>
-                                        <p>U bent al ingeschreven voor deze cursus.</p>
+                                        <p>U bent al ingeschreven voor deze tutorial.</p>
                                     </aside>
                                 {% endif %}
                             {% else %}
                                 <aside class="hint">
                                     <span class="hint__title">Inloggen</span>
-                                    <p>U dient eerst in te loggen voordat u zich voor deze cursus kunt inschrijven.<br>
-                                        Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
+                                    <p>U dient eerst in te loggen voordat u zich voor deze tutorial kunt inschrijven.<br>
+                                        Klik <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
                                 </aside>
                             {% endif %}
                         </div>
