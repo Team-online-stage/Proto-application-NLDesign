@@ -1,7 +1,41 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Studenten</h1>
+    <section class="row">
+        <div class="col-sm-8">
+            <div class="content">
+                <header class="content__header">
+                    <h1>Studenten</h1>
+                </header>
+            </div>
+        </div>
+    </section>
+
+    <article>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="content-background">
+                    <div class="content">
+                        <h2>Over Studenten</h2>
+                        <p>Hier komt een introductie over de studenten.</p>
+
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                            Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                            Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                            Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+                            imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+                            Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
+                            porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis,
+                            feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
+                            Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
     <div class="row">
         <div class="col-sm-8">
             {% if user is defined and user is not null %}
