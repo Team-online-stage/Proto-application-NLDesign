@@ -1,0 +1,25 @@
+<div class="content-background">
+    <div class="content">
+        <h2>{{ 'stages'|trans|capitalize }}</h2>
+        <ul class="list list--timeline list--timeline-compact">
+            <li class="list__item {% if stage.slug == 'instruction' %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete' %}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete' %}
+                    <a
+                    href="{{ path('app_process_slug',{id:process.id,slug:'instruction', resumeRequest:'resume'}) }}">{{ 'instruction'|trans|capitalize }}</a>{% else %}{{ 'instruction'|trans|capitalize }}{% endif %}
+            </li>
+            {% for iteratedStage in process.stages %}
+                <li class="list__item {% if stage.slug == iteratedStage.slug %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete' %}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete' %}
+                    <a href="{{ path('app_process_slug',{id:process.id,slug:iteratedStage.slug}) }}">{{ iteratedStage.name|capitalize }}{% else %}{{ iteratedStage.name|capitalize }}{% endif %}</a>
+                </li>
+            {% endfor %}
+            <li class="list__item {% if stage.slug == 'submit' or request.status == 'submitted' %}list__item--active{% endif %}">
+                <a href="{{ path('app_process_slug',{id:process.id,slug:'submit'}) }}">{{ 'submit'|trans|capitalize }}</a>
+            </li>
+            <li class="list__item {% if request.status == 'in progress' %}list__item--active{% else %}list__item--disabled{% endif %}">
+                {{ 'in progress'|trans|capitalize }}
+            </li>
+            <li class="list__item {% if request.status == 'processed' %}list__item--active{% else %}list__item--disabled{% endif %}">
+                {{ 'processed'|trans|capitalize }}
+            </li>
+        </ul>
+    </div>
+</div>

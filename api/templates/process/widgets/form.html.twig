@@ -1,0 +1,74 @@
+
+
+{% for section in stage.sections|sort((a, b) => a.orderNumber <=> b.orderNumber) %}
+    <div class="content-background">
+        <div class="content">
+            <h2>{{ section.name|capitalize }}</h2>
+            <p>{{ section.description|capitalize }}</p>
+
+
+            {% for property in section.properties %}
+                {% set property = commonground_resource(property) %}
+                {% if property.type == 'array' and property.format == 'bsn' %}
+                    {% include 'process/formelements/person.html.twig' %}
+
+                {% elseif property.format == 'bag' %}
+                    {% include 'process/formelements/bag/address.html.twig' %}
+
+
+                {% elseif property.iri == 'wrc/organizations' %}
+                    {% include 'process/formelements/organizations.html.twig' %}
+                {% elseif property.iri == 'grc/cemetery' %}
+                    {% include 'process/formelements/cemetery.html.twig' %}
+                {% elseif property.iri == 'grc/grave_type' %}
+                    {% include 'process/formelements/grave_type.html.twig' %}
+                {% elseif property.iri == 'arc/event' %}
+                    {% include 'process/formelements/event.html.twig' %}
+
+                {% elseif property.iri == 'pdc/offer' %}
+                    {% include 'process/formelements/pdc/offer.html.twig' %}
+
+                {% elseif property.iri == 'brp/ingeschrevenpersoon' %}
+                    {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
+                {% elseif property.iri == 'irc/assent' %}
+                    {% include 'process/formelements/assent.html.twig' %}
+
+                    {# Let slook for formats #}
+                {% elseif property.format == 'phonenumber' %}
+                    {% include 'process/formelements/generic.html.twig'  with {'type': 'tel'} %}
+                {% elseif property.format == 'datetime' %}
+                    {% include 'process/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}
+                {% elseif property.format == 'date-time' %}
+                    {% include 'process/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}
+                {% elseif property.format == 'textarea' %}
+                    {% include 'process/formelements/textarea.html.twig' %}
+                {% elseif property.format == 'text-area' %}
+                    {% include 'process/formelements/textarea.html.twig' %}
+                {% elseif property.format == 'radio' %}
+                    {% include 'process/formelements/radio.html.twig' %}
+                {% elseif property.format == 'rdw' %}
+                    {% include 'process/formelements/rdw.html.twig' %}
+                {% elseif property.format == 'file' %}
+                    {% include 'process/formelements/file.html.twig' %}
+                {% elseif property.format == 'location' %}
+                    {% include 'process/formelements/location.html.twig' %}
+                {% elseif property.format == 'meeverhuizen' %}
+                    {% include 'process/formelements/mee_verhuizers.html.twig' %}
+                {% elseif property.format == 'calendar' %}
+                    {% include 'process/formelements/calendar.html.twig' %}
+
+                    {# Generic HTML 5 input types #}
+                {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
+                    {% include 'process/formelements/generic.html.twig'  with {'type': property.format} %}
+                {% else %}
+                    <p>No applicable format {{ property.format }}, type {{ property.type }} or
+                        iri {{ property.iri }}</p>
+                {% endif %}
+
+            {% endfor %}
+
+            {#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
+
+        </div><!-- /.content -->
+    </div><!-- /.content-background -->
+{% endfor %}
