@@ -250,10 +250,10 @@ class EducationController extends AbstractController
     }
 
     /**
-     * @Route("/studenten")
+     * @Route("/students")
      * @Template
      */
-    public function studentenAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    public function studentsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
         $content = false;
         $variables = $applicationService->getVariables();
@@ -269,7 +269,7 @@ class EducationController extends AbstractController
     }
 
     /**
-     * @Route("/studenten/{id}")
+     * @Route("/students/{id}")
      * @Template
      */
     public function studentAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
@@ -288,10 +288,10 @@ class EducationController extends AbstractController
     }
 
     /**
-     * @Route("/stages")
+     * @Route("/internships")
      * @Template
      */
-    public function stagesAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    public function internshipsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
         $content = false;
         $variables = $applicationService->getVariables();
@@ -307,10 +307,10 @@ class EducationController extends AbstractController
     }
 
     /**
-     * @Route("/stages/{id}")
+     * @Route("/internships/{id}")
      * @Template
      */
-    public function stageAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    public function internshipAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
     {
         $content = false;
         $variables = $applicationService->getVariables();
@@ -320,16 +320,16 @@ class EducationController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get Resource
-        $variables['stage'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id]);
+        $variables['internship'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id]);
 
         return $variables;
     }
 
     /**
-     * @Route("/organisaties")
+     * @Route("/organizations")
      * @Template
      */
-    public function organisatiesAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    public function organizationsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
         $content = false;
         $variables = $applicationService->getVariables();
@@ -345,10 +345,10 @@ class EducationController extends AbstractController
     }
 
     /**
-     * @Route("/organisaties/{id}")
+     * @Route("/organizations/{id}")
      * @Template
      */
-    public function organisatieAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    public function organizationAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
     {
         $content = false;
         $variables = $applicationService->getVariables();
@@ -364,10 +364,10 @@ class EducationController extends AbstractController
     }
 
     /**
-     * @Route("/overzicht")
+     * @Route("/overview")
      * @Template
      */
-    public function overzichtAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    public function overviewAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
         $content = false;
         $variables = $applicationService->getVariables();
