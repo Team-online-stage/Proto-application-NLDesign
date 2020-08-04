@@ -380,6 +380,22 @@ class EducationController extends AbstractController
     }
 
     /**
+     * @Route("/register")
+     * @Template
+     */
+    public function registerAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        return $variables;
+    }
+
+    /**
      * @Route("/tests")
      * @Template
      */
