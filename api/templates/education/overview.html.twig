@@ -137,7 +137,7 @@
             <div class="notification__content">
                 <h2 class="notification__title">U bent niet ingelogd</h2>
                 <span>U dient ingelogd te zijn om uw overzicht te kunnen bekijken.</span><br>
-                <span>Klik <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
+                <span>Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
             </div>
         </div>
     {% endif %}
