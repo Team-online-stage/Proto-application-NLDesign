@@ -416,7 +416,7 @@ class EducationController extends AbstractController
                     $contact['name'] = 'studentUserContact';
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
-                    //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']);
+                //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']);
                 } elseif ($userGroup['name'] == 'Bedrijven') { //check if the group bedrijven is selected
                     $contact['name'] = 'organizationUserContact';
                     $contact['emails'] = [];
