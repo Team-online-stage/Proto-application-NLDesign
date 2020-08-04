@@ -79,7 +79,7 @@
                                                                 {% for question in stage.questions %}
                                                                     <div class="input">
                                                                         <h3>{{ question.name }}</h3>
-                                                                        <label class="input__label" for="description">{{ question.description }}</label>
+                                                                        <label class="input__label">{{ question.description }}</label>
                                                                         {% if question.answerOptions is defined and question.answerOptions is not empty %}
                                                                             <fieldset class="input">
                                                                                 {% for answerOption in question.answerOptions %}
@@ -128,7 +128,7 @@
                                     <div class="notification__content">
                                         <h2 class="notification__title">U bent niet ingelogd</h2>
                                         <span>U dient ingelogd te zijn om deze test te kunnen doen.</span><br>
-                                        <span>Klik <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
+                                        <span>Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
                                     </div>
                                 </div>
                             {% endif %}

@@ -161,7 +161,7 @@
                                 <aside class="hint">
                                     <span class="hint__title">Inloggen</span>
                                     <p>U dient eerst in te loggen voordat u een resultaat kunt indienen.<br>
-                                        Klik <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
+                                        Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
                                 </aside>
                             {% endif %}
                         </div>
