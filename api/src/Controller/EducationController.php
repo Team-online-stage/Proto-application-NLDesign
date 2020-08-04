@@ -410,18 +410,15 @@ class EducationController extends AbstractController
             //$email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
 
             //create the contact
-            foreach($resource['userGroups'] as $userGroupUrl) //check the selected group(s)
-            {
+            foreach($resource['userGroups'] as $userGroupUrl) { //check the selected group(s)
                 $userGroup = $commonGroundService->getResource($userGroupUrl); //get the group resource
-                if($userGroup['name'] == 'Studenten') //check if the group studenten is selected
-                {
+                if($userGroup['name'] == 'Studenten') { //check if the group studenten is selected
                     $contact['name'] = 'studentUserContact';
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
                     //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']);
                 }
-                elseif ($userGroup['name'] == 'Bedrijven') //check if the group bedrijven is selected
-                {
+                elseif ($userGroup['name'] == 'Bedrijven') { //check if the group bedrijven is selected
                     $contact['name'] = 'organizationUserContact';
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
