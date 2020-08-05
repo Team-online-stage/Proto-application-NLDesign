@@ -67,7 +67,7 @@
                                     <a class="nav__link" style="height: 100%" href="{{ path('app_user_logout') }}">Uitloggen</a>
                                 </li>
                             </ul>
-                        </li>
+                        <li>
                     {% endif %}
                 {% else %}
                     {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedOut is defined %}
@@ -81,24 +81,24 @@
                                     {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
                                         <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% else %}
                                         <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% endif %}
                                 </li>
                                 <li class="nav__item" style="text-align: center">
                                     <a href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Bedrijf</span>
+                                            <span>{{ 'organization'|trans|capitalize }}</span>
                                         </a>
                                 </li>
                                 <li class="nav__item" style="text-align: center">
                                     <a href="/login" title="Home" class="nav__link">
-                                        <span>gebruiker</span>
+                                        <span>{{ 'user'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 {% for item in loggedOut.menuItems %}
@@ -120,24 +120,24 @@
                                     {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
                                         <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% else %}
                                         <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% endif %}
                                 </li>
                                 <li class="nav__item" style="text-align: center">
                                     <a href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                        title="Home" class="nav__link">
-                                        <span>Bedrijf</span>
+                                        <span>{{ 'organization'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                                 <li class="nav__item" style="text-align: center">
                                     <a href="/login" title="Home" class="nav__link">
-                                        <span>gebruiker</span>
+                                        <span>{{ 'user'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                             </ul>
