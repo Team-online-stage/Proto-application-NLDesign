@@ -96,6 +96,11 @@
                                             <span>Bedrijf</span>
                                         </a>
                                 </li>
+                                <li class="nav__item" style="text-align: center">
+                                    <a href="/login" title="Home" class="nav__link">
+                                        <span>gebruiker</span>
+                                    </a>
+                                </li>
                                 {% for item in loggedOut.menuItems %}
                                     <li class="nav__item" style="text-align: center">
                                         <a href="{{ item.href }}" title="Home" class="nav__link">
@@ -128,6 +133,11 @@
                                     <a href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                        title="Home" class="nav__link">
                                         <span>Bedrijf</span>
+                                    </a>
+                                </li>
+                                <li class="nav__item" style="text-align: center">
+                                    <a href="/login" title="Home" class="nav__link">
+                                        <span>gebruiker</span>
                                     </a>
                                 </li>
                             </ul>
