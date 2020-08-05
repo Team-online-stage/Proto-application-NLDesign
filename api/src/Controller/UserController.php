@@ -19,12 +19,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     /**
-     * @Route("/login", methods={"GET"})
+     * @Route("/login")
      * @Template
      */
     public function login(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return [];
+        return $this->render('login/index.html.twig');
     }
 
     /**
@@ -60,7 +60,7 @@ class UserController extends AbstractController
         $session->set('user', null);
         $session->set('employee', null);
         $session->set('contact', null);
-        $session->set('company', null);
+        $session->set('organisation', null);
 
         return $this->redirect($this->generateUrl('app_default_index'));
     }

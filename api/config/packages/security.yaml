@@ -1,17 +1,10 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        chain_provider:
-            chain:
-                providers: [CommongroundApplicationProvider, CommongroundDigispoofProvider, CommongroundEherkenningProvider, CommongroundUserProvider]
         commongroundApplicationProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider
-        commongroundUserProvider:
-            id: Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider
-        commongroundDigispoofProvider:
-            id: Conduction\CommonGroundBundle\Security\User\CommongroundDigispoofProvider
-        commongroundEherkenningProvider:
-            id: Conduction\CommonGroundBundle\Security\User\CommongroundEherkenningProvider
+        commongroundProvider:
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js|docs)/
@@ -21,54 +14,21 @@ security:
             anonymous: true
             pattern: ^/payments/mollie_webhook
             methods: [POST]
-        digispoof:
-            anonymous: ~
-            pattern: ^/digispoof
-            form_login:
-                login_path: app_user_digispoof
-                check_path: app_user_digispoof
-            logout:
-                path: app_user_logout2
-                target: app_user_digispoof
-            stateless: false
-            provider: commongroundDigispoofProvider
-            guard:
-                authenticators:
-                    - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
-                    - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
-                    - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
-                entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
-        eherkenning:
-            anonymous: ~
-            pattern: ^/eherkenning
-            form_login:
-                login_path: app_user_eherkenning
-                check_path: app_user_eherkenning
-            logout:
-                path: app_user_logout2
-                target: app_user_eherkenning
-            stateless: false
-            provider: commongroundEherkenningProvider
-            guard:
-                authenticators:
-                    - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
-                    - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
-                    - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
-                    - Conduction\CommonGroundBundle\Security\CommongroundEherkenningAuthenticator
-                entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
         main:
             anonymous: ~
+            pattern: ^/
             form_login:
                 login_path: app_user_login
                 check_path: app_user_login
             logout:
-                path: app_user_logout2
-                target: app_user_login
+                path: app_user_logout
+                target: app_default_index
             stateless: false
-            provider: commongroundUserProvider
+            provider: commongroundProvider
             guard:
                 authenticators:
                     - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundEherkenningAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
@@ -82,5 +42,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/digispoof, roles: ROLE_USER }
+        - { path: ^/eherkenning, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

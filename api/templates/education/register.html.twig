@@ -1,0 +1,56 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <header class="content__header">
+        <h1 class="content__header-title">Registreren als gebruiker</h1>
+    </header>
+    {% if user is defined and user is not null %}
+        <div class="notification notification--warning">
+            <div class="notification__content">
+                <h2 class="notification__title">U bent al geregistreerd als een gebruiker</h2>
+                <span>U kan niet registreren als u al ingelogd bent.</span><br>
+            </div>
+        </div>
+    {% else %}
+        <form method="post" action="{{ path('app_default_index') }}">
+            <div class="input">
+                <label class="input__label" for="email">E-mailadres <span style="color: red">*</span></label>
+                <input required="" type="email" id="email" name="email" class="input__control input__control--l input__control--text">
+            </div>
+
+            <div class="input">
+                <label class="input__label" for="wachtwoord">Wachtwoord <span style="color: red">*</span></label>
+                <input required="" type="password" id="wachtwoord" name="wachtwoord" minlength="8" class="input__control input__control--m input__control--text">
+            </div>
+
+            <div class="input">
+                <label class="input__label" for="wachtwoordBevestigen">Wachtwoord bevestigen <span style="color: red">*</span></label>
+                <input required="" type="password" id="wachtwoordBevestigen" name="wachtwoordBevestigen" minlength="8" class="input__control input__control--m input__control--text">
+            </div>
+
+            <fieldset class="input">
+                <legend class="input__legend">Ik ben een...</legend>
+                <div class="input__group input__group--checkbox">
+                    {% for userGroup in userGroups %}
+                        {% if userGroup.canBeRegisteredFor == true %}
+                            <input name="userGroups[]" type="checkbox" value="{{ userGroup['@id'] }}" id="{{ userGroup.name }}" class="input__control input__control--checkbox">
+                            <label class="input__label input__control--m input__label--checkbox" for="{{ userGroup.name }}">
+                                {% if userGroup.title is defined and userGroup.title is not empty %}
+                                    {{ userGroup.title }}
+                                {% else %}
+                                    {{ userGroup.name }}
+                                {% endif %}
+                            </label>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </fieldset>
+
+            <div class="input">
+                <button type="submit" class="btn">registreren <i class="icon icon-arr-forward"></i></button>
+            </div>
+        </form>
+    {% endif %}
+{% endblock %}

@@ -380,6 +380,67 @@ class EducationController extends AbstractController
     }
 
     /**
+     * @Route("/register")
+     * @Template
+     */
+    public function registerAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $organization = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'6a001c4c-911b-4b29-877d-122e362f519d']); //conduction
+        $variables['userGroups'] = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups'], ['organization' => $organization], $variables['query'])['hydra:member'];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            $email = [];
+            $contact = [];
+            $user = [];
+
+            //create the email
+            $email['name'] = 'userEmail';
+            $email['email'] = $resource['email'];
+            //$email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+
+            //create the contact
+            foreach ($resource['userGroups'] as $userGroupUrl) { //check the selected group(s)
+                $userGroup = $commonGroundService->getResource($userGroupUrl); //get the group resource
+                if ($userGroup['name'] == 'Studenten') { //check if the group studenten is selected
+                    $contact['name'] = 'studentUserContact';
+                    $contact['emails'] = [];
+                    $contact['emails'][0] = $email['@id'];
+                //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']);
+                } elseif ($userGroup['name'] == 'Bedrijven') { //check if the group bedrijven is selected
+                    $contact['name'] = 'organizationUserContact';
+                    $contact['emails'] = [];
+                    $contact['emails'][0] = $email['@id'];
+                    //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
+                }
+            }
+
+            //create the user
+            $user['organization'] = $organization;
+            $user['username'] = $resource['email'];
+            $user['password'] = $resource['password'];
+            $user['person'] = $contact['@id'];
+            $user['userGroups'] = [];
+            $user['userGroups'] = $resource['userGroups'];
+            //$commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
+
+            return $this->redirectToRoute('app_default_index');
+        }
+
+        return $variables;
+    }
+
+    /**
      * @Route("/tests")
      * @Template
      */
