@@ -7,7 +7,6 @@
         <div class="col-md-12">
             <div class="content-background" >
             	<div class="content">
-                    {{ dump(app.user.type) }}
                         {% if processes is defined and processes is not empty %}
                     <table class="table table-hover">
                         <thead>
@@ -20,11 +19,21 @@
                         <tbody>
 
                         {% for resource in processes %}
-                            <tr>
-                                <td style="width: fit-content">{{ resource.name|capitalize }}</td>
-                                <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description }}{% endif %}</td>
-                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_start', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
-                            </tr>
+                            {% if resource.audience is defined and resource.audience is not empty %}
+                                {% if app.user.type is defined and app.user is not empty and app.user.type in resource.audience %}
+                                    <tr>
+                                        <td style="width: fit-content">{{ resource.name|capitalize }}</td>
+                                        <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description }}{% endif %}</td>
+                                        <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_start', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
+                                    </tr>
+                                {% endif %}
+                            {% else %}
+                                <tr>
+                                    <td style="width: fit-content">{{ resource.name|capitalize }}</td>
+                                    <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description }}{% endif %}</td>
+                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_start', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
 {#                        <tr>#}
 {#                            <td>Initiatief</td>#}
