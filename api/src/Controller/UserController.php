@@ -57,8 +57,6 @@ class UserController extends AbstractController
     {
         $session->set('requestType', null);
         $session->set('request', null);
-        $session->set('user', null);
-        $session->set('employee', null);
         $session->set('contact', null);
         $session->set('organisation', null);
 
