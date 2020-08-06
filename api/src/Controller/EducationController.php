@@ -393,8 +393,8 @@ class EducationController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $organization = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'6a001c4c-911b-4b29-877d-122e362f519d']); //conduction
-        $variables['userGroups'] = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups'], ['organization' => $organization], $variables['query'])['hydra:member'];
+        $conductionUrl = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'6a001c4c-911b-4b29-877d-122e362f519d']); //conduction
+        $variables['userGroups'] = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups'], ['organization' => $conductionUrl], $variables['query'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -427,7 +427,7 @@ class EducationController extends AbstractController
                     }
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
-                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']); //create a person in cc
+                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']); //create a person in CC
 
                     //create the participant in EDU
                     $participant = [];
@@ -449,21 +449,30 @@ class EducationController extends AbstractController
                     }
                     $contactPerson['emails'] = [];
                     $contactPerson['emails'][0] = $email['@id'];
-                    $contactPerson = $commonGroundService->createResource($contactPerson, ['component' => 'cc', 'type' => 'people']); //create a person in cc
+                    $contactPerson = $commonGroundService->createResource($contactPerson, ['component' => 'cc', 'type' => 'people']); //create a person in CC
 
+                    //create an organization in CC
                     $contact['name'] = 'bedrijfUserContact';
                     $contact['description'] = 'Beschrijving van dit bedrijfUserContact';
-                    $contact['type'] = 'bedrijfUserContact';
+                    $contact['type'] = 'Participant';
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
                     $contact['persons'] = [];
                     $contact['persons'][0] = $contactPerson['@id'];
-                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']); //create an organization in cc
+                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
+
+                    //create an organization in WRC
+                    $organization = [];
+                    $organization['name'] = 'bedrijfUserContact';
+                    $organization['description'] = 'Beschrijving van dit bedrijfUserContact';
+                    $organization['rsin'] = '';
+                    $organization['contact'] = $contact['@id'];
+                    $commonGroundService->createResource($organization, ['component' => 'wrc', 'type' => 'organizations']);
                 }
             }
 
             //create the user in UC
-            $user['organization'] = $organization;
+            $user['organization'] = $conductionUrl;
             $user['username'] = $resource['email'];
             $user['password'] = $resource['wachtwoord'];
             $user['person'] = $contact['@id'];
