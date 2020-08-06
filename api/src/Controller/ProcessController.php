@@ -33,7 +33,7 @@ class ProcessController extends AbstractController
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
-        $variables['processes'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types'])['hydra:member'];
+        $variables['processes'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types'], ['order[name]' => 'asc'])['hydra:member'];
 
         return $variables;
     }
