@@ -35,7 +35,7 @@
                         </a>
                     </li>
                 {% endif %}
-                {% if user is defined and user is not empty %}
+                {% if app.user is defined and app.user is not empty %}
                     {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedIn is defined %}
                         {% set loggedInMenu = commonground_resource(application.defaultConfiguration.configuration.loggedIn) %}
                         <li class="nav__item nav__item--parent">
