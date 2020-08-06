@@ -35,13 +35,11 @@
                         </a>
                     </li>
                 {% endif %}
-                {% if user is defined and user is not empty %}
+                {% if app.user is defined and app.user is not empty %}
                     {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedIn is defined %}
                         {% set loggedInMenu = commonground_resource(application.defaultConfiguration.configuration.loggedIn) %}
                         <li class="nav__item nav__item--parent">
-                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px"
-                                                                               class="fas fa-user"></i>{{ user.naam.voornamen }} {{ user.naam.geslachtsnaam }}
-                            </a>
+                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px" class="fas fa-user"></i>{{ app.user.username }}</a>
                             <ul class="nav__submenu"
                                 style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
                                 {% for item in loggedInMenu.menuItems %}
@@ -58,16 +56,14 @@
                         </li>
                     {% else %}
                         <li class="nav__item nav__item--parent">
-                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px"
-                                                                               class="fas fa-user"></i>{{ user.naam.voornamen }} {{ user.naam.geslachtsnaam }}
-                            </a>
+                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px" class="fas fa-user"></i>{{ app.user.username }}</a>
                             <ul class="nav__submenu"
                                 style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
                                 <li class="nav__item" style="text-align: center">
                                     <a class="nav__link" style="height: 100%" href="{{ path('app_user_logout') }}">Uitloggen</a>
                                 </li>
                             </ul>
-                        </li>
+                        <li>
                     {% endif %}
                 {% else %}
                     {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedOut is defined %}
@@ -81,20 +77,25 @@
                                     {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
                                         <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% else %}
                                         <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% endif %}
                                 </li>
                                 <li class="nav__item" style="text-align: center">
-                                        <a href=" {{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                    <a href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Bedrijf</span>
+                                            <span>{{ 'organization'|trans|capitalize }}</span>
                                         </a>
+                                </li>
+                                <li class="nav__item" style="text-align: center">
+                                    <a href="/login" title="Home" class="nav__link">
+                                        <span>{{ 'user'|trans|capitalize }}</span>
+                                    </a>
                                 </li>
                                 {% for item in loggedOut.menuItems %}
                                     <li class="nav__item" style="text-align: center">
@@ -115,19 +116,24 @@
                                     {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
                                         <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% else %}
                                         <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                            title="Home" class="nav__link">
-                                            <span>Persoon</span>
+                                            <span>{{ 'person'|trans|capitalize }}</span>
                                         </a>
                                     {% endif %}
                                 </li>
                                 <li class="nav__item" style="text-align: center">
-                                    <a href=" {{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                    <a href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                                        title="Home" class="nav__link">
-                                        <span>Bedrijf</span>
+                                        <span>{{ 'organization'|trans|capitalize }}</span>
+                                    </a>
+                                </li>
+                                <li class="nav__item" style="text-align: center">
+                                    <a href="/login" title="Home" class="nav__link">
+                                        <span>{{ 'user'|trans|capitalize }}</span>
                                     </a>
                                 </li>
                             </ul>

@@ -145,6 +145,58 @@
         <source>programs</source>
         <target>__programs</target>
       </trans-unit>
+      <trans-unit id="OKgeh_e" resname="person">
+        <source>person</source>
+        <target>persoon</target>
+      </trans-unit>
+      <trans-unit id="rzobsxK" resname="organization">
+        <source>organization</source>
+        <target>organisatie</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target>gebruiker</target>
+      </trans-unit>
+      <trans-unit id="q9TEHaN" resname="processes">
+        <source>processes</source>
+        <target>__processes</target>
+      </trans-unit>
+      <trans-unit id="QoghNQ6" resname="login">
+        <source>login</source>
+        <target>__login</target>
+      </trans-unit>
+      <trans-unit id="FX3KkuQ" resname="save">
+        <source>save</source>
+        <target>__save</target>
+      </trans-unit>
+      <trans-unit id="baYk26U" resname="checklist">
+        <source>checklist</source>
+        <target>__checklist</target>
+      </trans-unit>
+      <trans-unit id="9czPtzd" resname="messages">
+        <source>messages</source>
+        <target>__messages</target>
+      </trans-unit>
+      <trans-unit id="tfkKlua" resname="progress">
+        <source>progress</source>
+        <target>__progress</target>
+      </trans-unit>
+      <trans-unit id="lq25JFK" resname="properties">
+        <source>properties</source>
+        <target>__properties</target>
+      </trans-unit>
+      <trans-unit id="7HJCDfX" resname="requests">
+        <source>requests</source>
+        <target>__requests</target>
+      </trans-unit>
+      <trans-unit id="enfFFYe" resname="stages">
+        <source>stages</source>
+        <target>__stages</target>
+      </trans-unit>
+      <trans-unit id="K2uFPJ5" resname="in progress">
+        <source>in progress</source>
+        <target>__in progress</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
