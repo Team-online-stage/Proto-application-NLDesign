@@ -65,7 +65,13 @@ class ContactController extends AbstractController
 
         // Lets handle a post
         if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+            $resource = $commonGroundService->saveResource($resource, ['component' => 'cmc', 'type' => 'contact_moments']);
 
+            // If the contact moment was succesfully created we forward the user
+            if(!array_key_exists('@id', $resource)){
+                return $this->redirect($this->generateUrl('app_contact_index'));
+            }
         }
 
         return $variables;

@@ -27,14 +27,61 @@
     </div>
 {% endif %}
 
+<form method="post" action="{{ path('app_contact_send') }}" class="form">
 <div class="row">
     <div class="col-md-8  col-sm-12">
-        <form method="post" action="{{ path('app_contact_send') }}" class="form">
-        </form>
+        <div class="content-background">
+            <div class="content">
+                <div class="input">
+                    <label class="input__label" for="sender">{{ 'sender'|trans|capitalize }}</label>
+                    <input required="" type="text" id="sender" class="input__control input__control--text" {% if resource.sender is defined %}value="{{ resource.sender }}"{% endif %}>
+                </div>
+                <div class="input">
+                    <label class="input__label" for="receiver">{{ 'receiver'|trans|capitalize }}</label>
+                    <input required="" type="text" id="receiver" class="input__control input__control--text" {% if resource.receiver is defined %}value="{{ resource.receiver }}"{% endif %}>
+                </div>
+                <div class="input">
+                    <label class="input__label" for="channel">{{ 'channel'|trans|capitalize }}</label>
+                    <input required="" type="text" id="channel" class="input__control input__control--text" {% if resource.channel is defined %}value="{{ resource.channel }}"{% endif %}>
+                </div>
+                <div class="input">
+                    <label class="input__label" for="topic">{{ 'topic'|trans|capitalize }}</label>
+                    <input required="" type="text" name="topic" id="topic" class="input__control input__control--text" {% if resource.topic is defined %}value="{{ resource.topic }}"{% endif %}>
+                </div>
+                <div class="input">
+                    <label class="input__label" for="message">{{ 'message'|trans|capitalize }}</label>
+                    <textarea equired=""  name="message" id="message" class="input__control input__control--m input__control--text">{% if resource.message is defined %}value="{{ resource.message }}"{% endif %}</textarea>
+                </div>
+            </div><!-- /.content -->
+        </div><!-- /.content-background -->
+
+        <!-- Page Break -->
+        <div style="height: 20px"></div>
+        <button class="btn btn--block" name="submit">{{ 'send'|trans|capitalize }}</button>
     </div><!-- /.col -->
 
     <div class="col-md-4  col-sm-12">
+        <div class="content-background">
+            <div class="content">
+                <h2 id="regarding">{{ 'regarding'|trans|capitalize }}</h2>
+                <ul class="input__group-list" aria-describedby="regarding">
+                    <li class="input__group input__group--checkbox">
+                        <ul>
+                            {% for resourceLink in resource.resources %}
+                                {% set resourceItem = commonground_resource(resourceLink) %}
+                                <li>
+                                    <input type="checkbox" class="input__control input__control--checkbox" value="{{ resourceLink }}" name="resources[]" id="{{ resourceLink }}">
+                                    <label for="{{ resourceLink }}" class="input__label input__label--checkbox">{{ resourceItem.reference }}
+                                    </label>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
 
+                </ul>
+            </div><!-- /.content -->
+        </div><!-- /.content-background -->
     </div>
 </div>
+</form>
 {% endblock %}
