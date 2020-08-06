@@ -410,22 +410,21 @@ class EducationController extends AbstractController
             $email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
 
             //create the contact
+            if (array_key_exists('achternaam', $resource)) {
+                if (array_key_exists('tussenvoegsel', $resource)) {
+                    $contact['additionalName'] = $resource['tussenvoegsel'];
+                }
+                $contact['familyName'] = $resource['achternaam'];
+            }
             foreach ($resource['userGroups'] as $userGroupUrl) { //check the selected group(s)
                 $userGroup = $commonGroundService->getResource($userGroupUrl); //get the group resource
                 if ($userGroup['name'] == 'Studenten') { //check if the group studenten is selected
                     $participant = [];
                     $contact['name'] = 'studentUserContact';
-                    if(array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
+                    if (array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
                         $contact['givenName'] = $resource['voornaam'];
-                    }
-                    else {
+                    } else {
                         $contact['givenName'] = 'studentUserContact';
-                    }
-                    if(array_key_exists('achternaam', $resource)) {
-                        if(array_key_exists('tussenvoegsel', $resource)) {
-                            $contact['additionalName'] = $resource['tussenvoegsel'];
-                        }
-                        $contact['familyName'] = $resource['achternaam'];
                     }
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
@@ -436,21 +435,14 @@ class EducationController extends AbstractController
                 } elseif ($userGroup['name'] == 'Bedrijven') { //check if the group bedrijven is selected
                     $contactPerson = [];
                     $contactPerson['name'] = 'bedrijfUserContact';
-                    if(array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
+                    if (array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
                         $contactPerson['givenName'] = $resource['voornaam'];
-                    }
-                    else {
+                    } else {
                         $contactPerson['givenName'] = 'bedrijfUserContact';
-                    }
-                    if(array_key_exists('achternaam', $resource)) {
-                        if(array_key_exists('tussenvoegsel', $resource)) {
-                            $contactPerson['additionalName'] = $resource['tussenvoegsel'];
-                        }
-                        $contactPerson['familyName'] = $resource['achternaam'];
                     }
                     $contactPerson['emails'] = [];
                     $contactPerson['emails'][0] = $email['@id'];
-                    $contactPerson = $commonGroundService->createResource($contactPerson, ['component' => 'cc', 'type' => 'people']);
+                    $contactPerson = $commonGroundService->createResource($contactPerson, ['component' => 'cc', 'type' => 'people']); //create a person in cc
 
                     $contact['name'] = 'bedrijfUserContact';
                     $contact['description'] = 'Beschrijving van dit bedrijfUserContact';
@@ -459,7 +451,7 @@ class EducationController extends AbstractController
                     $contact['emails'][0] = $email['@id'];
                     $contact['persons'] = [];
                     $contact['persons'][0] = $contactPerson['@id'];
-                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
+                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']); //creat a organization in cc
                 }
             }
 
