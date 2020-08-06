@@ -34,15 +34,15 @@
             <div class="content">
                 <div class="input">
                     <label class="input__label" for="sender">{{ 'sender'|trans|capitalize }}</label>
-                    <input required="" type="text" id="sender" class="input__control input__control--text" {% if resource.sender is defined %}value="{{ resource.sender }}"{% endif %}>
+                    <input required="" type="text" name="sender" id="sender" class="input__control input__control--text" {% if resource.sender is defined %}value="{{ resource.sender }}"{% endif %}>
                 </div>
                 <div class="input">
                     <label class="input__label" for="receiver">{{ 'receiver'|trans|capitalize }}</label>
-                    <input required="" type="text" id="receiver" class="input__control input__control--text" {% if resource.receiver is defined %}value="{{ resource.receiver }}"{% endif %}>
+                    <input required="" type="text" name="receiver" id="receiver" class="input__control input__control--text" {% if resource.receiver is defined %}value="{{ resource.receiver }}"{% endif %}>
                 </div>
                 <div class="input">
                     <label class="input__label" for="channel">{{ 'channel'|trans|capitalize }}</label>
-                    <input required="" type="text" id="channel" class="input__control input__control--text" {% if resource.channel is defined %}value="{{ resource.channel }}"{% endif %}>
+                    <input required="" type="text" name="channel" id="channel" class="input__control input__control--text" {% if resource.channel is defined %}value="{{ resource.channel }}"{% endif %}>
                 </div>
                 <div class="input">
                     <label class="input__label" for="topic">{{ 'topic'|trans|capitalize }}</label>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="input">
                     <label class="input__label" for="message">{{ 'message'|trans|capitalize }}</label>
-                    <textarea equired=""  name="message" id="message" class="input__control input__control--m input__control--text">{% if resource.message is defined %}value="{{ resource.message }}"{% endif %}</textarea>
+                    <textarea equired=""  name="message" id="message" class="input__control input__control--m input__control--text">{% if resource.message is defined %}{{ resource.message }}{% endif %}</textarea>
                 </div>
             </div><!-- /.content -->
         </div><!-- /.content-background -->
