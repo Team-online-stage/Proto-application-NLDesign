@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <header class="content__header">
+        <a class="backlink" href="/education/teams">Teams</a>
+    </header>
+    <div class="row">
+        <div class="col-sm-12 col-lg-8">
+            <div class="content-background">
+                <div class="content ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1>{{ team.name|capitalize }}</h1>
+                            {% if team.description is defined and team.description is not empty %}
+                                <p>{{ team.description }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/350/250" alt="tender" width="100%">
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="edit-section">
+                        <h2>Algemene informatie</h2>
+                    </div>
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Naam
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ team.name }}</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
