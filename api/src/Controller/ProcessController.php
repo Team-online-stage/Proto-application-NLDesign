@@ -149,7 +149,7 @@ class ProcessController extends AbstractController
             }
 
             // We only support the posting and saving of
-            if($this->getUser()){
+            if ($this->getUser()) {
                 $request = $commonGroundService->saveResource($request, ['component' => 'vrc', 'type' => 'requests']);
             }
 
@@ -171,10 +171,9 @@ class ProcessController extends AbstractController
         $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
 
         // Lets see if we have any contact moments asociated with this processe
-        if (array_key_exists('@id', $variables['request'])){
-            $variables['contactMoments'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['resources' => [$variables['request']['@id']]])["hydra:member"];
-        }
-        else{
+        if (array_key_exists('@id', $variables['request'])) {
+            $variables['contactMoments'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['resources' => [$variables['request']['@id']]])['hydra:member'];
+        } else {
             $variables['contactMoments'] = [];
         }
 
