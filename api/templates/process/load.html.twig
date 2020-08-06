@@ -14,6 +14,16 @@
         </div><!-- ./content -->
     </div><!-- ./col -->
 </section>
+
+    {% if not app.user %}
+        <div class="notification notification--info">
+            <div class="notification__content">
+                <div class="notification__type">{{ 'attention'|trans|capitalize }}</div>
+                <h2 class="notification__title">{{ 'you can not save or submit procceses if you are not loged in'|trans|capitalize }}</h2>
+            </div>
+        </div>
+    {% endif %}
+
 <div class="row">
     <div class="col-md-8  col-sm-12">
         <form method="post" action="{{ path('app_process_slug',{id:process.id, slug:slug}) }}" class="form">
@@ -62,7 +72,7 @@
             {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
                 <div class="col-md-6" style="padding-right: 0px;">
                     <a class="btn btn--primary btn--block"
-                       href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Vorige</a>
+                       href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">{{ 'previous'|trans|capitalize }}</a>
                 </div>
             {% endif %}
 
@@ -90,6 +100,7 @@
             <!-- Page Break -->
             <div style="height: 20px"></div>
             {% include 'process/widgets/contact.html.twig' %}
+
         {% else %}
             {% if user is defined and user is not empty %}
                 {% include 'process/widgets/requests.html.twig' %}

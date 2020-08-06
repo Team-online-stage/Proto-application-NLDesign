@@ -148,9 +148,13 @@ class ProcessController extends AbstractController
                 return $this->redirect($this->generateUrl('app_process_load', ['id' => $id]));
             }
 
-            $variables['request'] = $commonGroundService->saveResource($request, ['component' => 'vrc', 'type' => 'requests']);
+            // We only support the posting and saving of
+            if ($this->getUser()) {
+                $request = $commonGroundService->saveResource($request, ['component' => 'vrc', 'type' => 'requests']);
+            }
 
             // stores an attribute in the session for later reuse
+            $variables['request'] = $request;
             $session->set('request', $variables['request']);
 
             // Lets go to the next stage
@@ -164,6 +168,13 @@ class ProcessController extends AbstractController
         }
 
         $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
+
+        // Lets see if we have any contact moments asociated with this processe
+        if (array_key_exists('@id', $variables['request'])) {
+            $variables['contactMoments'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['resources' => [$variables['request']['@id']]])['hydra:member'];
+        } else {
+            $variables['contactMoments'] = [];
+        }
 
         // Getting the current stage
         if (array_key_exists('currentStage', $variables['request']) && filter_var($variables['request']['currentStage'], FILTER_VALIDATE_URL) === true) {
@@ -182,6 +193,9 @@ class ProcessController extends AbstractController
         }
 
         $variables['slug'] = $slug;
+
+        // We nowdays use the common decriptor resource, but request still got stuck on request. This litle line wil make sure that all widgets wil work in both worlds
+        $variables['resource'] = $variables['request'];
 
         return $variables;
     }

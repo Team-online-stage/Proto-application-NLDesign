@@ -407,32 +407,62 @@ class EducationController extends AbstractController
             //create the email
             $email['name'] = 'userEmail';
             $email['email'] = $resource['email'];
-            //$email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+            $email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
 
             //create the contact
+            if (array_key_exists('achternaam', $resource)) {
+                if (array_key_exists('tussenvoegsel', $resource)) {
+                    $contact['additionalName'] = $resource['tussenvoegsel'];
+                }
+                $contact['familyName'] = $resource['achternaam'];
+            }
             foreach ($resource['userGroups'] as $userGroupUrl) { //check the selected group(s)
                 $userGroup = $commonGroundService->getResource($userGroupUrl); //get the group resource
                 if ($userGroup['name'] == 'Studenten') { //check if the group studenten is selected
+                    $participant = [];
                     $contact['name'] = 'studentUserContact';
+                    if (array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
+                        $contact['givenName'] = $resource['voornaam'];
+                    } else {
+                        $contact['givenName'] = 'studentUserContact';
+                    }
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
-                //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']);
+                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']);
+
+                    $participant['person'] = $contact['@id'];
+                    $commonGroundService->createResource($participant, ['component' => 'edu', 'type' => 'participants']);
                 } elseif ($userGroup['name'] == 'Bedrijven') { //check if the group bedrijven is selected
-                    $contact['name'] = 'organizationUserContact';
+                    $contactPerson = [];
+                    $contactPerson['name'] = 'bedrijfUserContact';
+                    if (array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
+                        $contactPerson['givenName'] = $resource['voornaam'];
+                    } else {
+                        $contactPerson['givenName'] = 'bedrijfUserContact';
+                    }
+                    $contactPerson['emails'] = [];
+                    $contactPerson['emails'][0] = $email['@id'];
+                    $contactPerson = $commonGroundService->createResource($contactPerson, ['component' => 'cc', 'type' => 'people']); //create a person in cc
+
+                    $contact['name'] = 'bedrijfUserContact';
+                    $contact['description'] = 'Beschrijving van dit bedrijfUserContact';
+                    $contact['type'] = 'bedrijfUserContact';
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
-                    //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
+                    $contact['persons'] = [];
+                    $contact['persons'][0] = $contactPerson['@id'];
+                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']); //creat a organization in cc
                 }
             }
 
             //create the user
             $user['organization'] = $organization;
             $user['username'] = $resource['email'];
-            $user['password'] = $resource['password'];
+            $user['password'] = $resource['wachtwoord'];
             $user['person'] = $contact['@id'];
             $user['userGroups'] = [];
             $user['userGroups'] = $resource['userGroups'];
-            //$commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
+            $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
 
             return $this->redirectToRoute('app_default_index');
         }

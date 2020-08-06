@@ -1,7 +1,7 @@
 <div class="content-background">
     <div class="content">
         <h2>
-            Ingevulde gegevens
+            {{ 'properties'|trans|capitalize }}
         </h2>
 
         {% if request is defined and request is not null %}
@@ -94,10 +94,10 @@
     </div>
 </div>
 
+{% if  app.user %}
 <div class="content-background" style="margin-top: 20px">
-
     <div class="content">
-        <h2>Gegevens indiener</h2>
+        <h2>{{ 'submitter'|trans|capitalize }}</h2>
         <ul class="definition-list">
             {% if user.naam.voornamen is defined and user.naam.voornamen is not empty %}
                 <li class="definition-list__item definition-list__item--horizontal">
@@ -169,11 +169,25 @@
     </div>
 </div>
 
-{% if request['status'] is defined and request['status'] in {'incomplete':'incomplete','complete':'complete'} %}
-<button name="request[status]" style="margin-top: 20px;" id="status_submit" value="submitted" class="btn btn--block">{{ 'submit'|trans|capitalize }}</button>
-<button name="request[status]" style="margin-top: 20px; background-color: red; color: white;" id="status_cancel" value="cancelled" class="btn btn--block btn--primary">{{ 'cancel'|trans|capitalize }}</button>
-{% elseif request['status'] is defined and request['status'] in {'submitted':'submitted'} %}
-<button name="request[status]" style="margin-top: 20px; background-color: red; color: white;" id="status_retract" value="retracted" class="btn btn--block btn--primary">{{ 'retract'|trans|capitalize }}</button>
+    {% if request['status'] is defined and request['status'] in {'incomplete':'incomplete','complete':'complete'} %}
+    <button name="request[status]" style="margin-top: 20px;" id="status_submit" value="submitted" class="btn btn--block">{{ 'submit'|trans|capitalize }}</button>
+    <button name="request[status]" style="margin-top: 20px; background-color: red; color: white;" id="status_cancel" value="cancelled" class="btn btn--block btn--primary">{{ 'cancel'|trans|capitalize }}</button>
+    {% elseif request['status'] is defined and request['status'] in {'submitted':'submitted'} %}
+    <button name="request[status]" style="margin-top: 20px; background-color: red; color: white;" id="status_retract" value="retracted" class="btn btn--block btn--primary">{{ 'retract'|trans|capitalize }}</button>
+    {% endif %}
+{% else %}
+
+    {% if not app.user %}
+        <!-- Page Break -->
+        <div style="height: 20px"></div>
+
+        <div class="notification notification--warning">
+            <div class="notification__content">
+                <div class="notification__type">{{ 'attention'|trans|capitalize }}</div>
+                <h2 class="notification__title">{{ 'you can not save or submit procceses if you are not loged in'|trans|capitalize }}</h2>
+            </div>
+        </div>
+    {% endif %}
 {% endif %}
 
 
