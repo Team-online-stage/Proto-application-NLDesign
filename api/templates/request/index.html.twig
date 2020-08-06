@@ -6,8 +6,8 @@
     <div class="row">
         <div class="col-md-8">
 
-            <div class="content-background" >
-            	<div class="content">
+            <div class="content-background">
+                <div class="content">
                     {% if user is defined and user is not null %}
                     <table class="table table-hover">
                         <thead>
@@ -27,7 +27,15 @@
                                 <td>{% if resource.dateModified is defined and resource.dateModified is not null %}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>
                                 <td>{{ resource.status|trans|capitalize }}</td>
                                 {% if resource.status != 'submitted' %}
-                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_request_load', {id: resource.id}) }}"><b>{{ 'resume'|trans|capitalize }}</b></a></td>
+                                    {% set resumeRequest = 'resume' %}
+                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                           href="{{ path('app_request_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'resume'|trans|capitalize }}</b></a>
+                                    </td>
+                                {% else %}
+                                    {% set resumeRequest = 'see' %}
+                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                           href="{{ path('app_request_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'see'|trans|capitalize }}</b></a>
+                                    </td>
                                 {% endif %}
 
                             </tr>
@@ -37,20 +45,22 @@
 
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
-
+            <a href="/process" class="btn btn--primary"
+               style="background-color: #138496; color: white; width: 100%; margin-top: 20px; "><i style="margin-right: 10px;" class="fas fa-user"></i>Nieuw verzoek starten</a>
         </div><!-- /.col -->
         {% else %}
             <div class="notification notification--warning">
                 <div class="notification__content">
                     <h2 class="notification__title">U bent niet ingelogd</h2>
                     <span>U dient ingelogd te zijn om uw verzoeken te kunnen bekijken.</span><br>
-                    <span>Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
+                    <span>Klik <a
+                            href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
                 </div>
             </div>
         {% endif %}
 
         <div class="col-md-4">
-            {% if user is not empty%}
+            {% if user is not empty %}
                 <div class="content-background">
 
                     <div class="content">
@@ -76,7 +86,7 @@
                                     </div>
                                 </li>
                             {% endif %}
-                            {% if user.naam.voorvoegsel is defined and user.naam.voorvoegsel is not empty%}
+                            {% if user.naam.voorvoegsel is defined and user.naam.voorvoegsel is not empty %}
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
                                         Voorvoegsel
@@ -86,7 +96,7 @@
                                     </div>
                                 </li>
                             {% endif %}
-                            {% if user.leeftijd is defined and user.leeftijd is not empty%}
+                            {% if user.leeftijd is defined and user.leeftijd is not empty %}
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
                                         Leeftijd
@@ -96,7 +106,7 @@
                                     </div>
                                 </li>
                             {% endif %}
-                            {% if user.geslachtsaanduiding is defined and user.geslachtsaanduiding is not empty%}
+                            {% if user.geslachtsaanduiding is defined and user.geslachtsaanduiding is not empty %}
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
                                         Geslacht
@@ -117,7 +127,7 @@
                                         {% if user.verblijfplaats.huisletter is defined and user.verblijfplaats.huisletter is not empty %}{{ user.verblijfplaats.huisletter }}{% endif %}
                                         {% if user.verblijfplaats.huisnummertoevoeging is defined and user.verblijfplaats.huisnummertoevoeging is not empty %}{{ user.verblijfplaats.huisnummertoevoeging }}{% endif %}
                                         <br>
-                                        {% if user.verblijfplaats.postcode is defined and user.verblijfplaats.postcode is not empty %}{{ user.verblijfplaats.postcode }}{% endif%}
+                                        {% if user.verblijfplaats.postcode is defined and user.verblijfplaats.postcode is not empty %}{{ user.verblijfplaats.postcode }}{% endif %}
                                         {% if user.verblijfplaats.woonplaatsnaam is defined and  user.verblijfplaats.woonplaatsnaam is not empty %}{{ user.verblijfplaats.woonplaatsnaam }}{% endif %}
                                     </p>
                                 </div>
@@ -128,9 +138,6 @@
 
                 <!-- Page Break -->
                 <div style="height: 20px"></div>
-
-                <a href="/process" class="btn btn--primary" style="background-color: #138496; color: white; width: 100% "><i style="margin-right: 10px;" class="fas fa-user"></i>Zelf regelen</a>
-
             {% endif %}
 
             <!--
@@ -151,40 +158,40 @@
         </div>
     </div>
 
-{#<div class="row">#}
-{#        <div class="col-md-12">#}
-{#            <h2> Uitgelicht</h2>#}
-{#            <ul class="list list--card">#}
-{#                <li class="card">#}
-{#                    <a href="{{ path('app_challenge_index') }}" class="card__content">#}
-{#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
-{#                        <div class="card__body">#}
-{#                            <span class="card__title">Challenges</span>#}
-{#                            Bekijk challanges en beloningen vanuit de overheid#}
-{#                        </div>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li class="card">#}
-{#                    <a href="{{ path('app_pitch_index') }}" class="card__content">#}
-{#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
-{#                        <div class="card__body">#}
-{#                        	<span class="card__title">Pitches</span>#}
-{#                        	Bekijk goede ideën vanuit de communitys#}
-{#                        </div>#}
-{#                    </a>#}
-{#                </li>#}
-{#                <li class="card">#}
-{#                    <a href="{{ path('app_news_index') }}" class="card__content">#}
-{#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
-{#                        <div class="card__body">#}
-{#                        	<span class="card__title">Nieuws</span>#}
-{#                        	Volg het laatste nieuws#}
-{#                        </div>#}
-{#                    </a>#}
-{#                </li>#}
-{#            </ul>#}
-{#        </div>#}
-{#    </div>#}
+    {#<div class="row">#}
+    {#        <div class="col-md-12">#}
+    {#            <h2> Uitgelicht</h2>#}
+    {#            <ul class="list list--card">#}
+    {#                <li class="card">#}
+    {#                    <a href="{{ path('app_challenge_index') }}" class="card__content">#}
+    {#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
+    {#                        <div class="card__body">#}
+    {#                            <span class="card__title">Challenges</span>#}
+    {#                            Bekijk challanges en beloningen vanuit de overheid#}
+    {#                        </div>#}
+    {#                    </a>#}
+    {#                </li>#}
+    {#                <li class="card">#}
+    {#                    <a href="{{ path('app_pitch_index') }}" class="card__content">#}
+    {#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
+    {#                        <div class="card__body">#}
+    {#                        	<span class="card__title">Pitches</span>#}
+    {#                        	Bekijk goede ideën vanuit de communitys#}
+    {#                        </div>#}
+    {#                    </a>#}
+    {#                </li>#}
+    {#                <li class="card">#}
+    {#                    <a href="{{ path('app_news_index') }}" class="card__content">#}
+    {#                        <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>#}
+    {#                        <div class="card__body">#}
+    {#                        	<span class="card__title">Nieuws</span>#}
+    {#                        	Volg het laatste nieuws#}
+    {#                        </div>#}
+    {#                    </a>#}
+    {#                </li>#}
+    {#            </ul>#}
+    {#        </div>#}
+    {#    </div>#}
 
     <script>
         /* Load collapse component */

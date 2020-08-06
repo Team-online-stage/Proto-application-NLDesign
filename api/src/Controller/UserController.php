@@ -28,19 +28,40 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/digispoof")
+     * @Template
+     */
+    public function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
+
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
+    }
+
+    /**
+     * @Route("/eherkenning")
+     * @Template
+     */
+    public function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $redirect = $commonGroundService->cleanUrl(['component' => 'eh']);
+
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
+    }
+
+    /**
      * @Route("/logout")
      * @Template
      */
-    public function logoutAction(Session $session)
+    public function logoutAction(Session $session, Request $request)
     {
         $session->set('requestType', null);
         $session->set('request', null);
         $session->set('user', null);
         $session->set('employee', null);
         $session->set('contact', null);
+        $session->set('company', null);
 
-        $this->addFlash('info', 'U bent uitgelogd');
-
-        return $this->redirect($this->generateUrl('app_process_index'));
+        return $this->redirect($this->generateUrl('app_default_index'));
     }
 }

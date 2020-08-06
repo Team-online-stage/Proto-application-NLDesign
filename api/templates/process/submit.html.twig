@@ -16,11 +16,12 @@
                         </p>
                     </div>
                 </li>
+                {% if request.properties is defined and request.properties is not empty %}
             {% for key, property in request.properties %}
                 <li class="definition-list__item definition-list__item--horizontal">
 
                     <div class="definition-list__title">
-                        {{ key|capitalize }}
+                        {{ key|capitalize|replace({"_":" "}) }}
                     </div>
 
                     <div class="definition-list__description">
@@ -28,21 +29,25 @@
                             {% if property is iterable %}
                                 {% for key, value in property %}
                                     {% if value is iterable %}
-                                        <ul>
+                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 50%; margin-left: 0px;">
                                     {% for item in value %}
                                         {% if item is iterable %}
                                         {% for subItem in item %}
                                             {% if 'http' in subItem %}
                                                 <li>{{ commonground_resource(subItem).name|capitalize }}</li>
                                             {% else %}
+                                                {% if subItem != '' %}
                                                 <li>{{ subItem|capitalize }}</li>
+                                                {% endif %}
                                             {% endif %}
                                             {% endfor %}
                                         {% else %}
                                             {% if 'http' in item %}
                                                 <li>{{ commonground_resource(item).name|capitalize }}</li>
                                             {% else %}
+                                                {% if item != '' %}
                                                 <li>{{ item|capitalize }}</li>
+                                                {% endif %}
                                             {% endif %}
                                         {% endif %}
                                         {% endfor %}
@@ -67,7 +72,11 @@
                                     {% endif #}
                                 {% else %}
                                     {% if 'http' in property %}
-                                        {{ commonground_resource(property).name|capitalize }}
+                                        {% if commonground_resource(property)['@type'] == 'Adres' %}
+                                            {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
+                                        {% else %}
+                                            {{ commonground_resource(property).name|capitalize }}
+                                        {% endif %}
                                     {% else %}
                                     {{ property|capitalize }}
                                     {% endif %}
@@ -78,6 +87,7 @@
 
                 </li>
             {% endfor %}
+                {% endif %}
             </ul>
         {% endif %}
 
@@ -141,7 +151,7 @@
             {% endif %}
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title">
-                    Addres
+                    Adres
                 </div>
                 <div class="definition-list__description">
                     <p>

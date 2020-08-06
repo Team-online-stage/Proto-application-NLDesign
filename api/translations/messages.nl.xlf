@@ -17,6 +17,10 @@
         <source>submitted</source>
         <target>ingediend</target>
       </trans-unit>
+      <trans-unit id="PBlHIfy" resname="retracted">
+        <source>retracted</source>
+        <target>ingetrokken</target>
+      </trans-unit>
       <trans-unit id="qL_s87z" resname="declined">
         <source>declined</source>
         <target>afgewezen</target>
@@ -27,7 +31,7 @@
       </trans-unit>
       <trans-unit id="7rv2RX5" resname="complete">
         <source>complete</source>
-        <target>kompleet</target>
+        <target>compleet</target>
       </trans-unit>
       <trans-unit id="WBkP_r_" resname="processed">
         <source>processed</source>
@@ -103,7 +107,7 @@
       </trans-unit>
       <trans-unit id="WpL28In" resname="instruction">
         <source>instruction</source>
-        <target>instructies</target>
+        <target>instructie</target>
       </trans-unit>
       <trans-unit id="YFQKuu_" resname="this request is currently">
         <source>this request is currently</source>
@@ -116,6 +120,30 @@
       <trans-unit id="EwPAaws" resname="type">
         <source>type</source>
         <target>type</target>
+      </trans-unit>
+      <trans-unit id="qp6bXJB" resname="see">
+        <source>see</source>
+        <target>bekijken</target>
+      </trans-unit>
+      <trans-unit id="k25cxQI" resname="courses">
+        <source>courses</source>
+        <target>__courses</target>
+      </trans-unit>
+      <trans-unit id="_UD0x.j" resname="toegekende beroeps referentie na succesvolle afronding">
+        <source>toegekende beroeps referentie na succesvolle afronding</source>
+        <target>__toegekende beroeps referentie na succesvolle afronding</target>
+      </trans-unit>
+      <trans-unit id="S2XQXq4" resname="toegekende educatieve referentie na succesvolle afronding">
+        <source>toegekende educatieve referentie na succesvolle afronding</source>
+        <target>__toegekende educatieve referentie na succesvolle afronding</target>
+      </trans-unit>
+      <trans-unit id="YkyVVAY" resname="activities">
+        <source>activities</source>
+        <target>__activities</target>
+      </trans-unit>
+      <trans-unit id=".euuMDh" resname="programs">
+        <source>programs</source>
+        <target>__programs</target>
       </trans-unit>
     </body>
   </file>

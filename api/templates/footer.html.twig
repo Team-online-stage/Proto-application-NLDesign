@@ -1,5 +1,5 @@
     <footer class="footer">
-        <div class="{% if application is defined and application.defaultConfiguration.configuration.colorSchemeFooter is defined  %}{{ application.defaultConfiguration.configuration.colorSchemeFooter }}{% else %}background--donkerblauw{% endif %} " style="padding: 30px 0;padding: 3rem 0;">
+        <div id="footer" class="{% if application is defined and application.defaultConfiguration.configuration.colorSchemeFooter is defined  %}{{ application.defaultConfiguration.configuration.colorSchemeFooter }}{% else %}background--donkerblauw{% endif %} " style="padding: 30px 0;padding: 3rem 0;">
             <div class="container">
                 <div class="row">
                     {% if application is defined
@@ -41,7 +41,7 @@
                             {% endif %}
                             {# lets deal with templates #}
                             {% if footer2['@type'] == 'Template' %}
-                                {{ footer2.content|raw }}
+                                {{ include(template_from_string(footer2.content|raw)) }}
                             {% endif %}
                         </div>
                     {% endif %}

@@ -4,8 +4,7 @@
 
 
     <div class="row">
-        <div class="col-md-8">
-
+        <div class="col-md-12">
             <div class="content-background" >
             	<div class="content">
                         {% if processes is defined and processes is not empty %}
@@ -21,121 +20,25 @@
 
                         {% for resource in processes %}
                             <tr>
-                                <td>{{ resource.name|capitalize }}</td>
-                                <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description|capitalize }}{% endif %}</td>
+                                <td style="width: fit-content">{{ resource.name|capitalize }}</td>
+                                <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.description }}{% endif %}</td>
                                 <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_process_start', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>
                             </tr>
                         {% endfor %}
+{#                        <tr>#}
+{#                            <td>Initiatief</td>#}
+{#                            <td>Via dit formulier kunt u een initiatief starten</td>#}
+{#                            <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_tender_newpitch') }}"><b>{{ 'start'|trans|capitalize }}</b></a></td>#}
+{#                        </tr>#}
                         </tbody>
                     </table>
+
                         {% else %}
                         <h1>Er zijn geen processen</h1>
                         {% endif %}
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
         </div><!-- /.col -->
-
-        <div class="col-md-4">
-            {% if user is not empty%}
-                <div class="content-background">
-
-                    <div class="content">
-                        <h2>Uw gegevens</h2>
-                        <ul class="definition-list">
-                            {% if user.naam.voornamen is defined and user.naam.voornamen is not empty %}
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title">
-                                    Voornamen
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>{{ user.naam.voornamen }}</p>
-                                </div>
-                            </li>
-                            {% endif %}
-                            {% if user.naam.geslachtsnaam is defined and user.naam.geslachtsnaam is not empty %}
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title">
-                                    Achternaam
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>{{ user.naam.geslachtsnaam }}</p>
-                                </div>
-                            </li>
-                            {% endif %}
-                            {% if user.naam.voorvoegsel is defined and user.naam.voorvoegsel is not empty%}
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        Voorvoegsel
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ user.naam.voorvoegsel }}</p>
-                                    </div>
-                                </li>
-                            {% endif %}
-                            {% if user.leeftijd is defined and user.leeftijd is not empty%}
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        Leeftijd
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ user.leeftijd }}</p>
-                                    </div>
-                                </li>
-                            {% endif %}
-                            {% if user.geslachtsaanduiding is defined and user.geslachtsaanduiding is not empty%}
-                                <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">
-                                        Geslacht
-                                    </div>
-                                    <div class="definition-list__description">
-                                        <p>{{ user.geslachtsaanduiding }}</p>
-                                    </div>
-                                </li>
-                            {% endif %}
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title">
-                                    Addres
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>
-                                        {% if user.verblijfplaats.straatnaam is defined and user.verblijfplaats.straatnaam is not empty %}{{ user.verblijfplaats.straatnaam }}{% endif %}
-                                        {% if user.verblijfplaats.huisnummer is defined and user.verblijfplaats.huisnummer is not empty %}{{ user.verblijfplaats.huisnummer }}{% endif %}
-                                        {% if user.verblijfplaats.huisletter is defined and user.verblijfplaats.huisletter is not empty %}{{ user.verblijfplaats.huisletter }}{% endif %}
-                                        {% if user.verblijfplaats.huisnummertoevoeging is defined and user.verblijfplaats.huisnummertoevoeging is not empty %}{{ user.verblijfplaats.huisnummertoevoeging }}{% endif %}
-                                        <br>
-                                        {% if user.verblijfplaats.postcode is defined and user.verblijfplaats.postcode is not empty %}{{ user.verblijfplaats.postcode }}{% endif%}
-                                        {% if user.verblijfplaats.woonplaatsnaam is defined and  user.verblijfplaats.woonplaatsnaam is not empty %}{{ user.verblijfplaats.woonplaatsnaam }}{% endif %}
-                                    </p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Page Break -->
-                <div style="height: 20px"></div>
-
-                        <a href="/request" class="btn btn--primary" style="background-color: #138496; color: white; width: 100%"><i style="margin-right: 10px;" class="fas fa-user"></i>Mijn {{ application.organization.name }}</a>
-
-
-            {% endif %}
-
-            <!--
-            <div class="content-background background--geel">
-                <div class="content">
-                    <button class="btn btn--primary">Primaire knop</button>
-                </div>
-            </div>
-
-
-            <div class="content-background background--donkergeel">
-                <div class="content">
-                	<button class="btn btn--primary">Primaire knop</button>
-
-                </div>
-            </div>
-            -->
-        </div>
     </div>
 
 {#<div class="row">#}

@@ -1,328 +1,14 @@
 {% extends "base.html.twig" %}
 
 {% block content %}
-    {% if user is defined and user is not null %}
-    <section class="row">
-        <div class="col-md-12">
-            <div class="content">
-
-                <header class="content__header">
-                    <a class="backlink" href="{{ path('app_process_index') }}">Home</a>
-                    <header class="content__header">
-                        <h1 class="content__header-title">{{ process.name|capitalize }}</h1>
-                    </header>
-                </header>
-            </div><!-- ./content -->
-        </div><!-- ./col -->
-    </section>
-    <div class="row">
-    <div class="col-md-8  col-sm-12">
-        <form method="post" action="{{ path('app_process_slug',{id:process.id, slug:slug}) }}" class="form">
-        {% include 'process/default.html.twig' %}
-
-    {% if slug is not defined or slug == 'instruction'%}
-        {% include 'process/instruction.html.twig' %}
-        {% include 'process/documents.html.twig' %}
-
-    {% elseif slug == 'submit' %}
-        {% include 'process/submit.html.twig' %}
-    {% elseif slug == 'in-progress' %}
-        {% include 'process/in-progress.html.twig' %}
-    {% elseif slug == 'processed' %}
-        {% include 'process/processed.html.twig' %}
-
-    {% elseif stage.sections is defined and stage.sections is not null %}
-
-        {% for section in stage.sections %}
-            <div class="content-background">
-                <div class="content">
-                    <h2>{{ section.name|capitalize }}</h2>
-                    <p>{{ section.description|capitalize }}</p>
-
-
-                    {% for property in section.properties %}
-                        {% set property = commonground_resource(property) %}
-                        {% if property.type == 'array' and property.format == 'bsn' %}
-                            {% include 'process/formelements/person.html.twig' %}
-
-                        {% elseif property.format == 'bag' %}
-                            {% include 'process/formelements/bag/address.html.twig' %}
-
-
-                        {% elseif property.iri == 'wrc/organizations'%}
-                            {% include 'process/formelements/organizations.html.twig' %}
-                        {% elseif property.iri == 'grc/cemetery'%}
-                            {% include 'process/formelements/cemetery.html.twig' %}
-                        {% elseif property.iri == 'grc/grave_type'%}
-                            {% include 'process/formelements/grave_type.html.twig' %}
-                        {% elseif property.iri == 'arc/event'%}
-                            {% include 'process/formelements/event.html.twig' %}
-
-                        {% elseif property.iri == 'pdc/offer'%}
-                            {% include 'process/formelements/pdc/offer.html.twig' %}
-
-                        {% elseif property.iri == 'brp/ingeschrevenpersoon'%}
-                            {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
-                        {% elseif property.iri == 'irc/assent'%}
-                            {% include 'process/formelements/assent.html.twig' %}
-
-                        {# Let slook for formats #}
-                        {% elseif property.format == 'phonenumber'%}
-                            {% include 'process/formelements/generic.html.twig'  with {'type': 'tel'} %}
-                        {% elseif property.format == 'datetime'%}
-                            {% include 'process/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}
-                        {% elseif property.format == 'date-time'%}
-                            {% include 'process/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}
-                        {% elseif property.format == 'textarea'%}
-                            {% include 'process/formelements/textarea.html.twig'  %}
-                        {% elseif property.format == 'text-area'%}
-                            {% include 'process/formelements/textarea.html.twig'  %}
-                        {% elseif property.format == 'radio'%}
-                            {% include 'process/formelements/radio.html.twig'  %}
-                        {% elseif property.format == 'file'%}
-                            {% include 'process/formelements/file.html.twig'  %}
-                        {% elseif property.format == 'location'%}
-                            {% include 'process/formelements/location.html.twig'  %}
-                        {% elseif property.format == 'meeverhuizen'%}
-                            {% include 'process/formelements/mee_verhuizers.html.twig'  %}
-                        {% elseif property.format == 'calendar'%}
-                            {% include 'process/formelements/calendar.html.twig'  %}
-
-                        {# Generic HTML 5 input types #}
-                        {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
-                            {% include 'process/formelements/generic.html.twig'  with {'type': property.format} %}
-                        {% else %}
-                            <p>No applicable format {{ property.format }}, type {{ property.type }} or iri {{ property.iri }}</p>
-                        {% endif %}
-
-                    {% endfor %}
-
-{#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
-
-                </div><!-- /.content -->
-            </div><!-- /.content-background -->
-        {% endfor %}
-    {% endif %}
-        <!-- Page Break -->
-        <div style="height: 20px;"></div>
-
-        {% if slug == 'instruction' %}
-        <div class="col-md-12 no-padding">
-            <a class="btn btn--block" href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">Beginnen</a>
-        </div><!-- /.col -->
-        {% elseif slug != 'submit' %}
-        <div class="col-md-6" style="padding-left: 0px;">
-            <button class="btn btn--block"  name="submit">Opslaan</button>
-        </div><!-- /.col -->
-        {% endif %}
-
-            {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
-            <div class="col-md-6" style="padding-right: 0px;">
-            <a class="btn btn--primary btn--block" href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Terug naar {{ stage.previous.name }}</a>
-            </div>
-            {% endif %}
-
-            <!-- Page Break -->
-            <div style="height: 20px;"></div>
-        </form>
-
-    </div><!-- /.col -->
-
-        <div class="col-md-4  col-sm-12">
-
-
-            {% if slug != 'instruction' %}
-
-            <div class="content-background">
-                <div style="text-align: center; padding: 20px" >
-                    <h2>Voortgang</h2>
-                    {% set counter = 0 %}
-                    {% for stage in process.stages %}
-                        {% for section in stage.sections %}
-                            {% for property in section.properties %}
-                                {% set counter = counter + 1 %}
-                            {% endfor %}
-                        {% endfor %}
-                    {% endfor %}
-                    {% if request.properties|length != 0 %}
-                        {% set value = request.properties|length / counter * 100 %}
-                    {% else %}
-                        {% set value = 0 %}
-                    {% endif %}
-                    <div class="progressbar">
-                        <p>{{ value|round(0, 'ceil') }}%</p>
-                        <div  style="width: {{ value }}%;"></div>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <div class="content-background" style="margin-top: 20px;">
-                <div class="content">
-                    <h2>Stappen</h2>
-                 	<ul class="list list--timeline list--timeline-compact">
-                        <li class="list__item {% if stage.slug == 'instruction' %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete'%}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete'%}<a href="{{ path('app_process_slug',{id:process.id,slug:'instruction'}) }}">{{ 'instruction'|trans|capitalize }}</a>{% else %}{{ 'instruction'|trans|capitalize }}{% endif %}</li>
-                        {% for iteratedStage in process.stages %}
-                        <li class="list__item {% if stage.slug == iteratedStage.slug %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete'%}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete'%}<a href="{{ path('app_process_slug',{id:process.id,slug:iteratedStage.slug}) }}">{{ iteratedStage.name|capitalize }}{% else %}{{ iteratedStage.name|capitalize }}{% endif %}</a></li>
-                        {% endfor %}
-                        <li class="list__item {% if stage.slug == 'submit' or request.status == 'submitted' %}list__item--active{% endif %}"><a href="{{ path('app_process_slug',{id:process.id,slug:'submit'}) }}">{{ 'submit'|trans|capitalize }}</a></li>
-                		<li class="list__item {% if request.status == 'in progress' %}list__item--active{% else %}list__item--disabled{% endif %}" >In behandeling</li>
-                		<li class="list__item {% if request.status == 'processed' %}list__item--active{% else %}list__item--disabled{% endif %}">Uitsluitsel</li>
-                	</ul>
-                </div>
-            </div>
-
-
-            <div class="content-background" style="margin-top: 20px;">
-                <div class="content">
-                    <h2>
-                        Ingevulde gegevens
-                    </h2>
-
-                    {% if request is defined and request is not null %}
-                        <ul class="definition-list">
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title" style="max-width: 100%">
-                                    {{ 'status'|trans|capitalize }}
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>
-                                        {{ request['status']|trans|capitalize  }}
-                                    </p>
-                                </div>
-                            </li>
-                            {% for key, property in request.properties %}
-                                <li class="definition-list__item definition-list__item--horizontal">
-
-                                    <div class="definition-list__title" style="max-width: 100%;">
-                                        {{ key|capitalize }}
-                                    </div>
-
-                                    <div class="definition-list__description">
-                                        <p>
-                                            {% if property is iterable %}
-                                            {% for key, value in property %}
-                                            {% if value is iterable %}
-                                        <ul>
-                                            {% for item in value %}
-                                                {% if item is iterable %}
-                                                    {% for subItem in item %}
-                                                        {% if 'http' in subItem %}
-                                                        <li>{{ commonground_resource(subItem).name|capitalize }}</li>
-                                                    {% else %}
-                                                        <li>{{ subItem|capitalize }}</li>
-                                                        {% endif %}
-                                                    {% endfor %}
-                                                {% else %}
-                                                    {% if 'http' in item %}
-                                                        <li>{{ commonground_resource(item).name|capitalize }}</li>
-                                                    {% else %}
-                                                        <li>{{ item|capitalize }}</li>
-                                                    {% endif %}
-                                                {% endif %}
-                                            {% endfor %}
-                                        </ul>
-                                        {% else %}
-                                            {% if 'http' in value %}
-                                                {{ commonground_resource(value).name }}<br>
-                                            {% else %}
-                                                {{ value|capitalize }}<br>
-                                            {% endif %}
-                                        {% endif %}
-                                        {% endfor %}
-                                        {# else %}
-                                            {% if commonground_is_resource(property) %}
-                                                {% set property = commonground_resource(property) %}
-                                                {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
-                                                    {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
-                                                {% elseif property.reference is defined %}
-                                                    {{ property.reference }}
-                                                {% elseif property.name is defined %}
-                                                    {{ property.name }}
-                                                {% endif #}
-                                        {% else %}
-                                            {% if 'http' in property %}
-                                                {{ commonground_resource(property).name|capitalize }}
-                                            {% else %}
-                                                {{ property|capitalize }}
-                                            {% endif %}
-                                            {# endif #}
-                                        {% endif %}
-                                        </p>
-                                    </div>
-
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
-
-                </div>
-            </div>
-            {% endif %}
-
-            <!--
-
-
-            <div class="content-background background--donkergeel">
-                <div class="content">
-                    <h2>{{ process.name }}</h2>
-                    {% if request.properties is defined %}
-                        <ul class="definition-list">
-                        {% for key, property in request.properties%}
-                            <li class="definition-list__item definition-list__item--horizontal">
-                                <div class="definition-list__title">
-                                    {{ key }}
-                                </div>
-                                <div class="definition-list__description">
-                                    <p>
-                                        {% if property is iterable %}
-                                            {% for key, value in property %}
-                                                {{ key }}: {{ value }}<br>
-                                            {% endfor %}
-                                        {% else %}
-                                            {% if commonground_is_resource(property) %}
-                                                {% set property = commonground_resource(property) %}
-                                                {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
-                                                    {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
-                                                {% elseif property.reference is defined %}
-                                                    {{ property.reference }}
-                                                {% elseif property.name is defined %}
-                                                    {{ property.name }}
-                                                {% endif %}
-                                            {% else %}
-                                                {{ property }}
-                                            {% endif %}
-                                        {% endif %}
-                                    </p>
-                                </div>
-                            </li>
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
-                </div>
-            </div>
-            {% endif %}
-        </div>
-    </div>
-    {% else %}
-<div>
-    <div class="notification notification--warning">
-        <div class="notification__content">
-            <h2 class="notification__title">U bent niet ingelogd</h2>
-            <span>U dient ingelogd te zijn om een process te starten.</span><br>
-            <span>Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
-        </div>
-    </div>
-</div>
 <section class="row">
     <div class="col-md-12">
         <div class="content">
 
             <header class="content__header">
-                <a class="backlink" href="{{ path('app_process_index') }}">Home</a>
+                <a class="backlink" href="{{ path('app_process_index') }}">{{ 'processes'|trans|capitalize }}</a>
                 <header class="content__header">
-                    <h1 class="content__header-title">{{ process.name }}</h1>
+                    <h1 class="content__header-title">{{ process.name|capitalize }}</h1>
                 </header>
             </header>
         </div><!-- ./content -->
@@ -333,125 +19,82 @@
         <form method="post" action="{{ path('app_process_slug',{id:process.id, slug:slug}) }}" class="form">
             {% include 'process/default.html.twig' %}
 
-            {% if slug is not defined or slug == 'instruction'%}
+            {% if slug is not defined or slug == 'instruction' %}
                 {% include 'process/instruction.html.twig' %}
                 {% include 'process/documents.html.twig' %}
-
             {% elseif slug == 'submit' %}
                 {% include 'process/submit.html.twig' %}
             {% elseif slug == 'in-progress' %}
                 {% include 'process/in-progress.html.twig' %}
             {% elseif slug == 'processed' %}
                 {% include 'process/processed.html.twig' %}
-
             {% elseif stage.sections is defined and stage.sections is not null %}
-
-                {% for section in stage.sections %}
-                    <div class="content-background">
-                        <div class="content">
-                            <h2>{{ section.name }}</h2>
-                            {{ section.description }}
-
-                            {% for property in section.properties %}
-                                {% set property = commonground_resource(property) %}
-                                {% if property.type == 'array' and property.format == 'bsn' %}
-                                    {% include 'process/formelements/brp/person.html.twig' %}
-
-                                {% elseif property.format == 'bag' %}
-                                    {% include 'process/formelements/bag/address.html.twig' %}
-
-
-                                {% elseif property.iri == 'wrc/organizations'%}
-                                    {% include 'process/formelements/organizations.html.twig' %}
-                                {% elseif property.iri == 'grc/cemetery'%}
-                                    {% include 'process/formelements/cemetery.html.twig' %}
-                                {% elseif property.iri == 'grc/grave_type'%}
-                                    {% include 'process/formelements/grave_type.html.twig' %}
-                                {% elseif property.iri == 'arc/event'%}
-                                    {% include 'process/formelements/event.html.twig' %}
-
-                                {% elseif property.iri == 'pdc/offer'%}
-                                    {% include 'process/formelements/pdc/offer.html.twig' %}
-
-                                {% elseif property.iri == 'brp/ingeschrevenpersoon'%}
-                                    {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
-                                {% elseif property.iri == 'irc/assent'%}
-                                    {% include 'process/formelements/assent.html.twig' %}
-
-                                    {# Let slook for formats #}
-                                {% elseif property.format == 'phonenumber'%}
-                                    {% include 'process/formelements/generic.html.twig'  with {'type': 'tel'} %}
-                                {% elseif property.format == 'datetime'%}
-                                    {% include 'process/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}
-                                {% elseif property.format == 'date-time'%}
-                                    {% include 'process/formelements/generic.html.twig'  with {'type': 'datetime-local'} %}
-                                {% elseif property.format == 'textarea'%}
-                                    {% include 'process/formelements/textarea.html.twig'  %}
-                                {% elseif property.format == 'text-area'%}
-                                    {% include 'process/formelements/textarea.html.twig'  %}
-                                {% elseif property.format == 'radio'%}
-                                    {% include 'process/formelements/radio.html.twig'  %}
-
-                                    {# Generic HTML 5 input types #}
-                                {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
-                                    {% include 'process/formelements/generic.html.twig'  with {'type': property.format} %}
-                                {% else %}
-                                    <p>No applicable format {{ property.format }}, type {{ property.type }} or iri {{ property.iri }}</p>
-                                {% endif %}
-
-                            {% endfor %}
-
-                            {#                    <a class="btn" href="{{ path('app_request_data') }}">Begin</a>#}
-
-                        </div><!-- /.content -->
-                    </div><!-- /.content-background -->
-                {% endfor %}
+                {% include 'process/widgets/form.html.twig' %}
             {% endif %}
             <!-- Page Break -->
             <div style="height: 20px;"></div>
 
+
             {% if slug == 'instruction' %}
                 <div class="col-md-12 no-padding">
-                    <a class="btn btn--block" href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">Inloggen</a>
+                    {% if process.requireLogin is defined and process.requireLogin == 'true' and (user is not defined or user is null) %}
+                        <div class="col-md-6" style="padding-left: 0px;">
+                            <button class="btn btn--block" name="submit">{{ 'login'|trans|capitalize }}</button>
+                        </div><!-- /.col -->
+                    {% elseif resumeRequest is defined and resumeRequest == 'resume' %}
+                        {% set nextStage = commonground_resource(request.currentStage) %}
+                        <a class="btn btn--block"
+                           href="{{ path('app_process_slug',{id: process.id, slug:  nextStage.slug}) }}">{{ 'resume'|trans|capitalize }}</a>
+                    {% elseif resumeRequest is defined and resumeRequest == 'see' %}
+                        <a class="btn btn--block"
+                           href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'see'|trans|capitalize }}</a>
+                    {% else %}
+                        <a class="btn btn--block"
+                           href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'start'|trans|capitalize }}</a>
+                    {% endif %}
                 </div><!-- /.col -->
             {% elseif slug != 'submit' %}
                 <div class="col-md-6" style="padding-left: 0px;">
-                    <button class="btn btn--block"  name="submit">Opslaan</button>
+                    <button class="btn btn--block" name="submit">{{ 'save'|trans|capitalize }}</button>
                 </div><!-- /.col -->
             {% endif %}
 
             {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
                 <div class="col-md-6" style="padding-right: 0px;">
-                    <a class="btn btn--primary btn--block" href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Terug naar {{ stage.previous.name }}</a>
+                    <a class="btn btn--primary btn--block"
+                       href="{{ path('app_process_slug',{id: process.id, slug: stage.previous.slug}) }}">Vorige</a>
                 </div>
             {% endif %}
 
-            <!-- Page Break -->
-            <div style="height: 20px;"></div>
+
         </form>
 
     </div><!-- /.col -->
 
-
-
+    <div class="col-md-4  col-sm-12">
         {% if slug != 'instruction' %}
+            {% include 'process/widgets/progressbar.html.twig' %}
+
             <!-- Page Break -->
             <div style="height: 20px"></div>
+            {% include 'process/widgets/stages.html.twig' %}
 
-            <div class="content-background">
-                <div class="content">
-                    <h2>Stappen</h2>
-                    <ul class="list list--timeline list--timeline-compact">
-                        <li class="list__item {% if stage.slug == 'instruction' %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete'%}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete'%}<a href="{{ path('app_process_slug',{id:process.id,slug:'instruction'}) }}">{{ 'instruction'|trans|capitalize }}</a>{% else %}{{ 'instruction'|trans|capitalize }}{% endif %}</li>
-                        {% for iteratedStage in process.stages %}
-                            <li class="list__item {% if stage.slug == iteratedStage.slug %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete'%}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete'%}<a href="{{ path('app_process_slug',{id:process.id,slug:iteratedStage.slug}) }}">{{ iteratedStage.name|capitalize }}{% else %}{{ iteratedStage.name|capitalize }}{% endif %}</a></li>
-                        {% endfor %}
-                        <li class="list__item {% if stage.slug == 'submit' or request.status == 'submitted' %}list__item--active{% endif %}"><a href="{{ path('app_process_slug',{id:process.id,slug:'submit'}) }}">{{ 'submit'|trans|capitalize }}</a></li>
-                        <li class="list__item {% if request.status == 'in progress' %}list__item--active{% else %}list__item--disabled{% endif %}" >In behandeling</li>
-                        <li class="list__item {% if request.status == 'processed' %}list__item--active{% else %}list__item--disabled{% endif %}">Uitsluitsel</li>
-                    </ul>
-                </div>
-            </div>
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+            {% include 'process/widgets/checklist.html.twig' %}
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+            {% include 'process/widgets/properties.html.twig' %}
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+            {% include 'process/widgets/contact.html.twig' %}
+        {% else %}
+            {% if user is defined and user is not empty %}
+                {% include 'process/widgets/requests.html.twig' %}
+            {% endif %}
         {% endif %}
-{% endif %}
+    </div>
+</div>
 {% endblock %}

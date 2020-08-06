@@ -30,7 +30,7 @@
                     {% else %}
                     geboortedatum: '',
                     {% endif %}
-                    url: 'https://brp.westfriesland.commonground.nu/ingeschrevenpersonen/uuid/{{ ingeschrevenpersoon['id'] }}'
+                    url: '{{ ingeschrevenpersoon['@id'] }}'
                 },
                 {% endfor %}
             ];

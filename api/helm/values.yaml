@@ -9,10 +9,10 @@ settings:
   title: Proto Applicatie NL Design
   version: V.0.1
   id: 1ef30b69-6b28-4fbd-a0cd-83d6ff3c505e
-  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
+  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: application
   repro: https://github.com/ConductionNL/pan
-  demo: www.zuid-drecht.nl
+  demo: www.conduction.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: zuid-drecht.nl
   subdomain: false
@@ -24,6 +24,7 @@ settings:
   unit: Common-Ground
   env: dev
   web: false
+  internal: false
   debug: 1
   cache: 1
   replicaCount: 1
@@ -105,6 +106,15 @@ mercure:
   service:
     type: NodePort
     port: 80
+
+redis:
+    port: 6379
+    version: 5.0
+    memory: 100Mi
+    cpu: 100m
+    limits:
+        memory: 200Mi
+        cpu: 250m
 
 ingress:
   annotations:

@@ -1,17 +1,32 @@
-    <nav class=" {% if application is defined and application.defaultConfiguration.configuration.colorSchemeMenu is defined  %}{{ application.defaultConfiguration.configuration.colorSchemeMenu }}{% else %}background--donkerblauw{% endif %}" id="docs-nav">
-        <div class="container">
-            <div class="top-nav__block top-nav-autoresize">
-                <ul class="nav nav--submenu">
-                {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.mainMenu is defined  %}
+<nav
+    class=" {% if application is defined and application.defaultConfiguration.configuration.colorSchemeMenu is defined %}{{ application.defaultConfiguration.configuration.colorSchemeMenu }}{% else %}background--donkerblauw{% endif %}"
+    id="docs-nav">
+    <div class="container">
+        <div class="top-nav__block top-nav-autoresize">
+            <ul class="nav nav--submenu">
+                {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.mainMenu is defined %}
                     {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
-                    {% for item in menu.menuItems %}
-                        <li class="nav__item">
-                            <a href="{{ item.href }}" title="Home" class="nav__link  ">
-                                <i class="{{ item.icon }}" role="presentation"></i>
-                                <span>{{ item.name }}</span>
-                            </a>
-                        </li>
-                    {% endfor %}
+
+                    {% if application.id == '3f44c00e-d919-4f89-bd4c-b730c9b2620a' %}
+                        {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
+                            <li class="nav__item">
+                                <a href="{{ item.href }}" title="Home" class="nav__link  ">
+                                    <i class="{{ item.icon }}" role="presentation"></i>
+                                    <span>{{ item.name }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        {% for item in menu.menuItems %}
+                            <li class="nav__item">
+                                <a href="{{ item.href }}" title="Home" class="nav__link  ">
+                                    <i class="{{ item.icon }}" role="presentation"></i>
+                                    <span>{{ item.name }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+
                 {% else %}
                     <li class="nav__item">
                         <a href="{{ path('app_default_index') }}" title="Home" class="nav__link  ">
@@ -21,45 +36,69 @@
                     </li>
                 {% endif %}
                 {% if user is defined and user is not empty %}
-                    {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedIn is defined  %}
-                        {% set loggedIn = commonground_resource(application.defaultConfiguration.configuration.loggedIn) %}
+                    {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedIn is defined %}
+                        {% set loggedInMenu = commonground_resource(application.defaultConfiguration.configuration.loggedIn) %}
                         <li class="nav__item nav__item--parent">
-                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px" class="fas fa-user"></i>{{ user.naam.voornamen }} {{ user.naam.geslachtsnaam }}</a>
-                            <ul class="nav__submenu" style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
-                                {% for item in loggedIn.menuItems %}
-                                    <li class="nav__item" style="text-align: center" >
-                                        <a  href="{{ item.href }}" title="Home" class="nav__link">
+                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px"
+                                                                               class="fas fa-user"></i>{{ user.naam.voornamen }} {{ user.naam.geslachtsnaam }}
+                            </a>
+                            <ul class="nav__submenu"
+                                style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
+                                {% for item in loggedInMenu.menuItems %}
+                                    <li class="nav__item" style="text-align: center">
+                                        <a href="{{ item.href }}" title="Home" class="nav__link">
                                             <span>{{ item.name }}</span>
                                         </a>
                                     </li>
                                 {% endfor %}
-                                <li class="nav__item" style="text-align: center" >
-                                    <a class="nav__link" style="height: 100%" href="{{ path('app_user_logout') }}">Uitloggen</a></li>
+                                <li class="nav__item" style="text-align: center">
+                                    <a class="nav__link" style="height: 100%" href="{{ path('app_user_logout') }}">Uitloggen</a>
+                                </li>
                             </ul>
                         </li>
                     {% else %}
                         <li class="nav__item nav__item--parent">
-                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px" class="fas fa-user"></i>{{ user.naam.voornamen }} {{ user.naam.geslachtsnaam }}</a>
-                            <ul class="nav__submenu" style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
-                                <li class="nav__item" style="text-align: center" >
-                                    <a class="nav__link" style="height: 100%" href="{{ path('app_user_logout') }}">Uitloggen</a></li>
+                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px"
+                                                                               class="fas fa-user"></i>{{ user.naam.voornamen }} {{ user.naam.geslachtsnaam }}
+                            </a>
+                            <ul class="nav__submenu"
+                                style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
+                                <li class="nav__item" style="text-align: center">
+                                    <a class="nav__link" style="height: 100%" href="{{ path('app_user_logout') }}">Uitloggen</a>
+                                </li>
                             </ul>
                         </li>
                     {% endif %}
                 {% else %}
-                    {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedOut is defined  %}
+                    {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.loggedOut is defined %}
                         {% set loggedOut = commonground_resource(application.defaultConfiguration.configuration.loggedOut) %}
                         <li class="nav__item nav__item--parent">
-                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px;" class="fas fa-lock"></i>Inloggen</a>
-                            <ul class="nav__submenu" style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
-                                <li class="nav__item" style="text-align: center" >
-                                    <a  href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" title="Home" class="nav__link">
-                                        <span>Inwoner</span>
-                                    </a>
+                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px;"
+                                                                               class="fas fa-lock"></i>Inloggen</a>
+                            <ul class="nav__submenu"
+                                style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
+                                <li class="nav__item" style="text-align: center">
+                                    {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
+                                        <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                           title="Home" class="nav__link">
+                                            <span>Persoon</span>
+                                        </a>
+                                    {% else %}
+                                        <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                           title="Home" class="nav__link">
+                                            <span>Persoon</span>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                                <li class="nav__item" style="text-align: center">
+                                        <a href=" {{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                           title="Home" class="nav__link">
+                                            <span>Bedrijf</span>
+                                        </a>
                                 </li>
                                 {% for item in loggedOut.menuItems %}
-                                    <li class="nav__item" style="text-align: center" >
-                                        <a  href="{{ item.href }}" title="Home" class="nav__link">
+                                    <li class="nav__item" style="text-align: center">
+                                        <a href="{{ item.href }}" title="Home" class="nav__link">
                                             <span>{{ item.name }}</span>
                                         </a>
                                     </li>
@@ -68,21 +107,37 @@
                         </li>
                     {% else %}
                         <li class="nav__item nav__item--parent">
-                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px;" class="fas fa-lock"></i>Inloggen</a>
-                            <ul class="nav__submenu" style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
-                                <li class="nav__item" style="text-align: center" >
-                                    <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" title="Home" class="nav__link">
-                                        <span>Inwoner</span>
+                            <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px;"
+                                                                               class="fas fa-lock"></i>Inloggen</a>
+                            <ul class="nav__submenu"
+                                style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
+                                <li class="nav__item" style="text-align: center">
+                                    {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
+                                        <a href=" {{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                           title="Home" class="nav__link">
+                                            <span>Persoon</span>
+                                        </a>
+                                    {% else %}
+                                        <a href=" {{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                           title="Home" class="nav__link">
+                                            <span>Persoon</span>
+                                        </a>
+                                    {% endif %}
+                                </li>
+                                <li class="nav__item" style="text-align: center">
+                                    <a href=" {{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                                       title="Home" class="nav__link">
+                                        <span>Bedrijf</span>
                                     </a>
                                 </li>
                             </ul>
                         </li>
                     {% endif %}
                 {% endif %}
-                </ul>
+            </ul>
 
-            </div>
         </div>
+    </div>
 
-    </nav>
+</nav>
 
