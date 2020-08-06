@@ -41,28 +41,31 @@
             {% if resources is not empty %}
                 <ul class="list list--card list--card-small">
                     {% for team in resources %}
-                        <li class="card card--small">
-                            <div class="card__content">
-                                <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>
-                                <div class="card__body">
-                                    <div class="row" style=" height: 100%; width: 100%;">
-                                        <div class="col-sm-8" style="padding-right: 0px;">
-                                            <span class="card__title">{{ team.name }}</span><br>
-                                            {% if team.description is defined and team.description is not empty %}
-                                                <span>{{ team.description }}</span>
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div style="float: right;">
-                                                <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                    <a href="{{ path('app_education_team', {id: team.id}) }}">lees meer</a>
+                        {% if team.type is defined and team.type is not empty and (team.type == 'Leerjaar' or team.type == 'Klas' or team.type == 'Studiegroep')%}
+                            <li class="card card--small">
+                                <div class="card__content">
+                                    <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>
+                                    <div class="card__body">
+                                        <div class="row" style=" height: 100%; width: 100%;">
+                                            <div class="col-sm-8" style="padding-right: 0px;">
+                                                <span class="card__title">{{ team.name }}</span><br>
+                                                {% if team.description is defined and team.description is not empty %}
+                                                    <span>{{ team.description }}</span>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div style="float: right;">
+                                                    <div style="display: flex; flex-direction: column; justify-items: center;">
+                                                        <p style="margin: 0;">Groep soort: {{ internship.employmentType }}</p>
+                                                        <a href="{{ path('app_education_team', {id: team.id}) }}">lees meer</a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
+                            </li>
+                        {% endif %}
                     {% endfor %}
                 </ul>
             {% else %}
