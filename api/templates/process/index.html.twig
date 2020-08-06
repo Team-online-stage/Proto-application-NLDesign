@@ -16,7 +16,7 @@
     </section>
 
     {% if not app.user %}
-            <div class="notification notification--warning">
+            <div class="notification notification--info">
                 <div class="notification__content">
                     <div class="notification__type">{{ 'attention'|trans|capitalize }}</div>
                     <h2 class="notification__title">{{ 'you can not save or submit procceses if you are not loged in'|trans|capitalize }}</h2>
@@ -28,7 +28,7 @@
         <div class="col-md-12">
             <div class="content-background" >
             	<div class="content">
-                        {% if processes is defined and processes is not empty %}
+                    {% if processes is defined and processes is not empty %}
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -71,13 +71,11 @@
                         </tbody>
                     </table>
 
-                        {% else %}
-                        <h1>{{ 'no proccesses available'|trans|capitalize }}</h1>
-                        {% endif %}
+                    {% else %}
+                    <h1>{{ 'no proccesses available'|trans|capitalize }}</h1>
+                    {% endif %}
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
         </div><!-- /.col -->
     </div>
-
-
 {% endblock %}

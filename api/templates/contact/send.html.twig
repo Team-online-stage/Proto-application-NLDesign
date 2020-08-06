@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+
+
+<section class="row">
+    <div class="col-md-12">
+        <div class="content">
+            <header class="content__header">
+                {% if resource.backlink is defined %}
+                <a class="backlink" href="{{ resource.backlink }}">{{ 'previous'|trans|capitalize }}</a>
+                {% endif %}
+                <header class="content__header">
+                    <h1 class="content__header-title">{{ 'message'|trans|capitalize }}</h1>
+                </header>
+            </header>
+        </div><!-- ./content -->
+    </div><!-- ./col -->
+</section>
+
+{% if not app.user %}
+    <div class="notification notification--info">
+        <div class="notification__content">
+            <div class="notification__type">{{ 'attention'|trans|capitalize }}</div>
+            <h2 class="notification__title">{{ 'you can not submit a message if you are not loged in'|trans|capitalize }}</h2>
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+    <div class="col-md-8  col-sm-12">
+        <form method="post" action="{{ path('app_contact_send') }}" class="form">
+        </form>
+    </div><!-- /.col -->
+
+    <div class="col-md-4  col-sm-12">
+
+    </div>
+</div>
+{% endblock %}
