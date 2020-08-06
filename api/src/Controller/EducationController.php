@@ -462,12 +462,12 @@ class EducationController extends AbstractController
                     $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
 
                     //create an organization in WRC
-                    $organization = [];
-                    $organization['name'] = 'bedrijfUserContact';
-                    $organization['description'] = 'Beschrijving van dit bedrijfUserContact';
-                    $organization['rsin'] = '';
-                    $organization['contact'] = $contact['@id'];
-                    $commonGroundService->createResource($organization, ['component' => 'wrc', 'type' => 'organizations']);
+//                    $organization = [];
+//                    $organization['name'] = 'bedrijfUserContact';
+//                    $organization['description'] = 'Beschrijving van dit bedrijfUserContact';
+//                    $organization['rsin'] = '999912345';
+//                    $organization['contact'] = $contact['@id'];
+//                    $commonGroundService->createResource($organization, ['component' => 'wrc', 'type' => 'organizations']);
                 }
             }
 
@@ -565,7 +565,7 @@ class EducationController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'cc', 'type' => 'organizations'], $variables['query'])['hydra:member'];
 
         return $variables;
     }
@@ -584,7 +584,7 @@ class EducationController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get Resource
-        $variables['team'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id]);
+        $variables['team'] = $commonGroundService->getResource(['component' => 'cc', 'type' => 'organizations', 'id' => $id]);
 
         return $variables;
     }
