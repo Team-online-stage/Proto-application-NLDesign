@@ -153,7 +153,6 @@ class ProcessController extends AbstractController
                 $request = $commonGroundService->saveResource($request, ['component' => 'vrc', 'type' => 'requests']);
             }
 
-
             // stores an attribute in the session for later reuse
             $variables['request'] = $request;
             $session->set('request', $variables['request']);
