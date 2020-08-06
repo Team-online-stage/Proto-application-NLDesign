@@ -50,16 +50,16 @@ class ContactController extends AbstractController
         $variables = $applicationService->getVariables();
 
         // We accept any and all ways of pre-filling the form
-        $variables['resource'] =array_merge ($request->query->all(),$request->request->all());
+        $variables['resource'] = array_merge($request->query->all(), $request->request->all());
 
         // We need to fall back on resources
-        if(!array_key_exists('resources', $variables['resource'])){
+        if (!array_key_exists('resources', $variables['resource'])) {
             $variables['resource']['resources'] = [];
         }
 
         // Is a single resource has been passed we need to supply it to the resources array
-        if(array_key_exists('resource', $variables['resource'])){
-            $variables['resource']['resources'][] =  $variables['resource']['resource'];
+        if (array_key_exists('resource', $variables['resource'])) {
+            $variables['resource']['resources'][] = $variables['resource']['resource'];
             unset($variables['resource']['resource']);
         }
 
@@ -69,7 +69,7 @@ class ContactController extends AbstractController
             $resource = $commonGroundService->saveResource($resource, ['component' => 'cmc', 'type' => 'contact_moments']);
 
             // If the contact moment was succesfully created we forward the user
-            if(array_key_exists('@id', $resource)){
+            if (array_key_exists('@id', $resource)) {
                 return $this->redirect($this->generateUrl('app_contact_index'));
             }
         }
