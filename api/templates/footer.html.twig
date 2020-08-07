@@ -63,9 +63,7 @@
                             {% endif %}
                             {# lets deal with templates #}
                             {% if footer3['@type'] == 'Template' %}
-                                {% autoescape %}
-                                    {{ footer3.content|raw }}
-                                {% endautoescape %}
+                                {{ include(template_from_string(footer3.content|raw)) }}
                             {% endif %}
                         </div>
                     {% endif %}
@@ -87,9 +85,7 @@
                             {% endif %}
                             {# lets deal with templates #}
                             {% if footer4['@type'] == 'Template' %}
-                                {% autoescape %}
-                                    {{ footer4.content|raw }}
-                                {% endautoescape %}
+                                {{ include(template_from_string(footer4.content|raw)) }}
                             {% endif %}
                         </div>
                     {% endif %}
