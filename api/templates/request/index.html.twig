@@ -8,7 +8,7 @@
 
             <div class="content-background">
                 <div class="content">
-                    {% if user is defined and user is not null %}
+                    {% if app.user is defined and app.user is not null %}
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -60,7 +60,7 @@
         {% endif %}
 
         <div class="col-md-4">
-            {% if user is not empty %}
+            {% if app.user is not empty %}
                 <div class="content-background">
 
                     <div class="content">
@@ -128,7 +128,7 @@
                                         {% if user.verblijfplaats.huisnummertoevoeging is defined and user.verblijfplaats.huisnummertoevoeging is not empty %}{{ user.verblijfplaats.huisnummertoevoeging }}{% endif %}
                                         <br>
                                         {% if user.verblijfplaats.postcode is defined and user.verblijfplaats.postcode is not empty %}{{ user.verblijfplaats.postcode }}{% endif %}
-                                        {% if user.verblijfplaats.woonplaatsnaam is defined and  user.verblijfplaats.woonplaatsnaam is not empty %}{{ user.verblijfplaats.woonplaatsnaam }}{% endif %}
+                                        {% if user.verblijfplaats.woonplaatsnaam is defined and user.verblijfplaats.woonplaatsnaam is not empty %}{{ user.verblijfplaats.woonplaatsnaam }}{% endif %}
                                     </p>
                                 </div>
                             </li>

@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% if user is defined and user is not null %}
+    {% if app.user is defined and app.user is not null %}
         {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
         {% if participants|length > 0 %}
             {% set participant = participants[0] %}
@@ -85,7 +85,7 @@
                 </aside>
 
                 <div class="col-xl-9 col-lg-8 col-md-9">
-                    {% if user is defined and user is not null %}
+                    {% if app.user is defined and app.user is not null %}
                         {% if meetsPrerequisites == false %}
                             <div class="notification notification--warning">
                                 <div class="notification__content">
@@ -258,7 +258,7 @@
                             <span class="collapse__title">Inschrijven voor deze tutorial</span>
                         </div>
                         <div class="collapse__details collapse__details--open">
-                            {% if user is defined and user is not null %}
+                            {% if app.user is defined and app.user is not null %}
                                 {% if registered == false %}
                                     {% if meetsPrerequisites == true %}
                                         <form method="post" action="{{ path('app_education_course', {id: course.id}) }}">

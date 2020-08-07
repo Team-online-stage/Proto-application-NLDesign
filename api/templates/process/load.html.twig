@@ -47,7 +47,7 @@
 
             {% if slug == 'instruction' %}
                 <div class="col-md-12 no-padding">
-                    {% if process.requireLogin is defined and process.requireLogin == 'true' and (user is not defined or user is null) %}
+                    {% if process.requireLogin is defined and process.requireLogin == 'true' and (app.user is not defined or app.user is null) %}
                         <div class="col-md-6" style="padding-left: 0px;">
                             <button class="btn btn--block" name="submit">{{ 'login'|trans|capitalize }}</button>
                         </div><!-- /.col -->
@@ -102,7 +102,7 @@
             {% include 'process/widgets/contact.html.twig' %}
 
         {% else %}
-            {% if user is defined and user is not empty %}
+            {% if app.user is defined and app.user is not empty %}
                 {% include 'process/widgets/requests.html.twig' %}
             {% endif %}
         {% endif %}
