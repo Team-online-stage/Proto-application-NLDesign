@@ -64,8 +64,8 @@ class ContactController extends AbstractController
         }
 
         // We need an sender on messages
-        if(!array_key_exists('sender', $variables['resource']) && $user = $this->getUser();){
-            $variables['resource']['sender'] = $user['person'];
+        if(!array_key_exists('sender', $variables['resource']) && $user = $this->getUser()){
+            $variables['resource']['sender'] = $user->getPerson();
         }
 
         // Lets handle a post
