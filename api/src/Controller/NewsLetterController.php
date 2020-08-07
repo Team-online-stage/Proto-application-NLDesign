@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
@@ -15,14 +14,12 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- *
- * Class NewsLetterController
+ * Class NewsLetterController.
  *
  * @Route("/newsletter")
  */
 class NewsLetterController extends AbstractController
 {
-
     /**
      * This function shows all available processes.
      *
@@ -31,6 +28,5 @@ class NewsLetterController extends AbstractController
      */
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-
     }
 }
