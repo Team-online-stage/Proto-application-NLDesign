@@ -12,7 +12,7 @@ info:
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/pan.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
+    'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
     
 paths:
   /audit_trails:
@@ -2379,12 +2379,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-08-07 10:46:49'
+        example: '2020-08-07 12:32:53'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-08-07 10:46:49'
+        example: '2020-08-07 12:32:53'
     required: []
   AuditTrail-write:
     properties:
@@ -2432,12 +2432,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-08-07 10:46:49'
+        example: '2020-08-07 12:32:53'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-08-07 10:46:49'
+        example: '2020-08-07 12:32:53'
     required: []
   ChangeLog-write:
     properties:
@@ -2478,8 +2478,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: zuid-drecht.nl
-    url: pan.dev.zuid-drecht.nl
+    name: westfriesland.commonground.nu
+    url: pan.dev.westfriesland.commonground.nu
 externalDocs:
   -
     description: 'OAS Documentatie'
