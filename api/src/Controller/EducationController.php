@@ -84,7 +84,15 @@ class EducationController extends AbstractController
             $resource = $request->request->all();
 
             //check if this user is already a participant
-            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+            if (array_key_exists('user', $variables)) {
+                $userContact = $variables['user']['@id'];
+            } elseif (array_key_exists('username', $variables['user'])) { //W.I.P.
+                $users = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['username']])['hydra:member'];
+                if (count($users) > 0) {
+                    $userContact = $users[0]['person'];
+                }
+            }
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $userContact])['hydra:member'];
 
             $oldParticipant = [];
             $participant = [];
