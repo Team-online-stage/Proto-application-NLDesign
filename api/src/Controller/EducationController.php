@@ -462,12 +462,12 @@ class EducationController extends AbstractController
                     $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
 
                     //create an organization in WRC
-                    $organization = [];
-                    $organization['name'] = 'bedrijfUserContact';
-                    $organization['description'] = 'Beschrijving van dit bedrijfUserContact';
-                    $organization['rsin'] = '999912345';
-                    $organization['contact'] = $contact['@id'];
-                    $commonGroundService->createResource($organization, ['component' => 'wrc', 'type' => 'organizations']);
+//                    $organization = [];
+//                    $organization['name'] = 'bedrijfUserContact';
+//                    $organization['description'] = 'Beschrijving van dit bedrijfUserContact';
+//                    $organization['rsin'] = '999912345';
+//                    $organization['contact'] = $contact['@id'];
+//                    $commonGroundService->createResource($organization, ['component' => 'wrc', 'type' => 'organizations']);
                 }
             }
 
