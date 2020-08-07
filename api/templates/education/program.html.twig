@@ -137,7 +137,7 @@
                                         </div>
                                         <div class="definition-list__description">
                                             <div class="row">
-                                                {% if "http" in program.provider %}
+                                                {% if commonground_is_resource(program.provider) %}
                                                     {% set provider = commonground_resource(program.provider) %}
                                                     {% if provider is defined and provider is not empty %}
                                                         <div class="col-sm-6">
