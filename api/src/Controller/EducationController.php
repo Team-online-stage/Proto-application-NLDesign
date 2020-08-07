@@ -393,8 +393,8 @@ class EducationController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $organization = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'6a001c4c-911b-4b29-877d-122e362f519d']); //conduction
-        $variables['userGroups'] = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups'], ['organization' => $organization], $variables['query'])['hydra:member'];
+        $conductionUrl = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'6a001c4c-911b-4b29-877d-122e362f519d']); //conduction
+        $variables['userGroups'] = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups'], ['organization' => $conductionUrl], $variables['query'])['hydra:member'];
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -404,35 +404,81 @@ class EducationController extends AbstractController
             $contact = [];
             $user = [];
 
-            //create the email
+            //create the email in CC
             $email['name'] = 'userEmail';
             $email['email'] = $resource['email'];
-            //$email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+            $email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
 
-            //create the contact
+            //create the contact in CC
+            if (array_key_exists('achternaam', $resource)) {
+                if (array_key_exists('tussenvoegsel', $resource)) {
+                    $contact['additionalName'] = $resource['tussenvoegsel'];
+                }
+                $contact['familyName'] = $resource['achternaam'];
+            }
             foreach ($resource['userGroups'] as $userGroupUrl) { //check the selected group(s)
                 $userGroup = $commonGroundService->getResource($userGroupUrl); //get the group resource
                 if ($userGroup['name'] == 'Studenten') { //check if the group studenten is selected
                     $contact['name'] = 'studentUserContact';
+                    if (array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
+                        $contact['givenName'] = $resource['voornaam'];
+                    } else {
+                        $contact['givenName'] = 'studentUserContact';
+                    }
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
-                //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']);
+                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'people']); //create a person in CC
+
+                    //create the participant in EDU
+                    $participant = [];
+                    $participant['person'] = $contact['@id'];
+                    $commonGroundService->createResource($participant, ['component' => 'edu', 'type' => 'participants']);
+
+                    //create the employee in MRC
+                    $employee = [];
+                    $employee['person'] = $contact['@id'];
+                    $employee['organization'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'organizations']);
+                    $commonGroundService->createResource($employee, ['component' => 'mrc', 'type' => 'employees']);
                 } elseif ($userGroup['name'] == 'Bedrijven') { //check if the group bedrijven is selected
-                    $contact['name'] = 'organizationUserContact';
+                    $contactPerson = [];
+                    $contactPerson['name'] = 'bedrijfUserContact';
+                    if (array_key_exists('voornaam', $resource) && !empty($resource['voornaam'])) {
+                        $contactPerson['givenName'] = $resource['voornaam'];
+                    } else {
+                        $contactPerson['givenName'] = 'bedrijfUserContact';
+                    }
+                    $contactPerson['emails'] = [];
+                    $contactPerson['emails'][0] = $email['@id'];
+                    $contactPerson = $commonGroundService->createResource($contactPerson, ['component' => 'cc', 'type' => 'people']); //create a person in CC
+
+                    //create an organization in CC
+                    $contact['name'] = 'bedrijfUserContact';
+                    $contact['description'] = 'Beschrijving van dit bedrijfUserContact';
+                    $contact['type'] = 'Participant';
                     $contact['emails'] = [];
                     $contact['emails'][0] = $email['@id'];
-                    //$contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
+                    $contact['persons'] = [];
+                    $contact['persons'][0] = $contactPerson['@id'];
+                    $contact = $commonGroundService->createResource($contact, ['component' => 'cc', 'type' => 'organizations']);
+
+                    //create an organization in WRC
+//                    $organization = [];
+//                    $organization['name'] = 'bedrijfUserContact';
+//                    $organization['description'] = 'Beschrijving van dit bedrijfUserContact';
+//                    $organization['rsin'] = '999912345';
+//                    $organization['contact'] = $contact['@id'];
+//                    $commonGroundService->createResource($organization, ['component' => 'wrc', 'type' => 'organizations']);
                 }
             }
 
-            //create the user
-            $user['organization'] = $organization;
+            //create the user in UC
+            $user['organization'] = $conductionUrl;
             $user['username'] = $resource['email'];
-            $user['password'] = $resource['password'];
+            $user['password'] = $resource['wachtwoord'];
             $user['person'] = $contact['@id'];
             $user['userGroups'] = [];
             $user['userGroups'] = $resource['userGroups'];
-            //$commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
+            $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
 
             return $this->redirectToRoute('app_default_index');
         }
@@ -501,6 +547,44 @@ class EducationController extends AbstractController
 
             return $this->redirectToRoute('app_education_test', ['id' => $variables['test']['id']]);
         }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/teams")
+     * @Template
+     */
+    public function teamsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'cc', 'type' => 'organizations'], $variables['query'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/teams/{id}")
+     * @Template
+     */
+    public function teamAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get Resource
+        $variables['team'] = $commonGroundService->getResource(['component' => 'cc', 'type' => 'organizations', 'id' => $id]);
 
         return $variables;
     }

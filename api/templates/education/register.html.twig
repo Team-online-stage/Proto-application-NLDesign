@@ -14,24 +14,39 @@
             </div>
         </div>
     {% else %}
-        <form method="post" action="{{ path('app_default_index') }}">
+        <form method="post" action="{{ path('app_education_register') }}" name="thisForm">
+            <div class="input">
+                <label class="input__label" for="voornaam">Voornaam </label>
+                <input type="text" id="voornaam" name="voornaam" class="input__control input__control--m input__control--text">
+            </div>
+
+            <div class="input">
+                <label class="input__label" for="tussenvoegsel">Tussenvoegsel </label>
+                <input type="text" id="tussenvoegsel" name="tussenvoegsel" class="input__control input__control--s input__control--text">
+            </div>
+
+            <div class="input">
+                <label class="input__label" for="achternaam">Achternaam </label>
+                <input type="text" id="achternaam" name="achternaam" class="input__control input__control--m input__control--text">
+            </div>
+
             <div class="input">
                 <label class="input__label" for="email">E-mailadres <span style="color: red">*</span></label>
                 <input required="" type="email" id="email" name="email" class="input__control input__control--l input__control--text">
             </div>
 
-            <div class="input">
+            <div class="input" id="wachtwoordDiv">
                 <label class="input__label" for="wachtwoord">Wachtwoord <span style="color: red">*</span></label>
+                <div class="input__error" id="wachtwoordError">Error Bericht Komt Hier</div>
                 <input required="" type="password" id="wachtwoord" name="wachtwoord" minlength="8" class="input__control input__control--m input__control--text">
-            </div>
 
-            <div class="input">
                 <label class="input__label" for="wachtwoordBevestigen">Wachtwoord bevestigen <span style="color: red">*</span></label>
                 <input required="" type="password" id="wachtwoordBevestigen" name="wachtwoordBevestigen" minlength="8" class="input__control input__control--m input__control--text">
             </div>
 
-            <fieldset class="input">
+            <fieldset class="input" id="checkboxGroupDiv">
                 <legend class="input__legend">Ik ben een...</legend>
+                <div class="input__error" id="checkboxError">Error Bericht Komt Hier</div>
                 <div class="input__group input__group--checkbox">
                     {% for userGroup in userGroups %}
                         {% if userGroup.canBeRegisteredFor == true %}
@@ -49,8 +64,51 @@
             </fieldset>
 
             <div class="input">
-                <button type="submit" class="btn">registreren <i class="icon icon-arr-forward"></i></button>
+                <button onclick="checkPassword()" type="button" id="registreren" class="btn">registreren <i class="icon icon-arr-forward"></i></button>
             </div>
         </form>
     {% endif %}
+
+    <script>
+        function checkPassword() {
+            var wachtwoord = document.getElementById('wachtwoord').value;
+            var wachtwoordBevestigen = document.getElementById('wachtwoordBevestigen').value;
+            var wachtwoordDiv = document.getElementById('wachtwoordDiv');
+            var wachtwoordError = document.getElementById('wachtwoordError');
+            var submitButton = document.getElementById('registreren');
+
+            if (wachtwoord == wachtwoordBevestigen && wachtwoord.length > 7) {
+                wachtwoordDiv.classList.remove('input--invalid');
+                var form = document.thisForm;
+                var checkboxGroupDiv = document.getElementById('checkboxGroupDiv');
+                var checkboxError = document.getElementById('checkboxError');
+                var checked = false;
+                for (var i = 0; i < form.elements.length; i++) {
+                    if (form.elements[i].type == 'checkbox') {
+                        if (form.elements[i].checked == true) {
+                            checked = true;
+                        }
+                    }
+                }
+                if (checked == true) {
+                    checkboxGroupDiv.classList.remove('input--invalid');
+                    submitButton.type = 'submit';
+                }
+                else {
+                    checkboxGroupDiv.classList.add('input--invalid');
+                    submitButton.type = 'button';
+                    checkboxError.innerHTML = 'Selecteer wat voor een gebruiker u bent.';
+                }
+            } else {
+                submitButton.type = 'button';
+                wachtwoordDiv.classList.add('input--invalid');
+                if (wachtwoord != wachtwoordBevestigen){
+                    wachtwoordError.innerHTML = 'De wachtwoorden zijn niet hetzelfde.';
+                }
+                else if (wachtwoord.length < 8) {
+                    wachtwoordError.innerHTML = 'Wachtwoord is ongeldig. Het moet uit minimaal 8 karakters bestaan.';
+                }
+            }
+        }
+    </script>
 {% endblock %}

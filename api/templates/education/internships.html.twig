@@ -52,7 +52,9 @@
                                             {% else %}
                                                 <span class="card__title">{{ internship.name }}</span><br>
                                             {% endif %}
-                                            <span>{{ internship.description }}</span>
+                                            {% if internship.description is defined and internship.description is not empty %}
+                                                <span>{{ internship.description }}</span>
+                                            {% endif %}
                                         </div>
                                         <div class="col-sm-4">
                                             <div style="float: right;">
