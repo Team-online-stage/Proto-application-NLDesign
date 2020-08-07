@@ -107,7 +107,7 @@
       </trans-unit>
       <trans-unit id="WpL28In" resname="instruction">
         <source>instruction</source>
-        <target>instructies</target>
+        <target>instructie</target>
       </trans-unit>
       <trans-unit id="YFQKuu_" resname="this request is currently">
         <source>this request is currently</source>
@@ -139,11 +139,167 @@
       </trans-unit>
       <trans-unit id="YkyVVAY" resname="activities">
         <source>activities</source>
-        <target>__activities</target>
+        <target>activiteiten</target>
       </trans-unit>
       <trans-unit id=".euuMDh" resname="programs">
         <source>programs</source>
-        <target>__programs</target>
+        <target>programmas</target>
+      </trans-unit>
+      <trans-unit id="OKgeh_e" resname="person">
+        <source>person</source>
+        <target>persoon</target>
+      </trans-unit>
+      <trans-unit id="rzobsxK" resname="organization">
+        <source>organization</source>
+        <target>organisatie</target>
+      </trans-unit>
+      <trans-unit id="BPiZbad" resname="user">
+        <source>user</source>
+        <target>gebruiker</target>
+      </trans-unit>
+      <trans-unit id="q9TEHaN" resname="processes">
+        <source>processes</source>
+        <target>processen</target>
+      </trans-unit>
+      <trans-unit id="QoghNQ6" resname="login">
+        <source>login</source>
+        <target>inloggen</target>
+      </trans-unit>
+      <trans-unit id="FX3KkuQ" resname="save">
+        <source>save</source>
+        <target>opslaan</target>
+      </trans-unit>
+      <trans-unit id="baYk26U" resname="checklist">
+        <source>checklist</source>
+        <target>controllelijst</target>
+      </trans-unit>
+      <trans-unit id="9czPtzd" resname="messages">
+        <source>messages</source>
+        <target>berichten</target>
+      </trans-unit>
+      <trans-unit id="tfkKlua" resname="progress">
+        <source>progress</source>
+        <target>progressie</target>
+      </trans-unit>
+      <trans-unit id="lq25JFK" resname="properties">
+        <source>properties</source>
+        <target>gegevens</target>
+      </trans-unit>
+      <trans-unit id="7HJCDfX" resname="requests">
+        <source>requests</source>
+        <target>verzoeken</target>
+      </trans-unit>
+      <trans-unit id="enfFFYe" resname="stages">
+        <source>stages</source>
+        <target>stappen</target>
+      </trans-unit>
+      <trans-unit id="K2uFPJ5" resname="in progress">
+        <source>in progress</source>
+        <target>in behandeling</target>
+      </trans-unit>
+      <trans-unit id="mxa0TQ4" resname="documents">
+        <source>documents</source>
+        <target>documenten</target>
+      </trans-unit>
+      <trans-unit id="TqFAWIF" resname="home">
+        <source>home</source>
+        <target>home</target>
+      </trans-unit>
+      <trans-unit id="4Hh9Jyp" resname="attention">
+        <source>attention</source>
+        <target>ter informatie</target>
+      </trans-unit>
+      <trans-unit id="oy06T40" resname="you can not save or submit procceses if you are not loged in">
+        <source>you can not save or submit procceses if you are not loged in</source>
+        <target>u kan geen proces opslaan of indienen als u niet bent ingelogd</target>
+      </trans-unit>
+      <trans-unit id="uTw_URA" resname="login required">
+        <source>login required</source>
+        <target>inloggen benodigd</target>
+      </trans-unit>
+      <trans-unit id="myyDzbM" resname="no proccesses available">
+        <source>no proccesses available</source>
+        <target>geen processen beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="baBjNSj" resname="previous">
+        <source>previous</source>
+        <target>vorige</target>
+      </trans-unit>
+      <trans-unit id="yzc16Xg" resname="submitter">
+        <source>submitter</source>
+        <target>indiener</target>
+      </trans-unit>
+      <trans-unit id="LAXqlq0" resname="ask a question">
+        <source>ask a question</source>
+        <target>stel een vraag</target>
+      </trans-unit>
+      <trans-unit id="CEodBuJ" resname="you need to save before you can submit a question">
+        <source>you need to save before you can submit a question</source>
+        <target>u moet eerst opslaan voordat u een vraag kan indienen</target>
+      </trans-unit>
+      <trans-unit id="dYFSfiU" resname="you need to login before you can submit a question">
+        <source>you need to login before you can submit a question</source>
+        <target>u moet eerst inloggen voordat u een vraag kan indienen</target>
+      </trans-unit>
+      <trans-unit id="Sokp.EY" resname="there are currently no messages concerning this item">
+        <source>there are currently no messages concerning this item</source>
+        <target>__there are currently no messages concerning this item</target>
+      </trans-unit>
+      <trans-unit id="q1MKE_R" resname="message">
+        <source>message</source>
+        <target>__message</target>
+      </trans-unit>
+      <trans-unit id="4ZJcDk3" resname="you can not submit a message if you are not loged in">
+        <source>you can not submit a message if you are not loged in</source>
+        <target>__you can not submit a message if you are not loged in</target>
+      </trans-unit>
+      <trans-unit id="CjZ7ks8" resname="sender">
+        <source>sender</source>
+        <target>__sender</target>
+      </trans-unit>
+      <trans-unit id="gbrodrc" resname="receiver">
+        <source>receiver</source>
+        <target>__receiver</target>
+      </trans-unit>
+      <trans-unit id="aeNlaM2" resname="channel">
+        <source>channel</source>
+        <target>__channel</target>
+      </trans-unit>
+      <trans-unit id="I9YRpvb" resname="topic">
+        <source>topic</source>
+        <target>__topic</target>
+      </trans-unit>
+      <trans-unit id="J84dG.Q" resname="send">
+        <source>send</source>
+        <target>__send</target>
+      </trans-unit>
+      <trans-unit id="7X8Ch0B" resname="regarding">
+        <source>regarding</source>
+        <target>__regarding</target>
+      </trans-unit>
+      <trans-unit id="G4NthoB" resname="first name">
+        <source>first name</source>
+        <target>voornaam</target>
+      </trans-unit>
+      <trans-unit id="W4feAqp" resname="last name">
+        <source>last name</source>
+        <target>achternaam</target>
+      </trans-unit>
+      <trans-unit id="KOYEmu." resname="What product do you want to subscribe to:">
+        <source>What product do you want to subscribe to:</source>
+        <target>voor welke producten with u abonneren</target>
+      </trans-unit>
+      <trans-unit id="dYV6RYm" resname="from">
+        <source>from</source>
+        <target>van</target>
+      </trans-unit>
+      <trans-unit id="Zj6hv.." resname="to">
+        <source>to</source>
+        <target>tot</target>
+      </trans-unit>
+      <trans-unit id="NhlFDtB" resname="continue without logging in">
+        <source>continue without logging in</source>
+        <target>doorgaan zonder in te loggen</target>
       </trans-unit>
     </body>
   </file>

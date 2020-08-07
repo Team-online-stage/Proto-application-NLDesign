@@ -11,7 +11,7 @@
                 }
             });
         </script>
-        {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'}) %}
+        {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'})['hydra:member'] %}
 
 
         {% if request.properties.overledene is defined and request.properties.overledene is not empty %}
