@@ -38,7 +38,7 @@
 
     <div class="row">
         <div class="col-sm-8">
-            {% if user is defined and user is not null %}
+            {% if app.user is defined and app.user is not null %}
                 {% if resources is not empty %}
                     <ul class="list list--card list--card-small">
                     {% for student in resources %}

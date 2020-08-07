@@ -1,4 +1,4 @@
-{% if user is defined and user is not empty %}
+{% if app.user is defined and app.user is not empty %}
 <input type="hidden" name="request[submitters][0][brp]" value="{{ user['@id'] }}">
 {% endif %}
 <input type="hidden" name="request[requestType]" value="{{ process.requestType }}">

@@ -5,7 +5,7 @@
         <a class="backlink" href="/education/students">Studenten</a>
     </header>
     <div class="row">
-        {% if user is defined and user is not null %}
+        {% if app.user is defined and app.user is not null %}
         {% set person = commonground_resource(resource.person) %}
         <div class="col-sm-12 col-lg-8">
             <div class="content-background">

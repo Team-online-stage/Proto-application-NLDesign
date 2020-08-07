@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% if user is defined and user is not null %}
+    {% if app.user is defined and app.user is not null %}
         {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
         {% if participants|length > 0 %}
             {% set participant = participants[0] %}
@@ -34,7 +34,7 @@
                                 <p>{{ test.description }}</p>
                             {% endif %}
 
-                            {% if user is defined and user is not null %}
+                            {% if app.user is defined and app.user is not null %}
                                 {% set registeredForActivityCourse = false %}
                                 {% if test.activity is defined and test.activity is not empty %}
                                     {% if participant.courses is defined and participant.courses is not null %}
