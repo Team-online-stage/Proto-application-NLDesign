@@ -94,7 +94,7 @@
     </div>
 </div>
 
-{% if  app.user %}
+{% if app.user %}
 <div class="content-background" style="margin-top: 20px">
     <div class="content">
         <h2>{{ 'submitter'|trans|capitalize }}</h2>
@@ -161,7 +161,7 @@
                         {% if user.verblijfplaats.huisnummertoevoeging is defined and user.verblijfplaats.huisnummertoevoeging is not empty %}{{ user.verblijfplaats.huisnummertoevoeging }}{% endif %}
                         <br>
                         {% if user.verblijfplaats.postcode is defined and user.verblijfplaats.postcode is not empty %}{{ user.verblijfplaats.postcode }}{% endif%}
-                        {% if user.verblijfplaats.woonplaatsnaam is defined and  user.verblijfplaats.woonplaatsnaam is not empty %}{{ user.verblijfplaats.woonplaatsnaam }}{% endif %}
+                        {% if user.verblijfplaats.woonplaatsnaam is defined and user.verblijfplaats.woonplaatsnaam is not empty %}{{ user.verblijfplaats.woonplaatsnaam }}{% endif %}
                     </p>
                 </div>
             </li>

@@ -133,7 +133,7 @@
                                     <span class="collapse__title">Deelnemers</span>
                                 </div>
                                 <div class="collapse__details collapse__details--closed">
-                                    {% if user is defined and user is not null %}
+                                    {% if app.user is defined and app.user is not null %}
                                         {% if team.persons is defined and team.persons is not empty %}
                                             <ul class="list list--card list--card-small">
                                                 {% for person in team.persons %}

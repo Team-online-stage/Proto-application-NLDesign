@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    {% if user is defined and user is not null %}
+    {% if app.user is defined and app.user is not null %}
         {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
         {% if participants|length > 0 %}
             {% set participant = participants[0] %}
@@ -45,7 +45,7 @@
             <div class="row">
                 <div class="col-xl-12 col-lg-12 col-md-12">
 
-                    {% if user is defined and user is not null%}
+                    {% if app.user is defined and app.user is not null%}
                         {% if registeredForCourse == false %}
                             <div class="notification notification--warning">
                                 <div class="notification__content">
@@ -125,7 +125,7 @@
                             <span class="collapse__title">Resultaat indienen</span>
                         </div>
                         <div class="collapse__details collapse__details--open">
-                            {% if user is defined and user is not null %}
+                            {% if app.user is defined and app.user is not null %}
                                 {% if registeredForCourse == true %}
                                     {% if resultSubmitted == false %}
                                         <h2>Uw resultaat</h2>
