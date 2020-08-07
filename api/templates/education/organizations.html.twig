@@ -42,7 +42,7 @@
                 <h2>Partners</h2>
                 <ul class="list list--card list--card-small">
                     {% for organization in resources %}
-                        {% if organization.contact is defined and organization.contact is not empty %}
+                        {% if organization.contact is defined and organization.contact is not empty and commonground_is_resource(organization.contact) %}
                             {% set contact = commonground_resource(organization.contact) %}
                             {% if contact.type is defined and contact.type is not empty and contact.type == 'Partner' %}
                                 <li class="card card--small">
