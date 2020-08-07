@@ -52,9 +52,14 @@
                             <button class="btn btn--block" name="submit">{{ 'login'|trans|capitalize }}</button>
                         </div><!-- /.col -->
                     {% elseif resumeRequest is defined and resumeRequest == 'resume' %}
-                        {% set nextStage = commonground_resource(request.currentStage) %}
-                        <a class="btn btn--block"
-                           href="{{ path('app_process_slug',{id: process.id, slug:  nextStage.slug}) }}">{{ 'resume'|trans|capitalize }}</a>
+                        {% if request.currentStage != 'submit' %}
+                            {% set nextStage = commonground_resource(request.currentStage) %}
+                            <a class="btn btn--block"
+                               href="{{ path('app_process_slug',{id: process.id, slug:  nextStage.slug}) }}">{{ 'resume'|trans|capitalize }}</a>
+                        {% else %}
+                            <a class="btn btn--block"
+                               href="{{ path('app_process_slug',{id: process.id, slug:  request.currentStage}) }}">{{ 'resume'|trans|capitalize }}</a>
+                        {% endif %}
                     {% elseif resumeRequest is defined and resumeRequest == 'see' %}
                         <a class="btn btn--block"
                            href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'see'|trans|capitalize }}</a>
