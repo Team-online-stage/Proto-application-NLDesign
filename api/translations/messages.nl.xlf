@@ -277,6 +277,26 @@
         <source>regarding</source>
         <target>__regarding</target>
       </trans-unit>
+      <trans-unit id="G4NthoB" resname="first name">
+        <source>first name</source>
+        <target>voornaam</target>
+      </trans-unit>
+      <trans-unit id="W4feAqp" resname="last name">
+        <source>last name</source>
+        <target>achternaam</target>
+      </trans-unit>
+      <trans-unit id="KOYEmu." resname="What product do you want to subscribe to:">
+        <source>What product do you want to subscribe to:</source>
+        <target>voor welke producten with u abonneren</target>
+      </trans-unit>
+      <trans-unit id="dYV6RYm" resname="from">
+        <source>from</source>
+        <target>van</target>
+      </trans-unit>
+      <trans-unit id="Zj6hv.." resname="to">
+        <source>to</source>
+        <target>tot</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

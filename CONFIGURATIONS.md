@@ -78,3 +78,9 @@
     this template is then used as the home page for your application.
     
     This configuration can be used in: Proto application
+
+####newsGroups:
+    as value of newsGroups we give an array of the group id's you wish to use.
+    The template uses these numbers to determine which group you wish to subsribe to for the newsletter.
+    
+    This configuration can be used in: Proto application
