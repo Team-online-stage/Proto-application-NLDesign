@@ -159,7 +159,7 @@
       </trans-unit>
       <trans-unit id="q9TEHaN" resname="processes">
         <source>processes</source>
-        <target>processeen</target>
+        <target>processen</target>
       </trans-unit>
       <trans-unit id="QoghNQ6" resname="login">
         <source>login</source>
@@ -203,7 +203,7 @@
       </trans-unit>
       <trans-unit id="TqFAWIF" resname="home">
         <source>home</source>
-        <target>__home</target>
+        <target>home</target>
       </trans-unit>
       <trans-unit id="4Hh9Jyp" resname="attention">
         <source>attention</source>
@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="oy06T40" resname="you can not save or submit procceses if you are not loged in">
         <source>you can not save or submit procceses if you are not loged in</source>
-        <target>u kan geen procces opslaan of indienen als u niet bent ingelogd</target>
+        <target>u kan geen proces opslaan of indienen als u niet bent ingelogd</target>
       </trans-unit>
       <trans-unit id="uTw_URA" resname="login required">
         <source>login required</source>
@@ -296,6 +296,10 @@
       <trans-unit id="Zj6hv.." resname="to">
         <source>to</source>
         <target>tot</target>
+      </trans-unit>
+      <trans-unit id="NhlFDtB" resname="continue without logging in">
+        <source>continue without logging in</source>
+        <target>doorgaan zonder in te loggen</target>
       </trans-unit>
     </body>
   </file>

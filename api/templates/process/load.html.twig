@@ -49,7 +49,19 @@
                 <div class="col-md-12 no-padding">
                     {% if process.requireLogin is defined and process.requireLogin == 'true' and (app.user is not defined or app.user is null) %}
                         <div class="col-md-6" style="padding-left: 0px;">
-                            <button class="btn btn--block" name="submit">{{ 'login'|trans|capitalize }}</button>
+                            {% if process.audience == 'person' %}
+                                {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
+                                    <a class="btn btn--block" href="{{ commonground_cleanurl({"component":"digispoof-ui"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
+                                {% else %}
+                                    <a class="btn btn--block" href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
+                                {% endif %}
+                            {% elseif process.audience == 'organization' %}
+                                <a class="btn btn--block" href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
+                            {% endif %}
+                        </div><!-- /.col -->
+                        <div class="col-md-6" style="padding-right: 0px;">
+                        <a class="btn btn--block btn--primary"
+                           href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'continue without logging in'|trans|capitalize }}</a>
                         </div><!-- /.col -->
                     {% elseif resumeRequest is defined and resumeRequest == 'resume' %}
                         {% if request.currentStage != 'submit' %}
