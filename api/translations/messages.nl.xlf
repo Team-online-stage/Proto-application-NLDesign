@@ -301,6 +301,42 @@
         <source>continue without logging in</source>
         <target>doorgaan zonder in te loggen</target>
       </trans-unit>
+      <trans-unit id="h3gPpd5" resname="register">
+        <source>register</source>
+        <target>aanmelden</target>
+      </trans-unit>
+      <trans-unit id="CxGYhAj" resname="for citizen">
+        <source>for citizen</source>
+        <target>voor burgers</target>
+      </trans-unit>
+      <trans-unit id="XQlXtH." resname="digid">
+        <source>digid</source>
+        <target>digid</target>
+      </trans-unit>
+      <trans-unit id="6I852XL" resname="for businesses">
+        <source>for businesses</source>
+        <target>voor bedrijven</target>
+      </trans-unit>
+      <trans-unit id="FFCzGvw" resname="e-herkening">
+        <source>e-herkening</source>
+        <target>e-herkening</target>
+      </trans-unit>
+      <trans-unit id="phf6eP9" resname="for employees">
+        <source>for employees</source>
+        <target>voor medewerkers</target>
+      </trans-unit>
+      <trans-unit id="FveKfWM" resname="username">
+        <source>username</source>
+        <target>gebruikersnaam</target>
+      </trans-unit>
+      <trans-unit id="XohImNo" resname="password">
+        <source>password</source>
+        <target>wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
+        <target>uitloggen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

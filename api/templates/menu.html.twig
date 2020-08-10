@@ -34,15 +34,12 @@
                         </a>
                 </li>
                     {% else %}
-                <li class="nav__item nav__item--parent">
-                    <a class="nav__link nav__link--parent" href="#"><i style="margin-right: 10px" class="fas fa-user"></i>{{ app.user.username }}</a>
-                    <ul class="nav__submenu"
-                        style="background-color: #CC0000; width: 100%; margin-top: -3px; padding-top: 0;">
-                        <li class="nav__item" style="text-align: center">
-                            <a class="nav__link" style="height: 100%" href="{{ path('app_user_logout') }}">Uitloggen</a>
-                        </li>
-                    </ul>
-                <li>
+                <li class="nav__item">
+                    <a href="{{ path('app_user_logout') }}" title="Profile" class="nav__link  ">
+                        <i style="margin-right: 10px" class="fas fa-user"></i>
+                        <span>{{ app.user.username }} ({{ 'logout'|trans|capitalize }})</span>
+                    </a>
+                </li>
                     {% endif %}
                 {% endif %}
             </ul>
