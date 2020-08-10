@@ -47,7 +47,7 @@
 
             {% if slug == 'instruction' %}
                 <div class="col-md-12 no-padding">
-                    {% if process.requireLogin is defined and process.requireLogin == 'true' and (user is not defined or user is null) %}
+                    {% if process.requireLogin is defined and process.requireLogin == 'true' and (app.user is not defined or app.user is null) %}
                         <div class="col-md-6" style="padding-left: 0px;">
                             {% if process.audience == 'person' %}
                                 {% if application is defined and application.id == "3f44c00e-d919-4f89-bd4c-b730c9b2620a" %}
@@ -64,9 +64,14 @@
                            href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'continue without logging in'|trans|capitalize }}</a>
                         </div><!-- /.col -->
                     {% elseif resumeRequest is defined and resumeRequest == 'resume' %}
-                        {% set nextStage = commonground_resource(request.currentStage) %}
-                        <a class="btn btn--block"
-                           href="{{ path('app_process_slug',{id: process.id, slug:  nextStage.slug}) }}">{{ 'resume'|trans|capitalize }}</a>
+                        {% if request.currentStage != 'submit' %}
+                            {% set nextStage = commonground_resource(request.currentStage) %}
+                            <a class="btn btn--block"
+                               href="{{ path('app_process_slug',{id: process.id, slug:  nextStage.slug}) }}">{{ 'resume'|trans|capitalize }}</a>
+                        {% else %}
+                            <a class="btn btn--block"
+                               href="{{ path('app_process_slug',{id: process.id, slug:  request.currentStage}) }}">{{ 'resume'|trans|capitalize }}</a>
+                        {% endif %}
                     {% elseif resumeRequest is defined and resumeRequest == 'see' %}
                         <a class="btn btn--block"
                            href="{{ path('app_process_slug',{id: process.id, slug:  process.stages[0].slug }) }}">{{ 'see'|trans|capitalize }}</a>
@@ -114,7 +119,7 @@
             {% include 'process/widgets/contact.html.twig' %}
 
         {% else %}
-            {% if user is defined and user is not empty %}
+            {% if app.user is defined and app.user is not empty %}
                 {% include 'process/widgets/requests.html.twig' %}
             {% endif %}
         {% endif %}

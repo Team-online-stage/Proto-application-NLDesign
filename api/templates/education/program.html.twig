@@ -2,8 +2,16 @@
 
 {% block content %}
 
-    {% if user is defined and user is not null %}
-        {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : user['@id']})['hydra:member'] %}
+    {% if app.user is defined and app.user is not null %}
+        {% if user is defined and user is not null %}
+            {% set userContact = user['@id'] %}
+        {% elseif app.user.username is defined and app.user.username is not null %}
+            {% set users = commonground_resource_list({'component': 'uc', 'type': 'users'},{'username' : app.user.username})['hydra:member'] %}
+            {% if users|length > 0 %}
+                {% set userContact = users[0].person %}
+            {% endif %}
+        {% endif %}
+        {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : userContact})['hydra:member'] %}
         {% if participants|length > 0 %}
             {% set participant = participants[0] %}
         {% endif %}
@@ -85,7 +93,7 @@
                 </aside>
 
                 <div class="col-xl-9 col-lg-8 col-md-9">
-                    {% if user is defined and user is not null %}
+                    {% if app.user is defined and app.user is not null %}
                         {% if meetsPrerequisites == false %}
                             <div class="notification notification--warning">
                                 <div class="notification__content">
@@ -137,7 +145,7 @@
                                         </div>
                                         <div class="definition-list__description">
                                             <div class="row">
-                                                {% if "http" in program.provider %}
+                                                {% if commonground_is_resource(program.provider) %}
                                                     {% set provider = commonground_resource(program.provider) %}
                                                     {% if provider is defined and provider is not empty %}
                                                         <div class="col-sm-6">
@@ -334,7 +342,7 @@
                         <div class="collapse__details collapse__details--open">
                             {% if registered == false %}
                                 {% if deadline == false %}
-                                    {% if user is defined and user is not null %}
+                                    {% if app.user is defined and app.user is not null %}
                                         {% if meetsPrerequisites == true %}
                                             <h2>Motiveer uw inschrijving</h2>
 
