@@ -1,0 +1,27 @@
+<div class="content-background">
+    <div class="content">
+        <div class="edit-section">
+            <h2>{{ 'your data'|trans|capitalize }}</h2>
+        </div>
+        <ul class="definition-list">
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title">
+                    Naam
+                </div>
+                <div class="definition-list__description">
+                    <p>{{ app.user }}</span></p>
+                </div>
+            </li>
+            {% if app.user.organization %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title">
+                    Organisatie
+                </div>
+                <div class="definition-list__description">
+                    <p>{{ commonground_resource(app.user.organization).name }}</span></p>
+                </div>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

@@ -24,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/chrc")
  */
-class TenderController extends AbstractController
+class ChrcController extends AbstractController
 {
     /**
      * @Route("/new-pitch")

@@ -18,12 +18,12 @@
                     {% if resource.status != 'submitted' %}
                         {% set resumeRequest = 'resume' %}
                         <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                               href="{{ path('app_request_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'resume'|trans|capitalize }}</b></a>
+                               href="{{ path('app_vrc_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'resume'|trans|capitalize }}</b></a>
                         </td>
                     {% else %}
                         {% set resumeRequest = 'see' %}
                         <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
-                               href="{{ path('app_request_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'see'|trans|capitalize }}</b></a>
+                               href="{{ path('app_vrc_load', {id: resource.id, resumeRequest: resumeRequest}) }}"><b>{{ 'see'|trans|capitalize }}</b></a>
                         </td>
                     {% endif %}
                 </tr>
