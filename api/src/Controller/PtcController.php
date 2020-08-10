@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/process")
  */
-class ProcessController extends AbstractController
+class PtcController extends AbstractController
 {
     /**
      * This function shows all available processes.
@@ -54,6 +54,7 @@ class ProcessController extends AbstractController
      * This function will kick of the suplied proces with given values.
      *
      * @Route("/{id}", defaults={"resumeRequest"="start"})
+     * @Route("/{id}", name="app_process_load", defaults={"resumeRequest"="start"})
      * @Route("/{id}/{resumeRequest}", name="app_process_resume", defaults={"resumeRequest"="start"})
      * @Route("/{id}/{slug}/{resumeRequest}", name="app_process_slug", defaults={"slug"="instruction", "resumeRequest"="start"})
      * @Template
