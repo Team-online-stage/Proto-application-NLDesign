@@ -6,8 +6,6 @@
             <ul class="nav nav--submenu">
                 {% if application is defined and application.defaultConfiguration.configuration is defined and application.defaultConfiguration.configuration.mainMenu is defined %}
                     {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
-
-                    {% if application.id == '3f44c00e-d919-4f89-bd4c-b730c9b2620a' %}
                         {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
                             <li class="nav__item">
                                 <a href="{{ item.href }}" title="Home" class="nav__link  ">
@@ -16,17 +14,6 @@
                                 </a>
                             </li>
                         {% endfor %}
-                    {% else %}
-                        {% for item in menu.menuItems %}
-                            <li class="nav__item">
-                                <a href="{{ item.href }}" title="Home" class="nav__link  ">
-                                    <i class="{{ item.icon }}" role="presentation"></i>
-                                    <span>{{ item.name }}</span>
-                                </a>
-                            </li>
-                        {% endfor %}
-                    {% endif %}
-
                 {% else %}
                     <li class="nav__item">
                         <a href="{{ path('app_default_index') }}" title="Home" class="nav__link  ">
