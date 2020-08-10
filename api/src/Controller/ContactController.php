@@ -63,6 +63,11 @@ class ContactController extends AbstractController
             unset($variables['resource']['resource']);
         }
 
+        // We need an sender on messages
+        if(!array_key_exists('sender', $variables['resource']) && $user = $this->getUser()){
+            $variables['resource']['sender'] = $user->getPerson();
+        }
+
         // Lets handle a post
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();

@@ -243,39 +243,39 @@
       </trans-unit>
       <trans-unit id="Sokp.EY" resname="there are currently no messages concerning this item">
         <source>there are currently no messages concerning this item</source>
-        <target>__there are currently no messages concerning this item</target>
+        <target>er zijn momenteel nog geen berichten over dit onderwerp</target>
       </trans-unit>
       <trans-unit id="q1MKE_R" resname="message">
         <source>message</source>
-        <target>__message</target>
+        <target>bericht</target>
       </trans-unit>
       <trans-unit id="4ZJcDk3" resname="you can not submit a message if you are not loged in">
         <source>you can not submit a message if you are not loged in</source>
-        <target>__you can not submit a message if you are not loged in</target>
+        <target>u kan geen bericht versturen als u niet bent ingelogd</target>
       </trans-unit>
       <trans-unit id="CjZ7ks8" resname="sender">
         <source>sender</source>
-        <target>__sender</target>
+        <target>afzender</target>
       </trans-unit>
       <trans-unit id="gbrodrc" resname="receiver">
         <source>receiver</source>
-        <target>__receiver</target>
+        <target>ontvanger</target>
       </trans-unit>
       <trans-unit id="aeNlaM2" resname="channel">
         <source>channel</source>
-        <target>__channel</target>
+        <target>kanaal</target>
       </trans-unit>
       <trans-unit id="I9YRpvb" resname="topic">
         <source>topic</source>
-        <target>__topic</target>
+        <target>onderwerp</target>
       </trans-unit>
       <trans-unit id="J84dG.Q" resname="send">
         <source>send</source>
-        <target>__send</target>
+        <target>verstuur</target>
       </trans-unit>
       <trans-unit id="7X8Ch0B" resname="regarding">
         <source>regarding</source>
-        <target>__regarding</target>
+        <target>betreffende</target>
       </trans-unit>
       <trans-unit id="G4NthoB" resname="first name">
         <source>first name</source>
@@ -300,6 +300,42 @@
       <trans-unit id="NhlFDtB" resname="continue without logging in">
         <source>continue without logging in</source>
         <target>doorgaan zonder in te loggen</target>
+      </trans-unit>
+      <trans-unit id="h3gPpd5" resname="register">
+        <source>register</source>
+        <target>aanmelden</target>
+      </trans-unit>
+      <trans-unit id="CxGYhAj" resname="for citizen">
+        <source>for citizen</source>
+        <target>voor burgers</target>
+      </trans-unit>
+      <trans-unit id="XQlXtH." resname="digid">
+        <source>digid</source>
+        <target>digid</target>
+      </trans-unit>
+      <trans-unit id="6I852XL" resname="for businesses">
+        <source>for businesses</source>
+        <target>voor bedrijven</target>
+      </trans-unit>
+      <trans-unit id="FFCzGvw" resname="e-herkening">
+        <source>e-herkening</source>
+        <target>e-herkening</target>
+      </trans-unit>
+      <trans-unit id="phf6eP9" resname="for employees">
+        <source>for employees</source>
+        <target>voor medewerkers</target>
+      </trans-unit>
+      <trans-unit id="FveKfWM" resname="username">
+        <source>username</source>
+        <target>gebruikersnaam</target>
+      </trans-unit>
+      <trans-unit id="XohImNo" resname="password">
+        <source>password</source>
+        <target>wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="ACcM9j_" resname="logout">
+        <source>logout</source>
+        <target>uitloggen</target>
       </trans-unit>
     </body>
   </file>
