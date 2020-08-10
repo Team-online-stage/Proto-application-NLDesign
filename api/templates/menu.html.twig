@@ -7,7 +7,7 @@
                 {% if application.defaultConfiguration.configuration.mainMenu is defined %}
                     {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
 
-                    {% for item in menu.menuItems %}
+                    {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
                 <li class="nav__item">
                     <a href="{{ item.href }}" title="Home" class="nav__link  ">
                         <i class="{{ item.icon }}" role="presentation"></i>
