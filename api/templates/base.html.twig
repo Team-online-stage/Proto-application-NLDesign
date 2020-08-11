@@ -17,16 +17,13 @@
 
         <meta name="generator" content="Hexo 3.9.0">
         <meta charset="utf-8">
-        {% if application is defined and application is not empty and application.name == 'Commonground.nu' %}
-            <title>Common-ground</title>
-            {#        <i class="fas fa-book"#}
-        {% else %}
-            <title> {% if application is not empty %}
-                    {% if slug is defined and slug is not empty %}
-                        {{ slug|capitalize }} |
-                    {% endif %}
-                    {{ application['name'] }}{% else %} Applicatie{% endif %}</title>
-        {% endif %}
+
+        <title> {% if application is not empty %}
+                {% if slug is defined and slug is not empty %}
+                    {{ slug|capitalize }} |
+                {% endif %}
+                {{ application['name'] }}{% else %} Applicatie{% endif %}</title>
+
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         {% if application['style']['favicon']['base64'] is defined and application['style']['favicon']['base64'] is not empty %}
@@ -137,10 +134,13 @@
 
         <div class="wrapper">
             <a class="skiplink" href="#content">
-                <span class="skiplink__text">Ga direct naar inhoud</span>
+                <span class="skiplink__text">{{ 'skip to content'|trans|capitalize }}</span>
             </a>
 
+            {# lets be able to disable this #}
+            {% if application['defaultConfiguration']['configuration']['header'] is not defined or (application['defaultConfiguration']['configuration']['header'] is defined and application['defaultConfiguration']['configuration']['header'] != 'false')  %}
             {% include "header.html.twig" %}
+            {% endif %}
 
             {% include "menu.html.twig" %}
 
