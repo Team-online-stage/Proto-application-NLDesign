@@ -109,7 +109,15 @@
         </script>
 
         <style>
+            /* deafult values for root variables */
+            root {
+                --primary: #0047BB;
+                --primary2: #FFFFFF;
+                --secondary: #0047BB;
+                --secondary2: #FFFFFF;
+            }
 
+            /* general overwrites and addons to nl-design system */
             .header {
                 height: auto;
                 background-color: #fff;
@@ -124,9 +132,51 @@
                 padding-right: 0px;
             }
 
+            .header-logo a:after{
+                background-image: none;
+            }
+
             {% if application is not empty and application['style']['css'] is defined %}
             {{ application['style']['css']|raw }}
             {% endif %}
+
+            /* Making sure the overwrites on nl design take effect */
+            .main-title {
+                color: var(--primary2) !important;
+            }
+
+            .logo-header {
+                background: var(--primary);
+            }
+
+            .navbar-header {
+                background: var(--primary);}
+
+            .bg-primary-gradient {
+                background: linear-gradient(-45deg, var(--secondary),var(--secondary2)) !important;
+            }
+
+            .footer, .footer__nav a, .footer__nav  {
+                background-color: var(--secondary);
+                color: var(--secondary2); !important;
+            }
+            .nav__link {
+                color: var(--primary2) !important;
+            }
+
+            .nav__link--parent {
+                color: var(--primary2) !important;
+            }
+
+            .nav__submenu {
+                background-color: var(--primary) !important;
+            }
+
+            .top-nav-autoresize .nav__link:hover {
+                background-color: var(--secondary);
+                color: var(--secondary2);
+            }
+
         </style>
 
     </head>
@@ -144,14 +194,9 @@
 
             {% include "menu.html.twig" %}
 
-            {% if application is defined and application.id == '3f44c00e-d919-4f89-bd4c-b730c9b2620a' and slug is defined and slug == 'home' %}
-            <main class="skiplink-target main" id="content" tabindex="-1" style="padding-top: 0px">
-            {% else %}
             <main class="skiplink-target main" id="content" tabindex="-1">
-            {% endif %}
 
                 <div class="container">
-
                     <!-- the alert box -->
                     {% for label, messages in app.flashes() %}
                         {% for message in messages %}
@@ -162,12 +207,10 @@
                             </div>
                         {% endfor %}
                     {% endfor %}
-
-                    {% block content %}
-
-                    {% endblock %}
-
                 </div>
+
+                {% block container %}
+                {% endblock %}
             </main>
 
             {% include "footer.html.twig" %}
