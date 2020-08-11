@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class VrcController extends AbstractController
 {
-
     /**
      * @Route("/")
      * @Template
