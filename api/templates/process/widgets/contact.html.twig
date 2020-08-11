@@ -18,7 +18,7 @@
             {{ 'you need to login before you can submit a question'|trans|capitalize}}
         </aside>
         {% elseif resource['@id'] is defined %}
-        <a href="{{ path('app_contact_send',{resource:resource['@id'],backlink:app.request.requesturi,topic:resource.reference,receiver:resource.organization}) }}" class="btn btn--block">{{ 'ask a question'|trans|capitalize }}</a>
+        <a href="{{ path('app_cmc_send',{resource:resource['@id'],backlink:app.request.requesturi,topic:resource.reference,receiver:resource.organization}) }}" class="btn btn--block">{{ 'ask a question'|trans|capitalize }}</a>
         {% else %}
         <aside class="hint">
             <h2 class="hint__title">{{ 'save'|trans|capitalize}}</h2>

@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * @Route("/cmc")
  */
-class ContactController extends AbstractController
+class CmcController extends AbstractController
 {
     /**
      * This function shows all available processes.
@@ -33,8 +33,8 @@ class ContactController extends AbstractController
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
-        $variables['received'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $variables['user']['person']])['hydra:member'];
-        $variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['sender' => $variables['user']['person']])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $this->getUser()->getPerson()])['hydra:member'];
+        //$variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['sender' => $this->getUser()->getPerson()])['hydra:member'];
 
         return $variables;
     }
