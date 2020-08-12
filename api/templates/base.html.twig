@@ -51,6 +51,8 @@
         <link rel="stylesheet" href="/uno/components/spinner/spinner.css">
         <link rel="stylesheet" href="/css/main.css">
 
+        <link rel="stylesheet" href="/css/challange.css">
+        <link rel="stylesheet" href="/css/processen.css">
 
         <link rel="stylesheet" href="/uno/components/button/button.css">
         <link rel="stylesheet" href="/uno/components/card/card.css">
@@ -110,11 +112,17 @@
 
         <style>
             /* deafult values for root variables */
-            root {
+            :root {
                 --primary: #0047BB;
-                --primary2: #FFFFFF;
+                --primary-color: white;
                 --secondary: #0047BB;
-                --secondary2: #FFFFFF;
+                --secondary-color: #FFC926;
+
+                --menu: #0047BB;
+                --menu-over: #3669A5;
+                --menu-color: white;
+                --footer: #0047BB;
+                --footer-color: white;
             }
 
             /* general overwrites and addons to nl-design system */
@@ -132,52 +140,109 @@
                 padding-right: 0px;
             }
 
+            .header-logo a:before {
+                background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iw5HDq8Ouw6lfMSIgZGF0YS1uYW1lPSLDkcOrw67DqSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MzkuNTcgMTA5OC44OSI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNjMDA7fS5jbHMtMntmaWxsOiMzNjY5YTU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT56dWlkIERyZWNodCBOb3BheW9mZjwvdGl0bGU+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTc2LDk2Ny4xMWMtNTYsNDEuMzktMTAxLjQzLDY2LjA1LTExMSw3MS4xMWE0LDQsMCwwLDEtMy43MiwwYy0yNS41Ny0xMy41LTMwNy40OC0xNjctMzYxLjM3LTQwNmE0LDQsMCwwLDEsNy4zOC0yLjgxYzM4LjU0LDY4LjkzLDEyNS4zNywxMTkuMjYsMTg3LjUxLDE1Mi42OSw1Mi41LDI4LjIzLDExMy42Miw1MC4yMSwxNjguMzQsODAuMzZDNTA4LjIyLDg4Ny4yOSw1NDksOTE3LjY5LDU3Nyw5NjEuNzVBNCw0LDAsMCwxLDU3Niw5NjcuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODM0LjcxLDIxNS44NFYxMDEuNjVhOC45LDguOSwwLDAsMC04LjktOC45MWgtMjczQTE0LjU5LDE0LjU5LDAsMCwwLDUzOS40MywxMDNsLTE5LDcwLjI4YTE0LjU4LDE0LjU4LDAsMCwxLTEzLjM1LDEwLjIxSDM4M1YxNDcuMTJjMzYuODQtMS4zNCw2Mi40Mi03LjQ1LDgwLjE2LTE1LjEsMjkuNDktMTIuNzQsMzcuMzUtMjkuNzgsMzkuMzYtMzYuNDRhMi4yMiwyLjIyLDAsMCwwLTIuMTMtMi44NEgzMzQuNjFjLTMzLjg4LDAtNjcuOTEsOS4yLTg2LjA4LDQwLjEtMTkuMzgsMzIuOTQtMTguMjQsNzguMDctMTYuNDksMTE0Ljg5LDAsMC01MC02Ni4yMi00MC43Ni0xNDguODdhNS41MSw1LjUxLDAsMCwwLTUuNDgtNi4xMkgxMDAuMzJhOC43OSw4Ljc5LDAsMCwwLTguNzgsOC43OVYxMjRjNC44Niw3OS4yNiw0OS4xNCwyODguNTcsMzcxLjU4LDM4NS40QzczNSw1OTEuMDYsNzc1LjQyLDcxNi4zLDc4My4zMiw3MzguMjRhMS4zOCwxLjM4LDAsMCwwLDIuNTMuMTdjNzUuMy0xNDMuOS04MS40OS0yNDcuNTItODEuNDktMjQ3LjUyLDMxLjMzLDAsNzkuMjMsMTcuOTQsMTE4LDM5Ljc5YTguMjgsOC4yOCwwLDAsMCwxMi4zNy03LjIxVjM2My44M2ExNC42LDE0LjYsMCwwLDAtMTguMTUtMTQuMTdjLTEzLjUsMy4zOS0zMCw2LjY4LTMyLjg3LDcuMjMtMzkuNDYsNy43Ny04NC43NSwxMS4xNS0xMjItOC43M3MtNDcuMjYtNjYuMjctMTguMzMtOTguMjNjMjUuMy0yOCw2NS41My0zNy41LDEwMi4yOS0zNSwyMy41NiwxLjYyLDU1LjE4LDcuNTksNzMuNzEsMTIuNjNBMTIuMTYsMTIuMTYsMCwwLDAsODM0LjcxLDIxNS44NFoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02NTQuODcsOTAxLjVhNCw0LDAsMCwxLTYtLjExYy0xMy41Ni0xNi4yNS03NS40Ni04Ni0xODUuNzMtMTQ2LjQyQTc1Ni40NCw3NTYuNDQsMCwwLDAsMzgzLDcxN2MtMTczLjUzLTcwLjE3LTI4Mi42OS0xNDMuMy0yOTEuNDItMzM4LjF2LTYuMjJhNCw0LDAsMCwxLDcuMjEtMi4zNGM2My42MSw4NywxNDQuNjksMTM3LjksMjQzLjE2LDE4Ni43Nyw0MC4yOCwyMCw4MS4xNywzNi4zMiwxMjEuMjEsNTMuMjUsNjYuMTUsMjgsMTMwLDU3LjU0LDE4NC43MywxMDcuOCwxNi4xOCwxNC44NSwyOS4wOSwyOS4xNSwzNi44MSw1MEM2OTUuNzUsNzk4LjEzLDcwMi41NSw4NDkuMTcsNjU0Ljg3LDkwMS41WiIvPjwvc3ZnPg==") no-repeat bottom;
+                background-size: 120%;
+            }
+
             .header-logo a:after{
                 background-image: none;
+            }
+
+            .flex-center {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
             }
 
             {% if application is not empty and application['style']['css'] is defined %}
             {{ application['style']['css']|raw }}
             {% endif %}
 
-            /* Making sure the overwrites on nl design take effect */
-            .main-title {
-                color: var(--primary2) !important;
-            }
-
-            .logo-header {
+            .background--primary{
                 background: var(--primary);
+                color: var(--primary-color) !important;
+
+            }
+            .background--secondary{
+                background: var(--secondary);
+                color: var(--secondary-color) !important;
+
             }
 
-            .navbar-header {
-                background: var(--primary);}
+            .color--primary{
+                color: var(--primary-color) !important;
 
-            .bg-primary-gradient {
-                background: linear-gradient(-45deg, var(--secondary),var(--secondary2)) !important;
             }
 
-            .footer, .footer__nav a, .footer__nav  {
-                background-color: var(--secondary);
-                color: var(--secondary2); !important;
-            }
-            .nav__link {
-                color: var(--primary2) !important;
+            .color--secondary{
+                color: var(--secondary-color) !important;
+
             }
 
-            .nav__link--parent {
-                color: var(--primary2) !important;
+            /* NL Design overwrites */
+            .footer {
+                background: var(--footer);
+                color: var(--footer-color) !important;
             }
 
-            .nav__submenu {
-                background-color: var(--primary) !important;
+            nav {
+                background: var(--menu);
+                color: var(--menu-color) !important;
             }
 
             .top-nav-autoresize .nav__link:hover {
-                background-color: var(--secondary);
-                color: var(--secondary2);
+                background-color: var(--menu-over);
             }
 
-        </style>
+            a:focus:not(.btn):not(.pagination__link):not(.nav__link){
+                background: var(--menu-over);
+                outline: none;
+            }
+
+            .card__hover a:hover {
+                background-color: var(--secondary);
+                border-color: var(--secondary);
+                transform: scale(1.02);
+            }
+
+            .card__icon {
+                margin-top: 50px;
+            }
+
+            /* ignore centering on small screens */
+            @media only screen and (max-width: 550px){
+                .card__icon {
+                    margin-top: 0px;
+                    margin-left: 15px;
+                }
+
+            }
+
+            .card__readmore {
+                padding-right: 15px;
+                padding-left: 15px;
+                padding-bottom: 15px;
+                text-align: right;
+                color: var(--secondary);
+            }
+
+            .card__readmore :hover {
+                text-decoration: underline;
+            }
+
+            .background--image{
+                background-size: 100% auto !important;
+                background-position: center !important;
+            }
+
+            a {
+                text-decoration: none;
+            }
+
+
+</style>
 
     </head>
     <body>
@@ -188,7 +253,7 @@
             </a>
 
             {# lets be able to disable this #}
-            {% if application['defaultConfiguration']['configuration']['header'] is not defined or (application['defaultConfiguration']['configuration']['header'] is defined and application['defaultConfiguration']['configuration']['header'] != 'false')  %}
+            {% if application['defaultConfiguration']['configuration']['header'] is not defined or (application['defaultConfiguration']['configuration']['header'] is defined and application['defaultConfiguration']['configuration']['header'] == true)  %}
             {% include "header.html.twig" %}
             {% endif %}
 
