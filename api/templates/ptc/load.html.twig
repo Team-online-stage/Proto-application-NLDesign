@@ -33,7 +33,7 @@
                 {% include 'ptc/widgets/instruction.html.twig' %}
                 {% include 'ptc/widgets/documents.html.twig' %}
             {% elseif slug == 'submit' %}
-                {% include 'ptc/widgets/submit.html.twig' %}
+                {% include 'ptc/submit.html.twig' %}
             {% elseif slug == 'in-progress' %}
                 {% include 'ptc/widgets/in-progress.html.twig' %}
             {% elseif slug == 'processed' %}
@@ -117,6 +117,8 @@
             <!-- Page Break -->
             <div style="height: 20px"></div>
             {% include 'ptc/widgets/contact.html.twig' %}
+
+
 
         {% else %}
             {% if app.user is defined and app.user is not empty %}

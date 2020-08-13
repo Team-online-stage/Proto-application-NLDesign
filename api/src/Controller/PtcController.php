@@ -39,7 +39,7 @@ class PtcController extends AbstractController
     }
 
     /**
-     * This function will kick of or run a procces without a request
+     * This function will kick of or run a procces without a request.
      *
      * @Route("/process/{id}")
      * @Route("/process/{id}/{stage}", name="app_ptc_process_stage")
@@ -52,21 +52,21 @@ class PtcController extends AbstractController
         $variables['submit'] = $request->query->get('submit', 'false');
 
         // Lets load a request
-        if($loadrequest =  $request->query->get('request')){
-            $variables['request'] =   $commonGroundService->getResource($loadrequest);
+        if ($loadrequest = $request->query->get('request')) {
+            $variables['request'] = $commonGroundService->getResource($loadrequest);
             $session->set('request', $variables['request']);
         }
 
-        $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types','id' => $id]);
-        if($this->getUser()) {
+        $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
+        if ($this->getUser()) {
             $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['process_type' => $variables['process']['@id'], 'submitters.brp' => $this->getUser()->getPerson(), 'order[dateCreated]'=>'desc'])['hydra:member'];
         }
 
-        if($stage == "start"){
+        if ($stage == 'start') {
             $session->remove('request');
         }
 
-        $variables['request'] =  $session->get('request', []);
+        $variables['request'] = $session->get('request', []);
 
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
@@ -82,20 +82,19 @@ class PtcController extends AbstractController
         }
 
         // lets handle a current stage
-        if($stage && $stage!='start'){
+        if ($stage && $stage != 'start') {
             $variables['request']['currentStage'] = $stage;
         }
 
         // Lets make sure that we always have a stage
-        if(!array_key_exists('stage', $variables) && $stage){
+        if (!array_key_exists('stage', $variables) && $stage) {
             /* @todo dit is lelijk */
             foreach ($variables['process']['stages'] as $tempStage) {
                 if ($tempStage['slug'] == $stage) {
                     $variables['stage'] = $tempStage;
                 }
             }
-        }
-        elseif(!array_key_exists('stage', $variables)){
+        } elseif (!array_key_exists('stage', $variables)) {
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
 
@@ -105,11 +104,10 @@ class PtcController extends AbstractController
 
             // Lets transfer the known properties
             $request = $resource['request'];
-            if(array_key_exists('properties', $resource['request'])){
+            if (array_key_exists('properties', $resource['request'])) {
                 $properties = array_merge($variables['request']['properties'], $resource['request']['properties']);
                 $request['properties'] = $properties;
-            }
-            elseif(array_key_exists('properties', $variables['request'])){
+            } elseif (array_key_exists('properties', $variables['request'])) {
                 $request['properties'] = $variables['request']['properties'];
             }
 
@@ -125,11 +123,12 @@ class PtcController extends AbstractController
 
         /* lagacy */
         $variables['resource'] = $variables['request'];
+
         return $variables;
     }
 
     /**
-     * This function will kick of or run a procces from a given request
+     * This function will kick of or run a procces from a given request.
      *
      * @Route("/request/{id}")
      * @Route("/request/{id}/{stage}", name="app_ptc_request_stage", defaults={"resumeRequest"="start"})
@@ -139,9 +138,9 @@ class PtcController extends AbstractController
     {
         $variables = [];
         $variables['request'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id]);
-        $variables['procces'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types','id' => $variables['request']['process_type']]);
+        $variables['procces'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types', 'id' => $variables['request']['process_type']]);
 
-        if($stage){
+        if ($stage) {
             $variables['request']['currentStage'] = $stage;
         }
 

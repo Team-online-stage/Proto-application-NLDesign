@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="YFQKuu_" resname="this request is currently">
         <source>this request is currently</source>
-        <target>__this request is currently</target>
+        <target>dit verzoek is momenteel:</target>
       </trans-unit>
       <trans-unit id="UD6t0Eb" resname="retract">
         <source>retract</source>
@@ -336,6 +336,94 @@
       <trans-unit id="ACcM9j_" resname="logout">
         <source>logout</source>
         <target>uitloggen</target>
+      </trans-unit>
+      <trans-unit id="licsifO" resname="skip to content">
+        <source>skip to content</source>
+        <target>overslaan naar inhoud</target>
+      </trans-unit>
+      <trans-unit id="DodjLNR" resname="date">
+        <source>date</source>
+        <target>datum</target>
+      </trans-unit>
+      <trans-unit id="K8tDy8j" resname="view">
+        <source>view</source>
+        <target>bekijken</target>
+      </trans-unit>
+      <trans-unit id="LIoflVB" resname="view all">
+        <source>view all</source>
+        <target>alles bekijken</target>
+      </trans-unit>
+      <trans-unit id="qwJO8ZA" resname="no messages available">
+        <source>no messages available</source>
+        <target>geen berichten beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="qyYJGKY" resname="this request is in progress and can no longer be altered">
+        <source>this request is in progress and can no longer be altered</source>
+        <target>dit verzoek is in behandeling en kan niet langer aangepast worden</target>
+      </trans-unit>
+      <trans-unit id="fG7N7IE" resname="this request has been procceced and can no longer be altered">
+        <source>this request has been procceced and can no longer be altered</source>
+        <target>this verzoek is verwerkt en kan niet langer aangepast worden</target>
+      </trans-unit>
+      <trans-unit id="PB_1By8" resname="unknow process status">
+        <source>unknow process status</source>
+        <target>onbekende proces status</target>
+      </trans-unit>
+      <trans-unit id="xsHJqch" resname="next">
+        <source>next</source>
+        <target>volgende</target>
+      </trans-unit>
+      <trans-unit id="4lbujnr" resname="continue">
+        <source>continue</source>
+        <target>doorgaan</target>
+      </trans-unit>
+      <trans-unit id="BOKwDjZ" resname="comparable requests">
+        <source>comparable requests</source>
+        <target>vergelijkbare verzoeken</target>
+      </trans-unit>
+      <trans-unit id="x4IRnYO" resname="no comparable requests">
+        <source>no comparable requests</source>
+        <target>geen vergelijkbare verzoeken</target>
+      </trans-unit>
+      <trans-unit id="LWA9gIE" resname="download documents">
+        <source>download documents</source>
+        <target>documenten downloaden</target>
+      </trans-unit>
+      <trans-unit id="pJn0pfd" resname="your data">
+        <source>your data</source>
+        <target>uw data</target>
+      </trans-unit>
+      <trans-unit id="2Ayb_RD" resname="address">
+        <source>address</source>
+        <target>adres</target>
+      </trans-unit>
+      <trans-unit id="SLjwM5J" resname="start request">
+        <source>start request</source>
+        <target>verzoek starten</target>
+      </trans-unit>
+      <trans-unit id="LtX3OR7" resname="job postings">
+        <source>job postings</source>
+        <target>__job postings</target>
+      </trans-unit>
+      <trans-unit id="qvq498b" resname="job applications">
+        <source>job applications</source>
+        <target>__job applications</target>
+      </trans-unit>
+      <trans-unit id="nXV1Fkg" resname="cources">
+        <source>cources</source>
+        <target>__cources</target>
+      </trans-unit>
+      <trans-unit id="ExGW77D" resname="programs and cources">
+        <source>programs and cources</source>
+        <target>__programs and cources</target>
+      </trans-unit>
+      <trans-unit id="G4vKHHU" resname="tenders">
+        <source>tenders</source>
+        <target>__tenders</target>
+      </trans-unit>
+      <trans-unit id="IjZUFsW" resname="pitches">
+        <source>pitches</source>
+        <target>__pitches</target>
       </trans-unit>
     </body>
   </file>

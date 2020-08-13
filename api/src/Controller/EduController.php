@@ -295,7 +295,6 @@ class EduController extends AbstractController
         return $variables;
     }
 
-
     /**
      * @Route("/organizations")
      * @Template

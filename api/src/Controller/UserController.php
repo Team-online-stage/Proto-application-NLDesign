@@ -217,5 +217,4 @@ class UserController extends AbstractController
 
         return $variables;
     }
-
 }
