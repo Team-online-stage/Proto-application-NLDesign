@@ -36,7 +36,7 @@ class CmcController extends AbstractController
         $variables['reciever'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $this->getUser()->getPerson()])['hydra:member'];
         $variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['sender' => $this->getUser()->getPerson()])['hydra:member'];
 
-        $variables['resources'] = array_merge( $variables['reciever'], $variables['send']);
+        $variables['resources'] = array_merge($variables['reciever'], $variables['send']);
 
         return $variables;
     }
