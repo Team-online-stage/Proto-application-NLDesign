@@ -66,14 +66,14 @@
                 {% include 'ptc/widgets/submitted.html.twig' %}
             {% elseif request.status == 'in-progress'%}
                 {% include 'ptc/widgets/in-progress.html.twig' %}
-            {% elseif request.status == 'processed '%}
+            {% elseif request.status == 'processed'%}
                 {% include 'ptc/widgets/processed.html.twig' %}
-            {% elseif request.status == 'retracted '%}
+            {% elseif request.status == 'retracted'%}
                 {% include 'ptc/widgets/retracted.html.twig' %}
-            {% elseif request.status == 'cancelled '%}
+            {% elseif request.status == 'cancelled'%}
                 {% include 'ptc/widgets/cancelled.html.twig' %}
             {% else %}
-                {{ 'unknow process status'|trans|capitalize }}
+                {{ 'unknow process status'|trans|capitalize }}:{{ request.status }}
             {% endif %}
 
             <!-- Page Break -->

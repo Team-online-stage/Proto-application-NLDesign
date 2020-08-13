@@ -76,6 +76,7 @@ class PtcController extends AbstractController
             // Lets whipe the request
             $variables['request']['process_type'] = $variables['process']['@id'];
             $variables['request']['status'] = 'incomplete';
+            $variables['request']['properties'] = [];
             $session->set('request', $variables['request']);
         }
 
@@ -107,7 +108,7 @@ class PtcController extends AbstractController
                 $properties = array_merge($variables['request']['properties'], $resource['request']['properties']);
                 $request['properties'] = $properties;
             }
-            else{
+            elseif(array_key_exists('properties', $variables['request'])){
                 $request['properties'] = $variables['request']['properties'];
             }
 
