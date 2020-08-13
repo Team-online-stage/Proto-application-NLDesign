@@ -117,8 +117,7 @@
 
     <div class="col-md-4  col-sm-12">
         {% if request.currentStage is not defined or request.currentStage is empty%}
-            {% include 'ptc/widgets/instruction.html.twig' %}
-            {% include 'ptc/widgets/documents.html.twig' %}
+            {% include 'ptc/widgets/requests.html.twig' %}
         {% else %}
             {% include 'ptc/widgets/progressbar.html.twig' %}
 

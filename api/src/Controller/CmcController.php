@@ -33,8 +33,10 @@ class CmcController extends AbstractController
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
-        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $this->getUser()->getPerson()])['hydra:member'];
-        //$variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['sender' => $this->getUser()->getPerson()])['hydra:member'];
+        $variables['reciever'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $this->getUser()->getPerson()])['hydra:member'];
+        $variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['sender' => $this->getUser()->getPerson()])['hydra:member'];
+
+        $variables['resources'] = array_merge( $variables['reciever'], $variables['send']);
 
         return $variables;
     }
@@ -75,7 +77,7 @@ class CmcController extends AbstractController
 
             // If the contact moment was succesfully created we forward the user
             if (array_key_exists('@id', $resource)) {
-                return $this->redirect($this->generateUrl('app_contact_index'));
+                return $this->redirect($this->generateUrl('app_cmc_index'));
             }
         }
 
