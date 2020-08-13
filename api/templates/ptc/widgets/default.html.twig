@@ -4,8 +4,11 @@
 <input type="hidden" name="request[requestType]" value="{{ process.requestType }}">
 <input type="hidden" name="request[component]" value="vrc">
 <input type="hidden" name="request[type]" value="requests">
-{% if request['status'] is not defined or request['status'] == 'incomplete' or request['status'] == 'complete' %}
+{% if request.status is not defined or request.status is empty or request.status == 'incomplete' or request.status == 'complete' %}
 <input type="hidden" name="request[status]" value="incomplete">
+{% else %}
+<input type="hidden" name="request[status]" value="{{ request.status }}">
+
 {% endif %}
 
 <input type="hidden" name="request[organization]" value="{% if application is not empty %}{{  application.organization['@id'] }}{% else %}{{ process.sourceOrganization }}{% endif %}">

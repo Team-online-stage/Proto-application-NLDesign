@@ -52,8 +52,8 @@ class PtcController extends AbstractController
         $variables['submit'] = $request->query->get('submit', 'false');
 
         // Lets load a request
-        if($request =  $request->query->get('request')){
-
+        if($loadrequest =  $request->query->get('request')){
+            $session->set('request',  $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types','id' => $loadrequest]));
         }
 
         if($this->getUser()) {
@@ -102,9 +102,14 @@ class PtcController extends AbstractController
             $resource = $request->request->all();
 
             // Lets transfer the known properties
-            $properties = array_merge($variables['request']['properties'], $resource['request']['properties']);
             $request = $resource['request'];
-            $request['properties'] = $properties;
+            if(array_key_exists('properties', $resource['request'])){
+                $properties = array_merge($variables['request']['properties'], $resource['request']['properties']);
+                $request['properties'] = $properties;
+            }
+            else{
+                $request['properties'] = $variables['request']['properties'];
+            }
 
             // We only support the posting and saving of
             if ($this->getUser()) {
@@ -116,6 +121,8 @@ class PtcController extends AbstractController
             $session->set('request', $request);
         }
 
+        /* lagacy */
+        $variables['resource'] = $variables['request'];
         return $variables;
     }
 

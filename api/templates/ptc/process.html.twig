@@ -51,7 +51,7 @@
             {% include 'ptc/widgets/default.html.twig' %}
 
             {# lets se whats the current request status #}
-            {% if submit != 'true' and (request.status is not defined or request.status is empty or request.status)%}
+            {% if submit != 'true' and (request.status is not defined or request.status is empty or request.status == 'incomplete' or request.status == 'complete')%}
 
                 {% if slug is not defined or slug == false or request.currentStage is not defined or request.currentStage is empty%}
                     {% include 'ptc/widgets/instruction.html.twig' %}
@@ -68,6 +68,10 @@
                 {% include 'ptc/widgets/in-progress.html.twig' %}
             {% elseif request.status == 'processed '%}
                 {% include 'ptc/widgets/processed.html.twig' %}
+            {% elseif request.status == 'retracted '%}
+                {% include 'ptc/widgets/retracted.html.twig' %}
+            {% elseif request.status == 'cancelled '%}
+                {% include 'ptc/widgets/cancelled.html.twig' %}
             {% else %}
                 {{ 'unknow process status'|trans|capitalize }}
             {% endif %}
@@ -100,8 +104,6 @@
                     <button class="btn btn--block" name="submit">{{ 'save'|trans|capitalize }}</button>
                 </div>
                 {% endif %}
-            {% elseif request.status == 'submitted' %}
-                <button class="btn btn--block" name="submit">{{ 'retract'|trans|capitalize }}</button>
             {% endif %}
 
             {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
