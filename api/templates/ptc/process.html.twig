@@ -51,18 +51,18 @@
             {% include 'ptc/widgets/default.html.twig' %}
 
             {# lets se whats the current request status #}
-            {% if request.status is not defined or request.status is empty or request.status == 'incomplete'%}
+            {% if submit != 'true' and (request.status is not defined or request.status is empty or request.status)%}
 
-                {% if request.currentStage is not defined or request.currentStage is empty%}
+                {% if slug is not defined or slug == false or request.currentStage is not defined or request.currentStage is empty%}
                     {% include 'ptc/widgets/instruction.html.twig' %}
                     {% include 'ptc/widgets/documents.html.twig' %}
                 {% else %}
                     {% include 'ptc/widgets/form.html.twig' %}
                 {% endif %}
 
-            {% elseif request.status == 'complete' %}
+            {% elseif request.status == 'complete' or submit == 'true' %}
                 {% include 'ptc/widgets/submit.html.twig' %}
-            {% elseif rrequest.status == 'submitted' %}
+            {% elseif request.status == 'submitted' %}
                 {% include 'ptc/widgets/submitted.html.twig' %}
             {% elseif request.status == 'in-progress'%}
                 {% include 'ptc/widgets/in-progress.html.twig' %}
@@ -75,7 +75,7 @@
             <!-- Page Break -->
             <div style="height: 20px;"></div>
 
-            {% if request.status is not defined or request.status is empty or request.status == 'incomplete'%}
+            {% if submit != 'true' and (request.status is not defined or request.status is empty or request.status == 'incomplete')%}
                 {% if request.currentStage is not defined or request.currentStage is empty%}
                     {% if not app.user %}
                         <a class="btn btn--block" href="{{ path('app_user_login') }}">{{ 'login'|trans|capitalize }}</a>
@@ -91,13 +91,15 @@
                         <button class="btn btn--block" name="submit">{{ 'start'|trans|capitalize }}</button>
                         {% endif %}
                     {% endif %}
+                {% elseif slug is not defined or slug == false %}
+                    <div class="col-md-6" style="padding-left: 0px;">
+                        <button class="btn btn--block" name="submit">{{ 'continue'|trans|capitalize }}</button>
+                    </div>
                 {% else %}
                 <div class="col-md-6" style="padding-left: 0px;">
                     <button class="btn btn--block" name="submit">{{ 'save'|trans|capitalize }}</button>
                 </div>
                 {% endif %}
-            {% elseif request.status == 'complete' %}
-                <button class="btn btn--block" name="submit">{{ 'submit'|trans|capitalize }}</button>
             {% elseif request.status == 'submitted' %}
                 <button class="btn btn--block" name="submit">{{ 'retract'|trans|capitalize }}</button>
             {% endif %}
