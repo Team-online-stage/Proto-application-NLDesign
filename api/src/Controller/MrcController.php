@@ -59,7 +59,4 @@ class MrcController extends AbstractController
 
         return $variables;
     }
-
-
-
 }

@@ -25,7 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class VrcController extends AbstractController
 {
-
     /**
      * @Route("/")
      * @Template
@@ -63,21 +62,20 @@ class VrcController extends AbstractController
      */
     public function DownloadAction(Request $request, CommonGroundService $commonGroundService, $id, $requestId)
     {
-
         $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
         $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $requestId]);
         $query = ['request' => $currentRequest['@id']];
-        $render = $commonGroundService->createResource($query, $document['uri'] . '/render');
+        $render = $commonGroundService->createResource($query, $document['uri'].'/render');
         switch ($document['type']) {
             case 'word':
                 $phpWord = new PhpWord();
                 $section = $phpWord->addSection();
                 \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
                 $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-                $filename = $document['name'] . '.docx';
+                $filename = $document['name'].'.docx';
                 $objWriter->save($filename);
                 header('Content-Type: application/vnd.ms-word');
-                header('Content-Disposition: attachment; filename=' . $filename);
+                header('Content-Disposition: attachment; filename='.$filename);
                 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                 flush();
                 readfile($filename);
