@@ -19,7 +19,7 @@
                             <td>{{ resource.topic|capitalize }}</td>
                             <td>{{ commonground_resource(resource.sender).name|capitalize }}</td>
                             <td>{{ commonground_resource(resource.receiver).name|capitalize }}</td>
-                            <td><a href="{{ path('app_contact_view', {id: resource.id}) }}">{{ 'view'|trans|capitalize }}</a>
+                            <td><a href="{{ path('app_cmc_view', {id: resource.id}) }}">{{ 'view'|trans|capitalize }}</a>
                             </td>
                         </tr>
                         {% endfor %}
