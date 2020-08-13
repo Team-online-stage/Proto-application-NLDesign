@@ -6,6 +6,18 @@
 
         {% if request is defined and request is not null %}
             <ul class="definition-list">
+                {% if request.reference is defined and request.reference is not empty %}
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title" style="max-width: 100%">
+                        {{ 'reference'|trans|capitalize }}
+                    </div>
+                    <div class="definition-list__description">
+                        <p>
+                            {{ request.reference }}
+                        </p>
+                    </div>
+                </li>
+                {% endif %}
                 <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title" style="max-width: 100%">
                         {{ 'status'|trans|capitalize }}

@@ -116,8 +116,9 @@
                 --primary: #0047BB;
                 --primary-color: white;
                 --secondary: #0047BB;
-                --secondary-color: #FFC926;
+                --secondary-color: #0047BB;
 
+                --header: white;
                 --menu: #0047BB;
                 --menu-over: #3669A5;
                 --menu-color: white;
@@ -126,10 +127,6 @@
             }
 
             /* general overwrites and addons to nl-design system */
-            .header {
-                height: auto;
-                background-color: #fff;
-            }
 
             .btn--block {
                 width: 100%;
@@ -159,6 +156,11 @@
             {% if application is not empty and application['style']['css'] is defined %}
             {{ application['style']['css']|raw }}
             {% endif %}
+
+            .header {
+                height: auto;
+                background-color: var(--header);
+            }
 
             .background--primary{
                 background: var(--primary);

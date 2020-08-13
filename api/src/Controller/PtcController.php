@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * Class ProcessController
  *
- * @Route("/process")
+ * @Route("/ptc")
  */
 class PtcController extends AbstractController
 {
@@ -39,22 +39,98 @@ class PtcController extends AbstractController
     }
 
     /**
-     * This function will kick of the suplied proces with given values.
+     * This function will kick of or run a procces without a request
      *
-     * @Route("/{id}/start")
+     * @Route("/process/{id}")
+     * @Route("/process/{id}/{stage}", name="app_ptc_process_stage")
+     * @Template
      */
-    public function startAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function processAction(Session $session, $id, $stage = false, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-        $session->set('request', null);
+        $variables = [];
+        if($this->getUser()) {
+            $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['process_type' => $id, 'submitters.brp' => $this->getUser()->getPerson(), 'order[dateCreated]'=>'desc'])['hydra:member'];
+        }
+        $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types','id' => $id]);
 
-        return $this->redirect($this->generateUrl('app_process_load', ['id' => $id]));
+        if($stage == "start"){
+            $session->remove('request');
+        }
+
+        $variables['request'] =  $session->get('request', []);
+
+        // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
+        if (
+            (array_key_exists('process_type', $variables['request']) && $variables['request']['process_type'] != $variables['process']['@id'])
+            ||
+            !array_key_exists('process_type', $variables['request'])
+        ) {
+            // Lets whipe the request
+            $variables['request']['process_type'] = $variables['process']['@id'];
+            $variables['request']['status'] = 'incomplete';
+            $session->set('request', $variables['request']);
+        }
+
+        // lets handle a current stage
+        if($stage && $stage!='start'){
+            $variables['request']['currentStage'] = $stage;
+        }
+
+        // Lets make sure that we always have a stage
+        if(!array_key_exists('stage', $variables) && $stage){
+            /* @todo dit is lelijk */
+            foreach ($variables['process']['stages'] as $tempStage) {
+                if ($tempStage['slug'] == $stage) {
+                    $variables['stage'] = $tempStage;
+                }
+            }
+        }
+        elseif(!array_key_exists('stage', $variables)){
+            $variables['stage'] = ['next' => $variables['process']['stages'][0]];
+        }
+
+        if ($request->isMethod('POST')) {
+            // the second argument is the value returned when the attribute doesn't exist
+            $resource = $request->request->all();
+            $request = array_merge ($variables['request'],$resource['request']);
+
+            // We only support the posting and saving of
+            if ($this->getUser()) {
+                $request = $commonGroundService->saveResource($request, ['component' => 'vrc', 'type' => 'requests']);
+            }
+
+            // stores an attribute in the session for later reuse
+            $variables['request'] = $request;
+            $session->set('request', $variables['request']);
+        }
+
+        return $variables;
+    }
+
+    /**
+     * This function will kick of or run a procces from a given request
+     *
+     * @Route("/request/{id}")
+     * @Route("/request/{id}/{stage}", name="app_ptc_request_stage", defaults={"resumeRequest"="start"})
+     * @Template
+     */
+    public function requestAction(Session $session, $id, $stage, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        $variables = [];
+        $variables['request'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $id]);
+        $variables['procces'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types','id' => $variables['request']['process_type']]);
+
+        if($stage){
+            $variables['request']['currentStage'] = $stage;
+        }
+
+        return $variables;
     }
 
     /**
      * This function will kick of the suplied proces with given values.
      *
      * @Route("/{id}", defaults={"resumeRequest"="start"})
-     * @Route("/{id}", name="app_process_load", defaults={"resumeRequest"="start"})
      * @Route("/{id}/{resumeRequest}", name="app_process_resume", defaults={"resumeRequest"="start"})
      * @Route("/{id}/{slug}/{resumeRequest}", name="app_process_slug", defaults={"slug"="instruction", "resumeRequest"="start"})
      * @Template
@@ -168,7 +244,7 @@ class PtcController extends AbstractController
             }
         }
 
-        $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
+        $variables['ptc'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
 
         // Lets see if we have any contact moments asociated with this processe
         if (array_key_exists('@id', $variables['request'])) {
@@ -181,7 +257,7 @@ class PtcController extends AbstractController
         if (array_key_exists('currentStage', $variables['request']) && filter_var($variables['request']['currentStage'], FILTER_VALIDATE_URL) === true) {
             $variables['stage'] = $commonGroundService->getResource($variables['request']['currentStage']);
         } else {
-            foreach ($variables['process']['stages'] as $stage) {
+            foreach ($variables['ptc']['stages'] as $stage) {
                 if ($stage['slug'] == $slug) {
                     $variables['stage'] = $stage;
                 }
