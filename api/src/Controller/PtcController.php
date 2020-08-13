@@ -48,6 +48,14 @@ class PtcController extends AbstractController
     public function processAction(Session $session, $id, $stage = false, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = [];
+        $variables['slug'] = $stage;
+        $variables['submit'] = $request->query->get('submit', 'false');
+
+        // Lets load a request
+        if($loadrequest =  $request->query->get('request')){
+            $session->set('request',  $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types','id' => $loadrequest]));
+        }
+
         if($this->getUser()) {
             $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['process_type' => $id, 'submitters.brp' => $this->getUser()->getPerson(), 'order[dateCreated]'=>'desc'])['hydra:member'];
         }
@@ -68,6 +76,7 @@ class PtcController extends AbstractController
             // Lets whipe the request
             $variables['request']['process_type'] = $variables['process']['@id'];
             $variables['request']['status'] = 'incomplete';
+            $variables['request']['properties'] = [];
             $session->set('request', $variables['request']);
         }
 
@@ -92,7 +101,16 @@ class PtcController extends AbstractController
         if ($request->isMethod('POST')) {
             // the second argument is the value returned when the attribute doesn't exist
             $resource = $request->request->all();
-            $request = array_merge ($variables['request'],$resource['request']);
+
+            // Lets transfer the known properties
+            $request = $resource['request'];
+            if(array_key_exists('properties', $resource['request'])){
+                $properties = array_merge($variables['request']['properties'], $resource['request']['properties']);
+                $request['properties'] = $properties;
+            }
+            elseif(array_key_exists('properties', $variables['request'])){
+                $request['properties'] = $variables['request']['properties'];
+            }
 
             // We only support the posting and saving of
             if ($this->getUser()) {
@@ -101,9 +119,11 @@ class PtcController extends AbstractController
 
             // stores an attribute in the session for later reuse
             $variables['request'] = $request;
-            $session->set('request', $variables['request']);
+            $session->set('request', $request);
         }
 
+        /* lagacy */
+        $variables['resource'] = $variables['request'];
         return $variables;
     }
 
