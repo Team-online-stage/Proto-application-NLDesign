@@ -339,51 +339,51 @@
       </trans-unit>
       <trans-unit id="licsifO" resname="skip to content">
         <source>skip to content</source>
-        <target>__skip to content</target>
+        <target>overslaan naar inhoud</target>
       </trans-unit>
       <trans-unit id="DodjLNR" resname="date">
         <source>date</source>
-        <target>__date</target>
+        <target>datum</target>
       </trans-unit>
       <trans-unit id="K8tDy8j" resname="view">
         <source>view</source>
-        <target>__view</target>
+        <target>bekijken</target>
       </trans-unit>
       <trans-unit id="LIoflVB" resname="view all">
         <source>view all</source>
-        <target>__view all</target>
+        <target>alles bekijken</target>
       </trans-unit>
       <trans-unit id="qwJO8ZA" resname="no messages available">
         <source>no messages available</source>
-        <target>__no messages available</target>
+        <target>geen berichten beschikbaar</target>
       </trans-unit>
       <trans-unit id="qyYJGKY" resname="this request is in progress and can no longer be altered">
         <source>this request is in progress and can no longer be altered</source>
-        <target>__this request is in progress and can no longer be altered</target>
+        <target>dit verzoek is in behandeling en kan niet langer aangepast worden</target>
       </trans-unit>
       <trans-unit id="fG7N7IE" resname="this request has been procceced and can no longer be altered">
         <source>this request has been procceced and can no longer be altered</source>
-        <target>__this request has been procceced and can no longer be altered</target>
+        <target>this verzoek is verwerkt en kan niet langer aangepast worden</target>
       </trans-unit>
       <trans-unit id="PB_1By8" resname="unknow process status">
         <source>unknow process status</source>
-        <target>__unknow process status</target>
+        <target>onbekende proces status</target>
       </trans-unit>
       <trans-unit id="xsHJqch" resname="next">
         <source>next</source>
-        <target>__next</target>
+        <target>volgende</target>
       </trans-unit>
       <trans-unit id="4lbujnr" resname="continue">
         <source>continue</source>
-        <target>__continue</target>
+        <target>doorgaan</target>
       </trans-unit>
       <trans-unit id="BOKwDjZ" resname="comparable requests">
         <source>comparable requests</source>
-        <target>__comparable requests</target>
+        <target>vergelijkbare verzoeken</target>
       </trans-unit>
       <trans-unit id="x4IRnYO" resname="no comparable requests">
         <source>no comparable requests</source>
-        <target>__no comparable requests</target>
+        <target>geen vergelijkbare verzoeken</target>
       </trans-unit>
       <trans-unit id="LWA9gIE" resname="download documents">
         <source>download documents</source>
@@ -391,15 +391,15 @@
       </trans-unit>
       <trans-unit id="pJn0pfd" resname="your data">
         <source>your data</source>
-        <target>__your data</target>
+        <target>uw data</target>
       </trans-unit>
       <trans-unit id="2Ayb_RD" resname="address">
         <source>address</source>
-        <target>__address</target>
+        <target>adres</target>
       </trans-unit>
       <trans-unit id="SLjwM5J" resname="start request">
         <source>start request</source>
-        <target>__start request</target>
+        <target>verzoek starten</target>
       </trans-unit>
       <trans-unit id="LtX3OR7" resname="job postings">
         <source>job postings</source>
