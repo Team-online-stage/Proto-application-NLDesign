@@ -72,10 +72,10 @@ class VrcController extends AbstractController
                 $section = $phpWord->addSection();
                 \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
                 $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-                $filename = $document['name'].'.docx';
+                $filename = dirname(__FILE__, 3)."/var/{$document['name']}.docx";
                 $objWriter->save($filename);
                 header('Content-Type: application/vnd.ms-word');
-                header('Content-Disposition: attachment; filename='.$filename);
+                header('Content-Disposition: attachment; filename='.$document['name'].'.docx');
                 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
                 flush();
                 readfile($filename);
