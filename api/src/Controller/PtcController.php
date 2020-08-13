@@ -52,8 +52,8 @@ class PtcController extends AbstractController
         $variables['submit'] = $request->query->get('submit', 'false');
 
         // Lets load a request
-        if($request =  $request->query->get('request')){
-
+        if($loadrequest =  $request->query->get('request')){
+            $session->set('request',  $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types','id' => $loadrequest]));
         }
 
         if($this->getUser()) {
@@ -116,6 +116,8 @@ class PtcController extends AbstractController
             $session->set('request', $request);
         }
 
+        /* lagacy */
+        $variables['resource'] = $variables['request'];
         return $variables;
     }
 
