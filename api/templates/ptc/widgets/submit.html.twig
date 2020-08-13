@@ -94,6 +94,8 @@
     </div>
 </div>
 
+
+
 {% if app.user %}
 <div class="content-background" style="margin-top: 20px">
     <div class="content">
@@ -168,13 +170,17 @@
         </ul>
     </div>
 </div>
+    <!-- Page Break -->
+    <div style="height: 20px"></div>
 
-    {% if request['status'] is defined and request['status'] in {'incomplete':'incomplete','complete':'complete'} %}
     <button name="request[status]" style="margin-top: 20px;" id="status_submit" value="submitted" class="btn btn--block">{{ 'submit'|trans|capitalize }}</button>
+
+    <!-- Page Break -->
+    <div style="height: 20px"></div>
     <button name="request[status]" style="margin-top: 20px; background-color: red; color: white;" id="status_cancel" value="cancelled" class="btn btn--block btn--primary">{{ 'cancel'|trans|capitalize }}</button>
-    {% elseif request['status'] is defined and request['status'] in {'submitted':'submitted'} %}
-    <button name="request[status]" style="margin-top: 20px; background-color: red; color: white;" id="status_retract" value="retracted" class="btn btn--block btn--primary">{{ 'retract'|trans|capitalize }}</button>
-    {% endif %}
+
+
+
 {% else %}
 
     {% if not app.user %}

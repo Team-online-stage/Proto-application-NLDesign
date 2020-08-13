@@ -14,7 +14,7 @@
                     {{ 'name'|trans|capitalize }}
                 </div>
                 <div class="definition-list__description">
-                    <p>{# if person.name is defined %}{{ person.name }}{% else #}{{ person.naam.voornamen }} {{ person.voorvoegsel.geslachtsnaam }} {{ person.naam.geslachtsnaam }}</p>
+                    <p>{# if person.name is defined %}{{ person.name }}{% else #}{{ person.naam.voornamen }} {{ person.naam.voorvoegsel }} {{ person.naam.geslachtsnaam }}</p>
                 </div>
             </li>
             <li class="definition-list__item definition-list__item--horizontal">

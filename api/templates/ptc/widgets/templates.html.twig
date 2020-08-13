@@ -1,0 +1,27 @@
+{% set requestType = commonground_resource(process.requestType) %}
+
+    <div class="content-background">
+        <div class="content">
+            <h2>{{ 'download documents'|trans|capitalize }}</h2>
+
+            <ul class="list list--files">
+                {% if requestType is defined and requestType is not empty and request.id is defined and request.id is not empty %}
+                    {% for template in requestType.templates %}
+                        <li class="file">
+                            <i class="file__icon icon icon-document"></i>
+                            <a href="{{ path('app_vrc_download',{'id': template.id, 'requestId': request.id}) }}">
+
+                                <div class="file__data">
+                                    <div class="file__filename">
+                                        <strong class="file__title break-all">{{ template.name }}</strong>
+                                        <span class="meta">{{ template.type }}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+

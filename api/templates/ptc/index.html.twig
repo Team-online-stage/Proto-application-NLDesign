@@ -49,7 +49,7 @@
                                             {% if resource.requireLogin is defined and resource.requireLogin == "true" and not app.user %}
                                             <span class="label label--rood">{{ 'login required'|trans|capitalize }}</span>
                                             {% else %}
-                                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_ptc_process', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a>
+                                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_ptc_process_stage', {id: resource.id, stage:'start'}) }}"><b>{{ 'start'|trans|capitalize }}</b></a>
                                             {% endif %}
                                         </td>
                                     </tr>
@@ -62,7 +62,7 @@
                                         {% if resource.requireLogin is defined and resource.requireLogin == "true" and not app.user %}
                                             {{ 'login required'|trans|capitalize }}
                                         {% else %}
-                                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_ptc_process', {id: resource.id}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></a>
+                                            <a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_ptc_process_stage', {id: resource.id, stage:'start'}) }}"><b>{{ 'start'|trans|capitalize }}</b></a></a>
                                         {% endif %}
                                     </td>
                                 </tr>
