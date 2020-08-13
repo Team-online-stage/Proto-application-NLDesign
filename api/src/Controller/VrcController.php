@@ -7,6 +7,8 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\PhpWord;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -23,7 +25,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class VrcController extends AbstractController
 {
-
     /**
      * @Route("/")
      * @Template
@@ -53,5 +54,33 @@ class VrcController extends AbstractController
         }
 
         return $this->redirect($this->generateUrl('app_process_load', ['id'=>$loadedRequest['processType']['id']]));
+    }
+
+    /**
+     * @Route("/download/{id}/{requestId}")
+     * @Template
+     */
+    public function DownloadAction(Request $request, CommonGroundService $commonGroundService, $id, $requestId)
+    {
+        $document = $commonGroundService->getResource(['component' => 'vtc', 'type' => 'templates', 'id' => $id]);
+        $currentRequest = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $requestId]);
+        $query = ['request' => $currentRequest['@id']];
+        $render = $commonGroundService->createResource($query, $document['uri'].'/render');
+        switch ($document['type']) {
+            case 'word':
+                $phpWord = new PhpWord();
+                $section = $phpWord->addSection();
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
+                $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+                $filename = $document['name'].'.docx';
+                $objWriter->save($filename);
+                header('Content-Type: application/vnd.ms-word');
+                header('Content-Disposition: attachment; filename='.$filename);
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                flush();
+                readfile($filename);
+                unlink($filename); // deletes the temporary file
+                exit;
+        }
     }
 }
