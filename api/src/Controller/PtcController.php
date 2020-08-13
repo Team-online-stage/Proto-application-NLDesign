@@ -102,9 +102,14 @@ class PtcController extends AbstractController
             $resource = $request->request->all();
 
             // Lets transfer the known properties
-            $properties = array_merge($variables['request']['properties'], $resource['request']['properties']);
             $request = $resource['request'];
-            $request['properties'] = $properties;
+            if(array_key_exists('properties', $resource['request'])){
+                $properties = array_merge($variables['request']['properties'], $resource['request']['properties']);
+                $request['properties'] = $properties;
+            }
+            else{
+                $request['properties'] = $variables['request']['properties'];
+            }
 
             // We only support the posting and saving of
             if ($this->getUser()) {
