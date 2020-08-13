@@ -5,7 +5,9 @@
             <h2>{{ 'your data'|trans|capitalize }}</h2>
         </div>
         <ul class="definition-list">
-            {% set person = commonground_resource(app.user.person)  %}
+            {% if app.user.person is defined %}
+                {% set person = commonground_resource(app.user.person)  %}
+            {% endif %}
             {% if app.user.organization %}
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title">
@@ -33,6 +35,7 @@
                 </div>
             </li>
             {% if  person.verblijfplaats is defined %}
+                {% set person = commonground_resource(app.user.person)  %}
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title">
                     {{ 'address'|trans|capitalize }}

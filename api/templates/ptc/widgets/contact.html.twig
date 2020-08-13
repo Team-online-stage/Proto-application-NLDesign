@@ -2,7 +2,7 @@
     <div class="content">
         <h2 id="contactdescription">{{ 'messages'|trans|capitalize }}</h2>
 
-        {% if contactMoments is empty %}
+        {% if contactMoments is not defined or contactMoments is empty %}
             {{ 'there are currently no messages concerning this item'|trans|capitalize}}
         {% else %}
         <ul class="list list--links" aria-describedby="contactdescription">

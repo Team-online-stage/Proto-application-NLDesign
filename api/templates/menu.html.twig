@@ -1,13 +1,11 @@
-<nav
-    class=" {% if application is defined and application.defaultConfiguration.configuration.colorSchemeMenu is defined %}{{ application.defaultConfiguration.configuration.colorSchemeMenu }}{% else %}background--donkerblauw{% endif %}"
-    id="docs-nav">
+<nav id="docs-nav">
     <div class="container">
         <div class="top-nav__block top-nav-autoresize">
             <ul class="nav nav--submenu">
                 {% if application.defaultConfiguration.configuration.mainMenu is defined %}
                     {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
 
-                    {% for item in menu.menuItems %}
+                    {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
                 <li class="nav__item">
                     <a href="{{ item.href }}" title="Home" class="nav__link  ">
                         <i class="{{ item.icon }}" role="presentation"></i>
@@ -20,7 +18,7 @@
 
                 {% if not app.user %}
                 <li class="nav__item">
-                    <a href="/login" title="Login" class="nav__link  ">
+                    <a href="{{ path('app_user_login') }}" title="Login" class="nav__link  ">
                         <i style="margin-right: 10px"  class="fas fa-lock"></i>
                         <span>{{ 'login'|trans|capitalize }}</span>
                     </a>
