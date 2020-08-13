@@ -12,7 +12,7 @@
                 </li>
             {% endfor %}
             <li class="list__item {% if stage.slug is defined and stage.slug == 'submit' or request.status == 'submitted' %}list__item--active{% endif %}">
-                <a href="{{ path('app_process_slug',{id:process.id,slug:'submit'}) }}">{{ 'submit'|trans|capitalize }}</a>
+                <a href="{{ path('app_ptc_process_stage',{id:process.id,submit:'true'}) }}">{{ 'submit'|trans|capitalize }}</a>
             </li>
             <li class="list__item {% if request.status == 'in progress' %}list__item--active{% else %}list__item--disabled{% endif %}">
                 {{ 'in progress'|trans|capitalize }}
