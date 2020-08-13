@@ -52,14 +52,15 @@ class PtcController extends AbstractController
         $variables['submit'] = $request->query->get('submit', 'false');
 
         // Lets load a request
-        if ($loadrequest = $request->query->get('request')) {
-            $session->set('request', $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $loadrequest]));
+        if($loadrequest =  $request->query->get('request')){
+            $variables['request'] =   $commonGroundService->getResource($loadrequest);
+            $session->set('request', $variables['request']);
         }
 
-        if ($this->getUser()) {
-            $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['process_type' => $id, 'submitters.brp' => $this->getUser()->getPerson(), 'order[dateCreated]'=>'desc'])['hydra:member'];
+        $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types','id' => $id]);
+        if($this->getUser()) {
+            $variables['requests'] = $commonGroundService->getResourceList(['component' => 'vrc', 'type' => 'requests'], ['process_type' => $variables['process']['@id'], 'submitters.brp' => $this->getUser()->getPerson(), 'order[dateCreated]'=>'desc'])['hydra:member'];
         }
-        $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
 
         if ($stage == 'start') {
             $session->remove('request');
