@@ -160,6 +160,8 @@ class PtcController extends AbstractController
             $session->set('request', $request);
         }
 
+        var_dump($variables['stage']);
+
         /* lagacy */
         $variables['resource'] = $variables['request'];
 
