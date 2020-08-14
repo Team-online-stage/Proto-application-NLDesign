@@ -84,7 +84,9 @@
                                         {% endif #}
                                 {% else %}
                                     {% if 'http' in property %}
-                                        {% if commonground_resource(property)['@type'] == 'Adres' %}
+                                        {% if 'enkelvoudiginformatieobjecten' in property %}
+                                            <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
+                                        {% elseif commonground_resource(property)['@type'] == 'Adres' %}
                                             {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                                         {% else %}
                                             {{ commonground_resource(property).name|capitalize }}

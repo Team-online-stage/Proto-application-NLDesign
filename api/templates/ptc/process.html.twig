@@ -44,9 +44,9 @@
 <div class="row">
     <div class="col-md-8  col-sm-12">
         {% if stage.next.slug is defined %}
-        <form method="post" action="{{ path('app_ptc_process_stage',{id:process.id, stage:stage.next.slug}) }}" class="form">
+        <form method="post" action="{{ path('app_ptc_process_stage',{id:process.id, stage:stage.next.slug}) }}" class="form" enctype="multipart/form-data">
         {% else %}
-        <form method="post" action="{{ path('app_ptc_process',{id:process.id}) }}" class="form">
+        <form method="post" action="{{ path('app_ptc_process',{id:process.id}) }}" class="form" enctype="multipart/form-data">
         {% endif%}
             {% include 'ptc/widgets/default.html.twig' %}
 
