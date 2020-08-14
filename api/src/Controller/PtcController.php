@@ -133,7 +133,12 @@ class PtcController extends AbstractController
                         $drc['informatieobjecttype'] = $informationObjectType;
                         $drc['bronorganisatie'] = '999990482';
                         $drc['titel'] = urlencode($key);
-                        $drc['auteur'] = $this->getUser()->getPerson();
+                        if($this->getUser()){
+                            $drc['auteur'] = $this->getUser()->getPerson();
+                        }
+                        else{
+                            $drc['auteur'] = 'Zelf regelen applicatie';
+                        }
                         $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
                         $drc['bestandsnaam'] = $file->getClientOriginalName();
                         $drc['bestandstype'] = $file->getClientOriginalExtension();
