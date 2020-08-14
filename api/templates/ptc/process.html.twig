@@ -9,14 +9,10 @@
                 <a class="backlink" href="{{ path('app_ptc_index') }}">{{ 'processes'|trans|capitalize }}</a>
                 <header class="content__header">
                     <h1 class="content__header-title">{{ process.name|capitalize }}</h1>
+                    {{ process.description }}
                 </header>
             </header>
         </div><!-- ./content -->
-        <div class="content-background">
-            <div class="content">
-                {{ process.description }}
-            </div>
-        </div>
     </div><!-- ./col -->
 </section>
 
