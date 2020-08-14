@@ -1,14 +1,5 @@
 <div class="content-background">
     <div class="content">
-        {{ process.description }}
-    </div>
-</div>
-
-<!-- Page Break -->
-<div style="height: 20px"></div>
-
-<div class="content-background">
-    <div class="content">
         <h2>{{ 'stages'|trans|capitalize }}</h2>
 
         <ul class="list list--timeline list--timeline-compact">
@@ -27,3 +18,20 @@
     </div>
 </div>
 
+<!-- Page Break -->
+<div style="height: 20px;"></div>
+
+{% if not app.user %}
+    {% if process.requireLogin is defined and process.requireLogin != 'true' %}
+        <div class="col-md-6" style="padding-left: 0px;">
+            <a class="btn btn--block" href="{{ path('app_user_login') }}">{{ 'login'|trans|capitalize }}</a>
+        </div>
+        <div class="col-md-6" style="padding-right: 0px;">
+            <button class="btn btn--block" name="submit">{{ 'continue without logging in'|trans|capitalize }}</button>
+        </div>
+    {%  else %}
+        <a class="btn btn--block" href="{{ path('app_user_login') }}">{{ 'login'|trans|capitalize }}</a>
+    {% endif %}
+{% else %}
+        <button class="btn btn--block" name="submit">{% if resource.reference is defined and resource.reference is not empty %}{{ 'next'|trans|capitalize }}{% else %}{{ 'start'|trans|capitalize }}{% endif %}</button>
+{% endif %}

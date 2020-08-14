@@ -71,9 +71,9 @@ class PtcController extends AbstractController
 
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
-            (array_key_exists('process_type', $variables['request']) && $variables['request']['process_type'] != $variables['process']['@id'])
+            (array_key_exists('processType', $variables['request']) && $variables['request']['processType'] != $variables['process']['@id'])
             ||
-            !array_key_exists('process_type', $variables['request'])
+            !array_key_exists('processType', $variables['request'])
         ) {
             // Lets whipe the request
             $variables['request']['process_type'] = $variables['process']['@id'];
@@ -104,7 +104,6 @@ class PtcController extends AbstractController
             $resource = $request->request->all();
             $files = $request->files->all();
 
-
             // Lets transfer the known properties
             $request = $resource['request'];
             if (array_key_exists('properties', $resource['request'])) {
@@ -117,8 +116,6 @@ class PtcController extends AbstractController
 
 
             if (count($files)>0) {
-
-
                 //We are going to need a JWT token for the DRC and ZTC here
 
                 $token = $commonGroundService->getJwtToken('ztc');
