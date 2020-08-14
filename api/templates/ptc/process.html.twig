@@ -12,6 +12,11 @@
                 </header>
             </header>
         </div><!-- ./content -->
+        <div class="content-background">
+            <div class="content">
+                {{ process.description }}
+            </div>
+        </div>
     </div><!-- ./col -->
 </section>
 
@@ -55,7 +60,6 @@
 
                 {% if slug is not defined or slug == false or request.currentStage is not defined or request.currentStage is empty%}
                     {% include 'ptc/widgets/instruction.html.twig' %}
-                    {% include 'ptc/widgets/documents.html.twig' %}
                 {% else %}
                     {% include 'ptc/widgets/form.html.twig' %}
                 {% endif %}
@@ -76,42 +80,6 @@
                 {{ 'unknow process status'|trans|capitalize }}:{{ request.status }}
             {% endif %}
 
-            <!-- Page Break -->
-            <div style="height: 20px;"></div>
-
-            {% if submit != 'true' and (request.status is not defined or request.status is empty or request.status == 'incomplete')%}
-                {% if request.currentStage is not defined or request.currentStage is empty%}
-                    {% if not app.user %}
-                        <a class="btn btn--block" href="{{ path('app_user_login') }}">{{ 'login'|trans|capitalize }}</a>
-                        <!-- Page Break -->
-                        {% if process.requireLogin is defined and process.requireLogin != 'true' %}
-                        <div style="height: 20px;"></div>
-                        <button class="btn btn--block" name="submit">{{ 'continue without logging in'|trans|capitalize }}</button>
-                        {% endif %}
-                    {% else %}
-                        {% if not app.user %}
-                        <button class="btn btn--block" name="submit">{{ 'next'|trans|capitalize }}</button>
-                        {% else %}
-                        <button class="btn btn--block" name="submit">{{ 'start'|trans|capitalize }}</button>
-                        {% endif %}
-                    {% endif %}
-                {% elseif slug is not defined or slug == false %}
-                    <div class="col-md-6" style="padding-left: 0px;">
-                        <button class="btn btn--block" name="submit">{{ 'continue'|trans|capitalize }}</button>
-                    </div>
-                {% else %}
-                <div class="col-md-6" style="padding-left: 0px;">
-                    <button class="btn btn--block" name="submit">{{ 'save'|trans|capitalize }}</button>
-                </div>
-                {% endif %}
-            {% endif %}
-
-            {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
-                <div class="col-md-6" style="padding-right: 0px;">
-                    <a class="btn btn--primary btn--block"
-                       href="{{ path('app_ptc_process_stage',{id: process.id, stage: stage.previous.slug}) }}">{{ 'previous'|trans|capitalize }}</a>
-                </div>
-            {% endif %}
         </form>
     </div><!-- /.col -->
 
