@@ -113,9 +113,7 @@ class PtcController extends AbstractController
                 $request['properties'] = $variables['request']['properties'];
             }
 
-
-
-            if (count($files)>0) {
+            if (count($files) > 0) {
                 //We are going to need a JWT token for the DRC and ZTC here
 
                 $token = $commonGroundService->getJwtToken('ztc');
@@ -128,12 +126,16 @@ class PtcController extends AbstractController
                         $informationObjectType = $infoObjectType['url'];
                     }
                 }
-                if($informationObjectType){
-                    foreach($files['request']['properties'] as $key=>$file){
+                if ($informationObjectType) {
+                    foreach ($files['request']['properties'] as $key=>$file) {
                         $drc['informatieobjecttype'] = $informationObjectType;
                         $drc['bronorganisatie'] = '999990482';
                         $drc['titel'] = urlencode($key);
-                        $drc['auteur'] = $this->getUser()->getPerson();
+                        if ($this->getUser()) {
+                            $drc['auteur'] = $this->getUser()->getPerson();
+                        } else {
+                            $drc['auteur'] = 'Zelf regelen applicatie';
+                        }
                         $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
                         $drc['bestandsnaam'] = $file->getClientOriginalName();
                         $drc['bestandstype'] = $file->getClientOriginalExtension();
