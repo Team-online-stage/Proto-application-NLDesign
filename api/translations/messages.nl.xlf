@@ -425,6 +425,18 @@
         <source>pitches</source>
         <target>__pitches</target>
       </trans-unit>
+      <trans-unit id="2LiW76m" resname="relevant requests that you have made in the past that share a great amount of characteristic with the request">
+        <source>relevant requests that you have made in the past that share a great amount of characteristic with the request</source>
+        <target>__relevant requests that you have made in the past that share a great amount of characteristic with the request</target>
+      </trans-unit>
+      <trans-unit id="UTMi1ew" resname="you need to login before you can view relevant requests">
+        <source>you need to login before you can view relevant requests</source>
+        <target>u dient ingelogd te zijn om relevante verzoeken te bekijken</target>
+      </trans-unit>
+      <trans-unit id="l2vQ37g" resname="validations">
+        <source>validations</source>
+        <target>validaties</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
