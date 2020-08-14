@@ -7,6 +7,7 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use DateTime;
 use function GuzzleHttp\Promise\all;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -101,6 +102,8 @@ class PtcController extends AbstractController
         if ($request->isMethod('POST')) {
             // the second argument is the value returned when the attribute doesn't exist
             $resource = $request->request->all();
+            $files = $request->files->all();
+
 
             // Lets transfer the known properties
             $request = $resource['request'];
@@ -109,6 +112,45 @@ class PtcController extends AbstractController
                 $request['properties'] = $properties;
             } elseif (array_key_exists('properties', $variables['request'])) {
                 $request['properties'] = $variables['request']['properties'];
+            }
+
+
+
+            if (count($files)>0) {
+
+
+                //We are going to need a JWT token for the DRC and ZTC here
+
+                $token = $commonGroundService->getJwtToken('ztc');
+                $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
+                $infoObjectTypes = $commonGroundService->getResourceList(['component'=>'ztc', 'type'=>'informatieobjecttypen'])['results'];
+
+                $informationObjectType = null;
+                foreach ($infoObjectTypes as $infoObjectType) {
+                    if ($infoObjectType['omschrijving'] == 'Document') {
+                        $informationObjectType = $infoObjectType['url'];
+                    }
+                }
+                if($informationObjectType){
+                    foreach($files['request']['properties'] as $key=>$file){
+                        $drc['informatieobjecttype'] = $informationObjectType;
+                        $drc['bronorganisatie'] = '999990482';
+                        $drc['titel'] = urlencode($key);
+                        $drc['auteur'] = $this->getUser()->getPerson();
+                        $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
+                        $drc['bestandsnaam'] = $file->getClientOriginalName();
+                        $drc['bestandstype'] = $file->getClientOriginalExtension();
+                        $drc['formaat'] = $file->getClientMimeType();
+                        $drc['taal'] = 'nld';
+                        $drc['inhoud'] = base64_encode(file_get_contents($file->getPathname()));
+
+                        $token = $commonGroundService->getJwtToken('drc');
+                        $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
+                        $result = $commonGroundService->createResource($drc, ['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten']);
+                        $request['properties'][$key] = $result['url'];
+                        $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
+                    }
+                }
             }
 
             // We only support the posting and saving of

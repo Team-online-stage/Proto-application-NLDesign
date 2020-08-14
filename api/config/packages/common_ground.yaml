@@ -190,7 +190,7 @@ parameters:
         drc:
             location: "%env(APP_COMMONGROUND_DRC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
+            id: "%env(APP_COMMONGROUND_DRC_ID)%"
             secret: "%env(APP_COMMONGROUND_DRC_SECRET)%"
             accept: "application/json"
             autowire: false
@@ -209,16 +209,16 @@ parameters:
             accept: "application/json"
             autowire: false
         zrc:
-            location: "%env(APP_COMMONGROUND_NRC_LOCATION)%"
+            location: "%env(APP_COMMONGROUND_ZRC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
-            secret: "%env(APP_COMMONGROUND_NRC_SECRET)%"
+            id: "%env(APP_COMMONGROUND_ZRC_ID)%"
+            secret: "%env(APP_COMMONGROUND_ZRC_SECRET)%"
             accept: "application/json"
             autowire: false
         ztc:
             location: "%env(APP_COMMONGROUND_ZTC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
+            id: "%env(APP_COMMONGROUND_ZTC_ID)%"
             secret: "%env(APP_COMMONGROUND_ZTC_SECRET)%"
             accept: "application/json"
             autowire: false
