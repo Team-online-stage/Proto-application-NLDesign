@@ -26,6 +26,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class VrcController extends AbstractController
 {
     /**
+     * @Route("/user")
+     * @Template
+     */
+    public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests'], ['submitters.brp'=>$this->getUser()->getPerson()])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/organisation")
+     * @Template
+     */
+    public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables= [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/")
      * @Template
      */

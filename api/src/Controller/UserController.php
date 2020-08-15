@@ -196,40 +196,4 @@ class UserController extends AbstractController
 
         return $variables;
     }
-
-    /**
-     * @Route("/job_postings")
-     * @Template
-     */
-    public function jobPostingsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
-    {
-        $content = false;
-        $variables = $applicationService->getVariables();
-
-        // Lets provide this data to the template
-        $variables['query'] = array_merge($request->request->all(), $request->query->all());
-
-        // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/job_applications")
-     * @Template
-     */
-    public function jobApplicationsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
-    {
-        $content = false;
-        $variables = $applicationService->getVariables();
-
-        // Lets provide this data to the template
-        $variables['query'] = array_merge($request->request->all(), $request->query->all());
-
-        // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_applications'], $variables['query'])['hydra:member'];
-
-        return $variables;
-    }
 }

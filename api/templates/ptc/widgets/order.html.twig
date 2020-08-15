@@ -1,33 +1,37 @@
+{% if resource is defined and resource is not empty and resource.order is defined and resource.order is not empty %}
 <div class="content-background">
     <div class="content">
         <h2>{{ 'order'|trans|capitalize }}</h2>
         <ul class="definition-list">
-            {% if request.order is defined and request.order is not empty %}
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title" style="max-width: 100%">
-                        {{ 'order'|trans|capitalize }}
-                    </div>
-                    <div class="definition-list__description">
-                        <p>
-                            {{commonground_resource(request.order).reference }}
-                        </p>
-                    </div>
-                    <div class="definition-list__title" style="max-width: 100%">
-                        {{ 'invoice'|trans|capitalize }}
-                    </div>
-                    <div class="definition-list__description">
-                        {{ 'you will recieve an invoice afther your request has been proccesd'|trans|capitalize }}
-                    </div>
-                    <div class="definition-list__title" style="max-width: 100%">
-                        {{ 'amount'|trans|capitalize }}
-                    </div>
-                    <div class="definition-list__description">
-                        <p>
-                        {{ commonground_resource(request.order).price }} {{ commonground_resource(request.order).priceCurrency }}
-                        </p>
-                    </div>
-                </li>
-            {% endif %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'order'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{commonground_resource(resource.order).reference }}
+                    </p>
+                </div>
+            </li>
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'invoice'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    {{ 'you will recieve an invoice afther your request has been proccesd'|trans|capitalize }}
+                </div>
+            </li>
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'amount'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                    {{ commonground_resource(resource.order).price }} {{ commonground_resource(resource.order).priceCurrency }}
+                    </p>
+                </div>
+            </li>
         </ul>
     </div>
 </div>
+{% endif %}
