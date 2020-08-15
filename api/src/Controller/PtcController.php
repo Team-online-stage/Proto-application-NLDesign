@@ -95,9 +95,12 @@ class PtcController extends AbstractController
                     $variables['stage'] = $tempStage;
                 }
             }
-        } elseif (!array_key_exists('stage', $variables)) {
+        }
+
+        if (!array_key_exists('stage', $variables)) {
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
+
 
         if ($request->isMethod('POST')) {
             // the second argument is the value returned when the attribute doesn't exist
@@ -160,7 +163,6 @@ class PtcController extends AbstractController
             $session->set('request', $request);
         }
 
-        var_dump($variables['stage']);
 
         /* lagacy */
         $variables['resource'] = $variables['request'];

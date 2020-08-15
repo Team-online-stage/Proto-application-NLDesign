@@ -21,17 +21,23 @@
 <!-- Page Break -->
 <div style="height: 20px;"></div>
 
+<div class="row">
 {% if not app.user %}
     {% if process.requireLogin is defined and process.requireLogin != 'true' %}
-        <div class="col-md-6" style="padding-left: 0px;">
-            <a class="btn btn--block" href="{{ path('app_user_login') }}">{{ 'login'|trans|capitalize }}</a>
+        <div class="col-md-6" >
+            <a class="btn btn--block" href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
         </div>
-        <div class="col-md-6" style="padding-right: 0px;">
+        <div class="col-md-6" >
             <button class="btn btn--block" name="submit">{{ 'continue without logging in'|trans|capitalize }}</button>
         </div>
     {%  else %}
-        <a class="btn btn--block" href="{{ path('app_user_login') }}">{{ 'login'|trans|capitalize }}</a>
+    <div class="col-md-12" >
+        <a class="btn btn--block" href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
+    </div>
     {% endif %}
 {% else %}
+    <div class="col-md-12" >
         <button class="btn btn--block" name="submit">{% if resource.reference is defined and resource.reference is not empty %}{{ 'next'|trans|capitalize }}{% else %}{{ 'start'|trans|capitalize }}{% endif %}</button>
+    </div>
 {% endif %}
+</div>

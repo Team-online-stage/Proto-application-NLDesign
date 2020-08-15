@@ -78,9 +78,11 @@
 <!-- Page Break -->
 <div style="height: 20px;"></div>
 
-<div class="col-md-6" style="padding-left: 0px;">
-    <button class="btn btn--block" name="submit">{% if not app.user %}{{ 'continue'|trans|capitalize }}{% else %}{{ 'save'|trans|capitalize }}{% endif %}</button>
-</div>
-<div class="col-md-6" style="padding-right: 0px;">
-    <a class="btn btn--primary btn--block" href=" {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}{{ path('app_ptc_process_stage',{id: process.id, stage: stage.previous.slug}) }}{% else %}{{ path('app_ptc_process',{id: process.id}) }}{% endif %}">{{ 'previous'|trans|capitalize }}</a>
+<div class="row">
+    <div class="col-md-6" >
+        <button class="btn btn--block" name="submit">{% if not app.user %}{{ 'continue'|trans|capitalize }}{% else %}{{ 'save'|trans|capitalize }}{% endif %}</button>
+    </div>
+    <div class="col-md-6" >
+        <a class="btn btn--primary btn--block" href=" {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}{{ path('app_ptc_process_stage',{id: process.id, stage: stage.previous.slug}) }}{% else %}{{ path('app_ptc_process',{id: process.id}) }}{% endif %}">{{ 'previous'|trans|capitalize }}</a>
+    </div>
 </div>
