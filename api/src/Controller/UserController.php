@@ -24,9 +24,24 @@ class UserController extends AbstractController
      * @Route("/login")
      * @Template
      */
-    public function login(Request $request, AuthorizationCheckerInterface $authChecker, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function login(
+        Session $session,
+        Request $request,
+        AuthorizationCheckerInterface $authChecker,
+        CommonGroundService $commonGroundService,
+        ParameterBagInterface $params,
+        EventDispatcherInterface $dispatcher
+    )
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
+        // Dealing with backUrls
+        if($backUrl = $request->query->get('backUrl')){
+        }
+        else{
+            $backUrl = '/login';
+        }
+        $session->set('backUrl', $backUrl);
 
         if ($this->getUser()) {
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -35,7 +50,7 @@ class UserController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         } else {
-            return $this->render('login/index.html.twig');
+            return $this->render('login/index.html.twig',['backUrl'=>$backUrl]);
         }
     }
 

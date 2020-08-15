@@ -183,17 +183,24 @@
 
 {% else %}
 
-    {% if not app.user %}
-        <!-- Page Break -->
-        <div style="height: 20px"></div>
+    <!-- Page Break -->
+    <div style="height: 20px"></div>
 
-        <div class="notification notification--warning">
-            <div class="notification__content">
-                <div class="notification__type">{{ 'attention'|trans|capitalize }}</div>
-                <h2 class="notification__title">{{ 'you can not save or submit procceses if you are not loged in'|trans|capitalize }}</h2>
-            </div>
+    <div class="notification notification--warning">
+        <div class="notification__content">
+            <div class="notification__type">{{ 'attention'|trans|capitalize }}</div>
+            <h2 class="notification__title">{{ 'you can not save or submit procceses if you are not loged in'|trans|capitalize }}</h2>
         </div>
-    {% endif %}
+    </div>
+
+    <div style="height: 20px"></div>
+
+
+<div class="row" >
+    <div class="col-md-12" >
+        <a class="btn btn--block" href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
+    </div>
+</div>
 {% endif %}
 
 
