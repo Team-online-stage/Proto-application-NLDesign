@@ -42,7 +42,7 @@
 
                 for (var i = 0; i < ingeschrevenpersonen.length;i++) {
                     if(ingeschrevenpersonen[i]['bsn'] == selectedbsn){
-                        selectedIngeschrevenpersoonBsn = ingeschrevenpersonen[i]['url'];
+                        selectedIngeschrevenpersoonBsn = ingeschrevenpersonen[i]['@id'];
                         document.getElementById("p_bsn").innerHTML = "bsn: " + ingeschrevenpersonen[i]['bsn'];
                         document.getElementById("p_naam").innerHTML = "naam: " + ingeschrevenpersonen[i]['voornamen'] + " " + ingeschrevenpersonen[i]['geslachtsnaam'];
                         document.getElementById("p_geboortedatum").innerHTML = "geboortedatum: " + ingeschrevenpersonen[i]['geboortedatum'];
