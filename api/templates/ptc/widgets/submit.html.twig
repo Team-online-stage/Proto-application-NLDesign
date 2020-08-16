@@ -72,11 +72,12 @@
                                     {% endif #}
                                 {% else %}
                                     {% if 'http' in property %}
-                                        {% if commonground_resource(property)['@type'] == 'Adres' %}
+                                        {# if commonground_resource(property)['@type'] == 'Adres' %}
                                             {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                                         {% else %}
                                             {{ commonground_resource(property).name|capitalize }}
-                                        {% endif %}
+                                        {% endif #}
+                                        {{ commonground_resource(property).name|capitalize }}
                                     {% else %}
                                     {{ property|capitalize }}
                                     {% endif %}
