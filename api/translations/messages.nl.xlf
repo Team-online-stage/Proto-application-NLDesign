@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="YFQKuu_" resname="this request is currently">
         <source>this request is currently</source>
-        <target>dit verzoek is momenteel:</target>
+        <target>dit verzoek is momenteel</target>
       </trans-unit>
       <trans-unit id="UD6t0Eb" resname="retract">
         <source>retract</source>

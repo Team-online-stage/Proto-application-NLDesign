@@ -1,7 +1,8 @@
 {% if resource is defined and resource is not empty and resource.order is defined and resource.order is not empty %}
+{% set order =  commonground_resource(resource.order) %}
 <div class="content-background">
     <div class="content">
-        <h2>{{ 'order'|trans|capitalize }}</h2>
+        <h2>{{ 'financial'|trans|capitalize }}</h2>
         <ul class="definition-list">
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title" style="max-width: 100%">
@@ -9,28 +10,69 @@
                 </div>
                 <div class="definition-list__description">
                     <p>
-                        {{commonground_resource(resource.order).reference }}
+                        {{ order.reference }}
                     </p>
                 </div>
             </li>
+            {% if order.items is defined and order.items is not empty %}
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title" style="max-width: 100%">
-                    {{ 'invoice'|trans|capitalize }}
+                    {{ 'items'|trans|capitalize }}
                 </div>
-                <div class="definition-list__description">
-                    {{ 'you will recieve an invoice afther your request has been proccesd'|trans|capitalize }}
+                < class="definition-list__description">
+                    {% for key, property in order.items %}
+                        {{ item.name }}{{ item.price }}{{ item.priceCurency }}<br>
+                    {% endfor %}
                 </div>
             </li>
+            {% endif %}
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title" style="max-width: 100%">
                     {{ 'amount'|trans|capitalize }}
                 </div>
                 <div class="definition-list__description">
                     <p>
-                    {{ commonground_resource(resource.order).price }} {{ commonground_resource(resource.order).priceCurrency }}
+                    {{ order.price }} {{ order.priceCurrency }}
                     </p>
                 </div>
             </li>
+            {% if order.invoice is defined and order.invoice is not empty %}
+            {% set invoice =  commonground_resource(order.invoice) %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'invoice'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ invoice.reference }}
+                    </p>
+                </div>
+            </li>
+            {% endif %}
+
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'payment status'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ invoice.paid }}
+                    </p>
+                </div>
+            </li>
+            {% if invoice.paymentUrl is defined %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'payment link'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ invoice.paymentUrl }}
+                    </p>
+                </div>
+            </li>
+            {% endif %}
+            {% endif %}
         </ul>
     </div>
 </div>
