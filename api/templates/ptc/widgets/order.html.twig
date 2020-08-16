@@ -21,7 +21,7 @@
                 </div>
                 < class="definition-list__description">
                     {% for item in order.items %}
-                        {{ item.name }}{{ item.price }}{{ item.priceCurrency }}<br>
+                        <b>{{ item.name }}</b>{{ item.price }}{{ item.priceCurrency }}<br>
                     {% endfor %}
                 </div>
             </li>
