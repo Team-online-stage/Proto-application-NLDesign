@@ -20,7 +20,7 @@
                     {{ 'items'|trans|capitalize }}
                 </div>
                 < class="definition-list__description">
-                    {% for key, property in order.items %}
+                    {% for item in order.items %}
                         {{ item.name }}{{ item.price }}{{ item.priceCurency }}<br>
                     {% endfor %}
                 </div>
