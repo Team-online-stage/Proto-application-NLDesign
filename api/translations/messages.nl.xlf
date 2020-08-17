@@ -509,6 +509,10 @@
         <source>subject</source>
         <target>onderwerp</target>
       </trans-unit>
+      <trans-unit id="71J1a4t" resname="document template">
+        <source>document template</source>
+        <target>document sjabloon</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

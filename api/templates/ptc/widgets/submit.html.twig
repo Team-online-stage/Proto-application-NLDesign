@@ -77,12 +77,16 @@
                                         {% else %}
                                             {{ commonground_resource(property).name|capitalize }}
                                         {% endif #}
-                                {% if commonground_resource(property)['@type'] == 'Cemetery' %}
+                                {% if 'enkelvoudiginformatieobjecten' in property %}
+                                    <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}
                                     {{ commonground_resource(property).reference }}<br>
-                                {% elseif commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
                                     {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Adres' %}
+                                    {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                                 {% else %}
-                                    {{ commonground_resource(property).name }}<br>
+                                    {{ commonground_resource(property).name|capitalize }}
                                 {% endif %}
                             {% else %}
                                 {{ property|capitalize }}
