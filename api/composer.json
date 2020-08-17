@@ -8,6 +8,7 @@
 		"api-platform/api-pack": "^1.1",
 		"conduction/commongroundbundle": "dev-master",
 		"phpdocumentor/reflection-docblock": "^4.3",
+		"phpoffice/phpword": "^0.17.0",
 		"sensio/framework-extra-bundle": "^5.5",
 		"sensiolabs/security-checker": "^6.0",
 		"symfony/console": "4.3.*",

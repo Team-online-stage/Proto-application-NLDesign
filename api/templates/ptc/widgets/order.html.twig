@@ -1,0 +1,77 @@
+{% if resource is defined and resource is not empty and resource.order is defined and resource.order is not empty %}
+{% set order =  commonground_resource(resource.order) %}
+<div class="content-background">
+    <div class="content">
+        <h2>{{ 'financial'|trans|capitalize }}</h2>
+        <ul class="definition-list">
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'order'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ order.reference }}
+                    </p>
+                </div>
+            </li>
+            {% if order.items is defined and order.items is not empty %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'items'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    {% for item in order.items %}
+                        <b>{{ item.name }}</b>{{ item.price }}{{ item.priceCurrency }}<br>
+                    {% endfor %}
+                </div>
+            </li>
+            {% endif %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'amount'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                    {{ order.price }} {{ order.priceCurrency }}
+                    </p>
+                </div>
+            </li>
+            {% if order.invoice is defined and order.invoice is not empty %}
+            {% set invoice =  commonground_resource(order.invoice) %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'invoice'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ invoice.reference }}
+                    </p>
+                </div>
+            </li>
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'payment status'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ invoice.paid }}
+                    </p>
+                </div>
+            </li>
+            {% if invoice.paymentUrl is defined %}
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'payment link'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ invoice.paymentUrl }}
+                    </p>
+                </div>
+            </li>
+            {% endif %}
+            {% endif %}
+        </ul>
+    </div>
+</div>
+{% endif %}
