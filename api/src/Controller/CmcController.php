@@ -14,6 +14,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use function GuzzleHttp\Psr7\str;
 
 /**
  * The Procces test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
@@ -99,6 +100,15 @@ class CmcController extends AbstractController
         // Lets handle a post
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
+
+            if(isset($resource['sender_uri']) && !empty($resource['sender_uri'])) {
+                $resource['sender'] = $resource['sender_uri'];
+            }
+
+            if(isset($resource['receiver_uri']) && !empty($resource['receiver_uri'])) {
+                $resource['receiver'] = $resource['receiver_uri'];
+            }
+
             $resource = $commonGroundService->saveResource($resource, ['component' => 'cmc', 'type' => 'contact_moments']);
 
             // If the contact moment was succesfully created we forward the user
