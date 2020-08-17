@@ -77,7 +77,9 @@
                                         {% else %}
                                             {{ commonground_resource(property).name|capitalize }}
                                         {% endif #}
-                                {% if commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
+                                {% if commonground_resource(property)['@type'] == 'Cemetery' %}
+                                    {{ commonground_resource(property).reference }}<br>
+                                {% elseif commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
                                     {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
                                 {% else %}
                                     {{ commonground_resource(property).name }}<br>
