@@ -24,9 +24,24 @@ class UserController extends AbstractController
      * @Route("/login")
      * @Template
      */
-    public function login(Request $request, AuthorizationCheckerInterface $authChecker, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function login(
+        Session $session,
+        Request $request,
+        AuthorizationCheckerInterface $authChecker,
+        CommonGroundService $commonGroundService,
+        ParameterBagInterface $params,
+        EventDispatcherInterface $dispatcher
+    )
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
+        // Dealing with backUrls
+        if($backUrl = $request->query->get('backUrl')){
+        }
+        else{
+            $backUrl = '/login';
+        }
+        $session->set('backUrl', $backUrl);
 
         if ($this->getUser()) {
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -35,7 +50,7 @@ class UserController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         } else {
-            return $this->render('login/index.html.twig');
+            return $this->render('login/index.html.twig',['backUrl'=>$backUrl]);
         }
     }
 
@@ -178,42 +193,6 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_default_index');
         }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/job_postings")
-     * @Template
-     */
-    public function jobPostingsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
-    {
-        $content = false;
-        $variables = $applicationService->getVariables();
-
-        // Lets provide this data to the template
-        $variables['query'] = array_merge($request->request->all(), $request->query->all());
-
-        // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/job_applications")
-     * @Template
-     */
-    public function jobApplicationsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
-    {
-        $content = false;
-        $variables = $applicationService->getVariables();
-
-        // Lets provide this data to the template
-        $variables['query'] = array_merge($request->request->all(), $request->query->all());
-
-        // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_applications'], $variables['query'])['hydra:member'];
 
         return $variables;
     }

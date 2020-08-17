@@ -47,7 +47,7 @@
         {% if stage.next.slug is defined %}
         <form method="post" action="{{ path('app_ptc_process_stage',{id:process.id, stage:stage.next.slug}) }}" class="form" enctype="multipart/form-data">
         {% else %}
-        <form method="post" action="{{ path('app_ptc_process',{id:process.id}) }}" class="form" enctype="multipart/form-data">
+        <form method="post" action="{{ path('app_ptc_process',{id:process.id}) }}?submit=true" class="form" enctype="multipart/form-data">
         {% endif%}
             {% include 'ptc/widgets/default.html.twig' %}
 
@@ -77,6 +77,10 @@
             {% endif %}
 
         </form>
+
+        <!-- Page Break -->
+        <div style="height: 20px;"></div>
+
     </div><!-- /.col -->
 
     <div class="col-md-4  col-sm-12">
@@ -89,9 +93,15 @@
             <div style="height: 20px"></div>
             {% include 'ptc/widgets/stages.html.twig' %}
 
+            {#
             <!-- Page Break -->
             <div style="height: 20px"></div>
             {% include 'ptc/widgets/checklist.html.twig' %}
+            #}
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+            {% include 'ptc/widgets/order.html.twig' %}
 
             <!-- Page Break -->
             <div style="height: 20px"></div>

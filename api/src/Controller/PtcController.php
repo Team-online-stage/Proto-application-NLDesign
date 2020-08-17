@@ -26,6 +26,30 @@ use Symfony\Component\Routing\Annotation\Route;
 class PtcController extends AbstractController
 {
     /**
+     * @Route("/user")
+     * @Template
+     */
+    public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'ptc', 'type'=>'process_types'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/organisation")
+     * @Template
+     */
+    public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * This function shows all available processes.
      *
      * @Route("/")
@@ -95,9 +119,12 @@ class PtcController extends AbstractController
                     $variables['stage'] = $tempStage;
                 }
             }
-        } elseif (!array_key_exists('stage', $variables)) {
+        }
+
+        if (!array_key_exists('stage', $variables)) {
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
+
 
         if ($request->isMethod('POST')) {
             // the second argument is the value returned when the attribute doesn't exist
@@ -113,9 +140,7 @@ class PtcController extends AbstractController
                 $request['properties'] = $variables['request']['properties'];
             }
 
-
-
-            if (count($files)>0) {
+            if (count($files) > 0) {
                 //We are going to need a JWT token for the DRC and ZTC here
 
                 $token = $commonGroundService->getJwtToken('ztc');
@@ -128,12 +153,16 @@ class PtcController extends AbstractController
                         $informationObjectType = $infoObjectType['url'];
                     }
                 }
-                if($informationObjectType){
-                    foreach($files['request']['properties'] as $key=>$file){
+                if ($informationObjectType) {
+                    foreach ($files['request']['properties'] as $key=>$file) {
                         $drc['informatieobjecttype'] = $informationObjectType;
                         $drc['bronorganisatie'] = '999990482';
                         $drc['titel'] = urlencode($key);
-                        $drc['auteur'] = $this->getUser()->getPerson();
+                        if ($this->getUser()) {
+                            $drc['auteur'] = $this->getUser()->getPerson();
+                        } else {
+                            $drc['auteur'] = 'Zelf regelen applicatie';
+                        }
                         $drc['creatiedatum'] = (new DateTime('now'))->format('Y-m-d');
                         $drc['bestandsnaam'] = $file->getClientOriginalName();
                         $drc['bestandstype'] = $file->getClientOriginalExtension();
@@ -159,6 +188,7 @@ class PtcController extends AbstractController
             $variables['request'] = $request;
             $session->set('request', $request);
         }
+
 
         /* lagacy */
         $variables['resource'] = $variables['request'];

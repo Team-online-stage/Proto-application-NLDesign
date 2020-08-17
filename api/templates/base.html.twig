@@ -189,7 +189,7 @@
                 color: var(--footer-color) !important;
             }
 
-            nav {
+            #docs-nav {
                 background: var(--menu);
                 color: var(--menu-color) !important;
             }
@@ -263,6 +263,7 @@
 
             <main class="skiplink-target main" id="content" tabindex="-1">
 
+                {#
                 <div class="container">
                     <!-- the alert box -->
                     {% for label, messages in app.flashes() %}
@@ -275,6 +276,7 @@
                         {% endfor %}
                     {% endfor %}
                 </div>
+                #}
 
                 {% block container %}
                 {% endblock %}
