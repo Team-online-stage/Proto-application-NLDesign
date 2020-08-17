@@ -43,6 +43,8 @@ class ZZController extends AbstractController
         $slug_parts = explode('/', $slug);
         $variables['id'] = end($slug_parts);
 
+        $variables['slug'] = $slug;
+
         // Lets find an appoptiate slug
         $template = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id'=> $params->get('app_id').'/'.$slug]);
 
@@ -55,7 +57,7 @@ class ZZController extends AbstractController
             $resource = $request->request->all();
             if (array_key_exists('@component', $resource)) {
                 // Passing the variables to the resource
-                $configuration = $commonGroundService->saveResource($resource, ['component' => $resource['@component'], 'type' => $resource['@type']]);
+                $resource = $commonGroundService->saveResource($resource, ['component' => $resource['@component'], 'type' => $resource['@type']]);
             }
         }
 

@@ -171,12 +171,12 @@ parameters:
     # nlx-out
     env(APP_COMMONGROUND_NLX_OUT_LOCATION): "https://nlx-out.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_NLX_OUT_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-    # ProcesTypeCatalogus
-    env(APP_COMMONGROUND_PTC_LOCATION): "https://ptc.%env(APP_ENV)%"
-    env(APP_COMMONGROUND_PTC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
     # StufService
     env(APP_COMMONGROUND_STUF_LOCATION): "https://stuf.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_STUF_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+    
+    #DigiSpoof
+    env(APP_COMMONGROUND_DS_LOCATION): "https://ds.%env(APP_DOMAIN)%"
 
     # Test for commonground component by array
     common_ground.components:
@@ -190,7 +190,7 @@ parameters:
         drc:
             location: "%env(APP_COMMONGROUND_DRC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
+            id: "%env(APP_COMMONGROUND_DRC_ID)%"
             secret: "%env(APP_COMMONGROUND_DRC_SECRET)%"
             accept: "application/json"
             autowire: false
@@ -209,16 +209,16 @@ parameters:
             accept: "application/json"
             autowire: false
         zrc:
-            location: "%env(APP_COMMONGROUND_NRC_LOCATION)%"
+            location: "%env(APP_COMMONGROUND_ZRC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
-            secret: "%env(APP_COMMONGROUND_NRC_SECRET)%"
+            id: "%env(APP_COMMONGROUND_ZRC_ID)%"
+            secret: "%env(APP_COMMONGROUND_ZRC_SECRET)%"
             accept: "application/json"
             autowire: false
         ztc:
             location: "%env(APP_COMMONGROUND_ZTC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
+            id: "%env(APP_COMMONGROUND_ZTC_ID)%"
             secret: "%env(APP_COMMONGROUND_ZTC_SECRET)%"
             accept: "application/json"
             autowire: false
@@ -244,6 +244,8 @@ parameters:
         rdw:
             location: "%env(APP_COMMONGROUND_RDW_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_RDW_APIKEY)%"
+        ds:
+            location: "%env(APP_COMMONGROUND_DS_LOCATION)%"
 
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl

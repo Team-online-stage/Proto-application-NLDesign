@@ -11,7 +11,7 @@
                 }
             });
         </script>
-        {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'}) %}
+        {% set ingeschrevenpersonen = commonground_resource_list({'component':'brp', 'type':'ingeschrevenpersonen'})['hydra:member'] %}
 
 
         {% if request.properties.overledene is defined and request.properties.overledene is not empty %}
@@ -81,7 +81,7 @@
                     <input type="text" id="bsn" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
                 </div>
                 <div class="input">
-                    <button type="button" onclick="FindBsn()" class="btn btn--primary" name="select" value="bsn">Zoeken</button>
+                    <button type="button" onclick="FindBsn()" class="btn btn--primary"  value="bsn">Zoeken</button>
                 </div>
 
                 <div>
@@ -95,9 +95,7 @@
                     document.getElementById("p_naam").innerHTML = "naam: {{ selectedPersoon['naam']['voornamen'] }} {{ selectedPersoon['naam']['geslachtsnaam'] }}";
 
                     {% for ingeschrevenpersoon in ingeschrevenpersonen %}
-                    {% if ingeschrevenpersoon['burgerservicenummer'] == selectedPersoon['burgerservicenummer'] %}
-                    document.getElementById("p_geboortedatum").innerHTML = "geboortedatum: {{ ingeschrevenpersoon['geboorte']['datum']['date'] }}";
-                    {% endif %}
+
                     {% endfor %}
                     {% endif %}
                 </script>
@@ -140,14 +138,14 @@
                 </div>
 
                 <div class="input">
-                    <button type="submit" class="btn btn--primary" name="select" value="bsn">Selecteren</button>
+                    <button type="submit" class="btn btn--primary" value="bsn">Selecteren</button>
                 </div>
 
             </section>
 
         </div>
 
-        <input hidden="" id="selectedIngeschrevenpersoon" name="request[properties][{{ property.name }}]">
+        <input type="hidden" id="selectedIngeschrevenpersoon" name="request[properties][{{ property.name }}]">
 
         {#
                 <form class="form" method="post" action="#">

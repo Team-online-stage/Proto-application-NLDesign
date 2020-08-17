@@ -1,7 +1,0 @@
-<div class="row">
-    <div class="col-md-12">
-        <label class="input__label" for="{{ property.id }}">{{ property.name }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
-        <input class="input__control input__control--text" id="{{ property.id }}" type="tel" name="request[properties][{{ property.name }}]" {% if property.required is defined and property.required %}required{% endif %}
-        {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %} value="{{ request.properties[property.name] }} {% endif %}">
-    </div>
-</div>

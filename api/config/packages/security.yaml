@@ -1,38 +1,36 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        chain_provider:
-            chain:
-                providers: [CommongroundApplicationProvider, CommongroundUserProvider]
         commongroundApplicationProvider:
             id: Conduction\CommonGroundBundle\Security\User\CommongroundApplicationProvider
-        commongroundUserProvider:
-            id: Conduction\CommonGroundBundle\Security\User\CommongroundUserProvider
+        commongroundProvider:
+            id: Conduction\CommonGroundBundle\Security\User\CommongroundProvider
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js|docs)/
             security: false
-        # In order to read the docs we must allow anonymous GET reqoust on root    
-        www:
-            pattern:  ^/
-            methods: [GET]
+        # The mollie webhook does not have our API key
+        webhook:
             anonymous: true
-        demo:
-            anonymous: true
+            pattern: ^/payments/mollie_webhook
+            methods: [POST]
         main:
             anonymous: ~
+            pattern: ^/
             form_login:
                 login_path: app_user_login
                 check_path: app_user_login
             logout:
                 path: app_user_logout
-                target: app_user_login
+                target: app_default_index
             stateless: false
-            provider: commongroundUserProvider
+            provider: commongroundProvider
             guard:
                 authenticators:
                     - Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
-                    - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator  
+                    - Conduction\CommonGroundBundle\Security\CommongroundEherkenningAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate
@@ -44,5 +42,6 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-    # - { path: ^/admin, roles: ROLE_ADMIN }
-    # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/digispoof, roles: ROLE_USER }
+        - { path: ^/eherkenning, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
