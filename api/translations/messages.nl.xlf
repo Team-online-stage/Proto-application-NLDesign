@@ -491,7 +491,7 @@
       </trans-unit>
       <trans-unit id="XzxPhYD" resname="items">
         <source>items</source>
-        <target>voowerpen</target>
+        <target>producten</target>
       </trans-unit>
       <trans-unit id="WwlLa6H" resname="payment status">
         <source>payment status</source>
