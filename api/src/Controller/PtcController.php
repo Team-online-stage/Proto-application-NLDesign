@@ -125,7 +125,6 @@ class PtcController extends AbstractController
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
 
-
         if ($request->isMethod('POST')) {
             // the second argument is the value returned when the attribute doesn't exist
             $resource = $request->request->all();
@@ -188,7 +187,6 @@ class PtcController extends AbstractController
             $variables['request'] = $request;
             $session->set('request', $request);
         }
-
 
         /* lagacy */
         $variables['resource'] = $variables['request'];

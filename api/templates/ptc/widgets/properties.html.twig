@@ -67,7 +67,11 @@
                     </ul>
                     {% else %}
                         {% if 'http' in value %}
-                            {{ commonground_resource(value).name }}<br>
+                            {% if commonground_resource(value)['@type'] == 'Ingeschrevenpersoon' %}
+                                {{ commonground_resource(value).naam.voornamen }} {{ commonground_resource(value).naam.geslachtsnaam }} <br>
+                            {% else %}
+                                {{ commonground_resource(value).name }}<br>
+                            {% endif %}
                         {% else %}
                             {{ value|capitalize }}<br>
                         {% endif %}
@@ -88,7 +92,11 @@
                         {% if 'http' in property %}
                             {% if 'enkelvoudiginformatieobjecten' in property %}
                                 <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
-                            {% elseif commonground_resource(property)['@type'] == 'Adres' %}
+                            {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}
+                                {{ commonground_resource(property).reference }}<br>
+                            {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
+                                {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
+                            {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Adres' %}
                                 {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                             {% else %}
                                 {{ commonground_resource(property).name|capitalize }}

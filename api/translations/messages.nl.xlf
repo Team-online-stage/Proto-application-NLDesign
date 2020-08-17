@@ -403,31 +403,31 @@
       </trans-unit>
       <trans-unit id="LtX3OR7" resname="job postings">
         <source>job postings</source>
-        <target>__job postings</target>
+        <target>vacatures</target>
       </trans-unit>
       <trans-unit id="qvq498b" resname="job applications">
         <source>job applications</source>
-        <target>__job applications</target>
+        <target>solicitaties</target>
       </trans-unit>
       <trans-unit id="nXV1Fkg" resname="cources">
         <source>cources</source>
-        <target>__cources</target>
+        <target>cursussen</target>
       </trans-unit>
       <trans-unit id="ExGW77D" resname="programs and cources">
         <source>programs and cources</source>
-        <target>__programs and cources</target>
+        <target>programma's en cursussen</target>
       </trans-unit>
       <trans-unit id="G4vKHHU" resname="tenders">
         <source>tenders</source>
-        <target>__tenders</target>
+        <target>uitvragen</target>
       </trans-unit>
       <trans-unit id="IjZUFsW" resname="pitches">
         <source>pitches</source>
-        <target>__pitches</target>
+        <target>voorstellen</target>
       </trans-unit>
       <trans-unit id="2LiW76m" resname="relevant requests that you have made in the past that share a great amount of characteristic with the request">
         <source>relevant requests that you have made in the past that share a great amount of characteristic with the request</source>
-        <target>__relevant requests that you have made in the past that share a great amount of characteristic with the request</target>
+        <target>relevante verzoeken die u in het verleden heeft ingediend die overlappen met uw huidige proces</target>
       </trans-unit>
       <trans-unit id="UTMi1ew" resname="you need to login before you can view relevant requests">
         <source>you need to login before you can view relevant requests</source>
@@ -436,6 +436,82 @@
       <trans-unit id="l2vQ37g" resname="validations">
         <source>validations</source>
         <target>validaties</target>
+      </trans-unit>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
+        <target>facturen</target>
+      </trans-unit>
+      <trans-unit id="uwDNFgu" resname="no invoices available">
+        <source>no invoices available</source>
+        <target>geen facturen beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="4HJQ5hl" resname="assents">
+        <source>assents</source>
+        <target>instemmingen</target>
+      </trans-unit>
+      <trans-unit id="zeZE9WY" resname="no assents available">
+        <source>no assents available</source>
+        <target>geen instemmingen beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="HBaK2wD" resname="orders">
+        <source>orders</source>
+        <target>bestellingen</target>
+      </trans-unit>
+      <trans-unit id="Put_luW" resname="order">
+        <source>order</source>
+        <target>bestelling</target>
+      </trans-unit>
+      <trans-unit id="zzjZXJx" resname="amount">
+        <source>amount</source>
+        <target>bedrag</target>
+      </trans-unit>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
+        <target>factuur</target>
+      </trans-unit>
+      <trans-unit id="VKkJezN" resname="n.a.">
+        <source>n.a.</source>
+        <target>n.v.t.</target>
+      </trans-unit>
+      <trans-unit id="33cNkW_" resname="no orders available">
+        <source>no orders available</source>
+        <target>geen bestellingen beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="RkSTiS0" resname="you need to login before you can upload files">
+        <source>you need to login before you can upload files</source>
+        <target>u moet inloggen voordat u bestanden kan uploaden</target>
+      </trans-unit>
+      <trans-unit id="EuoS6s5" resname="change">
+        <source>change</source>
+        <target>verander</target>
+      </trans-unit>
+      <trans-unit id=".tDkggr" resname="financial">
+        <source>financial</source>
+        <target>financieel</target>
+      </trans-unit>
+      <trans-unit id="XzxPhYD" resname="items">
+        <source>items</source>
+        <target>producten</target>
+      </trans-unit>
+      <trans-unit id="WwlLa6H" resname="payment status">
+        <source>payment status</source>
+        <target>betaal status</target>
+      </trans-unit>
+      <trans-unit id="H9MQttL" resname="payment link">
+        <source>payment link</source>
+        <target>betaal link</target>
+      </trans-unit>
+      <trans-unit id="8XB5k9R" resname="no processes available">
+        <source>no processes available</source>
+        <target>geen proces beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="qUkfTBv" resname="subject">
+        <source>subject</source>
+        <target>onderwerp</target>
+      </trans-unit>
+      <trans-unit id="71J1a4t" resname="document template">
+        <source>document template</source>
+        <target>document sjabloon</target>
       </trans-unit>
     </body>
   </file>

@@ -70,17 +70,27 @@
                                     {% elseif property.name is defined %}
                                         {{ property.name }}
                                     {% endif #}
-                                {% else %}
-                                    {% if 'http' in property %}
+                        {% else %}
+                            {% if 'http' in property %}
                                         {# if commonground_resource(property)['@type'] == 'Adres' %}
                                             {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                                         {% else %}
                                             {{ commonground_resource(property).name|capitalize }}
                                         {% endif #}
-                                        {{ commonground_resource(property).name|capitalize }}
-                                    {% else %}
-                                    {{ property|capitalize }}
-                                    {% endif %}
+                                {% if 'enkelvoudiginformatieobjecten' in property %}
+                                    <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}
+                                    {{ commonground_resource(property).reference }}<br>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
+                                    {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Adres' %}
+                                    {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
+                                {% else %}
+                                    {{ commonground_resource(property).name|capitalize }}
+                                {% endif %}
+                            {% else %}
+                                {{ property|capitalize }}
+                            {% endif %}
                                 {# endif #}
                             {% endif %}
                         </p>
@@ -98,6 +108,7 @@
 
 
 {% if app.user %}
+    {% set user = commonground_resource(app.user.person) %}
 <div class="content-background" style="margin-top: 20px">
     <div class="content">
         <h2>{{ 'submitter'|trans|capitalize }}</h2>
