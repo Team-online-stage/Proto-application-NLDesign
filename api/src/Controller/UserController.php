@@ -31,14 +31,12 @@ class UserController extends AbstractController
         CommonGroundService $commonGroundService,
         ParameterBagInterface $params,
         EventDispatcherInterface $dispatcher
-    )
-    {
+    ) {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
         // Dealing with backUrls
-        if($backUrl = $request->query->get('backUrl')){
-        }
-        else{
+        if ($backUrl = $request->query->get('backUrl')) {
+        } else {
             $backUrl = '/login';
         }
         $session->set('backUrl', $backUrl);
@@ -50,7 +48,7 @@ class UserController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         } else {
-            return $this->render('login/index.html.twig',['backUrl'=>$backUrl]);
+            return $this->render('login/index.html.twig', ['backUrl'=>$backUrl]);
         }
     }
 
