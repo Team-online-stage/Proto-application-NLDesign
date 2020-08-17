@@ -9,15 +9,14 @@
                     {% for template in requestType.templates %}
                         <li class="file">
                             <i class="file__icon icon icon-document"></i>
-                            <a href="{{ path('app_vrc_download',{'id': template.id, 'requestId': request.id}) }}">
-
-                                <div class="file__data">
-                                    <div class="file__filename">
-                                        <strong class="file__title break-all">{{ template.name }}</strong>
-                                        <span class="meta">{{ template.type }}</span>
-                                    </div>
+                            <div class="file__data">
+                                <div class="file__filename">
+                                    <a href="{{ path('app_vrc_download',{'id': template.id, 'requestId': request.id}) }}">
+                                    <strong class="file__title break-all">{{ template.name }}</strong>
+                                    </a>
+                                    <span class="meta">{{ template.type }}</span>
                                 </div>
-                            </a>
+                            </div>
                         </li>
                     {% endfor %}
                 {% endif %}
