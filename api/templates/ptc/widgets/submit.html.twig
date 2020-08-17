@@ -102,6 +102,7 @@
 
 
 {% if app.user %}
+    {% set user = commonground_resource(app.user.person) %}
 <div class="content-background" style="margin-top: 20px">
     <div class="content">
         <h2>{{ 'submitter'|trans|capitalize }}</h2>
