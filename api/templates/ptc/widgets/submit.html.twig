@@ -29,7 +29,7 @@
                             {% if property is iterable %}
                                 {% for key, value in property %}
                                     {% if value is iterable %}
-                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 50%; margin-left: 0px;">
+                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 49%; margin-left: 0px; display: inline-block">
                                     {% for item in value %}
                                         {% if item is iterable %}
                                         {% for subItem in item %}
@@ -70,17 +70,21 @@
                                     {% elseif property.name is defined %}
                                         {{ property.name }}
                                     {% endif #}
-                                {% else %}
-                                    {% if 'http' in property %}
+                        {% else %}
+                            {% if 'http' in property %}
                                         {# if commonground_resource(property)['@type'] == 'Adres' %}
                                             {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                                         {% else %}
                                             {{ commonground_resource(property).name|capitalize }}
                                         {% endif #}
-                                        {{ commonground_resource(property).name|capitalize }}
-                                    {% else %}
-                                    {{ property|capitalize }}
-                                    {% endif %}
+                                {% if commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
+                                    {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
+                                {% else %}
+                                    {{ commonground_resource(property).name }}<br>
+                                {% endif %}
+                            {% else %}
+                                {{ property|capitalize }}
+                            {% endif %}
                                 {# endif #}
                             {% endif %}
                         </p>
