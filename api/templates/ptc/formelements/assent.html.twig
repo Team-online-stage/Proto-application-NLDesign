@@ -25,12 +25,16 @@
         </div>
     </div>
     <div id="personForm" class="col-sm-12">
+        {% if property.defaultValue is defined and property.defaultValue is not empty %}
+            {% set assent = commonground_resource(include(template_from_string(property.defaultValue))) %}
+        {% endif %}
         <div>
-
             <label class="input__label" for="voornaam">Voornaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text">
+            <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text"
+            {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" {% endif %}>
             <label class="input__label" for="achternaam">Achternaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text">
+            <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text"
+            {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
             <label class="input__label" for="email">Email</label>
             <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
             <span id="inputResult"></span>
