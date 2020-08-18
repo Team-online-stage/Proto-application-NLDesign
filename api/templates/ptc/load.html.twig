@@ -82,14 +82,14 @@
                 </div><!-- /.col -->
             {% elseif slug != 'submit' %}
                 <div class="col-md-6" style="padding-left: 0px;">
-                    <button class="btn btn--block" name="submit">{{ 'save'|trans|capitalize }}</button>
+                    <button class="btn btn--block" name="submit">{{ 'next step'|trans|capitalize }}</button>
                 </div><!-- /.col -->
             {% endif %}
 
             {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}
                 <div class="col-md-6" style="padding-right: 0px;">
                     <a class="btn btn--primary btn--block"
-                       href="{{ path('app_ptc_slug',{id: process.id, slug: stage.previous.slug}) }}">{{ 'previous'|trans|capitalize }}</a>
+                       href="{{ path('app_ptc_slug',{id: process.id, slug: stage.previous.slug}) }}">{{ 'previous step'|trans|capitalize }}</a>
                 </div>
             {% endif %}
 
