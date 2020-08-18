@@ -32,6 +32,7 @@ class ArcController extends AbstractController
         $variables = [];
         $calendar = $commonGroundService->getResourceList(['component'=>'arc', 'type'=>'calendars'], ['resource'=>$this->getUser()->getPerson(), 'order[endDate]' => 'desc'])['hydra:member'];
         $variables['resources'] = $calendar[0]['events'];
+
         return $variables;
     }
 
