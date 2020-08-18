@@ -12,7 +12,7 @@ info:
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/pan.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'         
+    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
     
 paths:
   /audit_trails:
@@ -2379,20 +2379,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-<<<<<<< Updated upstream
-        example: '2020-08-17 13:02:02'
-=======
-        example: '2020-08-17 13:15:33'
->>>>>>> Stashed changes
+        example: '2020-08-18 06:19:36'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-<<<<<<< Updated upstream
-        example: '2020-08-17 13:02:02'
-=======
-        example: '2020-08-17 13:15:33'
->>>>>>> Stashed changes
+        example: '2020-08-18 06:19:36'
     required: []
   AuditTrail-write:
     properties:
@@ -2440,20 +2432,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-<<<<<<< Updated upstream
-        example: '2020-08-17 13:02:02'
-=======
-        example: '2020-08-17 13:15:33'
->>>>>>> Stashed changes
+        example: '2020-08-18 06:19:36'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-<<<<<<< Updated upstream
-        example: '2020-08-17 13:02:02'
-=======
-        example: '2020-08-17 13:15:33'
->>>>>>> Stashed changes
+        example: '2020-08-18 06:19:36'
     required: []
   ChangeLog-write:
     properties:
@@ -2494,8 +2478,8 @@ securityDefinitions:
 host: irc.zaakonline.nl
 servers:
   -
-    name: westfriesland.commonground.nu
-    url: pan.dev.westfriesland.commonground.nu
+    name: zuid-drecht.nl
+    url: pan.dev.zuid-drecht.nl
 externalDocs:
   -
     description: 'OAS Documentatie'

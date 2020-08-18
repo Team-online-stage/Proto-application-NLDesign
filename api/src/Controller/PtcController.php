@@ -58,7 +58,7 @@ class PtcController extends AbstractController
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
-        $variables['processes'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types'], ['order[name]' => 'asc'])['hydra:member'];
+        $variables['processes'] = $commonGroundService->getResourceList(['component' => 'ptc', 'type' => 'process_types'], ['order[name]' => 'asc', 'limit' => 100])['hydra:member'];
 
         return $variables;
     }
