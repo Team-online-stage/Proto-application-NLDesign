@@ -127,15 +127,15 @@
       </trans-unit>
       <trans-unit id="k25cxQI" resname="courses">
         <source>courses</source>
-        <target>__courses</target>
+        <target>cursussen</target>
       </trans-unit>
       <trans-unit id="_UD0x.j" resname="toegekende beroeps referentie na succesvolle afronding">
         <source>toegekende beroeps referentie na succesvolle afronding</source>
-        <target>__toegekende beroeps referentie na succesvolle afronding</target>
+        <target>toegekende beroeps referentie na succesvolle afronding</target>
       </trans-unit>
       <trans-unit id="S2XQXq4" resname="toegekende educatieve referentie na succesvolle afronding">
         <source>toegekende educatieve referentie na succesvolle afronding</source>
-        <target>__toegekende educatieve referentie na succesvolle afronding</target>
+        <target>toegekende educatieve referentie na succesvolle afronding</target>
       </trans-unit>
       <trans-unit id="YkyVVAY" resname="activities">
         <source>activities</source>
@@ -535,23 +535,23 @@
       </trans-unit>
       <trans-unit id="hiQXuef" resname="events">
         <source>events</source>
-        <target>__events</target>
+        <target>afspraken</target>
       </trans-unit>
       <trans-unit id="UFoOj8N" resname="start date">
         <source>start date</source>
-        <target>__start date</target>
+        <target>startdatum</target>
       </trans-unit>
       <trans-unit id="kNsHSsY" resname="end date">
         <source>end date</source>
-        <target>__end date</target>
+        <target>einddatum</target>
       </trans-unit>
       <trans-unit id="ae3F5i5" resname="no events available">
         <source>no events available</source>
-        <target>__no events available</target>
+        <target>geen afspraken beschikbaar</target>
       </trans-unit>
       <trans-unit id="WGahArI" resname="uploaded files">
         <source>uploaded files</source>
-        <target>__uploaded files</target>
+        <target>geuploade bestanden</target>
       </trans-unit>
     </body>
   </file>
