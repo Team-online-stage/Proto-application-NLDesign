@@ -80,9 +80,9 @@
 
 <div class="row">
     <div class="col-md-6" >
-        <button class="btn btn--block" name="submit">{% if not app.user %}{{ 'continue'|trans|capitalize }}{% else %}{{ 'save'|trans|capitalize }}{% endif %}</button>
+        <button class="btn btn--block" name="submit">{% if not app.user %}{{ 'continue'|trans|capitalize }}{% else %}{{ 'next step'|trans|capitalize }}{% endif %}</button>
     </div>
     <div class="col-md-6" >
-        <a class="btn btn--primary btn--block" href=" {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}{{ path('app_ptc_process_stage',{id: process.id, stage: stage.previous.slug}) }}{% else %}{{ path('app_ptc_process',{id: process.id}) }}{% endif %}">{{ 'previous'|trans|capitalize }}</a>
+        <a class="btn btn--primary btn--block" href=" {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}{{ path('app_ptc_process_stage',{id: process.id, stage: stage.previous.slug}) }}{% else %}{{ path('app_ptc_process',{id: process.id}) }}{% endif %}">{{ 'previous step'|trans|capitalize }}</a>
     </div>
 </div>
