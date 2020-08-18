@@ -14,7 +14,7 @@
                         </thead>
                         <tbody>
                         {% for resource in resources %}
-                        <tr>
+                        <tr {% if resource.endDate|date("H:i d-m-Y") < "now"|date("H:i d-m-Y") %} style="color: #b4b4b4" {% endif %}>
                             <td>{{ resource.name|capitalize }}</td>
                             <td>{{ resource.description|capitalize }}</td>
                             <td>{{ resource.startDate|date("H:i d-m-Y") }}</td>

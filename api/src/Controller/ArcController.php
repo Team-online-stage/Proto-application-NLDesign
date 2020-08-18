@@ -30,7 +30,7 @@ class ArcController extends AbstractController
     public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $calendar = $commonGroundService->getResourceList(['component'=>'arc', 'type'=>'calendars'], ['resource'=>$this->getUser()->getPerson()])['hydra:member'];
+        $calendar = $commonGroundService->getResourceList(['component'=>'arc', 'type'=>'calendars'], ['resource'=>$this->getUser()->getPerson(), 'order[endDate]' => 'desc'])['hydra:member'];
         $variables['resources'] = $calendar[0]['events'];
         return $variables;
     }
