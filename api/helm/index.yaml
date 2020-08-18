@@ -3,14 +3,14 @@ entries:
   pan:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-08-18T06:18:22.3821822Z"
+    created: "2020-08-18T09:53:56.3586686Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: d6426bbf8e4ba36a9c1cc224f53295a8361d7793cb77931c23399f916c601227
+    digest: 2a0cc7771cb39ff77c41297100b7cbce274d73a0cfda44d9f13872182d5e2f5e
     home: www.westfriesland.commonground.nu
     icon: www.westfriesland.commonground.nu
     name: pan
     urls:
     - pan-0.1.0.tgz
     version: 0.1.0
-generated: "2020-08-18T06:18:22.3709875Z"
+generated: "2020-08-18T09:53:56.3521191Z"

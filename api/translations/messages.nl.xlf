@@ -513,6 +513,26 @@
         <source>document template</source>
         <target>document sjabloon</target>
       </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>wijzig</target>
+      </trans-unit>
+      <trans-unit id="AT9UQAy" resname="age">
+        <source>age</source>
+        <target>leeftijd</target>
+      </trans-unit>
+      <trans-unit id="3p.q6ot" resname="gender">
+        <source>gender</source>
+        <target>geslacht</target>
+      </trans-unit>
+      <trans-unit id="oAvqVDp" resname="adres">
+        <source>adres</source>
+        <target>adres</target>
+      </trans-unit>
+      <trans-unit id="EdQEF5W" resname="business">
+        <source>business</source>
+        <target>bedrijf</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
