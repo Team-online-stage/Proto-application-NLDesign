@@ -57,6 +57,8 @@
                     {% include 'ptc/formelements/calendar.html.twig' %}
                 {% elseif property.format == 'tofrom-time' %}
                     {% include 'ptc/formelements/tofromtime.html.twig' %}
+                {% elseif property.format == 'kvk' %}
+                    {% include 'ptc/formelements/kvk.html.twig' %}
 
                     {# Generic HTML 5 input types #}
                 {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
