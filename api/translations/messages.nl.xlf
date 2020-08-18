@@ -553,6 +553,22 @@
         <source>uploaded files</source>
         <target>geuploade bestanden</target>
       </trans-unit>
+      <trans-unit id="oU7H2ga" resname="your data">
+        <source>your data</source>
+        <target>uw data</target>
+      </trans-unit>
+      <trans-unit id="y6G2bAP" resname="view your existing requests">
+        <source>view your existing requests</source>
+        <target>bekijk uw bestaande verzoeken</target>
+      </trans-unit>
+      <trans-unit id="4h21Kof" resname="next step">
+        <source>next step</source>
+        <target>volgende stap</target>
+      </trans-unit>
+      <trans-unit id="7Hb21K0" resname="previous step">
+        <source>previous step</source>
+        <target>vorige stap</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
