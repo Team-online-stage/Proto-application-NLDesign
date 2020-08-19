@@ -8,7 +8,7 @@
             </li>
             {% for iteratedStage in process.stages %}
                 <li class="list__item {% if stage.slug is defined and stage.slug == iteratedStage.slug %}list__item--active{% endif %} {% if request.status != 'incomplete' and request.status != 'complete' %}list__item--disabled{% endif %}">{% if request.status == 'incomplete' or request.status == 'complete' %}
-                    <a href="{{ path('app_ptc_process_stage',{id:process.id,stage:iteratedStage.slug}) }}">{{ iteratedStage.name|capitalize }}{% else %}{{ iteratedStage.name|capitalize }}{% endif %}</a>
+                    <a href="{{ path('app_ptc_process_stage',{id:process.id,stage:iteratedStage.slug}) }}">{{ iteratedStage.name|capitalize }}{% else %}{{ iteratedStage.name|capitalize }}{% endif %}{% if iteratedStage.valid %}<span class="icon icon-check" role="presentation"></span>{% endif %}</a>
                 </li>
             {% endfor %}
             <li class="list__item {% if stage.slug is defined and stage.slug == 'submit' or request.status == 'submitted' %}list__item--active{% endif %}">

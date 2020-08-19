@@ -34,7 +34,6 @@ class PtcController extends AbstractController
     {
         $variables = [];
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'ptc', 'type'=>'process_types'])['hydra:member'];
-
         return $variables;
     }
 
