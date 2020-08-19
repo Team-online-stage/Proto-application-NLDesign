@@ -1,55 +1,9 @@
 
-{#<div class="content-background">#}
-{#    <div class="content">#}
-{#        <div class="edit-section">#}
-{#            <h2>{{ 'your data'|trans|capitalize }}</h2>#}
-{#        </div>#}
-        {#
-        <ul class="definition-list">
-            {% if app.user.person is defined %}
-                {% set person = commonground_resource(app.user.person)  %}
-            {% endif %}
-            {% if app.user.organization %}
-            <li class="definition-list__item definition-list__item--horizontal">
-                <div class="definition-list__title">
-                    {{ 'name'|trans|capitalize }}
-                </div>
-                <div class="definition-list__description">
-                    <p>{{ person.naam.voornamen }} {{ person.naam.voorvoegsel }} {{ person.naam.geslachtsnaam }}</p>
-                </div>
-            </li>
-            <li class="definition-list__item definition-list__item--horizontal">
-                <div class="definition-list__title">
-                    {{ 'organization'|trans|capitalize }}
-                </div>
-                <div class="definition-list__description">
-                    <p>{{ app.user }}</p>
-                </div>
-            </li>
-            {% else %}
-            <li class="definition-list__item definition-list__item--horizontal">
-                <div class="definition-list__title">
-                    {{ 'name'|trans|capitalize }}
-                </div>
-                <div class="definition-list__description">
-                    <p>{{ app.user }}</p>
-                </div>
-            </li>
-            {% if  person.verblijfplaats is defined %}
-                {% set person = commonground_resource(app.user.person)  %}
-            <li class="definition-list__item definition-list__item--horizontal">
-                <div class="definition-list__title">
-                    {{ 'address'|trans|capitalize }}
-                </div>
-                <div class="definition-list__description">
-                    <p>{{ person.verblijfplaats.straatnaam }} {{ person.verblijfplaats.huisnummer }}, {{ person.verblijfplaats.postcode }} {{ person.verblijfplaats.woonplaatsnaam }}</p>
-                </div>
-            </li>
-            {% endif %}
-            {% endif %}
-        </ul> #}
-{#    </div>#}
-{#</div>#}
+<div class="content-background">
+    <div class="content">
+        {%  include 'uc/widgets/data.html.twig' %}
+    </div>
+</div>
 
 
 {#<!-- Page Break -->#}
@@ -85,6 +39,11 @@
         {% if commonground_component_health("irc") %}
             <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_irc_user' %}sidenav__item--active{% endif %}">
                 <a href="{{ path('app_irc_user') }}">{{ 'assents'|trans|capitalize }}</a>
+            </li>
+        {%  endif %}
+        {% if commonground_component_health("irc") %}
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_arc_user' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_arc_user') }}">{{ 'events'|trans|capitalize }}</a>
             </li>
         {%  endif %}
     </ul>

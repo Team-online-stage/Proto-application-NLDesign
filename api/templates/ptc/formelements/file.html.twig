@@ -34,6 +34,24 @@
             <span class="btn" role="button">Bestand uploaden</span> <span id="fileName"></span>
         </label>
     {% endif %}
+    {% if request['properties'][property.name] is defined and  request['properties'][property.name] is not empty %}
+        <label class="input__label" for="{{ property.id }}">{{ 'uploaded files'|trans|capitalize }}</label>
+        <ul class="list list--files">
+        {% if request['properties'][property.name] is iterable %}
+        {% else %}
+            <li class="file">
+                <i class="file__icon icon icon-document"></i>
+                <div class="file__data">
+                    <div class="file__filename">
+                        <a href="{{ path('app_drc_download',{'resource':request['properties'][property.name]|url_encode})}}">
+                            <strong class="file__title break-all">test</strong>
+                        </a>
+                    </div>
+                </div>
+            </li>
+        {% endif %}
+    </ul>
+    {% endif %}
 </div>
 
 
