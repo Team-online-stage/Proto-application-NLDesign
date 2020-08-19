@@ -64,23 +64,6 @@ class VrcController extends AbstractController
     }
 
     /**
-     * @Route("/load/{id}/{resumeRequest}", defaults={"resumeRequest"="start"})
-     */
-    public function loadAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $resumeRequest)
-    {
-
-        //$variables = $applicationService->getVariables();
-        $loadedRequest = $commonGroundService->getResourceList(['component'=>'vrc', 'type'=>'requests', 'id'=>$id], ['extend'=>'processType']);
-
-        $session->set('request', $loadedRequest);
-        if (isset($resumeRequest)) {
-            return $this->redirect($this->generateUrl('app_process_resume', ['id'=>$loadedRequest['processType']['id'], 'resumeRequest'=>$resumeRequest]));
-        }
-
-        return $this->redirect($this->generateUrl('app_process_load', ['id'=>$loadedRequest['processType']['id']]));
-    }
-
-    /**
      * @Route("/download/{id}/{requestId}")
      * @Template
      */

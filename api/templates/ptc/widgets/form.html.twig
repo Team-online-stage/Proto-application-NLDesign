@@ -2,7 +2,7 @@
     <div class="content">
 {% if stage.sections is defined and stage.sections is not empty %}
 {% for section in stage.sections|sort((a, b) => a.orderNumber <=> b.orderNumber) %}
-            <h2>{{ section.name|capitalize }}</h2>
+            <h2>{{ section.name|capitalize }} {% if section.valid %}<span class="icon icon-check" role="presentation"></span>{% endif %}</h2>
             <p>{{ section.description|capitalize }}</p>
 
 
