@@ -127,15 +127,15 @@
       </trans-unit>
       <trans-unit id="k25cxQI" resname="courses">
         <source>courses</source>
-        <target>__courses</target>
+        <target>cursussen</target>
       </trans-unit>
       <trans-unit id="_UD0x.j" resname="toegekende beroeps referentie na succesvolle afronding">
         <source>toegekende beroeps referentie na succesvolle afronding</source>
-        <target>__toegekende beroeps referentie na succesvolle afronding</target>
+        <target>toegekende beroeps referentie na succesvolle afronding</target>
       </trans-unit>
       <trans-unit id="S2XQXq4" resname="toegekende educatieve referentie na succesvolle afronding">
         <source>toegekende educatieve referentie na succesvolle afronding</source>
-        <target>__toegekende educatieve referentie na succesvolle afronding</target>
+        <target>toegekende educatieve referentie na succesvolle afronding</target>
       </trans-unit>
       <trans-unit id="YkyVVAY" resname="activities">
         <source>activities</source>
@@ -427,7 +427,7 @@
       </trans-unit>
       <trans-unit id="2LiW76m" resname="relevant requests that you have made in the past that share a great amount of characteristic with the request">
         <source>relevant requests that you have made in the past that share a great amount of characteristic with the request</source>
-        <target>relevante verzoeken die u in het verleden heeft ingedieng die overlappen met uw huidige proces</target>
+        <target>relevante verzoeken die u in het verleden heeft ingediend die overlappen met uw huidige proces</target>
       </trans-unit>
       <trans-unit id="UTMi1ew" resname="you need to login before you can view relevant requests">
         <source>you need to login before you can view relevant requests</source>
@@ -508,6 +508,66 @@
       <trans-unit id="qUkfTBv" resname="subject">
         <source>subject</source>
         <target>onderwerp</target>
+      </trans-unit>
+      <trans-unit id="71J1a4t" resname="document template">
+        <source>document template</source>
+        <target>document sjabloon</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>wijzig</target>
+      </trans-unit>
+      <trans-unit id="AT9UQAy" resname="age">
+        <source>age</source>
+        <target>leeftijd</target>
+      </trans-unit>
+      <trans-unit id="3p.q6ot" resname="gender">
+        <source>gender</source>
+        <target>geslacht</target>
+      </trans-unit>
+      <trans-unit id="oAvqVDp" resname="adres">
+        <source>adres</source>
+        <target>adres</target>
+      </trans-unit>
+      <trans-unit id="EdQEF5W" resname="business">
+        <source>business</source>
+        <target>bedrijf</target>
+      </trans-unit>
+      <trans-unit id="hiQXuef" resname="events">
+        <source>events</source>
+        <target>afspraken</target>
+      </trans-unit>
+      <trans-unit id="UFoOj8N" resname="start date">
+        <source>start date</source>
+        <target>startdatum</target>
+      </trans-unit>
+      <trans-unit id="kNsHSsY" resname="end date">
+        <source>end date</source>
+        <target>einddatum</target>
+      </trans-unit>
+      <trans-unit id="ae3F5i5" resname="no events available">
+        <source>no events available</source>
+        <target>geen afspraken beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="WGahArI" resname="uploaded files">
+        <source>uploaded files</source>
+        <target>geuploade bestanden</target>
+      </trans-unit>
+      <trans-unit id="oU7H2ga" resname="your data">
+        <source>your data</source>
+        <target>uw data</target>
+      </trans-unit>
+      <trans-unit id="y6G2bAP" resname="view your existing requests">
+        <source>view your existing requests</source>
+        <target>bekijk uw bestaande verzoeken</target>
+      </trans-unit>
+      <trans-unit id="4h21Kof" resname="next step">
+        <source>next step</source>
+        <target>volgende stap</target>
+      </trans-unit>
+      <trans-unit id="7Hb21K0" resname="previous step">
+        <source>previous step</source>
+        <target>vorige stap</target>
       </trans-unit>
     </body>
   </file>

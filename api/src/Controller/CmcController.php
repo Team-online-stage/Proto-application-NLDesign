@@ -99,6 +99,15 @@ class CmcController extends AbstractController
         // Lets handle a post
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
+
+            if (isset($resource['sender_uri']) && !empty($resource['sender_uri'])) {
+                $resource['sender'] = $resource['sender_uri'];
+            }
+
+            if (isset($resource['receiver_uri']) && !empty($resource['receiver_uri'])) {
+                $resource['receiver'] = $resource['receiver_uri'];
+            }
+
             $resource = $commonGroundService->saveResource($resource, ['component' => 'cmc', 'type' => 'contact_moments']);
 
             // If the contact moment was succesfully created we forward the user

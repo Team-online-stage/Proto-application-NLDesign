@@ -6,20 +6,20 @@
     <div class="col-md-12">
         <div class="content">
         <header class="content__header">
-            <h1 class="content__header-title">{{ 'order'|trans|capitalize }}</h1>
+            <h1 class="content__header-title">{{ 'your data'|trans|capitalize }}</h1>
         </header>
         </div><!-- ./content -->
     </div><!-- ./col -->
 </section>
 
     <div class="row">
-        <aside class="col-xl-3 col-lg-4 col-md-3 col-sm-modal">
+        <aside class="col-xl-4 col-lg-4 col-md-4 col-sm-modal">
             <nav class="sidenav">
                 {% include 'uc/widgets/menu.html.twig' %}
             </nav>
         </aside>
 
-        <div class="col-xl-9 col-lg-8 col-md-9">
+        <div class="col-xl-8 col-lg-8 col-md-8">
             {% include 'orc/widgets/order_table.html.twig' %}
         </div>
     </div>
