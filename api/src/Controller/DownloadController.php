@@ -49,5 +49,4 @@ class DownloadController extends AbstractController
         unlink($filename); // deletes the temporary file
         exit;
     }
-
 }
