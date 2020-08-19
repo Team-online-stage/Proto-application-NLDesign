@@ -2,7 +2,7 @@
             <div class="content-background" >
             	<div class="content">
 
-                    <h1 style="display: inline-block; margin: 10px">{{ 'requests'|trans|capitalize }}</h1>
+                    <h2>{{ 'requests'|trans|capitalize }}</h2>
                     <a style="display: inline-block ;float: right; margin-bottom: 20px" href="{{ path('app_ptc_user') }}" rel="noopener" class="btn btn--primary" >{{ 'start request'|trans|capitalize }}<span class="btn__icon icon icon-arr-forward" title="" role=""></span></a>
                     {% if resources is defined and resources is not empty %}
                     <table class="table table-hover">
@@ -31,7 +31,9 @@
                         </tbody>
                     </table>
                     {% else %}
-                    <h2>{{ 'no assents available'|trans|capitalize }}</h2>
+                        <aside class="hint">
+                            <h2 class="hint__title">{{ 'no requests available'|trans|capitalize }}</h2>
+                        </aside>
                     {% endif %}
                 </div><!-- /.content -->
             </div><!-- /.content-background -->
