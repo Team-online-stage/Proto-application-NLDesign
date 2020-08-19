@@ -5,12 +5,17 @@
     </div>
 </div>
 
-
-{#<!-- Page Break -->#}
-{#<div style="height: 20px"></div>#}
+<!-- Page Break -->
+<div style="height: 20px"></div>
 
 <nav class="sidenav">
     <ul>
+        {% if application.defaultConfiguration.configuration.userPage is defined %}
+            <li class="sidenav__item">
+                <a href="/{{ application.defaultConfiguration.configuration.userPage }}">{{ 'personal'|trans|capitalize }}</a>
+            </li>
+        {% endif %}
+
         {% if commonground_component_health("cmc") %}
         <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_cmc_user' %}sidenav__item--active{% endif %}">
             <a href="{{ path('app_cmc_user') }}">{{ 'messages'|trans|capitalize }}</a>

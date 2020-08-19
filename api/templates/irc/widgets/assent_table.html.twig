@@ -1,7 +1,7 @@
 
             <div class="content-background" >
             	<div class="content">
-                    <h1 style="display: inline-block;">{{ 'assents'|trans|capitalize }}</h1>
+                    <h2>{{ 'assents'|trans|capitalize }}</h2>
                     {% if resources is defined and resources is not empty %}
                     <table class="table table-hover">
                         <thead>
@@ -26,10 +26,10 @@
                         {% endfor %}
                         </tbody>
                     </table>
-                    <a href="{{ path('app_cmc_index') }}">{{ 'view all'|trans|capitalize }}</a>
-
-                    {% else %}
-                    <h3>{{ 'no assents available'|trans|capitalize }}</h3>
+                {% else %}
+                    <aside class="hint">
+                        <h2 class="hint__title">{{ 'no assents available'|trans|capitalize }}</h2>
+                    </aside>
                     {% endif %}
                 </div><!-- /.content -->
             </div><!-- /.content-background -->

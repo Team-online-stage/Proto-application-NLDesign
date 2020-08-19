@@ -26,7 +26,7 @@
                 {% else %}
                     {% if application.defaultConfiguration.configuration.userPage is defined %}
                 <li class="nav__item">
-                        <a href="{{ application.defaultConfiguration.configuration.userPage }}" title="Profile" class="nav__link  ">
+                        <a href="/{{ application.defaultConfiguration.configuration.userPage }}" title="Profile" class="nav__link  ">
                             <i style="margin-right: 10px" class="fas fa-user"></i>
                             <span>{{ app.user.username }}</span>
                         </a>
