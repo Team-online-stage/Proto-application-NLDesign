@@ -40,10 +40,10 @@
                         </a>
                     </li>
                 {% endif %}
-                <form method="post" action="#" style="float: right; margin-left: 20px;">
+                <form method="post" action="{{ path('app_search_index') }}" style="float: right; margin-left: 20px;">
                     <div class="input nav--input">
                         <div class="input__control-group nav--input__control-group">
-                            <input type="search" id="search" class="input__control input__control--m input__control--search">
+                            <input type="search" id="search" name="search" class="input__control input__control--m input__control--search">
                             <button class="btn btn--icon" title="Zoeken"><i class="icon icon-magnifier" role="presentation"></i></button>
                         </div>
                     </div>
