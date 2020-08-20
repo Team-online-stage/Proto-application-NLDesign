@@ -134,9 +134,25 @@
                 width: 100%;
             }
 
-            .no-padding {
-                padding-left: 0px;
-                padding-right: 0px;
+            .nav--left {
+                margin-left: 0px;
+            }
+
+            .nav__item {
+                display: inline; float: left;
+            }
+
+            .nav--right {
+                float: right;
+            }
+
+            .nav--input {
+                margin-top: 10px;
+                margin-bottom: 10px !important;
+            }
+
+            .nav--input__control-group {
+                width: 200px;
             }
 
             .header-logo a:before {
@@ -277,7 +293,7 @@
                         {% endfor %}
                     {% endfor %}
                 </div>
-                
+
                 {% block container %}
                 {% endblock %}
             </main>
