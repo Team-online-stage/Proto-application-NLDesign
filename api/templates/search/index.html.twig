@@ -9,6 +9,7 @@
             {% if resources is defined and resources|length > 0 %}
         <ul class="list list--card list--card-small">
             {% for resource in resources %}
+                {% if resource.slugs is defined and resource.slugs|length > 0 %}
                 <li class="card card--small">
                     <div class="card__content">
                         <div class="card__thumb challenge-card-picture" style="background-image: url('https://picsum.photos/200')"></div>
@@ -23,7 +24,7 @@
                                         <div style="display: flex; flex-direction: column; justify-items: center;">
                                             <p style="margin: 0; color: grey;">gemaakt: {{ resource.dateModified|date("d-m-Y H:i", "Europe/Paris") }}</i></p>
                                             <p style="margin: 0; color: grey;">bijgewerkt: {{ resource.dateCreated|date("d-m-Y H:i", "Europe/Paris") }}</p>
-                                            <a href="/article?id={{ resource.id }}">lees meer</a>
+                                            <a href="/{{ resource.slugs[0].slug }}">lees meer</a>
                                         </div>
                                     </div>
                                 </div>
@@ -31,6 +32,7 @@
                         </div>
                     </div>
                 </li>
+                {% endif %}
             {% endfor %}
         </ul>
             {% else %}
