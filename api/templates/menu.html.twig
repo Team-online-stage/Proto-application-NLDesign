@@ -40,6 +40,7 @@
                         </a>
                     </li>
                 {% endif %}
+                {% if application.defaultConfiguration.configuration.search is defined %}
                 <form method="post" action="{{ path('app_search_index') }}" style="float: right; margin-left: 20px;">
                     <div class="input nav--input">
                         <div class="input__control-group nav--input__control-group">
@@ -48,6 +49,7 @@
                         </div>
                     </div>
                 </form>
+                {% endif %}
             </ul>
         </div>
     </div>
