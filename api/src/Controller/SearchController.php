@@ -4,14 +4,10 @@
 
 namespace App\Controller;
 
-use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\PhpWord;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,13 +31,13 @@ class SearchController extends AbstractController
         $variables['query'] = array_merge($request->query->all(), $request->request->all());
 
         // Bugy dit moeten de componenten zelf opvangen
-        if(array_key_exists('search',  $variables['query'])){
+        if (array_key_exists('search', $variables['query'])) {
             $variables['query']['name'] = $variables['query']['search'];
-            $variables['query']['description']  = $variables['query']['search'];
+            $variables['query']['description'] = $variables['query']['search'];
             $variables['query']['content'] = $variables['query']['search'];
         }
 
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'], $variables['query'])['hydra:member'];;
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'templates'], $variables['query'])['hydra:member'];
 
         return $variables;
     }
