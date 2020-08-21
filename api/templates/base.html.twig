@@ -121,6 +121,7 @@
     <style>
         /* deafult values for root variables */
         :root {
+            --background: #DEDEDE;
             --primary: #0047BB;
             --primary-color: white;
             --secondary: #0047BB;
@@ -168,6 +169,10 @@
         .header {
             height: auto;
             background-color: var(--header);
+        }
+
+        .wrapper {
+            background: var(--background);
         }
 
         .background--primary {
@@ -255,17 +260,23 @@
         /* Sticky docs-nav bar */
 
         /* The sticky class is added to the header with JS when it reaches its scroll position */
-        .sticky {
-            position: fixed;
-            top: 0;
-            width: 100%;
+        .sticky-nav {
+            position: sticky;
+            top: 0px;
+            background: var(--menu) !important;
+            color: var(--menu-color) !important;
+            transition: 0.2s;
             z-index: 1;
         }
 
-        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-        .sticky + .content {
-            padding-top: 102px;
+        .sticky-transition {
+            transition: 0.5s;
         }
+
+        /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+        /*.sticky-nav + .content {*/
+        /*    padding-top: 102px;*/
+        /*}*/
 
     </style>
 
@@ -283,34 +294,6 @@
     {% endif %}
 
     {% include "menu.html.twig" %}
-
-
-    {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
-        <script>
-            // When the user scrolls the page, execute myFunction
-
-            window.onload = function() {
-                myFunction();
-            };
-
-            window.onscroll = function() {myFunction()};
-
-            // Get the header
-            var header = document.getElementById("docs-nav");
-
-            // Get the offset position of the navbar
-            var sticky = header.offsetTop;
-
-            // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-            function myFunction() {
-                if (window.pageYOffset > sticky) {
-                    header.classList.add("sticky");
-                } else {
-                    header.classList.remove("sticky");
-                }
-            }
-        </script>
-    {% endif %}
 
     <main class="skiplink-target main" id="content" tabindex="-1">
 
@@ -337,6 +320,33 @@
     {% include "footer.html.twig" %}
 
     <script src="/js/highlight.pack.js"></script>
+
+
+{#   Sticky menu script   #}
+    {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
+        <script>
+            // When the user scrolls the page, execute myFunction
+            window.onscroll = function() {myFunction()};
+
+            // Get the header
+            var header = document.getElementById("docs-nav");
+
+            // Get the offset position of the navbar
+            var sticky = header.offsetTop;
+            console.log(header.offsetTop);
+
+            // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+            function myFunction() {
+                if (window.pageYOffset > sticky) {
+                    header.classList.remove("sticky-transition");
+                    header.classList.add("sticky-nav");
+                } else {
+                    header.classList.add("sticky-transition");
+                    header.classList.remove("sticky-nav");
+                }
+            }
+        </script>
+    {% endif %}
 
     <script>
         // Load collapse component
