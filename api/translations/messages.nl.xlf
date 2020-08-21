@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="oy06T40" resname="you can not save or submit procceses if you are not loged in">
         <source>you can not save or submit procceses if you are not loged in</source>
-        <target>u kan geen proces opslaan of indienen als u niet bent ingelogd</target>
+        <target>u kunt geen proces opslaan of indienen als u niet bent ingelogd</target>
       </trans-unit>
       <trans-unit id="uTw_URA" resname="login required">
         <source>login required</source>
@@ -483,7 +483,7 @@
       </trans-unit>
       <trans-unit id="EuoS6s5" resname="change">
         <source>change</source>
-        <target>verander</target>
+        <target>wijzig</target>
       </trans-unit>
       <trans-unit id=".tDkggr" resname="financial">
         <source>financial</source>

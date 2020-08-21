@@ -1,11 +1,10 @@
-<div class="edit-section">
-    <h2>{{ 'your data'|trans|capitalize }}</h2>
-    <a class="definition-list__edit-button" href="{{ path('app_ptc_user') }}">{{ 'edit'|trans|capitalize }}</a>
-</div>
 <ul class="definition-list">
     {% set user = commonground_resource(app.user.person) %}
     {% if user.naam.voornamen is defined and user.naam.voornamen is not empty %}
         <li class="definition-list__item definition-list__item--horizontal">
+            {% if application.defaultConfiguration.configuration.nameChangeRequest is defined %}
+                <a class="definition-list__edit-button" href="{{ path('app_ptc_process_stage', {id: application.defaultConfiguration.configuration.nameChangeRequest, stage:'start'}) }}">{{ 'edit'|trans|capitalize }}</a>
+            {% endif %}
             <div class="definition-list__title">
                 {{ 'first name'|trans|capitalize }}
             </div>
@@ -16,6 +15,9 @@
     {% endif %}
     {% if user.naam.geslachtsnaam is defined and user.naam.geslachtsnaam is not empty %}
         <li class="definition-list__item definition-list__item--horizontal">
+            {% if application.defaultConfiguration.configuration.familyChangeRequest is defined %}
+                <a class="definition-list__edit-button" href="{{ path('app_ptc_process_stage', {id: application.defaultConfiguration.configuration.familyChangeRequest, stage:'start'}) }}">{{ 'edit'|trans|capitalize }}</a>
+            {% endif %}
             <div class="definition-list__title">
                 {{ 'last name'|trans|capitalize }}
             </div>
@@ -36,6 +38,9 @@
     {% endif %}
     {% if user.geslachtsaanduiding is defined and user.geslachtsaanduiding is not empty%}
         <li class="definition-list__item definition-list__item--horizontal">
+            {% if application.defaultConfiguration.configuration.genderRequest is defined %}
+                <a class="definition-list__edit-button" href="{{ path('app_ptc_process_stage', {id: application.defaultConfiguration.configuration.genderRequest, stage:'start'}) }}">{{ 'edit'|trans|capitalize }}</a>
+            {% endif %}
             <div class="definition-list__title">
                 {{ 'gender'|trans|capitalize }}
             </div>
@@ -46,6 +51,9 @@
     {% endif %}
     {% if user.verblijfplaats is defined and user.verblijfplaats is not empty %}
     <li class="definition-list__item definition-list__item--horizontal">
+        {% if application.defaultConfiguration.configuration.moveRequest is defined %}
+            <a class="definition-list__edit-button" href="{{ path('app_ptc_process_stage', {id: application.defaultConfiguration.configuration.moveRequest, stage:'start'}) }}">{{ 'edit'|trans|capitalize }}</a>
+        {% endif %}
         <div class="definition-list__title">
             {{ 'adres'|trans|capitalize }}
         </div>
