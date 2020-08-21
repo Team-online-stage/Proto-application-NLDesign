@@ -7,9 +7,9 @@
                         <thead>
                         <tr>
                             <th scope="col">{{ 'date'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'topic'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'sender'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'receiver'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'reference'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'status'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'amount'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -17,17 +17,16 @@
                         {% for resource in resources %}
                         <tr>
                             <td>{{ resource.dateCreated|date("d-m-Y") }}</td>
-                            <td>{{ resource.topic|capitalize }}</td>
-                            <td>{{ commonground_resource(resource.sender).name|capitalize }}</td>
-                            <td>{{ commonground_resource(resource.receiver).name|capitalize }}</td>
-                            <td><a href="{{ path('app_cmc_view', {id: resource.id}) }}">{{ 'view'|trans|capitalize }}</a>
+                            <td>{{ resource.reference|capitalize }}</td>
+                            <td>{{ resource.paid }}</td>
+                            <td>{{ resource.price }} {{ resource.priceCurrency }}</td>
+                            <td>
+                                {# download knop #}
                             </td>
                         </tr>
                         {% endfor %}
                         </tbody>
                     </table>
-                    <a href="{{ path('app_cmc_index') }}">{{ 'view all'|trans|capitalize }}</a>
-
                     {% else %}
                         <aside class="hint">
                             <h2 class="hint__title">{{ 'no invoices available'|trans|capitalize }}</h2>

@@ -20,7 +20,7 @@
                             <td>{{ resource.description|capitalize }}</td>
                             <td>{{ resource.startDate|date("H:i d-m-Y") }}</td>
                             <td>{{ resource.endDate|date("H:i d-m-Y") }}</td>
-                            {% if resouce.resouce is defined and resource.resouce is not empty and commonground_resource(resource.resource)['@type'] == 'Request' %}
+                            {% if resource.resource is defined and resource.resource is not empty and commonground_resource(resource.resource)['@type'] == 'Request' %}
                                 {% set request = commonground_resource(resource.resource) %}
                             <td><a href="{{ path('app_ptc_process_stage', {id: commonground_resource(request.processType).id, request: request['@id']}) }}">{{ 'view'|trans|capitalize }}</a></td>
                             {% endif %}
