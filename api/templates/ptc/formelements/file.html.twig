@@ -17,6 +17,7 @@
             </li>
         </ul>
     {% endif %}
+    <div class="input input--horizontal {%if property.valid is defined and not property.valid %}input--invalid{% endif %}">
     <label>
     <div>
         <label class="input__label" for="{{ property.id }}">{{ property.title }}</label>
@@ -33,6 +34,7 @@
             <input type="file" id="{{ property.id }}" class="input__control--file" name="request[properties][{{ property.name }}]" aria-describedby="input-upload-hint">
             <span class="btn" role="button">Bestand uploaden</span> <span id="fileName"></span>
         </label>
+    </div>
     {% endif %}
     {% if request['properties'][property.name] is defined and  request['properties'][property.name] is not empty %}
         <label class="input__label" for="{{ property.id }}">{{ 'uploaded files'|trans|capitalize }}</label>
