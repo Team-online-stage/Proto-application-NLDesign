@@ -6,12 +6,12 @@
                     {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
 
                     {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
-                <li class="nav__item">
-                    <a href="{{ item.href }}" title="Home" class="nav__link  ">
-                        <i class="{{ item.icon }}" role="presentation"></i>
-                        <span>{{ item.name }}</span>
-                    </a>
-                </li>
+                        <li class="nav__item">
+                            <a href="{{ item.href }}" title="Home" class="nav__link  ">
+                                <i class="{{ item.icon }}" role="presentation"></i>
+                                <span>{{ item.name }}</span>
+                            </a>
+                        </li>
                     {% endfor %}
                 {% endif %}
             </ul>
