@@ -9,7 +9,7 @@
                 <a class="backlink" href="{{ path('app_ptc_index') }}">{{ 'processes'|trans|capitalize }}</a>
                 <header class="content__header">
                     {% if stage.name is defined %}
-                        <h1 class="content__header-title" {% if stage.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this stage'|trans|capitalize }}"></span>{% endif %}>{{ stage.name|capitalize }}</h1>
+                        <h1 class="content__header-title" {% if stage.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this stage'|trans|capitalize }}"></span>{% endif %}{{ stage.name|capitalize }}</h1>
                         {{ stage.description }}
                     {% else %}
                     <h1 class="content__header-title">{{ process.name|capitalize }}</h1>
