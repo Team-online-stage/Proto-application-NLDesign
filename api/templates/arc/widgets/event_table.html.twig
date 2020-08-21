@@ -15,12 +15,12 @@
                         </thead>
                         <tbody>
                         {% for resource in resources %}
-                        <tr {% if resource.endDate|date("H:i d-m-Y") < "now"|date("H:i d-m-Y") %} style="color: #b4b4b4" {% endif %}>
+                        <tr {% if resource.endDate|date < "now"|date %} style="color: #b4b4b4" {% endif %}>
                             <td>{{ resource.name|capitalize }}</td>
                             <td>{{ resource.description|capitalize }}</td>
                             <td>{{ resource.startDate|date("H:i d-m-Y") }}</td>
                             <td>{{ resource.endDate|date("H:i d-m-Y") }}</td>
-                            {% if commonground_resource(resource.resource)['@type'] == 'Request' %}
+                            {% if resouce.resouce is defined and resource.resouce is not empty and commonground_resource(resource.resource)['@type'] == 'Request' %}
                                 {% set request = commonground_resource(resource.resource) %}
                             <td><a href="{{ path('app_ptc_process_stage', {id: commonground_resource(request.processType).id, request: request['@id']}) }}">{{ 'view'|trans|capitalize }}</a></td>
                             {% endif %}
