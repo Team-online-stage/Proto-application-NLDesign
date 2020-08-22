@@ -565,6 +565,10 @@
         <source>previous step</source>
         <target>vorige stap</target>
       </trans-unit>
+      <trans-unit id="8hb2AI1" resname="read more">
+        <source>read more</source>
+        <target>meer lezen</target>      
+      </trans-unit>
       <trans-unit id="PEgjRvN" resname="back">
         <source>back</source>
         <target>__back</target>
