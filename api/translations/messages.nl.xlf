@@ -553,21 +553,69 @@
         <source>uploaded files</source>
         <target>geuploade bestanden</target>
       </trans-unit>
-      <trans-unit id="oU7H2ga" resname="your data">
-        <source>your data</source>
-        <target>uw data</target>
-      </trans-unit>
-      <trans-unit id="y6G2bAP" resname="view your existing requests">
+      <trans-unit id="FnzJSTa" resname="view your existing requests">
         <source>view your existing requests</source>
         <target>bekijk uw bestaande verzoeken</target>
       </trans-unit>
-      <trans-unit id="4h21Kof" resname="next step">
+      <trans-unit id="4WRPBMZ" resname="next step">
         <source>next step</source>
         <target>volgende stap</target>
       </trans-unit>
-      <trans-unit id="7Hb21K0" resname="previous step">
+      <trans-unit id="ax1LYs5" resname="previous step">
         <source>previous step</source>
         <target>vorige stap</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back">
+        <source>back</source>
+        <target>__back</target>
+      </trans-unit>
+      <trans-unit id="Sgozmwx" resname="personal">
+        <source>personal</source>
+        <target>__personal</target>
+      </trans-unit>
+      <trans-unit id="pJfw9Mc" resname="you need to login before you can view this page">
+        <source>you need to login before you can view this page</source>
+        <target>__you need to login before you can view this page</target>
+      </trans-unit>
+      <trans-unit id="rjgSBY9" resname="inProgress">
+        <source>inProgress</source>
+        <target>in behandeling</target>
+      </trans-unit>
+      <trans-unit id="iIpMs1D" resname="You have correctly filled out all required questions for this stage">
+        <source>You have correctly filled out all required questions for this stage</source>
+        <target>__You have correctly filled out all required questions for this stage</target>
+      </trans-unit>
+      <trans-unit id="0ifd5Zn" resname="You have correctly filled out all required questions for this section">
+        <source>You have correctly filled out all required questions for this section</source>
+        <target>__You have correctly filled out all required questions for this section</target>
+      </trans-unit>
+      <trans-unit id="Ge1Av2L" resname="process">
+        <source>process</source>
+        <target>__process</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search">
+        <source>search</source>
+        <target>__search</target>
+      </trans-unit>
+      <trans-unit id="8xuHaDl" resname="no items found">
+        <source>no items found</source>
+        <target>__no items found</target>
+      </trans-unit>
+      <trans-unit id="D2rZyWK" resname="your search did not yield any results, try agan">
+        <source>your search did not yield any results, try agan</source>
+        <target>__your search did not yield any results, try agan</target>
+      </trans-unit>
+      <trans-unit id="R_InZ3G" resname="filters">
+        <source>filters</source>
+        <target>__filters</target>
+      </trans-unit>
+      <trans-unit id="TYqqt6Z" resname="key word">
+        <source>key word</source>
+        <target>__key word</target>
+      </trans-unit>
+      <trans-unit id="CA3pYjj" resname="no requests available">
+        <source>no requests available</source>
+        <target>__no requests available</target>
       </trans-unit>
     </body>
   </file>
