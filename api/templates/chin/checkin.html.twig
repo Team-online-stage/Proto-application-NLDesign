@@ -1,0 +1,39 @@
+{% extends "content.html.twig" %}
+
+{% block content %}
+
+
+<section class="row">
+    <div class="col-md-12">
+        <div class="content">
+            <header class="content__header">
+                <header class="content__header">
+                    <h1 class="content__header-title">{{ 'checkin'|trans|capitalize }}</h1>
+                </header>
+            </header>
+        </div><!-- ./content -->
+    </div><!-- ./col -->
+</section>
+
+
+<div class="row">
+    <div class="col-md-8  col-sm-12">
+        <div class="content-background">
+            <div class="content">
+                {{ 'you are about to checkin, please review the data below'|trans|capitalize }}
+                <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
+                {% if not app.user %}
+
+                {% else %}
+                    {{ app.user.person }}
+                {% endif %}
+                    {{ 'location'|trans|capitalize }}
+                    {{ resource.place }}
+                    {{ 'location'|trans|capitalize }}
+                    {{ resource.name }}
+                </form>
+            </div><!-- /.content -->
+        </div><!-- /.content-background -->
+    </div><!-- /.col -->
+</div>
+{% endblock %}
