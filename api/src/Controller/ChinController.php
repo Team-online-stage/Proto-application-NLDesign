@@ -67,15 +67,25 @@ class ChinController extends AbstractController
     /**
      * This function will kick of the suplied proces with given values.
      *
-     * @Route("/checkin", name="app_chin_checkin")
-     * @Route("/checkin/{id}", name="app_chin_checkin_id)
+     * @Route("/checkin/{code}")
      * @Template
      */
-    public function checkinAction(Session $session, $id, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function checkinAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-        $variables = $applicationService->getVariables();
-        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'],['reference' => $id])["hydra:member"];
-        $variables['resource'] = $variables['resources'][0];
+        $variables = [];
+
+        // Fallback options of establishing
+        if(!$code){
+            $code = $request->query->get('code');
+        }
+        if(!$code){
+            $code = $request->request->get('code');
+        }
+
+        if($code){
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'],['reference' => $code])["hydra:member"];
+            $variables['resource'] = $variables['resources'][0];
+        }
 
         return $variables;
     }
