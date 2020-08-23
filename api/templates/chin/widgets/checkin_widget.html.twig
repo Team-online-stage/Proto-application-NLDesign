@@ -32,15 +32,29 @@
     </div><!-- /.content -->
 </div><!-- /.col -->
 {% else %}
-    <div class="col-md-4 col-sm-12">
-        <div class="content">
-            <div class="input input--search">
-                <label class="input__label" for="search">Handmatig een code opgeven</label>
-                <div class="input__control-group">
-                    <input type="search" id="search" class="input__control input__control--lg input__control--search">
-                    <button class="btn btn--icon" title="incheken"> Inchecken</button>
+<div class="col-md-4 col-sm-12" >
+    <div class="content">
+
+        <ul class="definition-list">
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title">
+                    Locatie
                 </div>
-            </div>
-        </div><!-- /.content -->
-    </div><!-- /.col -->
+                <div class="definition-list__description">
+                    <p>{{ resource.name }}</p>
+                </div>
+            </li>
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title">
+                    Plaats
+                </div>
+                <div class="definition-list__description">
+                    <p>{{ commonground_resource(resource.place).name }}</p>
+                </div>
+            </li>
+        </ul>
+
+        <button class="btn btn-block" title="bevestig"> bevestig </button>
+    </div><!-- /.content -->
+</div><!-- /.col -->
 {% endif %}
