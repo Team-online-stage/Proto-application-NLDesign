@@ -38,7 +38,7 @@
                     {% for offer in offers %}
 
                     <li>
-                        <input type="checkbox" class="input__control input__control--checkbox" value="{{ offer['@id'] }}" name="request[properties][{{ property.name }}][{{ value }}]" id="{{ offer.id }}">
+                        <input {% if request['properties'][property.name] is defined and offer['@id'] in request['properties'][property.name] %}checked {% endif %} type="checkbox" class="input__control input__control--checkbox" value="{{ offer['@id'] }}" name="request[properties][{{ property.name }}][{{ value }}]" id="{{ offer.id }}">
                         <label for="{{ offer.id }}" class="input__label input__label--checkbox">{{ offer.name }}
                             {% if offer.price != 0 %}
                                 <span style="float:right;">
