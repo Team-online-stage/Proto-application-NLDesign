@@ -54,6 +54,9 @@
             </li>
         </ul>
         {% if not app.user %}
+            <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+               class="btn btn--digid btn-block">{{ 'identificeren'|trans|capitalize }}</a></p>
+         {#
         <button class="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
         <div class="modal modal--backdrop" role="dialog" id="mySmallModal" tabindex="-1">
             <section class="modal__content modal--height-s modal--width-s" role="document">
@@ -69,8 +72,7 @@
                            class="btn btn--digid btn-block">{{ 'digid'|trans|capitalize }}</a></p>
                     </div>
             </section>
-        </div>
-
+        </div>#}
 
         {% else %}
         <div class="input">
