@@ -75,19 +75,19 @@ class ChinController extends AbstractController
         $variables = [];
 
         // Fallback options of establishing
-        if(!$code){
+        if (!$code) {
             $code = $request->query->get('code');
         }
-        if(!$code){
+        if (!$code) {
             $code = $request->request->get('code');
         }
 
-        if($code){
+        if ($code) {
             $variables['code'] = $code;
-            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'],['reference' => $code])["hydra:member"];
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
 
-            if(count($variables['resources']) > 0){
-               $variables['resource'] = $variables['resources'][0];
+            if (count($variables['resources']) > 0) {
+                $variables['resource'] = $variables['resources'][0];
             }
         }
 
