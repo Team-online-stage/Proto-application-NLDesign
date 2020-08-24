@@ -28,14 +28,14 @@ class DrcController extends AbstractController
     {
         $token = $commonGroundService->getJwtToken('drc');
 
-        $result = $commonGroundService->getResource(['component'=>'drc','type'=>'enkelvoudiginformatieobjecten', 'id'=>$resource]);
+        $result = $commonGroundService->getResource(['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten', 'id'=>$resource]);
 
         $headers = ['Authorization'=>'Bearer '.$token];
         $guzzleConfig = [
             'http_errors' => false,
-            'timeout'  => 4000.0,
-            'headers' => $headers,
-            'verify' => false,
+            'timeout'     => 4000.0,
+            'headers'     => $headers,
+            'verify'      => false,
         ];
 
         // Lets start up a default client
