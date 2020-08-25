@@ -565,7 +565,7 @@
         <source>previous step</source>
         <target>vorige stap</target>
       </trans-unit>
-      <trans-unit id="8hb2AI1" resname="read more">
+      <trans-unit id="owVcl50" resname="read more">
         <source>read more</source>
         <target>meer lezen</target>
       </trans-unit>
@@ -579,7 +579,7 @@
       </trans-unit>
       <trans-unit id="pJfw9Mc" resname="you need to login before you can view this page">
         <source>you need to login before you can view this page</source>
-        <target>u mmoet inloggen voordat u deze pagina kan bekijken</target>
+        <target>u dient ingelogd te zijn om deze pagina te kunnen bekijken</target>
       </trans-unit>
       <trans-unit id="rjgSBY9" resname="inProgress">
         <source>inProgress</source>
@@ -587,11 +587,11 @@
       </trans-unit>
       <trans-unit id="iIpMs1D" resname="You have correctly filled out all required questions for this stage">
         <source>You have correctly filled out all required questions for this stage</source>
-        <target>u heeft allle verplichte vragen voor dit deel correct ingevult</target>
+        <target>u heeft alle verplichte vragen voor dit deel correct ingevuld</target>
       </trans-unit>
       <trans-unit id="0ifd5Zn" resname="You have correctly filled out all required questions for this section">
         <source>You have correctly filled out all required questions for this section</source>
-        <target>u heeft allle verplichte vragen voor deze sectie correct ingevult</target>
+        <target>u heeft alle verplichte vragen voor deze sectie correct ingevuld</target>
       </trans-unit>
       <trans-unit id="Ge1Av2L" resname="process">
         <source>process</source>
@@ -605,7 +605,7 @@
         <source>no items found</source>
         <target>niet gevonden</target>
       </trans-unit>
-      <trans-unit id="D2rZyWK" resname="your search did not yield any results, try again">
+      <trans-unit id="WqKKEGk" resname="your search did not yield any results, try again">
         <source>your search did not yield any results, try again</source>
         <target>uw zoek opdracht heet geen resulaten opgeleverd, probeer het nog een keer</target>
       </trans-unit>
@@ -620,6 +620,34 @@
       <trans-unit id="CA3pYjj" resname="no requests available">
         <source>no requests available</source>
         <target>geen verzoeken beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="gd9jWAz" resname="place">
+        <source>place</source>
+        <target>plaats</target>
+      </trans-unit>
+      <trans-unit id="HCJivOb" resname="creation date">
+        <source>creation date</source>
+        <target>aanmaak datum</target>
+      </trans-unit>
+      <trans-unit id="T9GRAhd" resname="deletion date">
+        <source>deletion date</source>
+        <target>verwijder datum</target>
+      </trans-unit>
+      <trans-unit id="FhDEDGV" resname="no checkins available">
+        <source>no checkins available</source>
+        <target>geen check-ins beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="fl8XlXb" resname="identificeren">
+        <source>identificeren</source>
+        <target>identificeren</target>
+      </trans-unit>
+      <trans-unit id="JorXDrW" resname="paid">
+        <source>paid</source>
+        <target>betaald</target>
+      </trans-unit>
+      <trans-unit id="k1CHLXE" resname="pay">
+        <source>pay</source>
+        <target>betalen</target>
       </trans-unit>
     </body>
   </file>
