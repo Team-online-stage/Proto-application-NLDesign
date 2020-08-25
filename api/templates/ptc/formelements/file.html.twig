@@ -41,12 +41,13 @@
         <ul class="list list--files">
         {% if request['properties'][property.name] is iterable %}
         {% else %}
+            {% set file = commonground_resource(request['properties'][property.name]) %}
             <li class="file">
                 <i class="file__icon icon icon-document"></i>
                 <div class="file__data">
                     <div class="file__filename">
-                        <a href="{{ path('app_drc_download',{'resource':request['properties'][property.name]|url_encode})}}">
-                            <strong class="file__title break-all">test</strong>
+                        <a href="{{ path('app_drc_download',{'resource':file.id})}}">
+                            <strong class="file__title break-all">{{ file.bestandsnaam }}</strong>
                         </a>
                     </div>
                 </div>

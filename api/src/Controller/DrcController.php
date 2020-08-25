@@ -26,27 +26,16 @@ class DrcController extends AbstractController
      */
     public function downloadAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService, $resource)
     {
-        $resource = urldecode($resource);
         $token = $commonGroundService->getJwtToken('drc');
-        $commonGroundService->setHeader('Authorization', 'Bearer '.$token);
-        $commonGroundService->setHeader('Accept', '*/*');
 
-        $result = $commonGroundService->getResource($resource);
-        $commonGroundService->setHeader('Authorization', $this->getParameter('app_commonground_key'));
-        $commonGroundService->setHeader('Accept', 'application/ld+json');
-//        var_dump($result);
+        $result = $commonGroundService->getResource(['component'=>'drc', 'type'=>'enkelvoudiginformatieobjecten', 'id'=>$resource]);
 
         $headers = ['Authorization'=>'Bearer '.$token];
         $guzzleConfig = [
-            // Base URI is used with relative requests
             'http_errors' => false,
-            //'base_uri' => 'https://wrc.zaakonline.nl/applications/536bfb73-63a5-4719-b535-d835607b88b2/',
-            // You can set any number of default request options.
-            'timeout'  => 4000.0,
-            // To work with NLX we need a couple of default headers
-            'headers' => $headers,
-            // Do not check certificates
-            'verify' => false,
+            'timeout'     => 4000.0,
+            'headers'     => $headers,
+            'verify'      => false,
         ];
 
         // Lets start up a default client
