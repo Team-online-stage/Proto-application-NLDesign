@@ -179,7 +179,6 @@ class UserController extends AbstractController
                 }
             }
 
-
             //create the user in UC
             $user['organization'] = $application['organization']['@id'];
             $user['username'] = $resource['email'];
