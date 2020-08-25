@@ -32,6 +32,7 @@ class ChinController extends AbstractController
     {
         $variables = [];
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
+
         return $variables;
     }
 
