@@ -102,9 +102,8 @@ class UserController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $conductionUrl = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'6a001c4c-911b-4b29-877d-122e362f519d']); //conduction
-        $variables['userGroups'] = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups'], ['organization' => $conductionUrl], $variables['query'])['hydra:member'];
-
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $variables['userGroups'] = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'groups'], ['organization' => $application['organization']['@id'], 'canBeRegisteredFor' => true])['hydra:member'];
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
@@ -180,8 +179,9 @@ class UserController extends AbstractController
                 }
             }
 
+
             //create the user in UC
-            $user['organization'] = $conductionUrl;
+            $user['organization'] = $application['organization']['@id'];
             $user['username'] = $resource['email'];
             $user['password'] = $resource['wachtwoord'];
             $user['person'] = $contact['@id'];
