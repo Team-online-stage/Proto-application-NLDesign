@@ -113,7 +113,8 @@
                     {% else %}
                         {% if 'http' in property %}
                             {% if 'enkelvoudiginformatieobjecten' in property %}
-                                <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
+                                {% set file = commonground_resource(property) %}
+                                <a href="{{ path('app_drc_download',{'resource':file.id})}}">{{  file.bestandsnaam }}</a>
                             {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}
                                 {{ commonground_resource(property).reference }}<br>
                             {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
