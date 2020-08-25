@@ -38,7 +38,7 @@
                     {% if application['defaultConfiguration']['configuration']['login']['idin'] is defined and application['defaultConfiguration']['configuration']['login']['idin'] %}
                         <h2 id="inloggen-verzuimloket">{{ 'for citizen'|trans|capitalize }}</h2>
                         <p>
-                            <a href="https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri=https://labs.signicat.com/redirect&acr_values=urn:signicat:oidc:method:idin-login&state=123"
+                            <a href="{{ path('app_user_idin') }}"
                                class="btn btn-block">{{ 'iDin'|trans|capitalize }}</a></p>
                     {% endif %}
 

@@ -75,6 +75,15 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/idin")
+     * @Template
+     */
+    public function IdinAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$request->getUri().'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+    }
+
+    /**
      * @Route("/logout")
      * @Template
      */
