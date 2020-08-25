@@ -71,7 +71,6 @@ class UserController extends AbstractController
     {
         $redirect = $commonGroundService->cleanUrl(['component' => 'eh']);
 
-
         return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
     }
 
@@ -94,7 +93,6 @@ class UserController extends AbstractController
         $session->set('request', null);
         $session->set('contact', null);
         $session->set('organisation', null);
-
 
         return $this->redirect($this->generateUrl('app_default_index'));
     }
