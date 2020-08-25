@@ -71,7 +71,17 @@ class UserController extends AbstractController
     {
         $redirect = $commonGroundService->cleanUrl(['component' => 'eh']);
 
+
         return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
+    }
+
+    /**
+     * @Route("/idin")
+     * @Template
+     */
+    public function IdinAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri=https://checkin.dev.zuid-drecht.nl/&acr_values=urn:signicat:oidc:method:idin-login&state=123');
     }
 
     /**
@@ -84,6 +94,7 @@ class UserController extends AbstractController
         $session->set('request', null);
         $session->set('contact', null);
         $session->set('organisation', null);
+
 
         return $this->redirect($this->generateUrl('app_default_index'));
     }
