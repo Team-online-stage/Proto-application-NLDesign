@@ -110,9 +110,6 @@ class ChinController extends AbstractController
             $telephoneResource['telephone'] = $tel;
             $commonGroundService->updateResource($telephoneResource);
 
-            $person['name'] = $name;
-            $person = $commonGroundService->updateResource($person);
-
             //create check-in
             $checkIn = [];
             $checkIn['reference'] = $code;
