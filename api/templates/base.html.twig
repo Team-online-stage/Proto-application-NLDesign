@@ -55,6 +55,7 @@
     <link rel="stylesheet" href="/uno/components/donut-chart/donut-chart.css">
     <link rel="stylesheet" href="/uno/components/spinner/spinner.css">
     <link rel="stylesheet" href="/uno/components/memo/memo.css">
+    <link rel="stylesheet" href="/uno/components/modal/modal.css">
     <link rel="stylesheet" href="/uno/components/tooltip/tooltip.css">
     <link rel="stylesheet" href="/css/main.css">
 
@@ -459,6 +460,17 @@
                 new module.SubMenuNavigation(submenus.item(i));
             }
         });
+
+        var myModal;
+        // Load modal component
+        System.import('/uno/components/modal/modal.js').then(function (module) {
+            myModal = new module.Modal(document.getElementById('myModal'));
+        });
+
+        // Called when the user clicks the button
+        function openModal() {
+            myModal.open();
+        }
     </script>
 
 </div>

@@ -649,6 +649,18 @@
         <source>pay</source>
         <target>betalen</target>
       </trans-unit>
+      <trans-unit id="bCoDPGD" resname="iDin">
+        <source>iDin</source>
+        <target>iDin</target>
+      </trans-unit>
+      <trans-unit id="MQ.yABS" resname="close">
+        <source>close</source>
+        <target>sluit</target>
+      </trans-unit>
+      <trans-unit id="TqgR6Pn" resname="check-ins">
+        <source>check-ins</source>
+        <target>check-ins</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
