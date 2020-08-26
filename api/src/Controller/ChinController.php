@@ -94,7 +94,7 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST') && $this->getUser() && $createCheckin == 'true') {
 
             //update person
-            $node = $request->request->get('name');
+            $node = $request->request->get('node');
             $name = $request->request->get('name');
             $email = $request->request->get('email');
             $tel = $request->request->get('tel');
