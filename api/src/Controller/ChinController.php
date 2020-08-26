@@ -114,8 +114,8 @@ class ChinController extends AbstractController
             $checkIn = [];
             $checkIn['reference'] = $code;
             $checkIn['node'] = $variables['resource']['@id'];
-            $checkIn['person'] = $person;
-            $checkIn['user'] = $user;
+            $checkIn['person'] = $person['@id'];
+            $checkIn['user'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
