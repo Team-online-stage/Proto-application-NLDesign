@@ -25,15 +25,16 @@
             <label class="input__label" for="search">Code</label>
             {% if code is defined %}<div class="input__error">Code niet gevonden</div>{% endif %}
             <div class="input__control-group">
-                <input {% if code is defined %}value="{{ code }}" {% endif%}type="search" id="code" name="code" class="input__control input__control--m input__control--search" placeholder="code">
-                <button class="btn" title="incheken"> Inchecken </button>
+                <input {% if code is defined %}value="{{ code }}" {% endif%} type="search" id="code" name="code" class="input__control input__control--m input__control--search" placeholder="code">
+                <button class="btn" style="margin-left: 10px;" title="incheken"> Inchecken </button>
+                <button class="btn btn--icon" style="margin-left: 10px;" title="scan"><i class="icon icon-magnifier"></i></button>
             </div>
         </div>
     </div><!-- /.content -->
 </div><!-- /.col -->
-    <div class="col-md-4 col-sm-2" >
+    <div class="col-md-4 col-sm-2">
         <div class="content">
-            <button class="btn btn--icon" title="scan"><i class="icon icon-magnifier"></i></button>
+
         </div><!-- /.content -->
     </div><!-- /.col -->
 {% else %}
