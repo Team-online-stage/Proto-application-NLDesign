@@ -19,10 +19,7 @@
             <ul style="float: right;">
                 {% if not app.user %}
                     <li class="nav__item">
-                        <a href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" title="Login" class="nav__link  ">
-                            <i style="margin-right: 10px"  class="fas fa-lock"></i>
-                            <span>{{ 'login'|trans|capitalize }}</span>
-                        </a>
+                        {%  include 'login/widgets/login_modal.html.twig' %}
                     </li>
                 {% else %}
                     {% if application.defaultConfiguration.configuration.userPage is defined %}
