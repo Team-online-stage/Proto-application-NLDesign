@@ -91,7 +91,7 @@ class ChinController extends AbstractController
 
         // Alleen afgaan bij post EN ingelogde gebruiker
 
-        if ($request->isMethod('POST') && $this->getUser() ) {
+        if ($request->isMethod('POST') && $this->getUser()) {
 
             //update person
             $name = $request->request->get('name');
@@ -124,7 +124,7 @@ class ChinController extends AbstractController
 
             return $this->redirect($this->generateUrl('app_chin_user'));
         }
-        
+
         return $variables;
     }
 }
