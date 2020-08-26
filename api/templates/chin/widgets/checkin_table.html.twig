@@ -19,8 +19,8 @@
                         <tr>
                             <td>{{ commonground_resource(checkin.node.organization).name|capitalize }}</td>
                             <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
-                            <td>{{ checkin.dateCreated|date("i:H d-m-Y") }}</td>
-                            <td>{{ checkin.dateCreated|date_modify("+12 day")|date("i:H d-m-Y") }}</td>
+                            <td>{{ checkin.dateCreated|date("H:i d-m-Y") }}</td>
+                            <td>{{ checkin.dateCreated|date_modify("+12 day")|date("H:i d-m-Y") }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
