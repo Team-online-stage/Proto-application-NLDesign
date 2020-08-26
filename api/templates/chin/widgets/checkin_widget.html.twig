@@ -78,17 +78,17 @@
         {% else %}
             {% set user = commonground_resource(app.user.person) %}
         <div class="input">
-            <label class="input__label" for="email">Naam</label>
+            <label class="input__label" for="email">Naam <span style="color: red;"><strong>*</strong></span></label>
             <input required="" type="text" id="name"  name="name" class="input__control input__control--text"
             value="{{ user.name }}">
         </div>
         <div class="input">
-            <label class="input__label" for="email">E-mailadres</label>
+            <label class="input__label" for="email">E-mailadres <span style="color: red;"><strong>*</strong></span></label>
             <input required="" type="email" id="email"  name="email" class="input__control input__control--text"
             {% if user.emails[0] is defined and user.emails[0] is not empty %}value="{{ user.emails[0].email }}" {% endif %}>
         </div>
         <div class="input">
-            <label class="input__label" for="email">Telefoonnummer</label>
+            <label class="input__label" for="email">Telefoonnummer <span style="color: red;"><strong>*</strong></span></label>
             <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
             {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
         </div>
