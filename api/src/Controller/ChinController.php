@@ -71,7 +71,7 @@ class ChinController extends AbstractController
     public function checkinAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = [];
-
+        $createCheckin = $request->request->get('createCheckin');
         // Fallback options of establishing
         if (!$code) {
             $code = $request->query->get('code');
@@ -91,7 +91,7 @@ class ChinController extends AbstractController
 
         // Alleen afgaan bij post EN ingelogde gebruiker
 
-        if ($request->isMethod('POST') && $this->getUser()) {
+        if ($request->isMethod('POST') && $this->getUser() && $createCheckin == 'true') {
 
             //update person
             $name = $request->request->get('name');
@@ -114,7 +114,7 @@ class ChinController extends AbstractController
             $checkIn = [];
             $checkIn['node'] = $variables['resource']['@id'];
             $checkIn['person'] = $person['@id'];
-            $checkIn['user'] = $user['@id'];
+            $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
