@@ -90,6 +90,7 @@ class ChinController extends AbstractController
         }
 
         // Alleen afgaan bij post EN ingelogde gebruiker
+<<<<<<< HEAD
         if ($request->isMethod('POST') && $this->getUser() ) {
 
             //update person
@@ -122,6 +123,10 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
             return $this->redirect($this->generateUrl('app_chin_user'));
+=======
+        if ($request->isMethod('POST') && $this->getUser()) {
+            // Check in object aanmaken en gebruiker doorsturen naar zijn checkin overzicht
+>>>>>>> development
         }
 
         return $variables;
