@@ -112,7 +112,6 @@ class ChinController extends AbstractController
 
             //create check-in
             $checkIn = [];
-            $checkIn['reference'] = $code;
             $checkIn['node'] = $variables['resource']['@id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['user'] = $user['@id'];
