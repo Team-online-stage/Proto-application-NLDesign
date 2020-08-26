@@ -90,8 +90,39 @@ class ChinController extends AbstractController
         }
 
         // Alleen afgaan bij post EN ingelogde gebruiker
+
         if ($request->isMethod('POST') && $this->getUser()) {
-            // Check in object aanmaken en gebruiker doorsturen naar zijn checkin overzicht
+
+            //update person
+            $name = $request->request->get('name');
+            $email = $request->request->get('email');
+            $tel = $request->request->get('tel');
+
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $person['@id']])['hydra:member'];
+            $user = $user[0];
+
+            $emailResource = $person['emails'][0];
+            $emailResource['email'] = $email;
+            $commonGroundService->updateResource($emailResource);
+
+            $telephoneResource = $person['telephones'][0];
+            $telephoneResource['telephone'] = $tel;
+            $commonGroundService->updateResource($telephoneResource);
+
+            $person['name'] = $name;
+            $person = $commonGroundService->updateResource($person);
+
+            //create check-in
+            $checkIn = [];
+            $checkIn['reference'] = $code;
+            $checkIn['node'] = $variables['resource']['@id'];
+            $checkIn['person'] = $person;
+            $checkIn['user'] = $user;
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
+            return $this->redirect($this->generateUrl('app_chin_user'));
         }
 
         return $variables;
