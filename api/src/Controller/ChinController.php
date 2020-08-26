@@ -89,6 +89,11 @@ class ChinController extends AbstractController
             }
         }
 
+        // Alleen afgaan bij post EN ingelogde gebruiker
+        if ($request->isMethod('POST') ) {
+            // Check in object aanmaken en gebruiker doorsturen naar zijn checkin overzicht
+        }
+
         return $variables;
     }
 }
