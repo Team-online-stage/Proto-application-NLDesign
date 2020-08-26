@@ -92,6 +92,7 @@
             <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
             {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
         </div>
+            <input type="hidden" name="node" value="{{ resource['@id'] }}">
         <button class="btn btn-block" name="createCheckin" value="true" title="indienen"> Indienen </button>
         {% endif %}
     </div><!-- /.content -->
