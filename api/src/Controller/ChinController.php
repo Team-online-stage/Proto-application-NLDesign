@@ -90,7 +90,7 @@ class ChinController extends AbstractController
         }
 
         // Alleen afgaan bij post EN ingelogde gebruiker
-        if ($request->isMethod('POST') ) {
+        if ($request->isMethod('POST') && $this->getUser()) {
             // Check in object aanmaken en gebruiker doorsturen naar zijn checkin overzicht
         }
 
