@@ -22,9 +22,9 @@
             <div class="col-xs-hidden">
                 {% if not app.user %}
                     <li class="nav__item">
+                        <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
+                                style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
                         {% include 'login/widgets/login_modal.html.twig' %}
-                        <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
-                        {%  include 'login/widgets/login_modal.html.twig' %}
                     </li>
                 {% else %}
                     {% if application.defaultConfiguration.configuration.userPage is defined %}
@@ -44,6 +44,9 @@
                 <ul style="float: right;">
                     {% if not app.user %}
                         <li class="nav__item">
+                            <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
+                                    style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}
+                            </a>
                             {% include 'login/widgets/login_modal.html.twig' %}
                         </li>
                     {% else %}
@@ -84,7 +87,7 @@
             <div class="top-nav__block top-nav__block--right" style="float: right;">
                 <button class="top-nav__block-item top-nav__block-item--collapse"
                         x-uno-collapse="" x-uno-collapse-target="collapse-menu-mobile"
-                onclick="adjustAnchors()">
+                        onclick="adjustAnchors()">
                     <i class="icon icon-hamburger" role="presentation"></i>
                     <span>Menu</span>
                 </button>
@@ -96,7 +99,7 @@
 </nav>
 
 
-<div class="col-xs-hidden"  id="stickyMobileNav">
+<div class="col-xs-hidden" id="stickyMobileNav">
     <div class="collapse collapse--nav mobile-nav-collapse">
         <div class="container collapse__details mobile-nav" id="collapse-menu-mobile">
             <ul class="list list--links list--chevrons">
@@ -143,9 +146,9 @@
 
     var anchors = document.getElementsByClassName('anchor');
 
-    function adjustAnchors(){
+    function adjustAnchors() {
 
-        if(adjustAnchor === false){
+        if (adjustAnchor === false) {
             for (var i = 0; i < anchors.length; i++) {
                 anchors[i].style.marginTop = '-192px';
             }
