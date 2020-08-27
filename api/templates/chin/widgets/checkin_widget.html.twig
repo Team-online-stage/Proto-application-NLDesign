@@ -35,67 +35,92 @@
 </div><!-- /.col -->
 {% else %}
 <div class="col-md-4 col-sm-12">
-    <div class="content">
-
-        <ul class="definition-list">
-            <li class="definition-list__item definition-list__item--horizontal">
-                <div class="definition-list__title">
-                    <span style="color: white">Locatie</span>
-                </div>
-                <div class="definition-list__description">
-                    <p>{{ resource.name }}</p>
-                </div>
-            </li>
-            <li class="definition-list__item definition-list__item--horizontal">
-                <div class="definition-list__title">
-                    <span style="color: white">Plaats</span>
-                </div>
-                <div class="definition-list__description">
-                    <p>{{ commonground_resource(resource.place).name }}</p>
-                </div>
-            </li>
-        </ul>
-        {% if not app.user %}
-            <a href="{{ path('app_user_idin') }}"
-               class="btn btn-block btn--idin">{{ 'identificeren'|trans|capitalize }}</a></p>
-         {#
-        <button clasbtn--digids="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
-        <div class="modal modal--backdrop" role="dialog" id="mySmallModal" tabindex="-1">
-            <section class="modal__content modal--height-s modal--width-s" role="document">
-                <header class="modal__title">
-                    <h1>Inloggen</h1>
-                    <button class="modal__close-button">
-                        <i class="icon icon-cross"></i>
-                        Sluit
-                    </button>
-                </header>
-                <div class="modal__body" tabindex="0" lang="en-US">
-                    <p> <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof"
-                           class="btn btn--digid btn-block">{{ 'digid'|trans|capitalize }}</a></p>
+        <div class="content">
+            <ul class="definition-list">
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Locatie</span>
                     </div>
-            </section>
-        </div>#}
+                    <div class="definition-list__description">
+                        <p style="color: #000000">{{ resource.name }}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Plaats</span>
+                    </div>
+                    <div class="definition-list__description">
+                        <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Adres</span>
+                    </div>
+                    <div class="definition-list__description">
+                        {% set place = commonground_resource(resource.place) %}
+                        {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                        <p style="color: #000000">{% if adres is defined and adres is not empty %}{{ adres.straat }} {{ adres.huisnummer }}{% endif %}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Organisatie</span>
+                    </div>
+                    <div class="definition-list__description">
+                        <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Datum</span>
+                    </div>
+                    <div class="definition-list__description">
+                        <p style="color: #000000">{{ "now"|date("H:i d-m-Y", "Europe/Amsterdam") }}</p>
+                    </div>
+                </li>
+            </ul>
+            {% if not app.user %}
+                <a href="{{ path('app_user_idin') }}"
+                   class="btn btn-block btn--idin">{{ 'check-in'|trans|capitalize }}</a></p>
+                {#
+               <button clasbtn--digids="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
+               <div class="modal modal--backdrop" role="dialog" id="mySmallModal" tabindex="-1">
+                   <section class="modal__content modal--height-s modal--width-s" role="document">
+                       <header class="modal__title">
+                           <h1>Inloggen</h1>
+                           <button class="modal__close-button">
+                               <i class="icon icon-cross"></i>
+                               Sluit
+                           </button>
+                       </header>
+                       <div class="modal__body" tabindex="0" lang="en-US">
+                           <p> <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof"
+                                  class="btn btn--digid btn-block">{{ 'digid'|trans|capitalize }}</a></p>
+                           </div>
+                   </section>
+               </div>#}
 
-        {% else %}
-            {% set user = commonground_resource(app.user.person) %}
-        <div class="input">
-            <label class="input__label" for="email">Naam <span style="color: red;"><strong>*</strong></span></label>
-            <input required="" type="text" id="name"  name="name" class="input__control input__control--text"
-            value="{{ user.name }}">
-        </div>
-        <div class="input">
-            <label class="input__label" for="email">E-mailadres <span style="color: red;"><strong>*</strong></span></label>
-            <input required="" type="email" id="email"  name="email" class="input__control input__control--text"
-            {% if user.emails[0] is defined and user.emails[0] is not empty %}value="{{ user.emails[0].email }}" {% endif %}>
-        </div>
-        <div class="input">
-            <label class="input__label" for="email">Telefoonnummer <span style="color: red;"><strong>*</strong></span></label>
-            <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
-            {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
-        </div>
-            <input type="hidden" name="node" value="{{ resource['@id'] }}">
-        <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> Indienen </button>
-        {% endif %}
-    </div><!-- /.content -->
-</div><!-- /.col -->
+            {% else %}
+                {% set user = commonground_resource(app.user.person) %}
+                <div class="input">
+                    <label class="input__label" for="email">Naam <span style="color: red;"><strong>*</strong></span></label>
+                    <input required="" type="text" id="name"  name="name" class="input__control input__control--text"
+                           value="{{ user.name }}">
+                </div>
+                <div class="input">
+                    <label class="input__label" for="email">E-mailadres <span style="color: red;"><strong>*</strong></span></label>
+                    <input required="" type="email" id="email"  name="email" class="input__control input__control--text"
+                           {% if user.emails[0] is defined and user.emails[0] is not empty %}value="{{ user.emails[0].email }}" {% endif %}>
+                </div>
+                <div class="input">
+                    <label class="input__label" for="email">Telefoonnummer <span style="color: red;"><strong>*</strong></span></label>
+                    <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
+                        {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
+                </div>
+                <input type="hidden" name="node" value="{{ resource['@id'] }}">
+                <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> {{ 'check-in'|trans|capitalize }} </button>
+            {% endif %}
+        </div><!-- /.content -->
+    </div><!-- /.col -->
 {% endif %}

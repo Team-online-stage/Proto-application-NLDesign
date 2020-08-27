@@ -681,6 +681,26 @@
         <source>create</source>
         <target>aanmaken</target>
       </trans-unit>
+      <trans-unit id="b1VGMZ5" resname="check-in date">
+        <source>check-in date</source>
+        <target>incheck datum</target>
+      </trans-unit>
+      <trans-unit id="Wyd8tmh" resname="rsin">
+        <source>rsin</source>
+        <target>rsin</target>
+      </trans-unit>
+      <trans-unit id="G9o1H6b" resname="kvk">
+        <source>kvk</source>
+        <target>kvk</target>
+      </trans-unit>
+      <trans-unit id="oII8_sC" resname="check-in">
+        <source>check-in</source>
+        <target>inchecken</target>
+      </trans-unit>
+      <trans-unit id="OHb1EzW" resname="view check-in">
+        <source>view check-in</source>
+        <target>check-in bekijken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
