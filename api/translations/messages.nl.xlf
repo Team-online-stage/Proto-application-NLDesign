@@ -689,6 +689,10 @@
         <source>kvk</source>
         <target>kvk</target>
       </trans-unit>
+      <trans-unit id="oII8_sC" resname="check-in">
+        <source>check-in</source>
+        <target>inchecken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

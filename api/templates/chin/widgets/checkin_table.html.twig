@@ -20,7 +20,7 @@
                             <td>{{ commonground_resource(checkin.node.organization).name|capitalize }}</td>
                             <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
                             <td>{{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
-                            <td>{{ checkin.dateCreated|date_modify("+12 day")|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
+                            <td>{{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
                         </tr>
                         {% endfor %}
                         </tbody>
