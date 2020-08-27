@@ -7,6 +7,7 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use function GuzzleHttp\Promise\all;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -68,7 +69,7 @@ class ChinController extends AbstractController
      * @Route("/checkin/{code}")
      * @Template
      */
-    public function checkinAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function checkinAction(Session $session, $code = null, Request $request,FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = [];
         $createCheckin = $request->request->get('createCheckin');
@@ -79,15 +80,20 @@ class ChinController extends AbstractController
         if (!$code) {
             $code = $request->request->get('code');
         }
+        if (!$code) {
+            $code = $session->get('code');
+        }
 
         if ($code) {
+            $session->set('code', $code);
             $variables['code'] = $code;
             $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
-
             if (count($variables['resources']) > 0) {
                 $variables['resource'] = $variables['resources'][0];
             }
         }
+
+
 
         // Alleen afgaan bij post EN ingelogde gebruiker
 
@@ -118,7 +124,7 @@ class ChinController extends AbstractController
             $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
-
+            $flash->add('success', 'U bent succesvol ingecheckt');
             return $this->redirect($this->generateUrl('app_chin_user'));
         }
 
