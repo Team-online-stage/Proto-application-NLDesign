@@ -55,6 +55,16 @@
                 </li>
                 <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title">
+                        <span>Adres</span>
+                    </div>
+                    <div class="definition-list__description">
+                        {% set place = commonground_resource(resource.place) %}
+                        {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                        <p style="color: #000000">{% if adres is defined and adres is not empty %}{{ adres.straat }} {{ adres.huisnummer }}{% endif %}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
                         <span>Organisatie</span>
                     </div>
                     <div class="definition-list__description">
@@ -72,7 +82,7 @@
             </ul>
             {% if not app.user %}
                 <a href="{{ path('app_user_idin') }}"
-                   class="btn btn-block btn--idin">{{ 'identificeren'|trans|capitalize }}</a></p>
+                   class="btn btn-block btn--idin">{{ 'check-in'|trans|capitalize }}</a></p>
                 {#
                <button clasbtn--digids="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
                <div class="modal modal--backdrop" role="dialog" id="mySmallModal" tabindex="-1">
@@ -109,7 +119,7 @@
                         {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
                 </div>
                 <input type="hidden" name="node" value="{{ resource['@id'] }}">
-                <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> Indienen </button>
+                <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> {{ 'check-in'|trans|capitalize }} </button>
             {% endif %}
         </div><!-- /.content -->
     </div><!-- /.col -->
