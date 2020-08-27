@@ -23,7 +23,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class WrcController extends AbstractController
 {
-
     /**
      * @Route("/organization")
      * @Template
@@ -34,7 +33,6 @@ class WrcController extends AbstractController
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
-
             $resource = $request->request->all();
             $resource['@id'] = null;
             $resource['id'] = 'new';
