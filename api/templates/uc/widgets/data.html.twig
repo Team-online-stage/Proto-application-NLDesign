@@ -12,6 +12,18 @@
                 <p>{{ user.naam.voornamen }}</p>
             </div>
         </li>
+    {% elseif user.givenName is defined and user.givenName is not empty %}
+        <li class="definition-list__item definition-list__item--horizontal">
+            {% if application.defaultConfiguration.configuration.nameChangeRequest is defined %}
+                <a class="definition-list__edit-button" href="{{ path('app_ptc_process_stage', {id: application.defaultConfiguration.configuration.nameChangeRequest, stage:'start'}) }}">{{ 'edit'|trans|capitalize }}</a>
+            {% endif %}
+            <div class="definition-list__title">
+                {{ 'first name'|trans|capitalize }}
+            </div>
+            <div class="definition-list__description">
+                <p>{{ user.givenName }}</p>
+            </div>
+        </li>
     {% endif %}
     {% if user.naam.geslachtsnaam is defined and user.naam.geslachtsnaam is not empty %}
         <li class="definition-list__item definition-list__item--horizontal">
@@ -23,6 +35,18 @@
             </div>
             <div class="definition-list__description">
                 <p>{{ user.naam.geslachtsnaam }}</p>
+            </div>
+        </li>
+    {% elseif user.familyName is defined and user.familyName is not empty %}
+        <li class="definition-list__item definition-list__item--horizontal">
+            {% if application.defaultConfiguration.configuration.familyChangeRequest is defined %}
+                <a class="definition-list__edit-button" href="{{ path('app_ptc_process_stage', {id: application.defaultConfiguration.configuration.familyChangeRequest, stage:'start'}) }}">{{ 'edit'|trans|capitalize }}</a>
+            {% endif %}
+            <div class="definition-list__title">
+                {{ 'last name'|trans|capitalize }}
+            </div>
+            <div class="definition-list__description">
+                <p>{{ user.familyName }}</p>
             </div>
         </li>
     {% endif %}
@@ -69,6 +93,18 @@
             </p>
         </div>
     </li>
+    {% elseif user.addresses[0].address is defined %}
+        <li class="definition-list__item definition-list__item--horizontal">
+            {% if application.defaultConfiguration.configuration.moveRequest is defined %}
+                <a class="definition-list__edit-button" href="{{ path('app_ptc_process_stage', {id: application.defaultConfiguration.configuration.moveRequest, stage:'start'}) }}">{{ 'edit'|trans|capitalize }}</a>
+            {% endif %}
+            <div class="definition-list__title">
+                {{ 'adres'|trans|capitalize }}
+            </div>
+            <div class="definition-list__description">
+                <p>{{ user.addresses[0].address }}</p>
+            </div>
+        </li>
     {% endif %}
     {% if app.user.organization is defined and app.user.organization is not empty %}
         <li class="definition-list__item definition-list__item--horizontal">
@@ -76,6 +112,9 @@
                 {{ 'business'|trans|capitalize }}
             </div>
             <div id="business" class="definition-list__description">
+                {% if commonground_resource(app.user.organization).name is defined %}
+                    <p>{{ commonground_resource(app.user.organization).name }}</p>
+                {% endif %}
             </div>
         </li>
 
