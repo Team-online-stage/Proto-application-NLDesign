@@ -1,7 +1,7 @@
-{% extends "content.html.twig" %}
+{# templates/home/index.html.twig #}
 
+{% extends 'base.html.twig' %}
 {% block container %}
-
     <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
         <div style="background-color: #FFFFFF" class="row">
             <div class="container">
@@ -17,13 +17,13 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="content">
-                    <h2>Wat is checkin?</h2>
+                    <h2><a style="margin-top: -80px; position: absolute" id="wat"></a> Wat is checkin?</h2>
                     <p>Checkin is de veilige manier om je gegevens achter te laten bij de horeca, we slaan gegevens slechts tijden op.</p>
                 </div><!-- /.content -->
             </div><!-- /.col -->
             <div class="col-md-6 col-sm-12">
                 <div class="content">
-                    <h2>Hoe werkt checkin?</h2>
+                    <h2><a style="margin-top: -80px; position: absolute" id="hoe"></a>Hoe werkt checkin?</h2>
                     <p>Als je via checkin incheckt bij een horeca gelegenheid ontvangt deze gelegenheid alleen een token, je contact gegevens zijn alleen inzochtenlijk voor het platform en worden na twee weken automatisch verwijder.</p>
                 </div><!-- /.content -->
             </div><!-- /.col -->
@@ -36,7 +36,7 @@
             </div><!-- /.col -->
             <div class="col-md-6 col-sm-12">
                 <div class="content">
-                    <h2>Wie zitten er achter checkin?</h2>
+                    <h2><a style="margin-top: -80px; position: absolute" id="wie"></a>Wie zitten er achter checkin?</h2>
                     <p>Checkin is een samenerwerking verband van de Rabo Bank en Konlijklijke Horeca Nederland, uitvoering en realisatie word begeleid door Conduction</p>
                 </div><!-- /.content -->
             </div><!-- /.col -->
