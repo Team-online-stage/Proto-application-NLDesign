@@ -19,31 +19,27 @@
         </div><!-- /.content -->
     </div><!-- /.col -->
     #}
-<div class="col-md-4 col-sm-10" >
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-10">
     <div class="content">
         <div class="input input--search {% if code is defined %}input--invalid{% endif %}">
             <label class="input__label" for="search">Code</label>
             {% if code is defined %}<div class="input__error">Code niet gevonden</div>{% endif %}
             <div class="input__control-group">
-                <input {% if code is defined %}value="{{ code }}" {% endif%}type="search" id="code" name="code" class="input__control input__control--m input__control--search" placeholder="code">
-                <button class="btn" title="incheken"> Inchecken </button>
+                <input {% if code is defined %}value="{{ code }}" {% endif%} type="search" id="code" name="code" class="input__control input__control--m input__control--search" placeholder="code">
+                <button class="btn" style="margin-left: 10px;" title="incheken"> Inchecken </button>
+                <button class="btn btn--icon" style="margin-left: 10px;" title="scan"><i class="icon icon-magnifier"></i></button>
             </div>
         </div>
     </div><!-- /.content -->
 </div><!-- /.col -->
-    <div class="col-md-4 col-sm-2" >
-        <div class="content">
-            <button class="btn btn--icon" title="scan"><i class="icon icon-magnifier"></i></button>
-        </div><!-- /.content -->
-    </div><!-- /.col -->
 {% else %}
-<div class="col-md-4 col-sm-12" >
+<div class="col-md-4 col-sm-12">
     <div class="content">
 
         <ul class="definition-list">
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title">
-                    Locatie
+                    <span style="color: white">Locatie</span>
                 </div>
                 <div class="definition-list__description">
                     <p>{{ resource.name }}</p>
@@ -51,7 +47,7 @@
             </li>
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title">
-                    Plaats
+                    <span style="color: white">Plaats</span>
                 </div>
                 <div class="definition-list__description">
                     <p>{{ commonground_resource(resource.place).name }}</p>
@@ -59,10 +55,10 @@
             </li>
         </ul>
         {% if not app.user %}
-            <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
-               class="btn btn--digid btn-block">{{ 'identificeren'|trans|capitalize }}</a></p>
+            <a href="{{ path('app_user_idin') }}"
+               class="btn btn-block btn--idin">{{ 'identificeren'|trans|capitalize }}</a></p>
          {#
-        <button class="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
+        <button clasbtn--digids="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
         <div class="modal modal--backdrop" role="dialog" id="mySmallModal" tabindex="-1">
             <section class="modal__content modal--height-s modal--width-s" role="document">
                 <header class="modal__title">
@@ -80,19 +76,24 @@
         </div>#}
 
         {% else %}
+            {% set user = commonground_resource(app.user.person) %}
         <div class="input">
-            <label class="input__label" for="email">Naam</label>
-            <input required="" type="text" id="name"  name="name" class="input__control input__control--text">
+            <label class="input__label" for="email">Naam <span style="color: red;"><strong>*</strong></span></label>
+            <input required="" type="text" id="name"  name="name" class="input__control input__control--text"
+            value="{{ user.name }}">
         </div>
         <div class="input">
-            <label class="input__label" for="email">E-mailadres</label>
-            <input required="" type="email" id="email"  name="email" class="input__control input__control--text">
+            <label class="input__label" for="email">E-mailadres <span style="color: red;"><strong>*</strong></span></label>
+            <input required="" type="email" id="email"  name="email" class="input__control input__control--text"
+            {% if user.emails[0] is defined and user.emails[0] is not empty %}value="{{ user.emails[0].email }}" {% endif %}>
         </div>
         <div class="input">
-            <label class="input__label" for="email">Telefoonnummer</label>
-            <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text">
+            <label class="input__label" for="email">Telefoonnummer <span style="color: red;"><strong>*</strong></span></label>
+            <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
+            {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
         </div>
-        <button class="btn btn-block" title="indienen"> Indienen </button>
+            <input type="hidden" name="node" value="{{ resource['@id'] }}">
+        <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> Indienen </button>
         {% endif %}
     </div><!-- /.content -->
 </div><!-- /.col -->

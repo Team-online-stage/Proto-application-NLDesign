@@ -71,7 +71,7 @@ class ChinController extends AbstractController
     public function checkinAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = [];
-
+        $createCheckin = $request->request->get('createCheckin');
         // Fallback options of establishing
         if (!$code) {
             $code = $request->query->get('code');
@@ -90,8 +90,36 @@ class ChinController extends AbstractController
         }
 
         // Alleen afgaan bij post EN ingelogde gebruiker
-        if ($request->isMethod('POST') ) {
-            // Check in object aanmaken en gebruiker doorsturen naar zijn checkin overzicht
+
+        if ($request->isMethod('POST') && $this->getUser() && $createCheckin == 'true') {
+
+            //update person
+            $node = $request->request->get('node');
+            $name = $request->request->get('name');
+            $email = $request->request->get('email');
+            $tel = $request->request->get('tel');
+
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $person['@id']])['hydra:member'];
+            $user = $user[0];
+
+            $emailResource = $person['emails'][0];
+            $emailResource['email'] = $email;
+            $commonGroundService->updateResource($emailResource);
+
+            $telephoneResource = $person['telephones'][0];
+            $telephoneResource['telephone'] = $tel;
+            $commonGroundService->updateResource($telephoneResource);
+
+            //create check-in
+            $checkIn = [];
+            $checkIn['node'] = $node;
+            $checkIn['person'] = $person['@id'];
+            $checkIn['userUrl'] = $user['@id'];
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
+            return $this->redirect($this->generateUrl('app_chin_user'));
         }
 
         return $variables;

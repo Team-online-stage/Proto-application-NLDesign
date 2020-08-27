@@ -649,6 +649,34 @@
         <source>pay</source>
         <target>betalen</target>
       </trans-unit>
+      <trans-unit id="bCoDPGD" resname="iDin">
+        <source>iDin</source>
+        <target>iDin</target>
+      </trans-unit>
+      <trans-unit id="MQ.yABS" resname="close">
+        <source>close</source>
+        <target>sluit</target>
+      </trans-unit>
+      <trans-unit id="TqgR6Pn" resname="check-ins">
+        <source>check-ins</source>
+        <target>check-ins</target>
+      </trans-unit>
+      <trans-unit id="_KZlqXd" resname="organizations">
+        <source>organizations</source>
+        <target>organisaties</target>
+      </trans-unit>
+      <trans-unit id="EVB6Di9" resname="new">
+        <source>new</source>
+        <target>nieuw</target>
+      </trans-unit>
+      <trans-unit id="rLIFg9y" resname="no organizations">
+        <source>no organizations</source>
+        <target>geen organisaties beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="_ohHsMM" resname="create">
+        <source>create</source>
+        <target>aanmaken</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
