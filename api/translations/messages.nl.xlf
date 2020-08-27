@@ -649,6 +649,10 @@
         <source>pay</source>
         <target>betalen</target>
       </trans-unit>
+      <trans-unit id="089Hb2N" resname="subscribe">
+        <source>subscribe</source>
+        <target>abboneren</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
