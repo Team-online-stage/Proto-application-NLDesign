@@ -2,15 +2,19 @@
 
 <div class="modal modal--backdrop" role="dialog" id="myModal" tabindex="-1" aria-describedby="modal-description3">
     <section class="modal__content" role="document">
-        <header class="modal__title">
-            <h1>{{ 'login'|trans|capitalize }}</h1>
-            <button class="modal__close-button">
-                <i class="icon icon-cross"></i>
-                {{ 'close'|trans|capitalize }}
-            </button>
-        </header>
-
         <div class="modal__body" tabindex="0" lang="en-US">
+            <div class="row" style="margin-top: 20px;">
+                <div class="col-xs-6">
+                    <h1>{{ 'login'|trans|capitalize }}</h1>
+                </div>
+                <div class="col-xs-6">
+                    <button style="float: right;" class="modal__close-button">
+                        <i class="icon icon-cross"></i>
+                        {{ 'close'|trans|capitalize }}
+                    </button>
+                </div>
+            </div>
+
             <div class="skiplink-target content" id="main-content">
 
                 {% if application['defaultConfiguration']['configuration']['login']['digid'] is defined and application['defaultConfiguration']['configuration']['login']['digid'] %}
