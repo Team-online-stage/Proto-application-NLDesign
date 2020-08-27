@@ -32,7 +32,7 @@ class ChinController extends AbstractController
     public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -124,7 +124,7 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
             $flash->add('success', 'U bent succesvol ingecheckt');
 
-            return $this->redirect($this->generateUrl('app_chin_user'));
+            return $this->redirect($this->generateUrl('app_chin_user',array('showCheckin'=>'true')));
         }
 
         return $variables;
