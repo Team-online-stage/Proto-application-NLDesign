@@ -51,7 +51,7 @@
                 <a href="{{ path('app_arc_user') }}">{{ 'events'|trans|capitalize }}</a>
             </li>
         {%  endif %}
-        {% if commonground_component_health("chin") %}
+        {% if commonground_component_health("chin") and 'scope.chin.checkins.read' in app.user.roles %}
             <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_user' %}sidenav__item--active{% endif %}">
                 <a href="{{ path('app_chin_user') }}">{{ 'check-ins'|trans|capitalize }}</a>
             </li>
