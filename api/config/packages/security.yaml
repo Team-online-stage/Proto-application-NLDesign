@@ -31,6 +31,7 @@ security:
                     - Conduction\CommonGroundBundle\Security\CommongroundEherkenningAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundIdinAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate
@@ -42,6 +43,4 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/digispoof, roles: ROLE_USER }
-        - { path: ^/eherkenning, roles: ROLE_USER }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

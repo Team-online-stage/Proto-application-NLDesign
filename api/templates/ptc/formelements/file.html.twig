@@ -17,6 +17,7 @@
             </li>
         </ul>
     {% endif %}
+    <div class="input input--horizontal {%if property.valid is defined and not property.valid %}input--invalid{% endif %}">
     <label>
     <div>
         <label class="input__label" for="{{ property.id }}">{{ property.title }}</label>
@@ -33,18 +34,20 @@
             <input type="file" id="{{ property.id }}" class="input__control--file" name="request[properties][{{ property.name }}]" aria-describedby="input-upload-hint">
             <span class="btn" role="button">Bestand uploaden</span> <span id="fileName"></span>
         </label>
+    </div>
     {% endif %}
     {% if request['properties'][property.name] is defined and  request['properties'][property.name] is not empty %}
         <label class="input__label" for="{{ property.id }}">{{ 'uploaded files'|trans|capitalize }}</label>
         <ul class="list list--files">
         {% if request['properties'][property.name] is iterable %}
         {% else %}
+            {% set file = commonground_resource(request['properties'][property.name]) %}
             <li class="file">
                 <i class="file__icon icon icon-document"></i>
                 <div class="file__data">
                     <div class="file__filename">
-                        <a href="{{ path('app_drc_download',{'resource':request['properties'][property.name]|url_encode})}}">
-                            <strong class="file__title break-all">test</strong>
+                        <a href="{{ path('app_drc_download',{'resource':file.id})}}">
+                            <strong class="file__title break-all">{{ file.bestandsnaam }}</strong>
                         </a>
                     </div>
                 </div>

@@ -1,8 +1,9 @@
 <div class="content-background">
     <div class="content">
+
 {% if stage.sections is defined and stage.sections is not empty %}
 {% for section in stage.sections|sort((a, b) => a.orderNumber <=> b.orderNumber) %}
-            <h2>{{ section.name|capitalize }}</h2>
+            <h2>{{ section.name|capitalize }} {% if section.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this section'|trans|capitalize }}"></span>{% endif %}</h2>
             <p>{{ section.description|capitalize }}</p>
 
 
@@ -82,9 +83,9 @@
 
 <div class="row">
     <div class="col-md-6" >
-        <button class="btn btn--block" name="submit">{% if not app.user %}{{ 'continue'|trans|capitalize }}{% else %}{{ 'next step'|trans|capitalize }}{% endif %}</button>
+        <a class="btn btn--primary btn--block" href=" {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}{{ path('app_ptc_process_stage',{id: process.id, stage: stage.previous.slug}) }}{% else %}{{ path('app_ptc_process',{id: process.id}) }}{% endif %}">{{ 'previous step'|trans|capitalize }}</a>
     </div>
     <div class="col-md-6" >
-        <a class="btn btn--primary btn--block" href=" {% if stage.previous is defined and stage.previous is not null and stage.previous != false %}{{ path('app_ptc_process_stage',{id: process.id, stage: stage.previous.slug}) }}{% else %}{{ path('app_ptc_process',{id: process.id}) }}{% endif %}">{{ 'previous step'|trans|capitalize }}</a>
+        <button class="btn btn--block" name="submit">{% if not app.user %}{{ 'continue'|trans|capitalize }}{% else %}{{ 'next step'|trans|capitalize }}{% endif %}</button>
     </div>
 </div>

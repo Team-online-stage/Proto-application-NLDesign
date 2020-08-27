@@ -16,16 +16,16 @@
                         </p>
                     </div>
                 </li>
-                {% if request.properties is defined and request.properties is not empty %}
-            {% for key, property in request.properties %}
-                <li class="definition-list__item definition-list__item--horizontal">
-
+                {% if request.requestType is defined and request.requestType is not empty %}
+                {% for prop in commonground_resource(request.requestType).properties %}
+                    <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title">
-                        {{ key|capitalize|replace({"_":" "}) }}
+                        {{ prop.name|capitalize|replace({"_":" "}) }}
                     </div>
+                        <div class="definition-list__description">
+                    {% for key, property in request.properties %}
+                        {% if key == prop.name %}
 
-                    <div class="definition-list__description">
-                        <p>
                             {% if property is iterable %}
                                 {% for key, value in property %}
                                     {% if value is iterable %}
@@ -93,11 +93,11 @@
                             {% endif %}
                                 {# endif #}
                             {% endif %}
-                        </p>
                     </div>
-
+                        {% endif %}
+                    {% endfor %}
                 </li>
-            {% endfor %}
+                {% endfor %}
                 {% endif %}
             </ul>
         {% endif %}

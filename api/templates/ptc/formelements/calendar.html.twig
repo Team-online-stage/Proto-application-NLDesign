@@ -1,9 +1,11 @@
+<label class="input__label" for="{{ property.id }}">{{ property.title }}</label>
+{%  if property.description %}<span class="input__hint" id="{{ property.id }}_name">{{ property.description }}</span>{% endif %}
 <div></div>
 <style>
-    .btnStyle:focus{
+    .activeBtn{
         background-color: #f9e11e !important;
         color: black;
-        border: none !important;
+        border: 2px solid black !important;
     }
 </style>
 <table class="table table--small-font">
@@ -131,7 +133,7 @@ value="">
 
             button.className = 'btnStyle button-'+j.toString();
             button.addEventListener('click', function(){
-                selectDate(button.value, button.name);
+                selectDate(button.value, button.name, button);
             });
             td.appendChild(button);
             days[i].appendChild(td);
@@ -161,13 +163,14 @@ value="">
                     buttons[j].setAttribute('disabled', 'disabled');
                 }
             }
-            console.log(date.getDay());
             weeks[i].innerHTML= date.getDate() + ' ' + months[date.getMonth()];
             date.setDate(date.getDate() + 1);
         }
     }
 
-    function selectDate(timeFrame, date){
+    function selectDate(timeFrame, date, button){
+        removeClass('activeBtn');
+        button.classList.add('activeBtn');
         if(date !== ''){
             let testData = document.getElementById('testData');
             let time = timeFrame.split('-');
@@ -181,6 +184,13 @@ value="">
         let info = document.getElementById('weekSelect');
 
         weekSelector(info);
+    }
+
+    function removeClass(className) {
+        let buttons = document.getElementsByClassName('btnStyle');
+        for(let i = 0; i < buttons.length; i++){
+            buttons[i].classList.remove(className);
+        }
     }
 
     firstStart();

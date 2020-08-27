@@ -71,7 +71,7 @@ class PtcController extends AbstractController
      * @Route("/process/{id}/{stage}", name="app_ptc_process_stage")
      * @Template
      */
-    public function processAction(Session $session, $id, $stage = false, Request $request, CommonGroundService $commonGroundService, VrcService  $vrcService, ParameterBagInterface $params)
+    public function processAction(Session $session, $id, $stage = false, Request $request, CommonGroundService $commonGroundService, VrcService $vrcService, ParameterBagInterface $params)
     {
         $variables = [];
         $variables['slug'] = $stage;
@@ -93,13 +93,11 @@ class PtcController extends AbstractController
             $session->remove('request');
         }
 
-
-        $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'],'properties'=>[]]);
+        $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
 
         // Let load the request on the procces and validate it
         $variables['process'] = $vrcService->fillProcess($variables['process'], $variables['request']);
         //var_dump($variables['process']);
-
 
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
