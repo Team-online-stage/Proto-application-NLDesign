@@ -124,7 +124,7 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
             $flash->add('success', 'U bent succesvol ingecheckt');
 
-            return $this->redirect($this->generateUrl('app_chin_user',array('showCheckin'=>'true')));
+            return $this->redirect($this->generateUrl('app_chin_user', ['showCheckin'=>'true']));
         }
 
         return $variables;
