@@ -92,6 +92,7 @@
     <link rel="stylesheet" href="/uno/components/section/inner-section.css">
     <link rel="stylesheet" href="/uno/components/table/table.css">
 
+{#  Image Slider  #}
     <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
     {# Add the new slick-theme.css if you want the default styling #}
     <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
@@ -110,6 +111,12 @@
     <script src="/uno/components/memo/memo.js"></script>
     <script src="/uno/components/tooltip/tooltip.js"></script>
 
+
+{#  QR scanner      #}
+    <script src="/html5-qrcode/minified/html5-qrcode.min.js"></script>
+    <script src="https://raw.githubusercontent.com/mebjas/html5-qrcode/master/minified/html5-qrcode.min.js"></script>
+
+{#  Slick image slider  #}
     <script type="text/javascript" src="slick/slick.min.js"></script>
 
     <script>
@@ -231,6 +238,10 @@
         /* NL Design overwrites */
         .footer {
             background: var(--footer);
+            color: var(--footer-color) !important;
+        }
+
+        .footer a {
             color: var(--footer-color) !important;
         }
 
