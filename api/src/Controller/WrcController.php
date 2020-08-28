@@ -34,8 +34,6 @@ class WrcController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
-            $resource['@id'] = null;
-            $resource['id'] = 'new';
 
             $commonGroundService->saveResource($resource, (['component'=>'wrc', 'type'=>'organizations']));
 
