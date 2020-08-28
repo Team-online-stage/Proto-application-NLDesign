@@ -138,26 +138,45 @@
             new module.Collapse(collapses.item(i));
         }
     });
-
-    // Code for combining anchors with sticky
-    var adjustAnchor = Boolean(false)
-
-    var anchors = document.getElementsByClassName('anchor');
-
-    function adjustAnchors() {
-
-        if (adjustAnchor === false) {
-            for (var i = 0; i < anchors.length; i++) {
-                anchors[i].style.marginTop = '-192px';
-            }
-
-            adjustAnchor = true
-        } else {
-            for (var i = 0; i < anchors.length; i++) {
-                anchors[i].style.marginTop = '-80px';
-            }
-            adjustAnchor = false
-        }
-    }
 </script>
+
+{% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
+
+    <script>
+        // Code for combining anchors with sticky
+        var adjustAnchor = Boolean(false)
+
+        var anchors = document.getElementsByClassName('anchor');
+
+        function adjustAnchors() {
+
+            if (adjustAnchor === false) {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-182px';
+                }
+
+                adjustAnchor = true
+            } else {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-70px';
+                }
+                adjustAnchor = false
+            }
+        }
+
+        $(window).resize(function () {
+            if ($(window).width() > 544) {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-70px';
+                }
+            } else if (adjustAnchor === true) {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-182px';
+                }
+
+            }
+        });
+    </script>
+
+{% endif %}
 
