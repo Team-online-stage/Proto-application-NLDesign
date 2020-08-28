@@ -24,7 +24,6 @@
                     <li class="nav__item">
                         <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
                                 style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
-                        {% include 'login/widgets/login_modal.html.twig' %}
                     </li>
                 {% else %}
                     {% if application.defaultConfiguration.configuration.userPage is defined %}
@@ -47,7 +46,6 @@
                             <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
                                     style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}
                             </a>
-                            {% include 'login/widgets/login_modal.html.twig' %}
                         </li>
                     {% else %}
                         {% if application.defaultConfiguration.configuration.userPage is defined %}
