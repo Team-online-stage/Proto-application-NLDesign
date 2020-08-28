@@ -56,7 +56,11 @@
 {% if app.request.query.get('showCheckin') %}
 <script>
     $(window).on('load',function(){
-        openModal0();
+        setTimeout(
+            function()
+            {
+                openModal0();
+            }, 1000);
     });
 </script>
 {% endif %}
