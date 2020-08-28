@@ -36,15 +36,15 @@ class LcController extends AbstractController
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
-            if(isset($resource['publicAccess'])){
+            if (isset($resource['publicAccess'])) {
                 $resource['publicAccess'] = true;
-            }else{
+            } else {
                 $resource['publicAccess'] = false;
             }
 
-            if(isset($resource['smokingAllowed'])){
+            if (isset($resource['smokingAllowed'])) {
                 $resource['smokingAllowed'] = true;
-            }else{
+            } else {
                 $resource['smokingAllowed'] = false;
             }
 
