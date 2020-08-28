@@ -210,7 +210,8 @@
 
 <div class="row" >
     <div class="col-md-12" >
-        <a class="btn btn--block" href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
+        <a class="btn btn--block" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
+        {%  include 'login/widgets/login_modal.html.twig' %}
     </div>
 </div>
 {% endif %}
