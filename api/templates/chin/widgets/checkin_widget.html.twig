@@ -125,27 +125,15 @@
                 </div>
 
                 <div class="input__group input__group--checkbox">
-                    <label class="input__label input__label--checkbox" for="chkbx1">Ik ga accoord met de opslag van mijn gegevens voor 14 dagen en verstrekking daarvan aan de GGD indien nodig</label>
-                    <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" required="">
+                    <label class="input__label input__label--checkbox" for="corona_check">Ik en mijn huisgenoten voldoen aan de vragen van de <a href="https://cdn.khn.nl/media/Corona/Documenten/20200708_Gezondheidscheck_vragen_NL.pdf" target="_blank">corona vragenlijst horeca</label>a></label>
+                    <input name="hobbies[]" type="checkbox" name="corona_check" id="corona_check" class="input__control input__control--checkbox" required="">
                 </div>
 
-                <fieldset class="input">
-                    <legend class="input__legend">De volgende vragen moeten we u stellen, maar worden niet opgeslagen. De antwoorden hebben ook geen effect op uw check maar wanneer je een van bovenstaande vragen met ‘ja’ beantwoordt, kunnen we je helaas niet toelaten in ons bedrijf of op ons terras.</legend>
+                <div class="input__group input__group--checkbox">
+                    <label class="input__label input__label--checkbox" for="data_verwerking">Ik ga akkoord met de opslag van mijn gegevens voor 14 dagen en verstrekking daarvan aan de GGD indien nodig</label>
+                    <input name="hobbies[]" type="checkbox" name="data_verwerking" id="data_verwerking" class="input__control input__control--checkbox" required="">
+                </div>
 
-                    <ul class="input__group-list">
-                        <li class="input__group input__group--checkbox">
-                            <input type="checkbox" id="Water" class="input__control input__control--checkbox"><label for="Water" class="input__label input__label--checkbox">Ik mag niet toetreden tot het terras omdat </label>
-                            <ul>
-                                <li><input type="checkbox" class="input__control input__control--checkbox" id="option1"><label for="option1" class="input__label input__label--checkbox"> Heb je een of meerdere van deze klachten (Hoesten, Neusverkoudheid ,Koorts vanaf 38 graden of Benauwdheidsklachten) gehad in de afgelopen 24 uur?</label></li>
-                                <li><input type="checkbox" class="input__control input__control--checkbox" id="option2"><label for="option2" class="input__label input__label--checkbox"> Wanneer je een van bovenstaande vragen met ‘ja’ beantwoordt, kunnen we je helaas niet toelaten in ons bedrijf of op ons terras.Bij aankomst van een gezelschap van 3 personen of meer, stellen wij de volgende controle vraag: • Er is sprake van een ‘gezamenlijke huishouding’ wanneer partners (getrouwd, geregistreerd partnerschap of anders) en kinderen, ouders en grootouders op hetzelfde adres staan ingeschreven. Vormen jullie een gezamenlijke huishouding?Als het antwoord ‘nee’ is dan zijn jullie welkom, maar moeten jullie wel op 1,5m van elkaar zitten.CheckVanwege de maatregelen rondom het coronavirus, zijn we verplicht je bij ontvangst de volgende vragen te stellen:Heb je een of meerdere van deze klachten (gehad in de afgelopen 24 uur)?Heb je op dit moment een huisgenoot met koorts en/of benauwdheidsklachten?</label></li>
-                                <li><input type="checkbox" class="input__control input__control--checkbox" id="option2"><label for="option2" class="input__label input__label--checkbox"> Heb je het nieuwe coronavirus gehad en is dit de afgelopen 7 dagen vastgesteld (in een lab)?</label></li>
-                                <li><input type="checkbox" class="input__control input__control--checkbox" id="option2"><label for="option2" class="input__label input__label--checkbox"> Heb je een huisgenoot/gezinslid met het nieuwe coronavirus en heb je in de afgelopen 14 dagen contact met hem/haar gehad terwijl hij/zij nog klachten had?</label></li>
-                                <li><input type="checkbox" class="input__control input__control--checkbox" id="option2"><label for="option2" class="input__label input__label--checkbox"> Ben je in quarantaine omdat je direct contact hebt gehad met iemand waarbij het nieuwe coronavirus is vastgesteld?</label></li>
-                            </ul>
-                        </li>
-                    </ul>
-
-                </fieldset>
                 <input type="hidden" name="node" value="{{ resource['@id'] }}">
                 <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> {{ 'check-in'|trans|capitalize }} </button>
             {% endif %}
