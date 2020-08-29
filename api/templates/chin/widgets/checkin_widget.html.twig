@@ -118,6 +118,34 @@
                     <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
                         {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
                 </div>
+
+                <fieldset class="input">
+                    <legend class="input__legend">Gezondheids vragen</legend>
+                    <div class="input__group input__group--checkbox">
+                        <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox">
+                        <label class="input__label input__label--checkbox" for="chkbx1">Web je een of meerdere van deze klachten (gehad in de afgelopen 24 uur)?</label>
+                    </div>
+                    <div class="input__group input__group--checkbox">
+                        <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" checked="">
+                        <label class="input__label input__label--checkbox" for="chkbx2">Heb je op dit moment een huisgenoot met koorts en/of benauwdheidsklachten</label>
+                    </div>
+                    <div class="input__group input__group--checkbox">
+                        <input name="hobbies[]" type="checkbox" id="chkbx3" class="input__control input__control--checkbox" disabled="">
+                        <label class="input__label input__label--checkbox" for="chkbx3">Heb je het nieuwe coronavirus gehad en is dit de afgelopen 7 dagen vastgesteld (in een lab)?</label>
+                    </div>
+                    <div class="input__group input__group--checkbox">
+                        <input name="hobbies[]" type="checkbox" id="chkbx4" class="input__control input__control--checkbox" disabled="" checked="">
+                        <label class="input__label input__label--checkbox" for="chkbx4">Heb je een huisgenoot/gezinslid met het nieuwe coronavirus en heb je in de afgelopen 14 dagen contact met hem/haar gehad terwijl hij/zij nog klachten had?</label>
+                    </div>
+                    <div class="input__group input__group--checkbox">
+                        <input name="hobbies[]" type="checkbox" id="chkbx5" class="input__control input__control--checkbox" disabled="" checked="">
+                        <label class="input__label input__label--checkbox" for="chkbx5">Ben je in quarantaine omdat je direct contact hebt gehad met iemand waarbij het nieuwe coronavirus is vastgesteld?</label>
+                    </div>
+                    <div class="input__group input__group--checkbox">
+                        <input name="hobbies[]" type="checkbox" id="chkbx6" class="input__control input__control--checkbox" disabled="" checked="">
+                        <label class="input__label input__label--checkbox" for="chkbx6">Ben je in quarantaine omdat je direct contact hebt gehad met iemand waarbij het nieuwe coronavirus is vastgesteld?</label>
+                    </div>
+                </fieldset>
                 <input type="hidden" name="node" value="{{ resource['@id'] }}">
                 <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> {{ 'check-in'|trans|capitalize }} </button>
             {% endif %}
