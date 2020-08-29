@@ -8,8 +8,16 @@
             <header class="content__header">
                 <a class="backlink" href="{{ path('app_ptc_index') }}">{{ 'processes'|trans|capitalize }}</a>
                 <header class="content__header">
+                    {% if stage.name is defined %}
+                    <h1 class="content__header-title">
+                        {{ stage.name|capitalize }}
+                        {% if stage.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this stage'|trans|capitalize }}"></span>{% endif %}
+                    </h1>
+                    {{ stage.description }}
+                    {% else %}
                     <h1 class="content__header-title">{{ process.name|capitalize }}</h1>
                     {{ process.description }}
+                    {% endif %}
                 </header>
             </header>
         </div><!-- ./content -->
@@ -89,20 +97,18 @@
         {% else %}
             {% include 'ptc/widgets/progressbar.html.twig' %}
 
-            <!-- Page Break -->
-            <div style="height: 20px"></div>
             {% include 'ptc/widgets/stages.html.twig' %}
 
+            {#
             <!-- Page Break -->
             <div style="height: 20px"></div>
             {% include 'ptc/widgets/checklist.html.twig' %}
+            #}
 
-            <!-- Page Break -->
-            <div style="height: 20px"></div>
+            {% include 'ptc/widgets/order.html.twig' %}
+
             {% include 'ptc/widgets/properties.html.twig' %}
 
-            <!-- Page Break -->
-            <div style="height: 20px"></div>
             {% include 'ptc/widgets/contact.html.twig' %}
        {% endif %}
     </div>

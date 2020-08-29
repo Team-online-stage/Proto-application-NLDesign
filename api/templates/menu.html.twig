@@ -1,49 +1,182 @@
 <nav id="docs-nav">
     <div class="container">
         <div class="top-nav__block top-nav-autoresize">
-            <ul class="nav nav--submenu">
+
+            <div class="col-xs">
+                <ul class="nav--submenu nav--left">
+                    {% if application.defaultConfiguration.configuration.mainMenu is defined %}
+                        {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
+
+                        {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
+                            <li class="nav__item">
+                                <a href="{{ item.href }}" title="Home" class="nav__link  ">
+                                    <i class="{{ item.icon }}" role="presentation"></i>
+                                    <span>{{ item.name }}</span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </div>
+
+            <div class="col-xs-hidden">
+                {% if not app.user %}
+                    <li class="nav__item">
+                        <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
+                                style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
+                    </li>
+                {% else %}
+                    {% if application.defaultConfiguration.configuration.userPage is defined %}
+                        <li class="nav__item">
+                            <a href="/{{ application.defaultConfiguration.configuration.userPage }}" title="Profile"
+                               class="nav__link  ">
+                                <i style="margin-right: 10px" class="fas fa-user"></i>
+                                <span>{{ app.user.username }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                {% endif %}
+
+            </div>
+
+            <div class="col-xs">
+                <ul style="float: right;">
+                    {% if not app.user %}
+                        <li class="nav__item">
+                            <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
+                                    style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}
+                            </a>
+                        </li>
+                    {% else %}
+                        {% if application.defaultConfiguration.configuration.userPage is defined %}
+                            <li class="nav__item">
+                                <a href="/{{ application.defaultConfiguration.configuration.userPage }}" title="Profile"
+                                   class="nav__link  ">
+                                    <i style="margin-right: 10px" class="fas fa-user"></i>
+                                    <span>{{ app.user.username }}</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                        <li class="nav__item">
+                            <a href="{{ path('app_user_logout') }}" title="Profile" class="nav__link  ">
+                                <i style="margin-right: 10px" class="fas fa-unlock"></i>
+                                <span>{{ 'logout'|trans|capitalize }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if application.defaultConfiguration.configuration.search is defined %}
+                        <form method="post" action="{{ path('app_search_index') }}"
+                              style="float: right; margin-left: 20px;">
+                            <div class="input nav--input">
+                                <div class="input__control-group nav--input__control-group">
+                                    <input type="search" id="search" name="search"
+                                           class="input__control input__control--m input__control--search">
+                                    <button class="btn btn--icon" title="Zoeken"><i class="icon icon-magnifier"
+                                                                                    role="presentation"></i></button>
+                                </div>
+                            </div>
+                        </form>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-xs-hidden">
+            <div class="top-nav__block top-nav__block--right" style="float: right;">
+                <button class="top-nav__block-item top-nav__block-item--collapse"
+                        x-uno-collapse="" x-uno-collapse-target="collapse-menu-mobile"
+                        onclick="adjustAnchors()">
+                    <i class="icon icon-hamburger" role="presentation"></i>
+                    <span>Menu</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="col-xs-hidden" id="stickyMobileNav">
+    <div class="collapse collapse--nav mobile-nav-collapse">
+        <div class="container collapse__details mobile-nav" id="collapse-menu-mobile">
+            <ul class="list list--links list--chevrons">
                 {% if application.defaultConfiguration.configuration.mainMenu is defined %}
                     {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
 
                     {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
-                <li class="nav__item">
-                    <a href="{{ item.href }}" title="Home" class="nav__link  ">
-                        <i class="{{ item.icon }}" role="presentation"></i>
-                        <span>{{ item.name }}</span>
-                    </a>
-                </li>
+                        <li><a href="{{ item.href }}">{{ item.name }}</a><i class="{{ item.icon }}"
+                                                                            role="presentation"></i>
+                        </li>
                     {% endfor %}
-
                 {% endif %}
 
                 {% if not app.user %}
-                <li class="nav__item">
-                    <a href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" title="Login" class="nav__link  ">
-                        <i style="margin-right: 10px"  class="fas fa-lock"></i>
-                        <span>{{ 'login'|trans|capitalize }}</span>
-                    </a>
-                </li>
                 {% else %}
                     {% if application.defaultConfiguration.configuration.userPage is defined %}
-                <li class="nav__item">
-                        <a href="{{ application.defaultConfiguration.configuration.userPage }}" title="Profile" class="nav__link  ">
-                            <i style="margin-right: 10px" class="fas fa-user"></i>
-                            <span>{{ app.user.username }}</span>
-                        </a>
-                </li>
-                    {% else %}
-                <li class="nav__item">
-                    <a href="{{ path('app_user_logout') }}" title="Profile" class="nav__link  ">
-                        <i style="margin-right: 10px" class="fas fa-user"></i>
-                        <span>{{ app.user.username }} ({{ 'logout'|trans|capitalize }})</span>
-                    </a>
-                </li>
+                        <li><a href="/{{ application.defaultConfiguration.configuration.userPage }}"
+                               title="Profile">{{ app.user.username }}</a><i class="fas fa-user"
+                                                                             role="presentation"></i>
+                        </li>
                     {% endif %}
+                    <li><a href="{{ path('app_user_logout') }}" title="Profile">{{ 'logout'|trans|capitalize }}</a><i
+                            class="fas fa-unlock" role="presentation"></i>
+                    </li>
                 {% endif %}
             </ul>
-
         </div>
     </div>
+</div>
 
-</nav>
+<script>
+    // Load collapse component
+    System.import('/uno/components/collapse/collapse.js').then(function (module) {
+        // Select all collapsible elements on the page
+        var collapses = document.querySelectorAll('[x-uno-collapse]');
+        // Initialize all collapses
+        for (var i = 0; i < collapses.length; i++) {
+            new module.Collapse(collapses.item(i));
+        }
+    });
+</script>
+
+{% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
+
+    <script>
+        // Code for combining anchors with sticky
+        var adjustAnchor = Boolean(false)
+
+        var anchors = document.getElementsByClassName('anchor');
+
+        function adjustAnchors() {
+
+            if (adjustAnchor === false) {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-182px';
+                }
+
+                adjustAnchor = true
+            } else {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-70px';
+                }
+                adjustAnchor = false
+            }
+        }
+
+        $(window).resize(function () {
+            if ($(window).width() > 544) {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-70px';
+                }
+            } else if (adjustAnchor === true) {
+                for (var i = 0; i < anchors.length; i++) {
+                    anchors[i].style.marginTop = '-182px';
+                }
+
+            }
+        });
+    </script>
+
+{% endif %}
 

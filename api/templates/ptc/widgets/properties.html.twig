@@ -1,11 +1,33 @@
 {% if resource is defined and resource is not empty %}
-<div class="content-background" style="margin-top: 20px;">
+<!-- Page Break -->
+<div style="height: 20px"></div>
+
+<div class="content-background">
     <div class="content">
         <h2>
             {{ 'properties'|trans|capitalize }}
         </h2>
-
         <ul class="definition-list">
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'process'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ process.name|capitalize }}
+                    </p>
+                </div>
+            </li>
+            <li class="definition-list__item definition-list__item--horizontal">
+                <div class="definition-list__title" style="max-width: 100%">
+                    {{ 'description'|trans|capitalize }}
+                </div>
+                <div class="definition-list__description">
+                    <p>
+                        {{ process.description }}
+                    </p>
+                </div>
+            </li>
             {% if resource.reference is defined and resource.reference is not empty %}
             <li class="definition-list__item definition-list__item--horizontal">
                 <div class="definition-list__title" style="max-width: 100%">
@@ -67,7 +89,11 @@
                     </ul>
                     {% else %}
                         {% if 'http' in value %}
-                            {{ commonground_resource(value).name }}<br>
+                            {% if commonground_resource(value)['@type'] == 'Ingeschrevenpersoon' %}
+                                {{ commonground_resource(value).naam.voornamen }} {{ commonground_resource(value).naam.geslachtsnaam }} <br>
+                            {% else %}
+                                {{ commonground_resource(value).name }}<br>
+                            {% endif %}
                         {% else %}
                             {{ value|capitalize }}<br>
                         {% endif %}
@@ -87,8 +113,13 @@
                     {% else %}
                         {% if 'http' in property %}
                             {% if 'enkelvoudiginformatieobjecten' in property %}
-                                <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
-                            {% elseif commonground_resource(property)['@type'] == 'Adres' %}
+                                {% set file = commonground_resource(property) %}
+                                <a href="{{ path('app_drc_download',{'resource':file.id})}}">{{  file.bestandsnaam }}</a>
+                            {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}
+                                {{ commonground_resource(property).reference }}<br>
+                            {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
+                                {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
+                            {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Adres' %}
                                 {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                             {% else %}
                                 {{ commonground_resource(property).name|capitalize }}

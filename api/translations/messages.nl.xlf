@@ -111,7 +111,7 @@
       </trans-unit>
       <trans-unit id="YFQKuu_" resname="this request is currently">
         <source>this request is currently</source>
-        <target>dit verzoek is momenteel:</target>
+        <target>dit verzoek is momenteel</target>
       </trans-unit>
       <trans-unit id="UD6t0Eb" resname="retract">
         <source>retract</source>
@@ -127,15 +127,15 @@
       </trans-unit>
       <trans-unit id="k25cxQI" resname="courses">
         <source>courses</source>
-        <target>__courses</target>
+        <target>cursussen</target>
       </trans-unit>
       <trans-unit id="_UD0x.j" resname="toegekende beroeps referentie na succesvolle afronding">
         <source>toegekende beroeps referentie na succesvolle afronding</source>
-        <target>__toegekende beroeps referentie na succesvolle afronding</target>
+        <target>toegekende beroeps referentie na succesvolle afronding</target>
       </trans-unit>
       <trans-unit id="S2XQXq4" resname="toegekende educatieve referentie na succesvolle afronding">
         <source>toegekende educatieve referentie na succesvolle afronding</source>
-        <target>__toegekende educatieve referentie na succesvolle afronding</target>
+        <target>toegekende educatieve referentie na succesvolle afronding</target>
       </trans-unit>
       <trans-unit id="YkyVVAY" resname="activities">
         <source>activities</source>
@@ -211,7 +211,7 @@
       </trans-unit>
       <trans-unit id="oy06T40" resname="you can not save or submit procceses if you are not loged in">
         <source>you can not save or submit procceses if you are not loged in</source>
-        <target>u kan geen proces opslaan of indienen als u niet bent ingelogd</target>
+        <target>u kunt geen proces opslaan of indienen als u niet bent ingelogd</target>
       </trans-unit>
       <trans-unit id="uTw_URA" resname="login required">
         <source>login required</source>
@@ -403,27 +403,303 @@
       </trans-unit>
       <trans-unit id="LtX3OR7" resname="job postings">
         <source>job postings</source>
-        <target>__job postings</target>
+        <target>vacatures</target>
       </trans-unit>
       <trans-unit id="qvq498b" resname="job applications">
         <source>job applications</source>
-        <target>__job applications</target>
+        <target>solicitaties</target>
       </trans-unit>
       <trans-unit id="nXV1Fkg" resname="cources">
         <source>cources</source>
-        <target>__cources</target>
+        <target>cursussen</target>
       </trans-unit>
       <trans-unit id="ExGW77D" resname="programs and cources">
         <source>programs and cources</source>
-        <target>__programs and cources</target>
+        <target>programma's en cursussen</target>
       </trans-unit>
       <trans-unit id="G4vKHHU" resname="tenders">
         <source>tenders</source>
-        <target>__tenders</target>
+        <target>uitvragen</target>
       </trans-unit>
       <trans-unit id="IjZUFsW" resname="pitches">
         <source>pitches</source>
-        <target>__pitches</target>
+        <target>voorstellen</target>
+      </trans-unit>
+      <trans-unit id="2LiW76m" resname="relevant requests that you have made in the past that share a great amount of characteristic with the request">
+        <source>relevant requests that you have made in the past that share a great amount of characteristic with the request</source>
+        <target>relevante verzoeken die u in het verleden heeft ingediend die overlappen met uw huidige proces</target>
+      </trans-unit>
+      <trans-unit id="UTMi1ew" resname="you need to login before you can view relevant requests">
+        <source>you need to login before you can view relevant requests</source>
+        <target>u dient ingelogd te zijn om relevante verzoeken te bekijken</target>
+      </trans-unit>
+      <trans-unit id="l2vQ37g" resname="validations">
+        <source>validations</source>
+        <target>validaties</target>
+      </trans-unit>
+      <trans-unit id="SR2r1Cs" resname="invoices">
+        <source>invoices</source>
+        <target>facturen</target>
+      </trans-unit>
+      <trans-unit id="uwDNFgu" resname="no invoices available">
+        <source>no invoices available</source>
+        <target>geen facturen beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="4HJQ5hl" resname="assents">
+        <source>assents</source>
+        <target>instemmingen</target>
+      </trans-unit>
+      <trans-unit id="zeZE9WY" resname="no assents available">
+        <source>no assents available</source>
+        <target>geen instemmingen beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="HBaK2wD" resname="orders">
+        <source>orders</source>
+        <target>bestellingen</target>
+      </trans-unit>
+      <trans-unit id="Put_luW" resname="order">
+        <source>order</source>
+        <target>bestelling</target>
+      </trans-unit>
+      <trans-unit id="zzjZXJx" resname="amount">
+        <source>amount</source>
+        <target>bedrag</target>
+      </trans-unit>
+      <trans-unit id="Utbj3k_" resname="invoice">
+        <source>invoice</source>
+        <target>factuur</target>
+      </trans-unit>
+      <trans-unit id="VKkJezN" resname="n.a.">
+        <source>n.a.</source>
+        <target>n.v.t.</target>
+      </trans-unit>
+      <trans-unit id="33cNkW_" resname="no orders available">
+        <source>no orders available</source>
+        <target>geen bestellingen beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="RkSTiS0" resname="you need to login before you can upload files">
+        <source>you need to login before you can upload files</source>
+        <target>u moet inloggen voordat u bestanden kan uploaden</target>
+      </trans-unit>
+      <trans-unit id="EuoS6s5" resname="change">
+        <source>change</source>
+        <target>wijzig</target>
+      </trans-unit>
+      <trans-unit id=".tDkggr" resname="financial">
+        <source>financial</source>
+        <target>financieel</target>
+      </trans-unit>
+      <trans-unit id="XzxPhYD" resname="items">
+        <source>items</source>
+        <target>producten</target>
+      </trans-unit>
+      <trans-unit id="WwlLa6H" resname="payment status">
+        <source>payment status</source>
+        <target>betaal status</target>
+      </trans-unit>
+      <trans-unit id="H9MQttL" resname="payment link">
+        <source>payment link</source>
+        <target>betaal link</target>
+      </trans-unit>
+      <trans-unit id="8XB5k9R" resname="no processes available">
+        <source>no processes available</source>
+        <target>geen proces beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="qUkfTBv" resname="subject">
+        <source>subject</source>
+        <target>onderwerp</target>
+      </trans-unit>
+      <trans-unit id="71J1a4t" resname="document template">
+        <source>document template</source>
+        <target>document sjabloon</target>
+      </trans-unit>
+      <trans-unit id="JiEhxTc" resname="edit">
+        <source>edit</source>
+        <target>wijzig</target>
+      </trans-unit>
+      <trans-unit id="AT9UQAy" resname="age">
+        <source>age</source>
+        <target>leeftijd</target>
+      </trans-unit>
+      <trans-unit id="3p.q6ot" resname="gender">
+        <source>gender</source>
+        <target>geslacht</target>
+      </trans-unit>
+      <trans-unit id="oAvqVDp" resname="adres">
+        <source>adres</source>
+        <target>adres</target>
+      </trans-unit>
+      <trans-unit id="EdQEF5W" resname="business">
+        <source>business</source>
+        <target>bedrijf</target>
+      </trans-unit>
+      <trans-unit id="hiQXuef" resname="events">
+        <source>events</source>
+        <target>afspraken</target>
+      </trans-unit>
+      <trans-unit id="UFoOj8N" resname="start date">
+        <source>start date</source>
+        <target>startdatum</target>
+      </trans-unit>
+      <trans-unit id="kNsHSsY" resname="end date">
+        <source>end date</source>
+        <target>einddatum</target>
+      </trans-unit>
+      <trans-unit id="ae3F5i5" resname="no events available">
+        <source>no events available</source>
+        <target>geen afspraken beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="WGahArI" resname="uploaded files">
+        <source>uploaded files</source>
+        <target>geuploade bestanden</target>
+      </trans-unit>
+      <trans-unit id="FnzJSTa" resname="view your existing requests">
+        <source>view your existing requests</source>
+        <target>bekijk uw bestaande verzoeken</target>
+      </trans-unit>
+      <trans-unit id="4WRPBMZ" resname="next step">
+        <source>next step</source>
+        <target>volgende stap</target>
+      </trans-unit>
+      <trans-unit id="ax1LYs5" resname="previous step">
+        <source>previous step</source>
+        <target>vorige stap</target>
+      </trans-unit>
+      <trans-unit id="owVcl50" resname="read more">
+        <source>read more</source>
+        <target>meer lezen</target>
+      </trans-unit>
+      <trans-unit id="PEgjRvN" resname="back">
+        <source>back</source>
+        <target>terug</target>
+      </trans-unit>
+      <trans-unit id="Sgozmwx" resname="personal">
+        <source>personal</source>
+        <target>persoonlijk</target>
+      </trans-unit>
+      <trans-unit id="pJfw9Mc" resname="you need to login before you can view this page">
+        <source>you need to login before you can view this page</source>
+        <target>u dient ingelogd te zijn om deze pagina te kunnen bekijken</target>
+      </trans-unit>
+      <trans-unit id="rjgSBY9" resname="inProgress">
+        <source>inProgress</source>
+        <target>in behandeling</target>
+      </trans-unit>
+      <trans-unit id="iIpMs1D" resname="You have correctly filled out all required questions for this stage">
+        <source>You have correctly filled out all required questions for this stage</source>
+        <target>u heeft alle verplichte vragen voor dit deel correct ingevuld</target>
+      </trans-unit>
+      <trans-unit id="0ifd5Zn" resname="You have correctly filled out all required questions for this section">
+        <source>You have correctly filled out all required questions for this section</source>
+        <target>u heeft alle verplichte vragen voor deze sectie correct ingevuld</target>
+      </trans-unit>
+      <trans-unit id="Ge1Av2L" resname="process">
+        <source>process</source>
+        <target>processen</target>
+      </trans-unit>
+      <trans-unit id="JBkykGe" resname="search">
+        <source>search</source>
+        <target>zoeken</target>
+      </trans-unit>
+      <trans-unit id="8xuHaDl" resname="no items found">
+        <source>no items found</source>
+        <target>niet gevonden</target>
+      </trans-unit>
+      <trans-unit id="WqKKEGk" resname="your search did not yield any results, try again">
+        <source>your search did not yield any results, try again</source>
+        <target>uw zoek opdracht heet geen resulaten opgeleverd, probeer het nog een keer</target>
+      </trans-unit>
+      <trans-unit id="R_InZ3G" resname="filters">
+        <source>filters</source>
+        <target>filters</target>
+      </trans-unit>
+      <trans-unit id="TYqqt6Z" resname="key word">
+        <source>key word</source>
+        <target>sleutel woorden</target>
+      </trans-unit>
+      <trans-unit id="CA3pYjj" resname="no requests available">
+        <source>no requests available</source>
+        <target>geen verzoeken beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="gd9jWAz" resname="place">
+        <source>place</source>
+        <target>plaats</target>
+      </trans-unit>
+      <trans-unit id="HCJivOb" resname="creation date">
+        <source>creation date</source>
+        <target>aanmaak datum</target>
+      </trans-unit>
+      <trans-unit id="T9GRAhd" resname="deletion date">
+        <source>deletion date</source>
+        <target>verwijder datum</target>
+      </trans-unit>
+      <trans-unit id="FhDEDGV" resname="no checkins available">
+        <source>no checkins available</source>
+        <target>geen check-ins beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="fl8XlXb" resname="identificeren">
+        <source>identificeren</source>
+        <target>identificeren</target>
+      </trans-unit>
+      <trans-unit id="JorXDrW" resname="paid">
+        <source>paid</source>
+        <target>betaald</target>
+      </trans-unit>
+      <trans-unit id="k1CHLXE" resname="pay">
+        <source>pay</source>
+        <target>betalen</target>
+      </trans-unit>
+      <trans-unit id="089Hb2N" resname="subscribe">
+        <source>subscribe</source>
+        <target>abboneren</target>
+      </trans-unit>
+      <trans-unit id="bCoDPGD" resname="iDin">
+        <source>iDin</source>
+        <target>iDin</target>
+      </trans-unit>
+      <trans-unit id="MQ.yABS" resname="close">
+        <source>close</source>
+        <target>sluit</target>
+      </trans-unit>
+      <trans-unit id="TqgR6Pn" resname="check-ins">
+        <source>check-ins</source>
+        <target>check-ins</target>
+      </trans-unit>
+      <trans-unit id="_KZlqXd" resname="organizations">
+        <source>organizations</source>
+        <target>organisaties</target>
+      </trans-unit>
+      <trans-unit id="EVB6Di9" resname="new">
+        <source>new</source>
+        <target>nieuw</target>
+      </trans-unit>
+      <trans-unit id="rLIFg9y" resname="no organizations">
+        <source>no organizations</source>
+        <target>geen organisaties beschikbaar</target>
+      </trans-unit>
+      <trans-unit id="_ohHsMM" resname="create">
+        <source>create</source>
+        <target>aanmaken</target>
+      </trans-unit>
+      <trans-unit id="b1VGMZ5" resname="check-in date">
+        <source>check-in date</source>
+        <target>incheck datum</target>
+      </trans-unit>
+      <trans-unit id="Wyd8tmh" resname="rsin">
+        <source>rsin</source>
+        <target>rsin</target>
+      </trans-unit>
+      <trans-unit id="G9o1H6b" resname="kvk">
+        <source>kvk</source>
+        <target>kvk</target>
+      </trans-unit>
+      <trans-unit id="oII8_sC" resname="check-in">
+        <source>check-in</source>
+        <target>inchecken</target>
+      </trans-unit>
+      <trans-unit id="OHb1EzW" resname="view check-in">
+        <source>view check-in</source>
+        <target>check-in bekijken</target>
       </trans-unit>
     </body>
   </file>

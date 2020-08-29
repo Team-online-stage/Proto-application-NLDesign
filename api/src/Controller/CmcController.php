@@ -25,6 +25,32 @@ use Symfony\Component\Routing\Annotation\Route;
 class CmcController extends AbstractController
 {
     /**
+     * @Route("/user")
+     * @Template
+     */
+    public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['reciever'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $this->getUser()->getPerson()])['hydra:member'];
+        $variables['send'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['sender' => $this->getUser()->getPerson()])['hydra:member'];
+        $variables['resources'] = array_merge($variables['reciever'], $variables['send']);
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/organisation")
+     * @Template
+     */
+    public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * This function shows all available processes.
      *
      * @Route("/")
@@ -73,6 +99,15 @@ class CmcController extends AbstractController
         // Lets handle a post
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
+
+            if (isset($resource['sender_uri']) && !empty($resource['sender_uri'])) {
+                $resource['sender'] = $resource['sender_uri'];
+            }
+
+            if (isset($resource['receiver_uri']) && !empty($resource['receiver_uri'])) {
+                $resource['receiver'] = $resource['receiver_uri'];
+            }
+
             $resource = $commonGroundService->saveResource($resource, ['component' => 'cmc', 'type' => 'contact_moments']);
 
             // If the contact moment was succesfully created we forward the user

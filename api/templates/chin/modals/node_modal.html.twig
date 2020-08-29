@@ -1,0 +1,58 @@
+<div class="modal modal--backdrop" role="dialog" id="myModal" tabindex="0" aria-describedby="modal-description3">
+    <section class="modal__content" role="document">
+        <form action="{{ path('app_chin_nodesorganization') }}" method="post">
+            <div class="modal__body" tabindex="0" lang="en-US">
+                <div class="row" style="margin-top: 20px;">
+                    <div class="col-xs-6">
+                        <h1>{{ 'organization'|trans|capitalize }}</h1>
+                    </div>
+                    <div class="col-xs-6">
+                        <button style="float: right;" class="modal__close-button">
+                            <i class="icon icon-cross"></i>
+                            {{ 'close'|trans|capitalize }}
+                        </button>
+                    </div>
+                </div>
+                <div class="input input--horizontal">
+                    <div>
+                        <label class="input__label" for="name">{{ 'name'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                    </div>
+                    <input required="" type="text" id="name" name="name" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                </div>
+                <div class="input input--horizontal">
+                    <div>
+                        <label class="input__label" for="description">{{ 'description'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                    </div>
+                    <textarea required="" id="description" name="description" aria-describedby="hint_name" class="input__control input__control--text input__control--l"></textarea>
+                </div>
+                <div class="input input--horizontal">
+                    <div>
+                        <label class="input__label" for="place">{{ 'place'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                    </div>
+                    <select id="place" name="place" class="input__control input__control--l input__control--select">
+                        {% if places is defined and places is not empty %}
+                            {% for place in places %}
+                                <option value="{{ place['@id'] }}">{{ place.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+                <div class="input input--horizontal">
+                    <div>
+                        <label class="input__label" for="organization">{{ 'organization'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                    </div>
+                    <select id="organization" name="organization" class="input__control input__control--l input__control--select">
+                        {% if organizations is defined and organizations is not empty %}
+                            {% for organization in organizations %}
+                                <option value="{{ organization['@id'] }}">{{ organization.name }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                </div>
+            </div>
+                <footer class="modal__footer" lang="en-US">
+                <button class="btn btn--primary">{{ 'create'|trans|capitalize }}</button>
+            </footer>
+        </form>
+    </section>
+</div>

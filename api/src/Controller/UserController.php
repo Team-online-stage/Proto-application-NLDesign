@@ -31,14 +31,12 @@ class UserController extends AbstractController
         CommonGroundService $commonGroundService,
         ParameterBagInterface $params,
         EventDispatcherInterface $dispatcher
-    )
-    {
+    ) {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
         // Dealing with backUrls
-        if($backUrl = $request->query->get('backUrl')){
-        }
-        else{
+        if ($backUrl = $request->query->get('backUrl')) {
+        } else {
             $backUrl = '/login';
         }
         $session->set('backUrl', $backUrl);
@@ -50,7 +48,7 @@ class UserController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         } else {
-            return $this->render('login/index.html.twig',['backUrl'=>$backUrl]);
+            return $this->render('login/index.html.twig', ['backUrl'=>$backUrl]);
         }
     }
 
@@ -74,6 +72,15 @@ class UserController extends AbstractController
         $redirect = $commonGroundService->cleanUrl(['component' => 'eh']);
 
         return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
+    }
+
+    /**
+     * @Route("/idin")
+     * @Template
+     */
+    public function IdinAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$request->getUri().'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
     }
 
     /**
@@ -104,9 +111,8 @@ class UserController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $conductionUrl = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'6a001c4c-911b-4b29-877d-122e362f519d']); //conduction
-        $variables['userGroups'] = $commonGroundService->getResource(['component' => 'uc', 'type' => 'groups'], ['organization' => $conductionUrl], $variables['query'])['hydra:member'];
-
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $variables['userGroups'] = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'groups'], ['organization' => $application['organization']['@id'], 'canBeRegisteredFor' => true])['hydra:member'];
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
@@ -183,7 +189,7 @@ class UserController extends AbstractController
             }
 
             //create the user in UC
-            $user['organization'] = $conductionUrl;
+            $user['organization'] = $application['organization']['@id'];
             $user['username'] = $resource['email'];
             $user['password'] = $resource['wachtwoord'];
             $user['person'] = $contact['@id'];
@@ -193,42 +199,6 @@ class UserController extends AbstractController
 
             return $this->redirectToRoute('app_default_index');
         }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/job_postings")
-     * @Template
-     */
-    public function jobPostingsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
-    {
-        $content = false;
-        $variables = $applicationService->getVariables();
-
-        // Lets provide this data to the template
-        $variables['query'] = array_merge($request->request->all(), $request->query->all());
-
-        // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/job_applications")
-     * @Template
-     */
-    public function jobApplicationsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
-    {
-        $content = false;
-        $variables = $applicationService->getVariables();
-
-        // Lets provide this data to the template
-        $variables['query'] = array_merge($request->request->all(), $request->query->all());
-
-        // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_applications'], $variables['query'])['hydra:member'];
 
         return $variables;
     }

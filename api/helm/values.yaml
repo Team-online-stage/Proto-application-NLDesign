@@ -4,27 +4,27 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: pan
-  name: pan
-  title: Proto Applicatie NL Design
+  projectName: db
+  name: db
+  title: CommonGround DashBoard
   version: V.0.1
-  id: 1ef30b69-6b28-4fbd-a0cd-83d6ff3c505e
-  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
+  id: 31a2ad29-ee03-4aa9-be81-abf1fda7bbcc
+  description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&#039;'
   type: application
-  repro: https://github.com/ConductionNL/pan
-  demo: www.conduction.nl
+  repro: https://github.com/ConductionNL/Commonground-dashboard
+  demo: https://db.huwelijksplanner.online
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: zuid-drecht.nl
-  subdomain: false
+  subdomain: db
   organisationName: Conduction
-  email: info@conduction.nl
+  email: info@westfriesland.commonground.nu
   country: Netherlands
   state: Noord-Holland
   locality: Amsterdam
   unit: Common-Ground
   env: dev
-  web: false
-  internal: false
+  web: 
+  internal: 
   debug: 1
   cache: 1
   replicaCount: 1
@@ -48,12 +48,12 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "1ef30b69-6b28-4fbd-a0cd-83d6ff3c505e"
+  commongroundId: "31a2ad29-ee03-4aa9-be81-abf1fda7bbcc"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.conduction.nl
-  authorisationProviderApplication: https://uc.conduction.nl
+  authorisationProviderUser: https://uc.huwelijksplanner.online
+  authorisationProviderApplication: https://uc.huwelijksplanner.online
 
 
 php:

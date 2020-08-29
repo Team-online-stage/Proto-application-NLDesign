@@ -16,20 +16,20 @@
                         </p>
                     </div>
                 </li>
-                {% if request.properties is defined and request.properties is not empty %}
-            {% for key, property in request.properties %}
-                <li class="definition-list__item definition-list__item--horizontal">
-
+                {% if request.requestType is defined and request.requestType is not empty %}
+                {% for prop in commonground_resource(request.requestType).properties %}
+                    <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title">
-                        {{ key|capitalize|replace({"_":" "}) }}
+                        {{ prop.name|capitalize|replace({"_":" "}) }}
                     </div>
+                        <div class="definition-list__description">
+                    {% for key, property in request.properties %}
+                        {% if key == prop.name %}
 
-                    <div class="definition-list__description">
-                        <p>
                             {% if property is iterable %}
                                 {% for key, value in property %}
                                     {% if value is iterable %}
-                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 50%; margin-left: 0px;">
+                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 49%; margin-left: 0px; display: inline-block">
                                     {% for item in value %}
                                         {% if item is iterable %}
                                         {% for subItem in item %}
@@ -70,23 +70,34 @@
                                     {% elseif property.name is defined %}
                                         {{ property.name }}
                                     {% endif #}
-                                {% else %}
-                                    {% if 'http' in property %}
-                                        {% if commonground_resource(property)['@type'] == 'Adres' %}
+                        {% else %}
+                            {% if 'http' in property %}
+                                        {# if commonground_resource(property)['@type'] == 'Adres' %}
                                             {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
                                         {% else %}
                                             {{ commonground_resource(property).name|capitalize }}
-                                        {% endif %}
-                                    {% else %}
-                                    {{ property|capitalize }}
-                                    {% endif %}
+                                        {% endif #}
+                                {% if 'enkelvoudiginformatieobjecten' in property %}
+                                    <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}
+                                    {{ commonground_resource(property).reference }}<br>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
+                                    {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
+                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Adres' %}
+                                    {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
+                                {% else %}
+                                    {{ commonground_resource(property).name|capitalize }}
+                                {% endif %}
+                            {% else %}
+                                {{ property|capitalize }}
+                            {% endif %}
                                 {# endif #}
                             {% endif %}
-                        </p>
                     </div>
-
+                        {% endif %}
+                    {% endfor %}
                 </li>
-            {% endfor %}
+                {% endfor %}
                 {% endif %}
             </ul>
         {% endif %}
@@ -97,6 +108,7 @@
 
 
 {% if app.user %}
+    {% set user = commonground_resource(app.user.person) %}
 <div class="content-background" style="margin-top: 20px">
     <div class="content">
         <h2>{{ 'submitter'|trans|capitalize }}</h2>
@@ -198,7 +210,8 @@
 
 <div class="row" >
     <div class="col-md-12" >
-        <a class="btn btn--block" href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">{{ 'login'|trans|capitalize }}</a>
+        <a class="btn btn--block" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
+        {%  include 'login/widgets/login_modal.html.twig' %}
     </div>
 </div>
 {% endif %}
