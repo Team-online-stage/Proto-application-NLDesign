@@ -19,13 +19,12 @@
         </div><!-- /.content -->
     </div><!-- /.col -->
     #}
-<div class="col-xl-4 col-lg-4 col-md-6 col-sm-10">
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-10" style="background-color: #01689B" >
     <div class="content">
         <div class="input input--search {% if code is defined %}input--invalid{% endif %}">
-            <label class="input__label" for="search">Code</label>
             {% if code is defined %}<div class="input__error">Code niet gevonden</div>{% endif %}
             <div class="input__control-group">
-                <input {% if code is defined %}value="{{ code }}" {% endif%} type="search" id="code" name="code" class="input__control input__control--m input__control--search" placeholder="code">
+                <input {% if code is defined %}value="{{ code }}" {% endif%} type="search" id="code" name="code" class="input__control input__control--m input__control--search" placeholder="vul code in">
                 <button class="btn" style="margin-left: 10px;" title="incheken"> Inchecken </button>
 {#                Search Button #}
 {#                <button class="btn btn--icon" style="margin-left: 10px;" title="scan"><i class="icon icon-magnifier"></i></button>#}
@@ -37,6 +36,7 @@
 <div class="col-md-4 col-sm-12">
         <div class="content">
             <ul class="definition-list">
+                {% if not app.user %}
                 <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title">
                         <span>Locatie</span>
@@ -63,6 +63,7 @@
                         <p style="color: #000000">{% if adres is defined and adres is not empty %}{{ adres.straat }} {{ adres.huisnummer }}{% endif %}</p>
                     </div>
                 </li>
+                {% endif %}
                 <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title">
                         <span>Organisatie</span>
@@ -71,6 +72,7 @@
                         <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
                     </div>
                 </li>
+                {% if not app.user %}
                 <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title">
                         <span>Datum</span>
@@ -79,7 +81,9 @@
                         <p style="color: #000000">{{ "now"|date("H:i d-m-Y", "Europe/Amsterdam") }}</p>
                     </div>
                 </li>
+                {% endif %}
             </ul>
+
             {% if not app.user %}
                 <a href="{{ path('app_user_idin') }}"
                    class="btn btn-block btn--idin">{{ 'check-in'|trans|capitalize }}</a></p>
@@ -119,29 +123,16 @@
                         {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
                 </div>
 
-                <fieldset class="input">
-                    <legend class="input__legend">Gezondheids vragen</legend>
-                    <div class="input__group input__group--checkbox">
-                        <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" required="">
-                        <label class="input__label input__label--checkbox" for="chkbx1">Ik heb géen van deze klachten (Hoesten, Neusverkoudheid, Koorts vanaf 38 graden of Benauwdheidsklachten ) gehad in de afgelopen 24 uur</label>
-                    </div>
-                    <div class="input__group input__group--checkbox">
-                        <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" required="">
-                        <label class="input__label input__label--checkbox" for="chkbx2">Ik heb op dit moment géén huisgenoot met koorts en/of benauwdheidsklachten</label>
-                    </div>
-                    <div class="input__group input__group--checkbox">
-                        <input name="hobbies[]" type="checkbox" id="chkbx3" class="input__control input__control--checkbox" required="">
-                        <label class="input__label input__label--checkbox" for="chkbx3">Bij mij is niet de afgelopen 7 dagen het nieuwe coronavirus vastgesteld (in een lab)</label>
-                    </div>
-                    <div class="input__group input__group--checkbox">
-                        <input name="hobbies[]" type="checkbox" id="chkbx4" class="input__control input__control--checkbox" required="">
-                        <label class="input__label input__label--checkbox" for="chkbx4">Ik heb géen huisgenoot/gezinslid met het nieuwe coronavirus of de afgelopen 14 dagen contact met hem/haar gehad terwijl hij/zij nog klachten had</label>
-                    </div>
-                    <div class="input__group input__group--checkbox">
-                        <input name="hobbies[]" type="checkbox" id="chkbx5" class="input__control input__control--checkbox" required="">
-                        <label class="input__label input__label--checkbox" for="chkbx5">Ik ben niet quarantaine omdat ik direct contact hebt gehad met iemand waarbij het nieuwe coronavirus is vastgesteld?</label>
-                    </div>
-                </fieldset>
+                <div class="input__group input__group--checkbox">
+                    <label class="input__label input__label--checkbox" for="corona_check">Ik en mijn huisgenoten voldoen aan de vragen van de <a href="https://cdn.khn.nl/media/Corona/Documenten/20200708_Gezondheidscheck_vragen_NL.pdf" target="_blank">corona vragenlijst horeca</label>a></label>
+                    <input name="hobbies[]" type="checkbox" name="corona_check" id="corona_check" class="input__control input__control--checkbox" required="">
+                </div>
+
+                <div class="input__group input__group--checkbox">
+                    <label class="input__label input__label--checkbox" for="data_verwerking">Ik ga akkoord met de opslag van mijn gegevens voor 14 dagen en verstrekking daarvan aan de GGD indien nodig</label>
+                    <input name="hobbies[]" type="checkbox" name="data_verwerking" id="data_verwerking" class="input__control input__control--checkbox" required="">
+                </div>
+
                 <input type="hidden" name="node" value="{{ resource['@id'] }}">
                 <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true" title="indienen"> {{ 'check-in'|trans|capitalize }} </button>
             {% endif %}

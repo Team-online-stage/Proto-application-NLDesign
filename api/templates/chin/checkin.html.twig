@@ -3,7 +3,7 @@
 {% extends 'base.html.twig' %}
 {% block container %}
     <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
-        <div style="background-color: #FFFFFF" class="row">
+        <div class="row">
             <div class="container">
                 {% include 'chin/widgets/checkin_widget.html.twig' %}
             </div><!-- /.container -->
@@ -15,38 +15,10 @@
 
     <div class="container background--wit">
         <div class="row">
-            <div class="col-md-6 col-sm-12">
+            <div class="col-md-6 col-md-12">
                 <div class="content">
-                    <h2><a id="wat" class="anchor"></a> Wat is checkin?</h2>
-                    <p>Checkin is de veilige manier om je gegevens achter te laten bij horecagelegenheden, we slaan
-                        gegevens slechts tijdelijk op.</p>
-                </div><!-- /.content -->
-            </div><!-- /.col -->
-            <div class="col-md-6 col-sm-12">
-                <div class="content">
-                    <h2><a id="hoe" class="anchor"></a>Hoe werkt checkin?</h2>
-                    <p>Als je via checkin incheckt bij een horecagelegenheid ontvangt deze gelegenheid alleen een token,
-                        je contact gegevens zijn alleen inzichtelijk voor het platform en worden na twee weken
-                        automatisch verwijderd.</p>
-                </div><!-- /.content -->
-            </div><!-- /.col -->
-            <div class="col-md-6 col-sm-12">
-                <div class="content">
-                    <h2>Wat als ik mogenlijk in contact ben geweest met iemand met corona?</h2>
-                    <p>Als de GGD constateert dat iemand positief is getest op COVID-19, zal zij een contactonderzoek
-                        opstarten. Blijkt tijdens het contactonderzoek dat iemand recent in een horecagelegenheid is
-                        geweest, dan kan de GGD daar de contactgegevens opvragen van iedereen die op dezeflde dag en
-                        tijd in de horecagelegenheid was als de positief geteste persoon. De horecagelegenheid zal dan
-                        aan checkin vragen om de contactgegevens over te dragen aan de GGD. Checkin draagt vervolgens
-                        die contactgegevens over aan de GGD. Ook in dat geval komen je contactgegevens niet bij de
-                        horecagelegenheid terecht, maar zijn dan alleen inzichtelijk voor de GGD. De GGD kan dan contact
-                        met je opnemen.</p>
-                </div><!-- /.content -->
-            </div><!-- /.col -->
-            <div class="col-md-6 col-sm-12">
-                <div class="content">
-                    <h2><a id="wie" class="anchor"></a>Wie zitten er achter checkin?</h2>
-                    <p>Checkin is een samenerwerking verband van de Rabo Bank en Konlijklijke Horeca Nederland, uitvoering en realisatie word begeleid door Conduction</p>
+                    <h2><a id="wat" class="anchor"></a> Waarom moet in inchecken?</h2>
+                    <p>In verband met corona richtlijnen vanuit de rijksoverheid is de horeca verplicht om contact gegevens van gasten voor 14 dagen op te slaan</p>
                 </div><!-- /.content -->
             </div><!-- /.col -->
         </div><!-- /.row -->
