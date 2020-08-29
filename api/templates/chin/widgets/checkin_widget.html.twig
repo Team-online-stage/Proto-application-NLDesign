@@ -19,8 +19,10 @@
         </div><!-- /.content -->
     </div><!-- /.col -->
     #}
-<div class="col-xl-4 col-lg-4 col-md-6 col-sm-10" style="background-color: #01689B" >
-    <div class="content">
+<div class="col-xl-4 col-lg-4 col-md-6 col-sm-10" style="background-color: #01689B; height: 500px;" >
+    <div class="content" style="
+  position: absolute;
+  bottom: 5px; width:100%">
         <div class="input input--search {% if code is defined %}input--invalid{% endif %}">
             {% if code is defined %}<div class="input__error">Code niet gevonden</div>{% endif %}
             <div class="input__control-group">
