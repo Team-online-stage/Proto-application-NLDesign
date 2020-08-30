@@ -105,6 +105,8 @@ class ChinController extends AbstractController
      */
     public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
+        $session->clear('newcheckin');
+        
         $variables = [];
         $createCheckin = $request->request->get('createCheckin');
         // Fallback options of establishing
@@ -158,6 +160,7 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
             $flash->add('success', 'U bent succesvol ingecheckt');
 
+            $session->set('newcheckin',true);
             return $this->redirect('/me');
         }
 
