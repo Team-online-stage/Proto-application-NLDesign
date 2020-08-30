@@ -142,11 +142,11 @@
                     <legend class="input__legend">Algemene bepalingen</legend>
                     <div class="input__group input__group--checkbox">
                         <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" checked="" required=""">
-                        <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a href="">vragen</a>a> van de corona vragenlijst horeca</label>
+                        <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a href="#" data-toggle="modal" data-target="#questionModal" onclick="openModal()">vragen</a> van de corona vragenlijst horeca</label>
                     </div>
                     <div class="input__group input__group--checkbox">
                         <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" required=""">
-                        <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a href="">proclaimer</a> en de <a href="">privacy</a> regels</label>
+                        <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy" target="_blank">privacy</a> regels</label>
                     </div>
                 </fieldset>
 
@@ -155,4 +155,54 @@
             {% endif %}
         </div><!-- /.content -->
     </div><!-- /.col -->
+
+    <script>
+        var questionModal;
+        // Load modal component
+        System.import('/uno/components/modal/modal.js').then(function (module) {
+            questionModal = new module.Modal(document.getElementById('questionModal'));
+        });
+
+        // Called when the user clicks the button
+        function openModal() {
+            questionModal.open();
+        }
+    </script>
+
+    <div class="modal modal--backdrop" role="dialog" id="questionModal" tabindex="-1" aria-describedby="modal-description3">
+        <section class="modal__content" role="document">
+            <div id="modal-description3" class="screenreader-only">
+                Dit is de beschrijving van de <span lang="en-US">modal</span>. De Escape knop annuleert en sluit het venster.
+            </div>
+            <header class="modal__title">
+                <h1>Titel van <span lang="en-US">modal</span></h1>
+                <button class="modal__close-button">
+                    <i class="icon icon-cross"></i>
+                    Sluit
+                </button>
+            </header>
+
+            <div class="modal__body" tabindex="0" lang="en-US">
+                <p>Leverage agile frameworks to provide a robust synopsis for
+                    high level overviews. Iterative approaches to corporate strategy
+                    foster collaborative thinking to further the overall value
+                    proposition. Organically grow the holistic world view of
+                    disruptive innovation via workplace diversity and empowerment.</p>
+                <p>Bring to the table win-win survival strategies to ensure
+                    proactive domination. At the end of the day, going forward,
+                    a new normal that has evolved from generation X is on the
+                    runway heading towards a streamlined cloud solution. User
+                    generated content in real-time will have multiple touchpoints
+                    for offshoring.</p>
+            </div>
+
+            <footer class="modal__footer" lang="en-US">
+                <p>Efficiently unleash cross-media information without
+                    cross-media value. Quickly maximize timely deliverables for
+                    real-time schemas. Dramatically maintain clicks-and-mortar
+                    solutions without functional solutions.</p>
+                <button class="btn btn--primary">Bevestig</button>
+            </footer>
+        </section>
+    </div>
 {% endif %}
