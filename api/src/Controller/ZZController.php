@@ -38,6 +38,7 @@ class ZZController extends AbstractController
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
+        $variables['session'] = $session->all();
 
         // Lets also provide any or all id
         $slug_parts = explode('/', $slug);

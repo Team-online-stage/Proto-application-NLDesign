@@ -163,6 +163,37 @@ class ChinController extends AbstractController
             $session->set('newcheckin', true);
 
             return $this->redirect('/me');
+        } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
+            $node = $request->request->get('node');
+            $firstName = $request->request->get('firstName');
+            $additionalName = $request->request->get('additionalName');
+            $lastName = $request->request->get('lastName');
+            $email = $request->request->get('email');
+            $tel = $request->request->get('tel');
+
+            $emailObject['email'] = $email;
+            $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
+
+            $telObject['telephone'] = $tel;
+            $telObject = $commonGroundService->createResource($telObject, ['component' => 'cc', 'type' => 'telephones']);
+
+            $person['givenName'] = $firstName;
+            $person['additionalName'] = $additionalName;
+            $person['familyName'] = $lastName;
+            $person['emails'][] = $emailObject['@id'];
+            $person['telephones'][] = $telObject['@id'];
+            $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+
+            $checkIn['node'] = $node;
+            $checkIn['person'] = $person['@id'];
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+            $flash->add('success', 'U bent succesvol ingecheckt');
+
+            $session->set('newcheckin', true);
+            $session->set('person', $person);
+
+            return $this->redirect('/me');
         }
 
         return $variables;
