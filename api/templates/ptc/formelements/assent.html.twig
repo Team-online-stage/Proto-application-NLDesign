@@ -31,10 +31,10 @@
         <div>
             <label class="input__label" for="voornaam">Voornaam</label>
             <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text"
-            {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" {% endif %}>
+            {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" readonly {% endif %}>
             <label class="input__label" for="achternaam">Achternaam</label>
             <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text"
-            {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
+            {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" readonly {% endif %}>
             <label class="input__label" for="email">Email</label>
             <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
             <span id="inputResult"></span>
@@ -49,6 +49,8 @@
     let personForm = document.getElementById("personForm");
 
     function addGetuigen(propertyName, items) {
+        $("#getuigenVoornaam").removeAttr("readonly");
+        $("#getuigenAchternaam").removeAttr("readonly");
         let input = document.getElementById('getuigenEmail');
         if(!input.checkValidity()){
             document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult';
