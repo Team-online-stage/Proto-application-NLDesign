@@ -107,6 +107,8 @@ class ChinController extends AbstractController
     {
         $session->remove('newcheckin');
 
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
         $variables = [];
         $createCheckin = $request->request->get('createCheckin');
         // Fallback options of establishing
@@ -162,7 +164,11 @@ class ChinController extends AbstractController
 
             $session->set('newcheckin', true);
 
-            return $this->redirect('/me');
+            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
+                return $this->redirect($application['defaultConfiguration']['configuration']['userPage']);
+            } else {
+                return $this->redirect($this->generateUrl('app_default_index'));
+            }
         } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
             $node = $request->request->get('node');
             $firstName = $request->request->get('firstName');
@@ -193,7 +199,11 @@ class ChinController extends AbstractController
             $session->set('newcheckin', true);
             $session->set('person', $person);
 
-            return $this->redirect('/me');
+            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
+                return $this->redirect($application['defaultConfiguration']['configuration']['userPage']);
+            } else {
+                return $this->redirect($this->generateUrl('app_default_index'));
+            }
         }
 
         return $variables;
