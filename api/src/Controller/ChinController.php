@@ -160,7 +160,9 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
             $flash->add('success', 'U bent succesvol ingecheckt');
 
-            return $this->redirect($this->generateUrl('app_chin_user', ['showCheckin'=>'true']));
+            $session->set('newcheckin',true);
+            return $this->redirect('/me');
+
         } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
 
             $node = $request->request->get('node');
@@ -189,8 +191,9 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
             $flash->add('success', 'U bent succesvol ingecheckt');
 
-
             $session->set('newcheckin',true);
+            $session->set('person', $person);
+
             return $this->redirect('/me');
         }
 
