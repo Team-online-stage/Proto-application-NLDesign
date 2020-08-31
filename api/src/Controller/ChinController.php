@@ -26,10 +26,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChinController extends AbstractController
 {
     /**
-     * @Route("/user")
+     * @Route("/checkin/user")
      * @Template
      */
-    public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function checkinUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
@@ -38,13 +38,47 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/organisation")
+     * @Route("/checkin/organisation")
      * @Template
      */
-    public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function checkinOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/nodes/user")
+     * @Template
+     */
+    public function nodesUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/nodes/organization")
+     * @Template
+     */
+    public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['places'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'places'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'])['hydra:member'];
+
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            $commonGroundService->saveResource($resource, (['component'=>'chin', 'type'=>'nodes']));
+
+            return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
+        }
 
         return $variables;
     }
@@ -71,6 +105,8 @@ class ChinController extends AbstractController
      */
     public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
+        $session->clear('newcheckin');
+
         $variables = [];
         $createCheckin = $request->request->get('createCheckin');
         // Fallback options of establishing
@@ -154,6 +190,8 @@ class ChinController extends AbstractController
             $flash->add('success', 'U bent succesvol ingecheckt');
 
 
+            $session->set('newcheckin',true);
+            return $this->redirect('/me');
         }
 
         return $variables;

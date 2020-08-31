@@ -19,9 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
  *
  * Class RequestController
  *
- * @Route("/wrc")
+ * @Route("/lc")
  */
-class WrcController extends AbstractController
+class LcController extends AbstractController
 {
     /**
      * @Route("/organization")
@@ -30,14 +30,27 @@ class WrcController extends AbstractController
     public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'wrc', 'type'=>'organizations'])['hydra:member'];
+        $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc', 'type'=>'places'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
-            $commonGroundService->saveResource($resource, (['component'=>'wrc', 'type'=>'organizations']));
+            if (isset($resource['publicAccess'])) {
+                $resource['publicAccess'] = true;
+            } else {
+                $resource['publicAccess'] = false;
+            }
 
-            return $this->redirect($this->generateUrl('app_wrc_organization'));
+            if (isset($resource['smokingAllowed'])) {
+                $resource['smokingAllowed'] = true;
+            } else {
+                $resource['smokingAllowed'] = false;
+            }
+
+            $commonGroundService->saveResource($resource, (['component'=>'lc', 'type'=>'places']));
+
+            return $this->redirect($this->generateUrl('app_lc_organization'));
         }
 
         return $variables;
