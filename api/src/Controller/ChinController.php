@@ -160,7 +160,8 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
             $flash->add('success', 'U bent succesvol ingecheckt');
 
-            $session->set('newcheckin',true);
+            $session->set('newcheckin', true);
+
             return $this->redirect('/me');
 
         } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
@@ -196,6 +197,17 @@ class ChinController extends AbstractController
 
             return $this->redirect('/me');
         }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/onboarding")
+     * @Template
+     */
+    public function onboardingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        $variables = $applicationService->getVariables();
 
         return $variables;
     }
