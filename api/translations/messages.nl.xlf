@@ -701,6 +701,14 @@
         <source>view check-in</source>
         <target>check-in bekijken</target>
       </trans-unit>
+      <trans-unit id="ehg2QA2" resname="check-in without login">
+        <source>check-in without login</source>
+        <target>inchecken zonder inloggen</target>
+      </trans-unit>
+      <trans-unit id="67Dv2Aw" resname="additional name">
+        <source>additional name</source>
+        <target>tussenvoegsel</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
