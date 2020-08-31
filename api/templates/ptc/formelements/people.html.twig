@@ -4,18 +4,18 @@
     <div class="col-sm-12">
         <div class="row" id="getuigen-container">
             <div id="0"></div>
-            {% if request.properties.getuigen is defined and request.properties.getuigen is not empty %}
+            {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
                 {% set value = 1 %}
-                {% for getuige in request.properties.getuigen %}
+                {% for getuige in request.properties[property.name] %}
                     <div id="{{ value }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
-                        <h2 id="{{ value }}">{{ getuige.person.givenName }} {{ getuige.person.familyName }}</h2>
+                        <h2 id="{{ value }}">{{ getuige.givenName }} {{ getuige.familyName }}</h2>
                         <div id="{{ value }}" style="line-height: 15px">
                             <p id="{{ value }}">Email: {{ getuige.email }}</p>
                             <p id="{{ value }}">Telefoon: {{ getuige.telephone }}</p>
                             <input type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="request[properties][{{ property.name }}][{{ value }}][email]">
                             <input type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="request[properties][{{ property.name }}][{{ value }}][telephone]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.person.givenName }}" name="request[properties][{{ property.name }}][{{ value }}][person][givenName]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.person.familyName }}" name="request[properties][{{ property.name }}][{{ value }}][person][familyName]">
+                            <input type="hidden" id="{{ value }}" value="{{ getuige.givenName }}" name="request[properties][{{ property.name }}][{{ value }}][givenName]">
+                            <input type="hidden" id="{{ value }}" value="{{ getuige.familyName }}" name="request[properties][{{ property.name }}][{{ value }}][familyName]">
                             <button class="btn btn-primary" id="{{ value }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
                         </div>
                     </div>
@@ -94,8 +94,8 @@
 
             hEmail.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][email]';
             hTelefoon.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][telephone]';
-            hVoornaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][person][givenName]';
-            hAchternaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][person][familyName]';
+            hVoornaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][givenName]';
+            hAchternaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][familyName]';
 
 
             let outerDiv = document.createElement('div');

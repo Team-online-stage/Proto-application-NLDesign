@@ -14,16 +14,14 @@
             </tr>
             </thead>
             <tbody>
-            {% set counter = 0 %}
             {% for checkin in checkins %}
             <tr>
                 <td>{{ commonground_resource(checkin.node.organization).name|capitalize }}</td>
                 <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
                 <td>{{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
                 <td>{{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
-                <td> <a data-toggle="modal" data-target="#checkin-{{ checkin.id }}" onclick="openModal{{ counter }}()">{{ 'view'|trans|capitalize }}</a></td>
+                <td> <a data-toggle="modal" data-target="#checkin-{{ checkin.id }}" onclick="openModal{{ checkin.id|replace({'-': ''}) }}()">{{ 'view'|trans|capitalize }}</a></td>
             </tr>
-                {% set counter = counter + 1 %}
             {% endfor %}
             </tbody>
         </table>
@@ -35,36 +33,31 @@
     </div><!-- /.content -->
 </div><!-- /.content-background -->
 
-{% set counter = 0 %}
+
 {% for checkin in checkins %}
     {% include 'chin/modals/checkin_modal.html.twig' with { 'item':checkin } %}
     <script>
-        let myModal{{ counter }};
+        let myModal{{ checkin.id|replace({'-': ''}) }};
         // Load modal component
         System.import('/uno/components/modal/modal.js').then(function (module) {
-            myModal{{ counter }} = new module.Modal(document.getElementById('checkin-{{ checkin.id }}'));
+            myModal{{ checkin.id|replace({'-': ''}) }} = new module.Modal(document.getElementById('checkin-{{ checkin.id }}'));
         });
 
         // Called when the user clicks the button
-        function openModal{{ counter }}() {
-            myModal{{ counter }}.open();
+        function openModal{{ checkin.id|replace({'-': ''}) }}() {
+            myModal{{ checkin.id|replace({'-': ''}) }}.open();
         }
         // Called when the user clicks the button
-        function closeModal{{ counter }}() {
-            myModal{{ counter }}.close();
+        function closeModal{{ checkin.id|replace({'-': ''}) }}() {
+            myModal{{ checkin.id|replace({'-': ''}) }}.close();
         }
     </script>
-    {% set counter = counter + 1 %}
 {% endfor %}
 
 {% if app.request.query.get('showCheckin') %}
 <script>
     $(window).on('load',function(){
-        setTimeout(
-            function()
-            {
-                openModal0();
-            }, 1000);
+        openModal0();
     });
 </script>
 {% endif %}
