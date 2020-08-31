@@ -41,20 +41,21 @@ class DownloadController extends AbstractController
         $section = $phpWord->addSection();
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $filename = dirname(__FILE__, 3)."/var/{$order['reference']}.docx";
-        $objWriter->save($filename);
-        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filename);
-//        $rendererName = Settings::PDF_RENDERER_DOMPDF;
-//        $rendererLibraryPath = realpath('/../vendor/dompdf/dompdf');
-//        Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
-//        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
-//        $filename = dirname(__FILE__, 3)."/var/{$order['reference']}.pdf";
-//        $xmlWriter->save($filename);
-        header('Content-Disposition: attachment; filename='.$order['reference'].'.docx');
+        $filenameDocx = dirname(__FILE__, 3)."/var/{$order['reference']}.docx";
+        $objWriter->save($filenameDocx);
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filenameDocx);
+        $rendererName = Settings::PDF_RENDERER_DOMPDF;
+        $rendererLibraryPath = realpath('../vendor/dompdf/dompdf');
+        Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+        $filename = dirname(__FILE__, 3)."/var/{$order['reference']}.pdf";
+        $xmlWriter->save($filename);
+        header('Content-Disposition: attachment; filename='.$order['reference'].'.pdf');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         flush();
         readfile($filename);
         unlink($filename); // deletes the temporary file
+        unlink($filenameDocx);
         exit;
     }
 
@@ -73,20 +74,21 @@ class DownloadController extends AbstractController
         $section = $phpWord->addSection();
         \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
         $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
-        $filename = dirname(__FILE__, 3)."/var/{$order['name']}.docx";
-        $objWriter->save($filename);
-        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filename);
-//        $rendererName = Settings::PDF_RENDERER_DOMPDF;
-//        $rendererLibraryPath = realpath('/../vendor/dompdf/dompdf');
-//        Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
-//        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
-//        $filename = dirname(__FILE__, 3)."/var/{$order['reference']}.pdf";
-//        $xmlWriter->save($filename);
-        header('Content-Disposition: attachment; filename='.$order['name'].'.docx');
+        $filenameDocx = dirname(__FILE__, 3)."/var/{$order['name']}.docx";
+        $objWriter->save($filenameDocx);
+        $phpWord = \PhpOffice\PhpWord\IOFactory::load($filenameDocx);
+        $rendererName = Settings::PDF_RENDERER_DOMPDF;
+        $rendererLibraryPath = realpath('../vendor/dompdf/dompdf');
+        Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+        $filename = dirname(__FILE__, 3)."/var/{$order['reference']}.pdf";
+        $xmlWriter->save($filename);
+        header('Content-Disposition: attachment; filename='.$order['name'].'.pdf');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         flush();
         readfile($filename);
         unlink($filename); // deletes the temporary file
+        unlink($filenameDocx); // deletes the temporary file
         exit;
     }
 }
