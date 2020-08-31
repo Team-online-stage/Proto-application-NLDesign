@@ -1,69 +1,80 @@
-{% set application = commonground_resource({'component':'wrc','type':'applications','id': app_id }) %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>{% if application is defined %}{{ application.name }}{% else %}Dashboard{% endif %}</title>
-	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="https://via.placeholder.com/50" type="image/x-icon"/>
+{# templates/home/index.html.twig #}
 
-	<!-- Fonts and icons -->
-	<script src="{{ asset('assets/js/plugin/webfont/webfont.min.js') }}"></script>
-	<script>
-		WebFont.load({
-			google: {"families":["Lato:300,400,700,900"]},
-			custom: {"families":["Flaticon", "Font Awesome 5 Solid", "Font Awesome 5 Regular", "Font Awesome 5 Brands", "simple-line-icons"], urls: ['../assets/css/fonts.min.css']},
-			active: function() {
-				sessionStorage.fonts = true;
-			}
-		});
-	</script>
+{% extends 'content.html.twig' %}
 
-	<!-- CSS Files -->
-	<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
-	<link rel="stylesheet" href="{{ asset('assets/css/atlantis.css') }}">
+{% block content %}
 
-    {% if application.style is defined %}
-    <!-- Commonground Overwrites -->
-    <style>
-        {{  application.style.css }}
-    </style>
-    {% endif %}
+    <section class="row">
+        <div class="col-xl-9 col-lg-8 col-md-9">
 
-</head>
-<body class="login">
-	<div class="wrapper wrapper-login">
-		<div class="container container-login animated fadeIn">
-			<h3 class="text-center">{{ commonground_application()['name'] }}</h3>
-            <form action="{{ path('app_user_login') }}" method="post" class="login-form">
-                {# if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif#}
-                <div class="form-group form-floating-label">
-                    <input id="username" name="username" type="text" class="form-control input-border-bottom" required>
-                    <label for="username" class="placeholder">Username</label>
+            <div class="content">
+                <header class="content__header">
+                    <h1 class="content__header-title">{{ 'login'|trans|capitalize }}</h1>
+                </header>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="row">
+        <div class="col-xl-9 col-lg-8 col-md-9">
+            <div class="content-background">
+                <div class="skiplink-target content" id="main-content">
+
+                    {% if application['defaultConfiguration']['configuration']['login']['digid'] is defined and application['defaultConfiguration']['configuration']['login']['digid'] %}
+                        <h2 id="inloggen-verzuimloket">{{ 'for citizen'|trans|capitalize }}</h2>
+                        <p>
+                            <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ backUrl }}"
+                               class="btn btn--digid btn-block">{{ 'digid'|trans|capitalize }}</a></p>
+                    {% endif %}
+
+                    {% if application['defaultConfiguration']['configuration']['login']['eherkening'] is defined and application['defaultConfiguration']['configuration']['login']['eherkening'] %}
+                        <h2 id="inloggen-verzuimloket">{{ 'for businesses'|trans|capitalize }}</h2>
+                        <p>
+                            <a href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ backUrl }}"
+                               class="btn btn--eherkenning btn-block">{{ 'e-herkening'|trans|capitalize }}</a></p>
+                    {% endif %}
+
+                    {% if application['defaultConfiguration']['configuration']['login']['idin'] is defined and application['defaultConfiguration']['configuration']['login']['idin'] %}
+                        <h2 id="inloggen-verzuimloket">{{ 'for citizen'|trans|capitalize }}</h2>
+                        <p>
+                            <a href="{{ path('app_user_idin') }}"
+                               class="btn btn--idin btn-block">{{ 'iDin'|trans|capitalize }}</a></p>
+                    {% endif %}
+
+                    {% if application['defaultConfiguration']['configuration']['login']['user'] is defined and application['defaultConfiguration']['configuration']['login']['user'] %}
+                        <h2 id="inloggen-verzuimloket">{{ 'for employees'|trans|capitalize }}</h2>
+
+                        <form method="post" action="{{ path('app_user_login') }}"
+                              name="thisForm">
+
+                            <div class="input">
+                                <label class="input__label" for="username">{{ 'username'|trans|capitalize }}<span
+                                        style="color: red">*</span></label>
+                                <input required="" type="text" id="username" name="username"
+                                       class="input__control input__control--l input__control--text">
+                            </div>
+
+                            <div class="input">
+                                <label class="input__label" for="password">{{ 'password'|trans|capitalize }}<span
+                                        style="color: red">*</span></label>
+                                <input required="" type="password" id="password" name="password"
+                                       class="input__control input__control--l input__control--text">
+                            </div>
+
+
+                            <div class="input">
+                                <button type="submit" id="registreren" class="btn">{{ 'login'|trans|capitalize }} <i
+                                        class="icon icon-arr-forward"></i></button>
+                            </div>
+
+                            <p><a href="{{ path('app_user_register') }}"
+                                  class="btn btn-block">{{ 'register'|trans|capitalize }}</a></p>
+
+                        </form>
+                    {% endif %}
                 </div>
-                <div class="form-group form-floating-label">
-                    <input id="password" name="password" type="password" class="form-control input-border-bottom" required>
-                    <label for="password" class="placeholder">Password</label>
-                    <div class="show-password">
-                        <i class="icon-eye"></i>
-                    </div>
-                </div>
-                <div class="form-action mb-3">
-                    <button class="btn btn-primary btn-rounded btn-login" type="submit">
-                        Sign in
-                    </button>
-                </div>
-
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
-            </form>
-		</div>
-	</div>
-	<script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
-	<script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
-	<script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-	<script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-	<script src="{{ asset('assets/js/atlantis.min.js') }}"></script>
-</body>
-</html>
+            </div>
+        </div>
+    </div>
+{% endblock %}

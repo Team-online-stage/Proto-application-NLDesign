@@ -57,7 +57,7 @@ class ZZController extends AbstractController
             $resource = $request->request->all();
             if (array_key_exists('@component', $resource)) {
                 // Passing the variables to the resource
-                $configuration = $commonGroundService->saveResource($resource, ['component' => $resource['@component'], 'type' => $resource['@type']]);
+                $resource = $commonGroundService->saveResource($resource, ['component' => $resource['@component'], 'type' => $resource['@type']]);
             }
         }
 

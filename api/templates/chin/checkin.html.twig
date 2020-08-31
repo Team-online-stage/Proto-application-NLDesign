@@ -1,0 +1,12 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+{% block container %}
+    <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
+        <div class="row">
+            <div class="container">
+                {% include 'chin/widgets/checkin_widget.html.twig' %}
+            </div><!-- /.container -->
+        </div><!-- /.row -->
+    </form>
+{% endblock %}
