@@ -709,6 +709,18 @@
         <source>additional name</source>
         <target>tussenvoegsel</target>
       </trans-unit>
+      <trans-unit id="iN72G2e" resname="your name">
+        <source>your name</source>
+        <target>uw naam</target>
+      </trans-unit>
+      <trans-unit id="3gAfe14" resname="your phone number">
+        <source>your phone number</source>
+        <target>uw telefoonnummer</target>
+      </trans-unit>
+      <trans-unit id="6VEW3z1" resname="your e-mail">
+        <source>your e-mail</source>
+        <target>uw e-mail</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
