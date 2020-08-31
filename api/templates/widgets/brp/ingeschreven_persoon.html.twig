@@ -63,15 +63,6 @@
 
         <!-- Page Break -->
         <div style="height: 20px;"></div>
-
-        <ul class="tab tab--inline" role="tablist">
-            <li class="tab__tab tab__tab--active" role="tab" aria-controls="panel2-1" id="tab2-1"><a href="#panel2-1">Zoeken</a></li>
-            <li class="tab__tab" role="tab" aria-controls="panel2-2" id="tab2-2"><a href="#panel2-2">Invoeren</a></li>
-        </ul>
-
-        <!-- Page Break -->
-        <div style="height: 20px;"></div>
-
         <div class="tab__content tab__content--inline">
 
             <section class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
@@ -101,48 +92,6 @@
                 </script>
 
             </section>
-
-            <section class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
-                <h3>Bsnnummer:</h3>
-                <div class="input input--horizontal">
-
-                    <input type="text" id="bsnhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--s">
-                </div>
-
-                <h3>Naam:</h3>
-                <div class="input input--horizontal">
-
-                    <input type="text" id="naamhandmatig" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
-                </div>
-
-                <!-- Page Break -->
-                <div style="height: 20px;"></div>
-
-                <h3>Geboortedatum:</h3>
-                <div class="input">
-
-                    <div class="input__control-group">
-                        <div>
-                            <label class="input__hint" for="date_of_birth-d">dag</label>
-                            <input aria-label="Geboortedag" title="Geboortedag" type="number" min="1" max="31" id="date_of_birth-d" class="input__control input__control--two-characters input__control--linked input__control--text">
-                        </div>
-                        <div>
-                            <label class="input__hint" for="date_of_birth-m">maand</label>
-                            <input aria-label="Geboortemaand" title="Geboortemaand" type="number" min="1" max="12" id="date_of_birth-m" class="input__control input__control--two-characters input__control--linked input__control--text">
-                        </div>
-                        <div>
-                            <span class="input__hint" for="date_of_birth-y">jaar</span>
-                            <input aria-label="Geboortejaar" title="Geboortejaar" type="number" id="date_of_birth-y" class="input__control input__control--four-characters input__control--linked input__control--text">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="input">
-                    <button type="submit" class="btn btn--primary" value="bsn">Selecteren</button>
-                </div>
-
-            </section>
-
         </div>
 
         <input type="hidden" id="selectedIngeschrevenpersoon" name="request[properties][{{ property.name }}]">
