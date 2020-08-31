@@ -105,7 +105,7 @@ class ChinController extends AbstractController
      */
     public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-        $session->clear('newcheckin');
+        $session->remove('newcheckin');
 
         $variables = [];
         $createCheckin = $request->request->get('createCheckin');
