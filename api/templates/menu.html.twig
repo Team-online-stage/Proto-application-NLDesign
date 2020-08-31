@@ -106,20 +106,14 @@
 
                     {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
                         <li><a href="{{ item.href }}">{{ item.name }}</a><i class="{{ item.icon }}"
-                                                                            role="presentation"></i>
+                                                                            role="presentation"> </i>
                         </li>
                     {% endfor %}
                 {% endif %}
 
                 {% if not app.user %}
                 {% else %}
-                    {% if application.defaultConfiguration.configuration.userPage is defined %}
-                        <li><a href="/{{ application.defaultConfiguration.configuration.userPage }}"
-                               title="Profile">{{ app.user.username }}</a><i class="fas fa-user"
-                                                                             role="presentation"></i>
-                        </li>
-                    {% endif %}
-                    <li><a href="{{ path('app_user_logout') }}" title="Profile">{{ 'logout'|trans|capitalize }}</a><i
+                    <li><a href="{{ path('app_user_logout') }}" title="Profile">{{ 'logout'|trans|capitalize }}</a> <i
                             class="fas fa-unlock" role="presentation"></i>
                     </li>
                 {% endif %}
