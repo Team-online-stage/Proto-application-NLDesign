@@ -1,3 +1,4 @@
+{% if app.user.person is defined and app.user.person is not empty %}
 <ul class="definition-list">
     {% set user = commonground_resource(app.user.person) %}
     {% if user.naam.voornamen is defined and user.naam.voornamen is not empty %}
@@ -137,3 +138,4 @@
         </script>
     {% endif %}
 </ul>
+{% endif %}
