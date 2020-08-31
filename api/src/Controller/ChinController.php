@@ -169,6 +169,7 @@ class ChinController extends AbstractController
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
+
         } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
             $node = $request->request->get('node');
             $firstName = $request->request->get('firstName');
