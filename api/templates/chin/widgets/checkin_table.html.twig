@@ -49,6 +49,10 @@
         function openModal{{ counter }}() {
             myModal{{ counter }}.open();
         }
+        // Called when the user clicks the button
+        function closeModal{{ counter }}() {
+            myModal{{ counter }}.close();
+        }
     </script>
     {% set counter = counter + 1 %}
 {% endfor %}

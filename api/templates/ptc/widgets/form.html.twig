@@ -12,10 +12,12 @@
                 {% if property.type == 'array' and property.format == 'bsn' %}
                     {% include 'ptc/formelements/person.html.twig' %}
 
+                {# should be depracticed#}
                 {% elseif property.format == 'bag' %}
                     {% include 'ptc/formelements/bag/address.html.twig' %}
 
-
+                {% elseif property.iri == 'bag/address' %}
+                    {% include 'ptc/formelements/bag/address.html.twig' %}
                 {% elseif property.iri == 'wrc/organizations' %}
                     {% include 'ptc/formelements/organizations.html.twig' %}
                 {% elseif property.iri == 'grc/cemetery' %}
@@ -32,6 +34,10 @@
                     {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
                 {% elseif property.iri == 'irc/assent' %}
                     {% include 'ptc/formelements/assent.html.twig' %}
+                {% elseif property.iri == 'cc/people' %}
+                    {% include 'ptc/formelements/people.html.twig' %}
+                {% elseif property.iri == 'cc/organization' %}
+                    {% include 'ptc/formelements/organization.html.twig' %}
 
                     {# Let slook for formats #}
                 {% elseif property.format == 'phonenumber' %}
