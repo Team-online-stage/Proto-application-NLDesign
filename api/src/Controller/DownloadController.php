@@ -47,7 +47,7 @@ class DownloadController extends AbstractController
         $rendererName = Settings::PDF_RENDERER_DOMPDF;
         $rendererLibraryPath = realpath('../vendor/dompdf/dompdf');
         Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
-        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
         $filename = dirname(__FILE__, 3)."/var/{$order['reference']}.pdf";
         $xmlWriter->save($filename);
         header('Content-Disposition: attachment; filename='.$order['reference'].'.pdf');
@@ -80,7 +80,7 @@ class DownloadController extends AbstractController
         $rendererName = Settings::PDF_RENDERER_DOMPDF;
         $rendererLibraryPath = realpath('../vendor/dompdf/dompdf');
         Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
-        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+        $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
         $filename = dirname(__FILE__, 3)."/var/{$order['reference']}.pdf";
         $xmlWriter->save($filename);
         header('Content-Disposition: attachment; filename='.$order['name'].'.pdf');
