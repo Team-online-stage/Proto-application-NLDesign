@@ -27,6 +27,8 @@
                 {% elseif property.iri == 'arc/event' %}
                     {% include 'ptc/formelements/event.html.twig' %}
 
+                {% elseif property.iri == 'lc/accommodation' %}
+                    {% include 'ptc/formelements/accommodation.html.twig' %}
                 {% elseif property.iri == 'pdc/offer' %}
                     {% include 'ptc/formelements/pdc/offer.html.twig' %}
 
@@ -37,6 +39,8 @@
                 {% elseif property.iri == 'cc/people' %}
                     {% include 'ptc/formelements/people.html.twig' %}
                 {% elseif property.iri == 'cc/organization' %}
+                    {% include 'ptc/formelements/organization.html.twig' %}
+                {% elseif property.iri == 'wrc/organization' %}
                     {% include 'ptc/formelements/organization.html.twig' %}
 
                     {# Let slook for formats #}
