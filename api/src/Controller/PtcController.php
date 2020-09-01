@@ -132,6 +132,9 @@ class PtcController extends AbstractController
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
 
+        // Aditionally some one might have tried to pre-fill the form, wich we will then use overwrite the data
+        $variables['request'] = array_merge($variables['request'], $request->query->all());
+
         if ($request->isMethod('POST')) {
             // the second argument is the value returned when the attribute doesn't exist
             $resource = $request->request->all();
