@@ -165,7 +165,7 @@ class ChinController extends AbstractController
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
-                return $this->redirect($application['defaultConfiguration']['configuration']['userPage']);
+                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
@@ -200,7 +200,7 @@ class ChinController extends AbstractController
             $session->set('person', $person);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
-                return $this->redirect($application['defaultConfiguration']['configuration']['userPage']);
+                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
