@@ -1,5 +1,16 @@
 
-{% set offers = commonground_resource_list({'component':'pdc', 'type':'offers'}, property.query)["hydra:member"] %}
+{% set queryArray = [] %}
+{% for key, value in property.query %}
+    {% if 'request.properties' in value %}
+        {% set newValue = include(template_from_string(value)) %}
+        {% set queryArray = queryArray|merge({ (key): newValue }) %}
+    {% else %}
+        {% set queryArray = queryArray|merge({ (key): value }) %}
+    {% endif %}
+{% endfor %}
+
+
+{% set offers = commonground_resource_list({'component':'pdc', 'type':'offers'}, queryArray)["hydra:member"] %}
 <div class="input input--horizontal">
     <div>
         <label class="input__label" for="{{ property.id }}">{{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
