@@ -111,6 +111,7 @@ class ChinController extends AbstractController
 
         $variables = [];
         $createCheckin = $request->request->get('createCheckin');
+
         // Fallback options of establishing
         if (!$code) {
             $code = $request->query->get('code');
