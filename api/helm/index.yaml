@@ -3,10 +3,10 @@ entries:
   db:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-08-27T13:43:29.614607726Z"
+    created: "2020-08-31T13:35:46.637653526Z"
     description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&#039;'
-    digest: f44b043f98eb92d4783ccb4670bbe4609dda91022941857dc7dba423736fd120
+    digest: 43f364c339fa5c958591c4db5740d597848da9c6c07aed3f1fa5e2c592402542
     home: huwelijksplanner.online
     icon: huwelijksplanner.online
     name: db
@@ -16,14 +16,14 @@ entries:
   pan:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-08-27T13:43:29.625101626Z"
-    description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
-      beschikbaar.
-    digest: 8deed50f897a074821b06fe15867b157e542b0a2dc33a2103ff9cd9559743fe1
-    home: www.westfriesland.commonground.nu
-    icon: www.westfriesland.commonground.nu
+    created: "2020-08-31T13:35:46.640850626Z"
+    description: '&#039;Naast deze JSON rest API is er ook een [graphql](/graphql)
+      interface beschikbaar.&#039;'
+    digest: 79028b7845962275bf246edaa3453fc7e0d6fa032c7eb09961b7f73a13884054
+    home: www.zuid-drecht.nl
+    icon: www.zuid-drecht.nl
     name: pan
     urls:
     - pan-0.1.0.tgz
     version: 0.1.0
-generated: "2020-08-27T13:43:29.610944626Z"
+generated: "2020-08-31T13:35:46.634386026Z"

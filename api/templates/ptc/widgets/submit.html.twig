@@ -16,89 +16,96 @@
                         </p>
                     </div>
                 </li>
-                {% if request.requestType is defined and request.requestType is not empty %}
-                {% for prop in commonground_resource(request.requestType).properties %}
-                    <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title">
-                        {{ prop.name|capitalize|replace({"_":" "}) }}
-                    </div>
-                        <div class="definition-list__description">
-                    {% for key, property in request.properties %}
-                        {% if key == prop.name %}
-
-                            {% if property is iterable %}
-                                {% for key, value in property %}
-                                    {% if value is iterable %}
-                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 49%; margin-left: 0px; display: inline-block">
-                                    {% for item in value %}
-                                        {% if item is iterable %}
-                                        {% for subItem in item %}
-                                            {% if 'http' in subItem %}
-                                                <li>{{ commonground_resource(subItem).name|capitalize }}</li>
-                                            {% else %}
-                                                {% if subItem != '' %}
-                                                <li>{{ subItem|capitalize }}</li>
-                                                {% endif %}
-                                            {% endif %}
-                                            {% endfor %}
-                                        {% else %}
-                                            {% if 'http' in item %}
-                                                <li>{{ commonground_resource(item).name|capitalize }}</li>
-                                            {% else %}
-                                                {% if item != '' %}
-                                                <li>{{ item|capitalize }}</li>
-                                                {% endif %}
-                                            {% endif %}
-                                        {% endif %}
-                                        {% endfor %}
-                                    </ul>
-                                    {% else %}
-                                        {% if 'http' in value %}
-                                            {{ commonground_resource(value).name|capitalize }}<br>
-                                        {% else %}
-                                            {{ value|capitalize }}<br>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            {# else %}
-                                {% if commonground_is_resource(property) %}
-                                    {% set property = commonground_resource(property) %}
-                                    {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}
-                                        {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
-                                    {% elseif property.reference is defined %}
-                                        {{ property.reference }}
-                                    {% elseif property.name is defined %}
-                                        {{ property.name }}
-                                    {% endif #}
-                        {% else %}
-                            {% if 'http' in property %}
-                                        {# if commonground_resource(property)['@type'] == 'Adres' %}
-                                            {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
-                                        {% else %}
-                                            {{ commonground_resource(property).name|capitalize }}
-                                        {% endif #}
-                                {% if 'enkelvoudiginformatieobjecten' in property %}
-                                    <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>
-                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}
-                                    {{ commonground_resource(property).reference }}<br>
-                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}
-                                    {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>
-                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Adres' %}
-                                    {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}
-                                {% else %}
-                                    {{ commonground_resource(property).name|capitalize }}
-                                {% endif %}
-                            {% else %}
-                                {{ property|capitalize }}
-                            {% endif %}
-                                {# endif #}
-                            {% endif %}
-                    </div>
-                        {% endif %}
+                {% for stage in process.stages %}
+                    {% for section in stage.sections %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            {{ dump(section) }}
+                        </li>
                     {% endfor %}
-                </li>
                 {% endfor %}
-                {% endif %}
+{#                {% if request.requestType is defined and request.requestType is not empty %}#}
+{#                {% for prop in commonground_resource(request.requestType).properties %}#}
+{#                    <li class="definition-list__item definition-list__item--horizontal">#}
+{#                    <div class="definition-list__title">#}
+{#                        {{ prop.name|capitalize|replace({"_":" "}) }}#}
+{#                    </div>#}
+{#                        <div class="definition-list__description">#}
+{#                    {% for key, property in request.properties %}#}
+{#                        {% if key == prop.name %}#}
+
+{#                            {% if property is iterable %}#}
+{#                                {% for key, value in property %}#}
+{#                                    {% if value is iterable %}#}
+{#                                        <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 49%; margin-left: 0px; display: inline-block">#}
+{#                                    {% for item in value %}#}
+{#                                        {% if item is iterable %}#}
+{#                                        {% for subItem in item %}#}
+{#                                            {% if 'http' in subItem %}#}
+{#                                                <li>{{ commonground_resource(subItem).name|capitalize }}</li>#}
+{#                                            {% else %}#}
+{#                                                {% if subItem != '' %}#}
+{#                                                <li>{{ subItem|capitalize }}</li>#}
+{#                                                {% endif %}#}
+{#                                            {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                        {% else %}#}
+{#                                            {% if 'http' in item %}#}
+{#                                                <li>{{ commonground_resource(item).name|capitalize }}</li>#}
+{#                                            {% else %}#}
+{#                                                {% if item != '' %}#}
+{#                                                <li>{{ item|capitalize }}</li>#}
+{#                                                {% endif %}#}
+{#                                            {% endif %}#}
+{#                                        {% endif %}#}
+{#                                        {% endfor %}#}
+{#                                    </ul>#}
+{#                                    {% else %}#}
+{#                                        {% if 'http' in value %}#}
+{#                                            {{ commonground_resource(value).name|capitalize }}<br>#}
+{#                                        {% else %}#}
+{#                                            {{ value|capitalize }}<br>#}
+{#                                        {% endif %}#}
+{#                                    {% endif %}#}
+{#                                {% endfor %}#}
+{#                            #}{# else %}#}
+{#                                {% if commonground_is_resource(property) %}#}
+{#                                    {% set property = commonground_resource(property) %}#}
+{#                                    {% if property.naam.voornamen is defined and property.naam.geslachtsnaam is defined %}#}
+{#                                        {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}#}
+{#                                    {% elseif property.reference is defined %}#}
+{#                                        {{ property.reference }}#}
+{#                                    {% elseif property.name is defined %}#}
+{#                                        {{ property.name }}#}
+{#                                    {% endif #}
+{#                        {% else %}#}
+{#                            {% if 'http' in property %}#}
+{#                                        #}{# if commonground_resource(property)['@type'] == 'Adres' %}#}
+{#                                            {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}#}
+{#                                        {% else %}#}
+{#                                            {{ commonground_resource(property).name|capitalize }}#}
+{#                                        {% endif #}
+{#                                {% if 'enkelvoudiginformatieobjecten' in property %}#}
+{#                                    <a href="{{ path('app_drc_download',{'resource':property|url_encode})}}">Download</a>#}
+{#                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Cemetery' %}#}
+{#                                    {{ commonground_resource(property).reference }}<br>#}
+{#                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Ingeschrevenpersoon' %}#}
+{#                                    {{ commonground_resource(property).naam.voornamen }} {{ commonground_resource(property).naam.geslachtsnaam }} <br>#}
+{#                                {% elseif commonground_resource(property)['@type'] is defined and commonground_resource(property)['@type'] == 'Adres' %}#}
+{#                                    {{ commonground_resource(property).straat|capitalize }} {{ commonground_resource(property).huisnummer }}#}
+{#                                {% else %}#}
+{#                                    {{ commonground_resource(property).name|capitalize }}#}
+{#                                {% endif %}#}
+{#                            {% else %}#}
+{#                                {{ property|capitalize }}#}
+{#                            {% endif %}#}
+{#                                #}{# endif #}
+{#                            {% endif %}#}
+{#                    </div>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                </li>#}
+{#                {% endfor %}#}
+{#                {% endif %}#}
             </ul>
         {% endif %}
 
