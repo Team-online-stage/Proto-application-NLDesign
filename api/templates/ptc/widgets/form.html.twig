@@ -3,7 +3,7 @@
 
 {% if stage.sections is defined and stage.sections is not empty %}
 {% for section in stage.sections|sort((a, b) => a.orderNumber <=> b.orderNumber) %}
-            <h2>{{ section.name|capitalize }} {% if section.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this section'|trans|capitalize }}"></span>{% endif %}</h2>
+            <h2>{{ section.name|capitalize }} {% if section.valid is defined and section.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this section'|trans|capitalize }}"></span>{% endif %}</h2>
             <p>{{ section.description|capitalize }}</p>
 
 
