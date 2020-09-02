@@ -52,14 +52,6 @@
                 {% if not app.user %}
                 <li class="definition-list__item definition-list__item--horizontal">
                     <div class="definition-list__title">
-                        <span>Locatie</span>
-                    </div>
-                    <div class="definition-list__description">
-                        <p style="color: #000000">{{ resource.name }}</p>
-                    </div>
-                </li>
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title">
                         <span>Plaats</span>
                     </div>
                     <div class="definition-list__description">
@@ -101,7 +93,7 @@
                 <div class="row">
                     <a id="checkinIdin" href="{{ path('app_user_idin') }}"
                        class="btn btn--idin">{{ 'check-in'|trans|capitalize }}</a>
-                    <button style="margin-left: 40px" id="showInfoFormButton" onclick="showInfoForm()"
+                    <button style="margin-top: 10px" id="showInfoFormButton" onclick="showInfoForm()"
                             class="btn">{{ 'check-in without login'|trans|capitalize }}</button>
                 </div>
 
