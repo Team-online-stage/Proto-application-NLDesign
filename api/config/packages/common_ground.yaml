@@ -155,10 +155,10 @@ parameters:
     env(APP_COMMONGROUND_BAG_LOCATION): "https://bag.basisregistraties.overheid.nl/api/v1/"
     env(APP_COMMONGROUND_BAG_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
     # KamerVanKoophandel
-    env(APP_COMMONGROUND_KVK_LOCATION): "https://kvk.%env(APP_DOMAIN)%"
-    env(APP_COMMONGROUND_KVK_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-    common_ground.kvk.location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
-    common_ground.kvk.apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
+#    env(APP_COMMONGROUND_KVK_LOCATION): "https://kvk.%env(APP_DOMAIN)%"
+#    env(APP_COMMONGROUND_KVK_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+#    common_ground.kvk.location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
+#    common_ground.kvk.apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
     # DienstWegverkeer
     env(APP_COMMONGROUND_RDW_LOCATION): "https://rdw.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_RDW_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
@@ -238,9 +238,9 @@ parameters:
         bag:
             location: "%env(APP_COMMONGROUND_BAG_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_BAG_APIKEY)%"
-        kvk:
-            location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
-            apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
+#        kvk:
+#            location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
+#            apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
         rdw:
             location: "%env(APP_COMMONGROUND_RDW_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_RDW_APIKEY)%"
