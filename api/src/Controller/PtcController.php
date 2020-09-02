@@ -81,8 +81,7 @@ class PtcController extends AbstractController
         VrcService $vrcService,
         PtcService $ptcService,
         ParameterBagInterface $params
-    )
-    {
+    ) {
         $variables = [];
         $variables['slug'] = $stage;
         $variables['submit'] = $request->query->get('submit', 'false');
