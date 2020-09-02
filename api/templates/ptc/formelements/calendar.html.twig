@@ -10,17 +10,17 @@
 </style>
 <table class="table table--small-font">
     <thead>
-        <tr>
-            <th><select id="weekSelect" onchange="weekSelector(this)"  class="calendarSelect">
-                </select></th>
-            <th style="text-align: center">Ma<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Di<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Woe<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Do<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Vrij<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Zat<br><p style="font-weight: 100" class="week"></p></th>
-            <th style="text-align: center">Zon<br><p style="font-weight: 100" class="week"></p></th>
-        </tr>
+    <tr>
+        <th><select id="weekSelect" onchange="weekSelector(this)"  class="calendarSelect">
+            </select></th>
+        <th style="text-align: center">Ma<br><p style="font-weight: 100" class="day"></p></th>
+        <th style="text-align: center">Di<br><p style="font-weight: 100" class="day"></p></th>
+        <th style="text-align: center">Woe<br><p style="font-weight: 100" class="day"></p></th>
+        <th style="text-align: center">Do<br><p style="font-weight: 100" class="day"></p></th>
+        <th style="text-align: center">Vrij<br><p style="font-weight: 100" class="day"></p></th>
+        <th style="text-align: center">Zat<br><p style="font-weight: 100" class="day"></p></th>
+        <th style="text-align: center">Zon<br><p style="font-weight: 100" class="day"></p></th>
+    </tr>
     </thead>
     <tbody>
     <tr style="height: 60px;" class="days">
@@ -56,10 +56,14 @@
 
 
 <input id="calendarValue"  type="hidden" name="request[properties][{{ property.name }}]"
-value="">
+       value="">
 <script>
 
     Date.prototype.getWeek = function (dowOffset) {
+
+        var d = new Date();
+        var n = d.getDay();
+
 
         dowOffset = typeof(dowOffset) == 'int' ? dowOffset : 0;
         let newYear = new Date(this.getFullYear(),0,1);
@@ -143,27 +147,29 @@ value="">
     function weekSelector(week) {
         const months = ['Jan', 'Feb', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
+        var currentDateInMs = new Date().getTime();
+
+        var currentDay = new Date().getDay();
+        var currentWeek = new Date().getWeek();
+
         let arr = week.value.split('-');
         let date = getDateOfWeek(arr[0], arr[1]);
-        let weeks = document.getElementsByClassName('week');
-        for(let i = 0; i < weeks.length; i ++){
+        let days = document.getElementsByClassName('day');
+        for(let i = 0; i < days.length; i ++){
             let buttons = document.getElementsByClassName('button-'+i.toString());
+            let dayOfButtonRowInMs = date.setDate(date.getDate() + i);
+            console.log(dayOfButtonRowInMs);
             for(let j = 0; j < buttons.length; j++){
                 buttons[j].name = date.getDate() + ' ' + months[date.getMonth()];
                 buttons[j].innerText = 'kies';
                 buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: #148839; border: 1px solid lightgray;');
-                if(date.getDay() === 0){
-                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
-                    buttons[j].innerText = '';
-                    buttons[j].setAttribute('disabled', 'disabled');
-                }
-                if(date.getDay() === 6){
+                if(dayOfButtonRowInMs < currentDateInMs || (currentWeek == arr[0] && i+1 === currentDay)){
                     buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
                     buttons[j].innerText = '';
                     buttons[j].setAttribute('disabled', 'disabled');
                 }
             }
-            weeks[i].innerHTML= date.getDate() + ' ' + months[date.getMonth()];
+            days[i].innerHTML= date.getDate() + ' ' + months[date.getMonth()];
             date.setDate(date.getDate() + 1);
         }
     }
