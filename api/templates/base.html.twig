@@ -475,6 +475,28 @@
             width: 40px;
             idth: 4rem
         }
+
+        .btn--facebook {
+            margin-right: 50px;
+            margin-right: 5rem;
+            position: relative
+        }
+
+        .btn--facebook:before {
+            background-image: url("../images/facebook.svg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            content: "";
+            height: 40px;
+            height: 4rem;
+            position: absolute;
+            right: -50px;
+            right: -5rem;
+            top: 4px;
+            top: .4rem;
+            width: 40px;
+            idth: 4rem
+        }
     </style>
 
     {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
