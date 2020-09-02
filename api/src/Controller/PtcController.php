@@ -7,8 +7,8 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Conduction\CommonGroundBundle\Service\VrcService;
 use Conduction\CommonGroundBundle\Service\PtcService;
+use Conduction\CommonGroundBundle\Service\VrcService;
 use DateTime;
 use function GuzzleHttp\Promise\all;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -80,7 +80,8 @@ class PtcController extends AbstractController
         CommonGroundService $commonGroundService,
         VrcService $vrcService,
         PtcService $ptcService,
-        ParameterBagInterface $params)
+        ParameterBagInterface $params
+    )
     {
         $variables = [];
         $variables['slug'] = $stage;
