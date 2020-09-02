@@ -7,6 +7,7 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Conduction\CommonGroundBundle\Service\PtcService;
 use Conduction\CommonGroundBundle\Service\VrcService;
 use DateTime;
 use function GuzzleHttp\Promise\all;
@@ -71,8 +72,16 @@ class PtcController extends AbstractController
      * @Route("/process/{id}/{stage}", name="app_ptc_process_stage")
      * @Template
      */
-    public function processAction(Session $session, $id, $stage = false, Request $request, CommonGroundService $commonGroundService, VrcService $vrcService, ParameterBagInterface $params)
-    {
+    public function processAction(
+        Session $session,
+        $id,
+        $stage = false,
+        Request $request,
+        CommonGroundService $commonGroundService,
+        VrcService $vrcService,
+        PtcService $ptcService,
+        ParameterBagInterface $params
+    ) {
         $variables = [];
         $variables['slug'] = $stage;
         $variables['submit'] = $request->query->get('submit', 'false');
@@ -95,8 +104,6 @@ class PtcController extends AbstractController
 
         $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
 
-        // Let load the request on the procces and validate it
-        $variables['process'] = $vrcService->fillProcess($variables['process'], $variables['request']);
         //var_dump($variables['process']);
 
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
@@ -131,6 +138,9 @@ class PtcController extends AbstractController
         if (!array_key_exists('stage', $variables)) {
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
+
+        // Aditionally some one might have tried to pre-fill the form, wich we will then use overwrite the data
+        $variables['request'] = array_merge($variables['request'], $request->query->all());
 
         if ($request->isMethod('POST')) {
             // the second argument is the value returned when the attribute doesn't exist
@@ -194,6 +204,9 @@ class PtcController extends AbstractController
             $variables['request'] = $request;
             $session->set('request', $request);
         }
+
+        // Let load the request on the procces and validate it
+        $variables['process'] = $ptcService->extendProcess($variables['process'], $variables['request']);
 
         /* lagacy */
         $variables['resource'] = $variables['request'];

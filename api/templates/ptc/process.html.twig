@@ -11,7 +11,7 @@
                     {% if stage.name is defined %}
                     <h1 class="content__header-title">
                         {{ stage.name|capitalize }}
-                        {% if stage.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this stage'|trans|capitalize }}"></span>{% endif %}
+                        {% if stage.valid is defined and stage.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this stage'|trans|capitalize }}"></span>{% endif %}
                     </h1>
                     {{ stage.description }}
                     {% else %}

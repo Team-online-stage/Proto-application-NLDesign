@@ -13,4 +13,9 @@ name: naam
 created: aangemaakt
 modified: aangepast
 status: status
-resume: hervat
+request: verzoek
+event: afspraak
+calendar: agenda
+orderitem: product bij bestelling
+givenname: voornaam
+value is empty: nog geen waarde opgegeven

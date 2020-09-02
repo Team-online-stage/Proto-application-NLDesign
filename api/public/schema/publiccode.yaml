@@ -1,13 +1,13 @@
 publiccodeYmlVersion: "0.2"
 
-name: pan
+name: db
 applicationSuite: commonground
-url: "https://github.com/ConductionNL/pan"
-landingURL: "www.westfriesland.commonground.nu" 
+url: "https://github.com/ConductionNL/Commonground-dashboard"
+landingURL: "https://db.huwelijksplanner.online" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V.0.1"
-releaseDate: "2020-27-08"
-logo: www.westfriesland.commonground.nu 
+releaseDate: "2020-02-09"
+logo: www.zuid-drecht.nl 
 monochromeLogo: img/logo-mono.svg
 
 inputTypes:
@@ -37,7 +37,7 @@ usedBy:
   - Gemeente Hoorn
   
 
-roadmap: "https://github.com/ConductionNL/pan/blob/master/ROADMAP.md"
+roadmap: "https://github.com/ConductionNL/Commonground-dashboard/blob/master/ROADMAP.md"
 
 developmentStatus: development
 
@@ -66,8 +66,8 @@ description:
 #          on multiple rows. You should note what the software
 #          is and why one should need it.
 
-    documentation: "https://github.com/ConductionNL/pan/blob/master/README.md"
-    apiDocumentation: "www.westfriesland.commonground.nu"
+    documentation: "https://github.com/ConductionNL/Commonground-dashboard/blob/master/README.md"
+    apiDocumentation: "https://db.huwelijksplanner.online"
 #
 #    features:
 #       - Very important feature

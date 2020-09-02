@@ -26,10 +26,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ChinController extends AbstractController
 {
     /**
-     * @Route("/user")
+     * @Route("/checkin/user")
      * @Template
      */
-    public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function checkinUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
         $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
@@ -38,13 +38,47 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/organisation")
+     * @Route("/checkin/organisation")
      * @Template
      */
-    public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function checkinOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/nodes/user")
+     * @Template
+     */
+    public function nodesUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/nodes/organization")
+     * @Template
+     */
+    public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['places'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'places'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'])['hydra:member'];
+
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            $commonGroundService->saveResource($resource, (['component'=>'chin', 'type'=>'nodes']));
+
+            return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
+        }
 
         return $variables;
     }
@@ -71,8 +105,13 @@ class ChinController extends AbstractController
      */
     public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
+        $session->remove('newcheckin');
+
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
         $variables = [];
         $createCheckin = $request->request->get('createCheckin');
+
         // Fallback options of establishing
         if (!$code) {
             $code = $request->query->get('code');
@@ -124,8 +163,60 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
             $flash->add('success', 'U bent succesvol ingecheckt');
 
-            return $this->redirect($this->generateUrl('app_chin_user', ['showCheckin'=>'true']));
+            $session->set('newcheckin', true);
+
+            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
+                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
+            } else {
+                return $this->redirect($this->generateUrl('app_default_index'));
+            }
+        } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
+            $node = $request->request->get('node');
+            $firstName = $request->request->get('firstName');
+            $additionalName = $request->request->get('additionalName');
+            $lastName = $request->request->get('lastName');
+            $email = $request->request->get('email');
+            $tel = $request->request->get('tel');
+
+            $emailObject['email'] = $email;
+            $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
+
+            $telObject['telephone'] = $tel;
+            $telObject = $commonGroundService->createResource($telObject, ['component' => 'cc', 'type' => 'telephones']);
+
+            $person['givenName'] = $firstName;
+            $person['additionalName'] = $additionalName;
+            $person['familyName'] = $lastName;
+            $person['emails'][] = $emailObject['@id'];
+            $person['telephones'][] = $telObject['@id'];
+            $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+
+            $checkIn['node'] = $node;
+            $checkIn['person'] = $person['@id'];
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+            $flash->add('success', 'U bent succesvol ingecheckt');
+
+            $session->set('newcheckin', true);
+            $session->set('person', $person);
+
+            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
+                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
+            } else {
+                return $this->redirect($this->generateUrl('app_default_index'));
+            }
         }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/onboarding")
+     * @Template
+     */
+    public function onboardingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        $variables = $applicationService->getVariables();
 
         return $variables;
     }

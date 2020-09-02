@@ -1,3 +1,4 @@
+{% if app.user.person is defined and app.user.person is not empty %}
 <ul class="definition-list">
     {% set user = commonground_resource(app.user.person) %}
     {% if user.naam.voornamen is defined and user.naam.voornamen is not empty %}
@@ -112,28 +113,14 @@
                 {{ 'business'|trans|capitalize }}
             </div>
             <div id="business" class="definition-list__description">
-                {% if commonground_resource(app.user.organization).name is defined %}
-                    <p>{{ commonground_resource(app.user.organization).name }}</p>
+                {% set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) %}
+                {% if organization.name is defined %}
+                    <p>{{ organization.name }}</p>
                 {% endif %}
             </div>
         </li>
 
-        <script>
-            let organization = '{{ app.user.organization }}';
-            $.ajax({
-                url: "https://api.kvk.nl/api/v2/testsearch/companies?q=test&mainBranch=true&branch=false&branchNumber=" + organization,
-                type: 'GET',
-                processData: true,
-                headers: {
-                    Accept: 'application/ld+json'
-                },
-                success: function(result) {
-                    console.log(result);
-                    if(result["data"]["items"].length >= 1){
-                        $('#business').append('<p>' + result["data"]["items"][0]["tradeNames"]["businessName"] + '</p>');
-                    }
-                },
-            });
-        </script>
+
     {% endif %}
 </ul>
+{% endif %}
