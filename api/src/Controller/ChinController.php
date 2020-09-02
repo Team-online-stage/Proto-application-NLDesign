@@ -161,7 +161,6 @@ class ChinController extends AbstractController
             $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
-            $flash->add('success', 'U bent succesvol ingecheckt');
 
             $session->set('newcheckin', true);
 
@@ -195,7 +194,6 @@ class ChinController extends AbstractController
             $checkIn['person'] = $person['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
-            $flash->add('success', 'U bent succesvol ingecheckt');
 
             $session->set('newcheckin', true);
             $session->set('person', $person);
