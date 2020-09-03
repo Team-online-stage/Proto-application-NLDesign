@@ -28,7 +28,6 @@ class DownloadController extends AbstractController
 {
     /**
      * @Route("/order/{id}")
-     * @Template
      */
     public function orderAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
@@ -61,7 +60,6 @@ class DownloadController extends AbstractController
 
     /**
      * @Route("/invoice/{id}")
-     * @Template
      */
     public function invoiceAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {

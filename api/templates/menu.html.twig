@@ -17,10 +17,8 @@
                             </a>
                         </li>
                     {% endfor %}
-                {% endif %}
 
-                <div class="top-nav__block top-nav__block--right">
-
+                    {# onderstaande is nu bij wijze van hotfix, de ventigid het coole rechts zwevende menu item #}
                     {% if not app.user %}
                         <li class="nav__item">
                             <a class="nav__link" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i
@@ -57,6 +55,11 @@
                             </div>
                         </form>
                     {% endif %}
+                {% endif %}
+
+                {#
+                <div class="top-nav__block top-nav__block--right">
+
 
                 </div>
 

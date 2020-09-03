@@ -1,4 +1,8 @@
-<label class="input__label" for="{{ property.id }}">{{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
+<label class="input__label" for="{{ property.id }}">
+    {% if property.icon is defined and property.icon is not empty %}
+        <i style="margin-right: 10px;" class="{{ property.icon }}"></i>
+    {% endif %}
+    {{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
 {%  if property.description %}<span class="input__hint" id="{{ property.id }}_name">{{ property.description }}</span>{% endif %}
 <fieldset class="input">
 
