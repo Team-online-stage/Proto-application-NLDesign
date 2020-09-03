@@ -50,6 +50,7 @@
             <div class="content">
                 <ul class="definition-list">
                     {% if not app.user %}
+                        <a href="{{ path('app_default_index') }}" class="backlink">{{ 'back'|trans|capitalize }}</a>
                         <li class="definition-list__item definition-list__item--horizontal">
                             <div class="definition-list__title">
                                 <span>Plaats</span>
