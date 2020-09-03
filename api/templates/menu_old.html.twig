@@ -10,7 +10,7 @@
                     {% set menu = commonground_resource(application.defaultConfiguration.configuration.mainMenu) %}
 
                     {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
-                        <li class="nav__item" data-width="150">
+                        <li class="nav__item col-xs" >
                             <a class="nav__link {% if item.href == currentPath %} nav__link--active {% endif %}"
                                href="{{ item.href }}">
                                 <i class="{{ item.icon }}" role="presentation"></i> {{ item.name }}
