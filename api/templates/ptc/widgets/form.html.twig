@@ -39,9 +39,9 @@
                 {% elseif property.iri == 'cc/people' %}
                     {% include 'ptc/formelements/people.html.twig' %}
                 {% elseif property.iri == 'cc/organization' %}
-                    {% include 'ptc/formelements/organization.html.twig' %}
+                    {% include 'ptc/formelements/ccOrganization.html.twig' %}
                 {% elseif property.iri == 'wrc/organization' %}
-                    {% include 'ptc/formelements/organization.html.twig' %}
+                    {% include 'ptc/formelements/wrcOrganization.html.twig' %}
 
                     {# Let slook for formats #}
                 {% elseif property.format == 'phonenumber' %}
