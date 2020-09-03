@@ -59,7 +59,6 @@
                                 <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
                             </div>
                         </li>
-                        {% endif %}
                     {% endif %}
                     {% if not app.user %}
                         <li class="definition-list__item definition-list__item--horizontal">
@@ -98,8 +97,8 @@
                             </div>
                         </li>
                     {% endif %}
+                    {% endif %}
                 </ul>
-
                 {% if not app.user %}
                     <div class="row">
                         <a id="checkinIdin" href="{{ path('app_user_idin') }}"
