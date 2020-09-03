@@ -32,6 +32,7 @@ security:
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundIdinAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundFacebookAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
 
             # activate different ways to authenticate
