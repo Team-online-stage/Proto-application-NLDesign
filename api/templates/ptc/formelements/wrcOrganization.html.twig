@@ -1,6 +1,10 @@
 <div class="input input--horizontal {%if property.valid is defined and not property.valid %}input--invalid{% endif %}">
     <div>
-        <label class="input__label" for="{{ property.id }}" id="{{ property.id }}_label">{{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
+        <label class="input__label" for="{{ property.id }}" id="{{ property.id }}_label">
+            {% if property.icon is defined and property.icon is not empty %}
+                <i style="margin-right: 10px;" class="{{ property.icon }}"></i>
+            {% endif %}
+            {{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
     </div>
     {%  if property.description %}<span class="input__hint" id="{{ property.id }}_name">{{ property.description }}</span>{% endif %}
     <div id="organizationForm" class="col-sm-12">
