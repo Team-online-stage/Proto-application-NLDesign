@@ -3,14 +3,14 @@ entries:
   pan:
   - apiVersion: v1
     appVersion: V.0.1
-    created: "2020-09-03T09:35:30.8690379Z"
+    created: "2020-09-03T11:30:17.2799707Z"
     description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql)
       interface beschikbaar.&quot;'
-    digest: 9cbb0e77d89103b0f4f8f8aeb834ee27171fe9c807b716cbe18f54c432a48d1c
-    home: huwelijksplanner.online
-    icon: huwelijksplanner.online
+    digest: b855e353c379ea400950fbaaa102bd10a1993bf55bce2cdf53fb1c79847f5e0c
+    home: www.zuid-drecht.nl
+    icon: www.zuid-drecht.nl
     name: pan
     urls:
     - pan-0.1.0.tgz
     version: 0.1.0
-generated: "2020-09-03T09:35:30.8617012Z"
+generated: "2020-09-03T11:30:17.2754803Z"
