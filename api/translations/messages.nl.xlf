@@ -721,6 +721,10 @@
         <source>your e-mail</source>
         <target>uw e-mail</target>
       </trans-unit>
+      <trans-unit id="5Bah43s" resname="phone number">
+        <source>phone number</source>
+        <target>telefoonnummer</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

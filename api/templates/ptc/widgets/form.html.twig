@@ -3,7 +3,10 @@
 
 {% if stage.sections is defined and stage.sections is not empty %}
 {% for section in stage.sections|sort((a, b) => a.orderNumber <=> b.orderNumber) %}
-            <h2>{{ section.name|capitalize }} {% if section.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this section'|trans|capitalize }}"></span>{% endif %}</h2>
+            <h2>{% if section.icon is defined and section.icon is not empty %}
+                    <i style="margin-right: 10px;" class="{{ section.icon }}"></i>
+                {% endif %}
+                {{ section.name|capitalize }} {% if section.valid is defined and section.valid %}<span class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this section'|trans|capitalize }}"></span>{% endif %}</h2>
             <p>{{ section.description|capitalize }}</p>
 
 
@@ -27,6 +30,8 @@
                 {% elseif property.iri == 'arc/event' %}
                     {% include 'ptc/formelements/event.html.twig' %}
 
+                {% elseif property.iri == 'lc/accommodation' %}
+                    {% include 'ptc/formelements/accommodation.html.twig' %}
                 {% elseif property.iri == 'pdc/offer' %}
                     {% include 'ptc/formelements/pdc/offer.html.twig' %}
 
@@ -37,7 +42,9 @@
                 {% elseif property.iri == 'cc/people' %}
                     {% include 'ptc/formelements/people.html.twig' %}
                 {% elseif property.iri == 'cc/organization' %}
-                    {% include 'ptc/formelements/organization.html.twig' %}
+                    {% include 'ptc/formelements/ccOrganization.html.twig' %}
+                {% elseif property.iri == 'wrc/organization' %}
+                    {% include 'ptc/formelements/wrcOrganization.html.twig' %}
 
                     {# Let slook for formats #}
                 {% elseif property.format == 'phonenumber' %}
@@ -66,6 +73,8 @@
                     {% include 'ptc/formelements/tofromtime.html.twig' %}
                 {% elseif property.format == 'kvk' %}
                     {% include 'ptc/formelements/kvk.html.twig' %}
+                {% elseif property.format == 'btw' %}
+                    {% include 'ptc/formelements/btw.html.twig' %}
 
                     {# Generic HTML 5 input types #}
                 {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}

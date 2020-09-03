@@ -20,7 +20,11 @@
     <div class="input input--horizontal {%if property.valid is defined and not property.valid %}input--invalid{% endif %}">
     <label>
     <div>
-        <label class="input__label" for="{{ property.id }}">{{ property.title }}</label>
+        <label class="input__label" for="{{ property.id }}">
+            {% if property.icon is defined and property.icon is not empty %}
+                <i style="margin-right: 10px;" class="{{ property.icon }}"></i>
+            {% endif %}
+            {{ property.title }}</label>
         {% if property.description is defined %}
         <span class="input__hint" id="hint_name">{{ property.description }}</span>
         {% endif %}
