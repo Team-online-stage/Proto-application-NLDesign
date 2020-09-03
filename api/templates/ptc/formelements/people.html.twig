@@ -52,22 +52,15 @@
             </div>
         </div>
     {% elseif property.type == 'string' %}
-        <div id="personForm" class="col-sm-12">
-            {% if property.defaultValue is defined and property.defaultValue is not empty %}
-                {% set assent = commonground_resource(include(template_from_string(property.defaultValue))) %}
-            {% endif %}
-            <div>
+        <div id="personForm">
                 <label class="input__label" for="voornaam">Voornaam</label>
-                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]"
-                    {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" {% endif %}>
+                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]">
                 <label class="input__label" for="achternaam">Achternaam</label>
-                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]"
-                    {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
+                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]">
                 <label class="input__label" for="email">Email</label>
                 <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][email]">
                 <label class="input__label" for="telefoon">Telefoonnummer</label>
                 <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephone]">
-            </div>
         </div>
     {% endif %}
 </div>
