@@ -101,12 +101,44 @@
                 </ul>
 
                 {% if not app.user %}
-                    <div class="row">
-                        <a id="checkinIdin" href="{{ path('app_user_idin') }}"
-                           class="btn btn--idin">{{ 'check-in'|trans|capitalize }}</a>
-                        <button style="margin-top: 10px" id="showInfoFormButton" onclick="showInfoForm()"
-                                class="btn">{{ 'check-in without login'|trans|capitalize }}</button>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Plaats</span>
                     </div>
+                    <div class="definition-list__description">
+                        <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
+                    </div>
+                </li>
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Adres</span>
+                    </div>
+                    <div class="definition-list__description">
+                        {% set place = commonground_resource(resource.place) %}
+                        {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                        <p style="color: #000000">{% if adres is defined and adres is not empty %}{{ adres.straat }} {{ adres.huisnummer }}{% endif %}</p>
+                    </div>
+                </li>
+                {% endif %}
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Organisatie</span>
+                    </div>
+                    <div class="definition-list__description">
+                        <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
+                    </div>
+                </li>
+                {% if not app.user %}
+                <li class="definition-list__item definition-list__item--horizontal">
+                    <div class="definition-list__title">
+                        <span>Datum</span>
+                    </div>
+                    <div class="definition-list__description">
+                        <p style="color: #000000">{{ "now"|date("H:i d-m-Y", "Europe/Amsterdam") }}</p>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
 
                     <div id="infoForm" style="margin-top: 10px;">
 
