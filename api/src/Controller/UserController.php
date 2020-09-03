@@ -99,6 +99,7 @@ class UserController extends AbstractController
     public function githubAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
         return $this->redirect('https://github.com/login/oauth/authorize?state='.getenv('APP_ID').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
     }
 

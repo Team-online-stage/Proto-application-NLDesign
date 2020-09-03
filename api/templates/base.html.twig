@@ -19,6 +19,13 @@
             gtag('config', '{{ application['defaultConfiguration']['configuration']['googleTagId'] }}');
         </script>
     {% endif %}
+    {% if app.user is defined and app.user is not empty %}
+        <script>
+            setTimeout(function(){
+                window.location.href = '/login';
+            }, 910000);
+        </script>
+    {% endif %}
 
     <meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
@@ -451,7 +458,8 @@
             top: 4px;
             top: .4rem;
             width: 40px;
-            idth: 4rem
+            width: 4rem
+
         }
 
         .btn--eidas {
