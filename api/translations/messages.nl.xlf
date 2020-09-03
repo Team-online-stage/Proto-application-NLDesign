@@ -651,7 +651,7 @@
       </trans-unit>
       <trans-unit id="089Hb2N" resname="subscribe">
         <source>subscribe</source>
-        <target>abboneren</target>
+        <target>abonneren</target>
       </trans-unit>
       <trans-unit id="bCoDPGD" resname="iDin">
         <source>iDin</source>
