@@ -59,6 +59,9 @@
                                 <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
                             </div>
                         </li>
+                        {% endif %}
+                    {% endif %}
+                    {% if not app.user %}
                         <li class="definition-list__item definition-list__item--horizontal">
                             <div class="definition-list__title">
                                 <span>Onderneming</span>
@@ -67,9 +70,9 @@
                                 <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
                             </div>
                         </li>
-                        {% set place = commonground_resource(resource.place) %}
-                        {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
-                        {% if adres is defined and adres is not empty %}
+                    {% set place = commonground_resource(resource.place) %}
+                    {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                    {% if adres is defined and adres is not empty %}
                         <li class="definition-list__item definition-list__item--horizontal">
                             <div class="definition-list__title">
                                 <span>Adres</span>
@@ -86,9 +89,6 @@
                                 <p style="color: #000000">{{ adres.woonplaats }}</p>
                             </div>
                         </li>
-                        {% endif %}
-                    {% endif %}
-                    {% if not app.user %}
                         <li class="definition-list__item definition-list__item--horizontal">
                             <div class="definition-list__title">
                                 <span>Datum</span>
