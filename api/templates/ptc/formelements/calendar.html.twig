@@ -158,10 +158,11 @@
 
         let arr = week.value.split('-');
         let date = getDateOfWeek(arr[0], arr[1]);
+        let n = getDateOfWeek(arr[0], arr[1]);
         let days = document.getElementsByClassName('day');
         for(let i = 0; i < days.length; i ++){
             let buttons = document.getElementsByClassName('button-'+i.toString());
-            let dayOfButtonRowInMs = date.setDate(date.getDate() + i);
+            let dayOfButtonRowInMs = n.setDate(n.getDate() + i);
             console.log(dayOfButtonRowInMs);
             for(let j = 0; j < buttons.length; j++){
                 buttons[j].name = date.getDate() + ' ' + months[date.getMonth()];
