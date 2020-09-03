@@ -1,4 +1,8 @@
-<label class="input__label" for="{{ property.id }}">{{ property.title }}</label>
+<label class="input__label" for="{{ property.id }}">
+    {% if property.icon is defined and property.icon is not empty %}
+        <i style="margin-right: 10px;" class="{{ property.icon }}"></i>
+    {% endif %}
+    {{ property.title }}</label>
 {%  if property.description %}<span class="input__hint" id="{{ property.id }}_name">{{ property.description }}</span>{% endif %}
 <div></div>
 <style>

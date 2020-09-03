@@ -1,40 +1,44 @@
-{{ section.description }}
+<div class="input input--horizontal">
+    <div>
+        <label class="input__label" for="{{ property.id }}" id="{{ property.id }}_label">
+            {% if property.icon is defined and property.icon is not empty %}
+                <i style="margin-right: 10px;" class="{{ property.icon }}"></i>
+            {% endif %}
+            {{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
+    </div>
+    <div class="row">
+        {#    <div class="col-md-4">#}
+        {#        <label class="input__label" for="{{ property.name }}">BAG ID (example: 0796200000306819)</label>#}
+        {#        <input class="input__control input__control--text" id="{{ property.slug }}" type="text" name="properties[{{ property.slug }}]" required>#}
+        {#    </div>#}
+        <div class="col-sm-12 col-lg-3">
+            <label class="input__label" for="postalCode">Postcode</label>
+            <input class="input__control input__control--text" id="postcode" type="text">
+        </div>
+        <div class="col-sm-12 col-lg-3">
+            <label class="input__label" for="houseNumber">Huisnummer</label>
+            <input class="input__control input__control--text" id="huisnummer" type="text">
+        </div>
+        <div class="col-sm-12 col-lg-3">
+            <label class="i4put__label" for="houseNumberSuffix">toevoeging</label>
+            <input class="input__control input__control--text" id="toevoeging" type="text">
+        </div>
+        <div class="col-sm-12 col-lg-2">
+            <br>
+            <button type="button" onclick="getBagKeys()" style="width: 100%; color: black; background-color: #f9e11e" class="btn btn-primary">Zoeken</button>
+        </div>
+    </div>
 
+    <hr style="margin-top: 20px;">
 
-<div class="row">
-{#    <div class="col-md-4">#}
-{#        <label class="input__label" for="{{ property.name }}">BAG ID (example: 0796200000306819)</label>#}
-{#        <input class="input__control input__control--text" id="{{ property.slug }}" type="text" name="properties[{{ property.slug }}]" required>#}
-{#    </div>#}
-    <div class="col-sm-12 col-lg-3">
-        <label class="input__label" for="postalCode">Postcode</label>
-        <input class="input__control input__control--text" id="postcode" type="text">
+    <div class="spinner">
+        <div aria-live="assertive" class="screenreader-only">Aan het laden</div>
     </div>
-    <div class="col-sm-12 col-lg-3">
-        <label class="input__label" for="houseNumber">Huisnummer</label>
-        <input class="input__control input__control--text" id="huisnummer" type="text">
-    </div>
-    <div class="col-sm-12 col-lg-3">
-        <label class="i4put__label" for="houseNumberSuffix">toevoeging</label>
-        <input class="input__control input__control--text" id="toevoeging" type="text">
-    </div>
-    <div class="col-sm-12 col-lg-2">
-        <br>
-        <button type="button" onclick="getBagKeys()" style="width: 100%; color: black; background-color: #f9e11e" class="btn btn-primary">Zoeken</button>
-    </div>
+
+    <fieldset class="input" id="adresLijst" style="margin-top: 20px;">
+
+    </fieldset>
 </div>
-
-<hr style="margin-top: 20px;">
-
-<div class="spinner">
-    <div aria-live="assertive" class="screenreader-only">Aan het laden</div>
-</div>
-
-<fieldset class="input" id="adresLijst" style="margin-top: 20px;">
-
-</fieldset>
-
-
 <script>
     $('.spinner').hide();
 

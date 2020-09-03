@@ -50,34 +50,45 @@
             <div class="content">
                 <ul class="definition-list">
                     {% if not app.user %}
+                        <a href="{{ path('app_default_index') }}" class="backlink">{{ 'back'|trans|capitalize }}</a>
                         <li class="definition-list__item definition-list__item--horizontal">
                             <div class="definition-list__title">
-                                <span>Plaats</span>
+                                <span>Locatie</span>
                             </div>
                             <div class="definition-list__description">
                                 <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
                             </div>
                         </li>
+                        {% endif %}
+                    {% endif %}
+                    {% if not app.user %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                <span>Onderneming</span>
+                            </div>
+                            <div class="definition-list__description">
+                                <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
+                            </div>
+                        </li>
+                    {% set place = commonground_resource(resource.place) %}
+                    {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                    {% if adres is defined and adres is not empty %}
                         <li class="definition-list__item definition-list__item--horizontal">
                             <div class="definition-list__title">
                                 <span>Adres</span>
                             </div>
                             <div class="definition-list__description">
-                                {% set place = commonground_resource(resource.place) %}
-                                {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
-                                <p style="color: #000000">{% if adres is defined and adres is not empty %}{{ adres.straat }} {{ adres.huisnummer }}{% endif %}</p>
+                                <p style="color: #000000">{{ adres.straat }} {{ adres.huisnummer }}</p>
                             </div>
                         </li>
-                    {% endif %}
-                    <li class="definition-list__item definition-list__item--horizontal">
-                        <div class="definition-list__title">
-                            <span>Organisatie</span>
-                        </div>
-                        <div class="definition-list__description">
-                            <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
-                        </div>
-                    </li>
-                    {% if not app.user %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                <span>Plaats</span>
+                            </div>
+                            <div class="definition-list__description">
+                                <p style="color: #000000">{{ adres.woonplaats }}</p>
+                            </div>
+                        </li>
                         <li class="definition-list__item definition-list__item--horizontal">
                             <div class="definition-list__title">
                                 <span>Datum</span>
