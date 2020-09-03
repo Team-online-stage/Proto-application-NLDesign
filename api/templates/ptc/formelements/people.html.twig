@@ -1,48 +1,69 @@
-<div class="row">
-    <div class="col-sm-12">
-        <div class="row" id="getuigen-container">
-            <div id="0"></div>
-            {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
-                {% set value = 1 %}
-                {% for getuige in request.properties[property.name] %}
-                    <div id="{{ value }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
-                        <h2 id="{{ value }}">{{ getuige.givenName }} {{ getuige.familyName }}</h2>
-                        <div id="{{ value }}" style="line-height: 15px">
-                            <p id="{{ value }}">Email: {{ getuige.email }}</p>
-                            <p id="{{ value }}">Telefoon: {{ getuige.telephone }}</p>
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="request[properties][{{ property.name }}][{{ value }}][email]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="request[properties][{{ property.name }}][{{ value }}][telephone]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.givenName }}" name="request[properties][{{ property.name }}][{{ value }}][givenName]">
-                            <input type="hidden" id="{{ value }}" value="{{ getuige.familyName }}" name="request[properties][{{ property.name }}][{{ value }}][familyName]">
-                            <button class="btn btn-primary" id="{{ value }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
-                        </div>
-                    </div>
-                    {% set value = value + 1 %}
-                {% endfor %}
+<div class="input input--horizontal">
+    <div>
+        <label class="input__label" for="{{ property.id }}" id="{{ property.id }}_label">
+            {% if property.icon is defined and property.icon is not empty %}
+                <i style="margin-right: 10px;" class="{{ property.icon }}"></i>
             {% endif %}
-        </div>
+            {{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
     </div>
-    <div id="personForm" class="col-sm-12">
-        {% if property.defaultValue is defined and property.defaultValue is not empty %}
-            {% set assent = commonground_resource(include(template_from_string(property.defaultValue))) %}
-        {% endif %}
-        <div>
-            <label class="input__label" for="voornaam">Voornaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text"
-            {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" {% endif %}>
-            <label class="input__label" for="achternaam">Achternaam</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text"
-            {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
-            <label class="input__label" for="email">Email</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
-            <span id="inputResult"></span>
-            <label class="input__label" for="telefoon">Telefoonnummer</label>
-            <input class="input__control input__control--text" style="width: 100%" id="getuigenTelefoon" type="tel">
-            <button class="btn" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Toevoegen</button>
+    {% if property.type == 'array' %}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row" id="getuigen-container">
+                    <div id="0"></div>
+                    {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
+                        {% set value = 1 %}
+                        {% for getuige in request.properties[property.name] %}
+                            <div id="{{ value }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
+                                <h2 id="{{ value }}">{{ getuige.givenName }} {{ getuige.familyName }}</h2>
+                                <div id="{{ value }}" style="line-height: 15px">
+                                    <p id="{{ value }}">Email: {{ getuige.email }}</p>
+                                    <p id="{{ value }}">Telefoon: {{ getuige.telephone }}</p>
+                                    <input type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="request[properties][{{ property.name }}][{{ value }}][email]">
+                                    <input type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="request[properties][{{ property.name }}][{{ value }}][telephone]">
+                                    <input type="hidden" id="{{ value }}" value="{{ getuige.givenName }}" name="request[properties][{{ property.name }}][{{ value }}][givenName]">
+                                    <input type="hidden" id="{{ value }}" value="{{ getuige.familyName }}" name="request[properties][{{ property.name }}][{{ value }}][familyName]">
+                                    <button class="btn btn-primary" id="{{ value }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
+                                </div>
+                            </div>
+                            {% set value = value + 1 %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+            <div id="personForm" class="col-sm-12">
+                {% if property.defaultValue is defined and property.defaultValue is not empty %}
+                    {% set assent = commonground_resource(include(template_from_string(property.defaultValue))) %}
+                {% endif %}
+                <div>
+                    <label class="input__label" for="voornaam">Voornaam</label>
+                    <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text"
+                    {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" {% endif %}>
+                    <label class="input__label" for="achternaam">Achternaam</label>
+                    <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text"
+                    {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
+                    <label class="input__label" for="email">Email</label>
+                    <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
+                    <span id="inputResult"></span>
+                    <label class="input__label" for="telefoon">Telefoonnummer</label>
+                    <input class="input__control input__control--text" style="width: 100%" id="getuigenTelefoon" type="tel">
+                    <button class="btn" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Toevoegen</button>
+                </div>
+            </div>
         </div>
-    </div>
+    {% elseif property.type == 'string' %}
+        <div id="personForm">
+                <label class="input__label" for="voornaam">Voornaam</label>
+                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]">
+                <label class="input__label" for="achternaam">Achternaam</label>
+                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]">
+                <label class="input__label" for="email">Email</label>
+                <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][email]">
+                <label class="input__label" for="telefoon">Telefoonnummer</label>
+                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephone]">
+        </div>
+    {% endif %}
 </div>
-
 <script>
     let personForm = document.getElementById("personForm");
 
