@@ -17,8 +17,8 @@
                         {% if app.user is defined and app.user is not null %}
                             <form method="post" action="{{ path('app_chin_nodescreate') }}" name="thisForm">
                                 <div class="input">
-                                    <label class="input__label" for="name">Naam </label>
-                                    <input type="text" id="name" name="name" class="input__control input__control--m input__control--text">
+                                    <label class="input__label" for="name">Naam <span style="color: red">*</span></label>
+                                    <input type="text" id="name" name="name" required="" class="input__control input__control--m input__control--text">
                                 </div>
 
                                 <div class="input">
@@ -26,15 +26,20 @@
                                     <input type="text" id="description" name="description" class="input__control input__control--m input__control--text">
                                 </div>
 
+                                {# Voor als de gebruiker zelf een QR-code zou mogen kiezen (dit word automatisch overscheven op het moment)
                                 <div class="input">
-                                    <label class="input__label" for="reference">QR Code <span style="color: red">*</span></label>
-                                    <input type="text" id="reference" name="reference" required="" class="input__control input__control--s input__control--text">
-                                </div>
+                                    <label class="input__label" for="reference">QR Code </label>
+                                    <input type="text" id="reference" name="reference" class="input__control input__control--s input__control--text">
+                                </div> #}
 
-                                <!-- Select a place for this QR-code (list of places for the organization of this 'medewerker' user in a dropdown) -->
+                                {# Select a place for this QR-code (list of places for the organization of this 'medewerker' user in a dropdown) #}
+                                {% if app.user.organization is defined and app.user.organization is not empty %}
+                                    {% set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) %}
+
+                                {% endif %}
 
                                 <div class="input">
-                                    <button type="button" id="registreren" class="btn">Aanmaken <i class="icon icon-arr-forward"></i></button>
+                                    <button type="submit" id="aanmaken" class="btn">Aanmaken <i class="icon icon-arr-forward"></i></button>
                                 </div>
                             </form>
                         {% else %}

@@ -100,8 +100,15 @@ class ChinController extends AbstractController
             $resource = $request->request->all();
 
             //create the node
-            $resource['organization'] = ''; //get the organization of this 'medewerker'
-            $resource['place'] = ''; //the selected place for this qr code
+            if (array_key_exists('user', $variables) and is_array($variables['user'])) {
+                if (array_key_exists('organization', $variables['user'])) {
+                    $resource['organization'] = $commonGroundService->getResource(['component' => 'kvk', 'type' => 'companies', 'id' => $variables['user']['organization']]); //get the organization of this 'medewerker'
+                }
+            } else {
+                $resource['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '4d1eded3-fbdf-438f-9536-8747dd8ab591']);
+            }
+            $resource['place'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'places', 'id' => 'db91b486-cbbb-47aa-9771-77862fda6c15']); //the selected place for this qr code
+            $resource['passthroughUrl'] = 'https://zuid-drecht.nl';
             $commonGroundService->createResource($resource, ['component' => 'chin', 'type' => 'nodes']);
 
             return $this->redirectToRoute('app_default_index');
