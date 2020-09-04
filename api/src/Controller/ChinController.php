@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use function GuzzleHttp\Promise\all;
@@ -183,7 +182,7 @@ class ChinController extends AbstractController
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
-                return $this->redirect('/' . $application['defaultConfiguration']['configuration']['userPage']);
+                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
@@ -217,15 +216,15 @@ class ChinController extends AbstractController
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
             $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-            if($isUrlToZD === false){
-            return $this->redirect($node['passthroughUrl']);
+            if ($isUrlToZD === false) {
+                return $this->redirect($node['passthroughUrl']);
             }
 
             $session->set('newcheckin', true);
             $session->set('person', $person);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
-                return $this->redirect('/' . $application['defaultConfiguration']['configuration']['userPage']);
+                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
