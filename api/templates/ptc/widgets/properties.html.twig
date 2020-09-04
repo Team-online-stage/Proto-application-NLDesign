@@ -56,6 +56,7 @@
                 {% for stage in process.stages %}
                     {% for section in stage.sections %}
                         {% for property in section.propertiesForms %}
+                            {% if property.value is defined and property.value is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title" style="max-width: 100%;">
                                     <a href="{{ path('app_ptc_process_stage',{id:process.id, stage:stage.slug}) }}#{{ property.id }}">{{ property.title|capitalize }}</a>
@@ -117,19 +118,16 @@
                                         {% if 'http' in property.value %}
                                             {% if 'enkelvoudiginformatieobjecten' in property.value %}
                                                 {% set file = commonground_resource(property.value) %}
-                                                {% if property is defined and 'http' in property %}
-                                                    {% set property = commonground_resource(property) %}
-                                                {% endif %}
                                                 <a href="{{ path('app_drc_download',{'resource':file.id}) }}">{{ file.bestandsnaam }}</a>
-                                            {% elseif property['@type'] is defined and property['@type'] == 'Cemetery' %}
-                                                {{ property.reference }}<br>
-                                            {% elseif property['@type'] is defined and property['@type'] == 'Ingeschrevenpersoon' %}
+                                            {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Cemetery' %}
+                                                {{ commonground_resource(property.value).reference }}<br>
+                                            {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Ingeschrevenpersoon' %}
                                                 {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
                                                 <br>
-                                            {% elseif property['@type'] is defined and property['@type'] == 'Adres' %}
+                                            {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Adres' %}
                                                 {{ property.straat|capitalize }} {{ property.huisnummer }}
                                             {% else %}
-                                                {{ property.name|capitalize }}
+                                                {{ commonground_resource(property.value).name|capitalize }}
                                             {% endif %}
                                         {% else %}
                                             {{ property.value|capitalize }}
@@ -138,6 +136,7 @@
                                     </p>
                                 </div>
                             </li>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
