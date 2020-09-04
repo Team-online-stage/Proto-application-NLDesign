@@ -1,5 +1,9 @@
 <div class="content-background">
     <div class="content">
+        {% if process.submitText is defined and process.submitText is not empty %}
+            {{ process.submitText }}
+        {% endif %}
+
         <h2>
             {{ 'properties'|trans|capitalize }}
         </h2>
