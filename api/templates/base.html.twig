@@ -21,7 +21,7 @@
     {% endif %}
     {% if app.user is defined and app.user is not empty %}
         <script>
-            setTimeout(function(){
+            setTimeout(function () {
                 window.location.href = '/login';
             }, 910000);
         </script>
@@ -458,7 +458,8 @@
             right: -5rem;
             top: 4px;
             top: .4rem;
-            width: 40px;property.title == 'Horeca firma contact'
+            width: 40px;
+            property . title = = 'Horeca firma contact'
             width: 4rem
 
         }
@@ -573,13 +574,17 @@
 
         <div class="container">
             <!-- the alert box -->
+            {% set flashes = [] %}
             {% for label, messages in app.flashes() %}
                 {% for message in messages %}
-                    <div class="notification notification--{{ label }}">
-                        <div class="notification__content">
-                            <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                    {% if message not in flashes %}
+                        {% set flashes = flashes|merge([message]) %}
+                        <div class="notification notification--{{ label }}">
+                            <div class="notification__content">
+                                <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         </div>
