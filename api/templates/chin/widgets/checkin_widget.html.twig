@@ -19,9 +19,7 @@
     </div><!-- /.col -->
     #}
 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 background--primary" style="height: 500px;" >
-    <div class="content" style="
-  position: absolute;
-  bottom: 5px; width:100%; text-align: center;">
+    <div class="content" style="height: 500px; width:100%; text-align: center; padding-top: 20px;">
         <h2>Scan je QR code</h2>
         <!-- Page Break -->
         <div style="height: 20px"></div>
@@ -59,7 +57,6 @@
                                 <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
                             </div>
                         </li>
-                        {% endif %}
                     {% endif %}
                     {% if not app.user %}
                         <li class="definition-list__item definition-list__item--horizontal">
@@ -98,8 +95,8 @@
                             </div>
                         </li>
                     {% endif %}
+                    {% endif %}
                 </ul>
-
                 {% if not app.user %}
                     <div class="row">
                         <a id="checkinIdin" href="{{ path('app_user_idin') }}"
@@ -200,11 +197,11 @@
                     <fieldset class="input">
                         <legend class="input__legend">Algemene bepalingen</legend>
                         <div class="input__group input__group--checkbox">
-                            <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" checked="" required=""">
+                            <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" checked="" required="">
                             <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a href="#" data-toggle="modal" data-target="#questionModal" onclick="openQuestionModal()">vragen</a> van de corona vragenlijst horeca</label>
                         </div>
                         <div class="input__group input__group--checkbox">
-                            <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" required=""">
+                            <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" required="">
                             <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy" target="_blank">privacy</a> regels</label>
                         </div>
                     </fieldset>

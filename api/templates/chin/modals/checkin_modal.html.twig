@@ -1,4 +1,5 @@
-<div class="modal modal--backdrop" role="dialog" id="checkin-{{ item.id }}" tabindex="-1" aria-describedby="modal-description3">
+<div class="modal modal--backdrop" role="dialog" id="checkin-{{ item.id }}" tabindex="-1"
+     aria-describedby="modal-description3">
     <section class="modal__content" role="document" style="background-color: #39870c">
         <div class="modal__body" tabindex="0" lang="en-US">
             <div class="flex-center" style="height: 100%">
@@ -15,9 +16,43 @@
                     <div class="col-xs-12">
                         <h3 style="color: white">{{ item.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</h3>
                     </div>
+                    {% if item.node.organization is defined and item.node.organization is not empty and 'http' in item.node.organization %}
+                        {% set org = commonground_resource(item.node.organization) %}
+                        {% set orgCc = commonground_resource_list({'component':'cc', 'type':'organizations'}, {'name':org.name})['hydra:member'] %}
+                        {% if orgCc[0] is defined and orgCc[0] is not empty %}
+                            {% set orgCc = orgCc[0] %}
+                            {% if orgCc.socials[0] is defined %}
+                                {% set social = orgCc.socials[0] %}
+                                {% if social.website is defined and social.website is not empty %}
+                                    <div class="col-xs-12" style="padding-top: 20px; margin-bottom: 10px">
+                                        <a href="{{ social.website }}" target="_blank" class="btn btn--primary" style="background-color: #39870c; border-radius: 25px; padding: 25px 50px;
+  border: 2px solid #FFF; color: #fff;">Naar site van {{ commonground_resource(item.node.place).name }}
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
                     <div class="col-xs-12" style="padding-top: 20px;">
                         <button class="modal__close-button btn btn--primary" style="background-color: #39870c; border-radius: 25px; padding: 25px 50px;
-  border: 2px solid #FFF; color: #fff;">Deze melding sluiten</button>
+  border: 2px solid #FFF; color: #fff;">Deze melding sluiten
+                        </button>
+                    </div>
+                    <div class="col-xs-12" style="margin-top: 26px; margin-bottom: 10px">
+                        <span style="color: white">- Powered by -</span>
+                    </div>
+                    <div class="col-xs-12 flex-center">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <a href="https://www.khn.nl/" target="_blank"><img src="../images/horecaNederland.png" width="50px" alt=""></a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="https://www.rabobank.nl/" target="_blank"><img src="../images/rabobank.png" width="50px" alt=""></a>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="https://www.conduction.nl/" target="_blank"><img src="../images/conduction.png" width="50px" alt=""></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

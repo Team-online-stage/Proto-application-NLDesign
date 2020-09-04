@@ -44,7 +44,7 @@ class ChinController extends AbstractController
     public function checkinOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -70,14 +70,48 @@ class ChinController extends AbstractController
         $variables = [];
         $variables['places'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'places'])['hydra:member'];
         $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
-            $commonGroundService->saveResource($resource, (['component'=>'chin', 'type'=>'nodes']));
+            $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
             return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
+        }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/nodes/create")
+     * @Template
+     */
+    public function nodesCreateAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //create the node
+            if (array_key_exists('user', $variables) and is_array($variables['user'])) {
+                if (array_key_exists('organization', $variables['user'])) {
+                    $resource['organization'] = $commonGroundService->getResource(['component' => 'kvk', 'type' => 'companies', 'id' => $variables['user']['organization']]); //get the organization of this 'medewerker'
+                }
+            } else {
+                $resource['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '4d1eded3-fbdf-438f-9536-8747dd8ab591']);
+            }
+            $resource['place'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'places', 'id' => 'db91b486-cbbb-47aa-9771-77862fda6c15']); //the selected place for this qr code
+            $resource['passthroughUrl'] = 'https://zuid-drecht.nl';
+            $commonGroundService->createResource($resource, ['component' => 'chin', 'type' => 'nodes']);
+
+            return $this->redirectToRoute('app_default_index');
         }
 
         return $variables;
@@ -162,6 +196,12 @@ class ChinController extends AbstractController
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
+            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
+            $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+            if ($isUrlToZD === false) {
+                return $this->redirect($node['passthroughUrl']);
+            }
+
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -194,6 +234,14 @@ class ChinController extends AbstractController
             $checkIn['person'] = $person['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
+            $node = $commonGroundService->getResource($node);
+
+            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
+            $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+            if ($isUrlToZD === false) {
+                return $this->redirect($node['passthroughUrl']);
+            }
 
             $session->set('newcheckin', true);
             $session->set('person', $person);

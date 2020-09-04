@@ -117,19 +117,16 @@
                                         {% if 'http' in property.value %}
                                             {% if 'enkelvoudiginformatieobjecten' in property.value %}
                                                 {% set file = commonground_resource(property.value) %}
-                                                {% if property is defined and 'http' in property %}
-                                                    {% set property = commonground_resource(property) %}
-                                                {% endif %}
                                                 <a href="{{ path('app_drc_download',{'resource':file.id}) }}">{{ file.bestandsnaam }}</a>
-                                            {% elseif property['@type'] is defined and property['@type'] == 'Cemetery' %}
-                                                {{ property.reference }}<br>
-                                            {% elseif property['@type'] is defined and property['@type'] == 'Ingeschrevenpersoon' %}
-                                                {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
+                                            {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Cemetery' %}
+                                                {{ commonground_resource(property.value).reference }}<br>
+                                            {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Ingeschrevenpersoon' %}
+                                                {{ commonground_resource(property.value).naam.voornamen }} {{ commonground_resource(property.value).naam.geslachtsnaam }}
                                                 <br>
-                                            {% elseif property['@type'] is defined and property['@type'] == 'Adres' %}
-                                                {{ property.straat|capitalize }} {{ property.huisnummer }}
+                                            {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Adres' %}
+                                                {{ commonground_resource(property.value).straat|capitalize }} {{ commonground_resource(property.value).huisnummer }}
                                             {% else %}
-                                                {{ property.name|capitalize }}
+                                                {{ commonground_resource(property.value).name|capitalize }}
                                             {% endif %}
                                         {% else %}
                                             {{ property.value|capitalize }}
