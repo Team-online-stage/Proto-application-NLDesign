@@ -18,7 +18,7 @@
                     </li>
                 {% endfor %}
                 <li class="navigation__item navigation__item--has-popout col-xs-hidden">
-                    <a class="navigation__link" href="#"><i style="margin-right: 10px" class="fas fa-unlock"></i>Menu<span class="icon icon-chevron-down navigation__icon" role="" title=""></span></a>
+                    <a class="navigation__link" href="#"><i class="icon icon-hamburger" role="presentation"></i>Menu</a>
                     <div class="navigation__popout">
                         <ul class="list list--links list--chevrons navigation__popout-items">
                             {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
