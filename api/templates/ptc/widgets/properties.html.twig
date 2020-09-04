@@ -121,10 +121,10 @@
                                             {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Cemetery' %}
                                                 {{ commonground_resource(property.value).reference }}<br>
                                             {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Ingeschrevenpersoon' %}
-                                                {{ property.naam.voornamen }} {{ property.naam.geslachtsnaam }}
+                                                {{ commonground_resource(property.value).naam.voornamen }} {{ commonground_resource(property.value).naam.geslachtsnaam }}
                                                 <br>
                                             {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Adres' %}
-                                                {{ property.straat|capitalize }} {{ property.huisnummer }}
+                                                {{ commonground_resource(property.value).straat|capitalize }} {{ commonground_resource(property.value).huisnummer }}
                                             {% else %}
                                                 {{ commonground_resource(property.value).name|capitalize }}
                                             {% endif %}
