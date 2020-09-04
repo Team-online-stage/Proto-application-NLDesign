@@ -1,7 +1,7 @@
 <div class="content-background">
     <div class="content">
         {% if process.instructionText is defined and process.instructionText is not empty %}
-            {{ process.instructionText }}
+            {{ process.instructionText|raw }}
         {% endif %}
 
         <h2>{{ 'stages'|trans|capitalize }}</h2>
