@@ -19,9 +19,7 @@
     </div><!-- /.col -->
     #}
 <div class="col-xl-4 col-lg-4 col-md-6 col-sm-10 background--primary" style="height: 500px;" >
-    <div class="content" style="
-  position: absolute;
-  bottom: 5px; width:100%; text-align: center;">
+    <div class="content" style="height: 500px; width:100%; text-align: center; padding-top: 20px;">
         <h2>Scan je QR code</h2>
         <!-- Page Break -->
         <div style="height: 20px"></div>
@@ -40,232 +38,246 @@
             <div class="input__control-group">
                 <input {% if code is defined %}value="{{ code }}" {% endif%} type="search" id="code" name="code" class="input__control input__control--m input__control--search" placeholder="vul code in">
                 <button class="btn" style="margin-left: 10px;" title="incheken"> Inchecken </button>
-{#                Search Button #}
-{#                <button class="btn btn--icon" style="margin-left: 10px;" title="scan"><i class="icon icon-magnifier"></i></button>#}
+                {#                Search Button #}
+                {#                <button class="btn btn--icon" style="margin-left: 10px;" title="scan"><i class="icon icon-magnifier"></i></button>#}
             </div>
         </div><!-- /.content -->
     </div><!-- /.col -->
-{% else %}
-<div class="col-md-4 col-sm-12" style="background:#fff;padding-bottom: 10px;">
-        <div class="content">
-            <ul class="definition-list">
+    {% else %}
+        <div class="col-md-4 col-sm-12" style="background:#fff;padding-bottom: 10px;">
+            <div class="content">
+                <ul class="definition-list">
+                    {% if not app.user %}
+                        <a href="{{ path('app_default_index') }}" class="backlink">{{ 'back'|trans|capitalize }}</a>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                <span>Locatie</span>
+                            </div>
+                            <div class="definition-list__description">
+                                <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if not app.user %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                <span>Onderneming</span>
+                            </div>
+                            <div class="definition-list__description">
+                                <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
+                            </div>
+                        </li>
+                    {% set place = commonground_resource(resource.place) %}
+                    {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                    {% if adres is defined and adres is not empty %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                <span>Adres</span>
+                            </div>
+                            <div class="definition-list__description">
+                                <p style="color: #000000">{{ adres.straat }} {{ adres.huisnummer }}</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                <span>Plaats</span>
+                            </div>
+                            <div class="definition-list__description">
+                                <p style="color: #000000">{{ adres.woonplaats }}</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                <span>Datum</span>
+                            </div>
+                            <div class="definition-list__description">
+                                <p style="color: #000000">{{ "now"|date("H:i d-m-Y", "Europe/Amsterdam") }}</p>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% endif %}
+                </ul>
                 {% if not app.user %}
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title">
-                        <span>Locatie</span>
+                    <div class="row">
+                        <a id="checkinIdin" href="{{ path('app_user_idin') }}"
+                           class="btn btn--idin">{{ 'check-in'|trans|capitalize }}</a>
+                        <button style="margin-top: 10px" id="showInfoFormButton" onclick="showInfoForm()"
+                                class="btn">{{ 'check-in without login'|trans|capitalize }}</button>
                     </div>
-                    <div class="definition-list__description">
-                        <p style="color: #000000">{{ resource.name }}</p>
-                    </div>
-                </li>
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title">
-                        <span>Plaats</span>
-                    </div>
-                    <div class="definition-list__description">
-                        <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
-                    </div>
-                </li>
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title">
-                        <span>Adres</span>
-                    </div>
-                    <div class="definition-list__description">
-                        {% set place = commonground_resource(resource.place) %}
-                        {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
-                        <p style="color: #000000">{% if adres is defined and adres is not empty %}{{ adres.straat }} {{ adres.huisnummer }}{% endif %}</p>
-                    </div>
-                </li>
-                {% endif %}
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title">
-                        <span>Organisatie</span>
-                    </div>
-                    <div class="definition-list__description">
-                        <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
-                    </div>
-                </li>
-                {% if not app.user %}
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title">
-                        <span>Datum</span>
-                    </div>
-                    <div class="definition-list__description">
-                        <p style="color: #000000">{{ "now"|date("H:i d-m-Y", "Europe/Amsterdam") }}</p>
-                    </div>
-                </li>
-                {% endif %}
-            </ul>
 
-            {% if not app.user %}
-                <div class="row">
-                    <a id="checkinIdin" href="{{ path('app_user_idin') }}"
-                       class="btn btn--idin">{{ 'check-in'|trans|capitalize }}</a>
-                    <button style="margin-top: 10px" id="showInfoFormButton" onclick="showInfoForm()"
-                            class="btn">{{ 'check-in without login'|trans|capitalize }}</button>
-                </div>
+                    <div id="infoForm" style="margin-top: 10px">
 
-                <div id="infoForm" style="margin-top: 10px">
+                        <div class="input">
+                            <label class="input__label" for="firstName">{{ 'first name'|trans|capitalize}} <span
+                                    style="color: red;"><strong>*</strong></span></label>
+                            <input required="" type="text" id="firstName" name="firstName" class="input__control input__control--text">
+                        </div>
 
+                        <div class="input">
+                            <label class="input__label" for="additionalName">{{ 'additional name'|trans|capitalize}}</label>
+                            <input type="text" id="additionalName" name="additionalName" class="input__control input__control--text">
+                        </div>
+
+
+                        <div class="input">
+                            <label class="input__label" for="lastName">{{ 'last name'|trans|capitalize}} <span
+                                    style="color: red;"><strong>*</strong></span></label>
+                            <input required="" type="text" id="lastName" name="lastName" class="input__control input__control--text">
+                        </div>
+
+                        <div class="input">
+                            <label class="input__label" for="email">E-mailadres <span
+                                    style="color: red;"><strong>*</strong></span></label>
+                            <input required="" type="email" id="email" name="email"
+                                   class="input__control input__control--text">
+                        </div>
+
+                        <div class="input">
+                            <label class="input__label" for="email">Telefoonnummer <span
+                                    style="color: red;"><strong>*</strong></span></label>
+                            <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text">
+                        </div>
+
+                        <fieldset class="input">
+                            <legend class="input__legend">Algemene bepalingen</legend>
+                            <div class="input__group input__group--checkbox">
+                                <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" checked="" required=""">
+                                <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a href="#" data-toggle="modal" data-target="#questionModal" onclick="openQuestionModal()">vragen</a> van de corona vragenlijst horeca</label>
+                            </div>
+                            <div class="input__group input__group--checkbox">
+                                <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" required=""">
+                                <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy" target="_blank">privacy</a> regels</label>
+                            </div>
+                        </fieldset>
+
+                        <input type="hidden" name="node" value="{{ resource['@id'] }}">
+                        <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true"
+                                title="indienen"> {{ 'check-in without login'|trans|capitalize }} </button>
+
+                    </div>
+
+                    {#
+                   <button clasbtn--digids="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
+                   <div class="modal modal--backdrop" role="dialog" id="mySmallModal" tabindex="-1">
+                       <section class="modal__content modal--height-s modal--width-s" role="document">
+                           <header class="modal__title">
+                               <h1>Inloggen</h1>
+                               <button class="modal__close-button">
+                                   <i class="icon icon-cross"></i>
+                                   Sluit
+                               </button>
+                           </header>
+                           <div class="modal__body" tabindex="0" lang="en-US">
+                               <p> <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof"
+                                      class="btn btn--digid btn-block">{{ 'digid'|trans|capitalize }}</a></p>
+                               </div>
+                       </section>
+                   </div>#}
+
+                {% else %}
+                    {% set user = commonground_resource(app.user.person) %}
                     <div class="input">
-                        <label class="input__label" for="firstName">{{ 'first name'|trans|capitalize}} <span
+                        <label class="input__label" for="email">Naam <span
                                 style="color: red;"><strong>*</strong></span></label>
-                        <input required="" type="text" id="firstName" name="firstName" class="input__control input__control--text">
+                        <input required="" type="text" id="name" name="name" class="input__control input__control--text"
+                               value="{{ user.name }}">
                     </div>
-
-                    <div class="input">
-                        <label class="input__label" for="additionalName">{{ 'additional name'|trans|capitalize}}</label>
-                        <input type="text" id="additionalName" name="additionalName" class="input__control input__control--text">
-                    </div>
-
-
-                    <div class="input">
-                        <label class="input__label" for="lastName">{{ 'last name'|trans|capitalize}} <span
-                                style="color: red;"><strong>*</strong></span></label>
-                        <input required="" type="text" id="lastName" name="lastName" class="input__control input__control--text">
-                    </div>
-
                     <div class="input">
                         <label class="input__label" for="email">E-mailadres <span
                                 style="color: red;"><strong>*</strong></span></label>
-                        <input required="" type="email" id="email" name="email"
-                               class="input__control input__control--text">
+                        <input required="" type="email" id="email" name="email" class="input__control input__control--text"
+                               {% if user.emails[0] is defined and user.emails[0] is not empty %}value="{{ user.emails[0].email }}" {% endif %}>
+                    </div>
+                    <div class="input">
+                        <label class="input__label" for="email">Telefoonnummer <span style="color: red;"><strong>*</strong></span></label>
+                        <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
+                            {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
                     </div>
 
-                    <div class="input">
-                        <label class="input__label" for="email">Telefoonnummer <span
-                                style="color: red;"><strong>*</strong></span></label>
-                        <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text">
-                    </div>
+                    <fieldset class="input">
+                        <legend class="input__legend">Algemene bepalingen</legend>
+                        <div class="input__group input__group--checkbox">
+                            <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" checked="" required=""">
+                            <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a href="#" data-toggle="modal" data-target="#questionModal" onclick="openQuestionModal()">vragen</a> van de corona vragenlijst horeca</label>
+                        </div>
+                        <div class="input__group input__group--checkbox">
+                            <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" required=""">
+                            <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy" target="_blank">privacy</a> regels</label>
+                        </div>
+                    </fieldset>
 
                     <input type="hidden" name="node" value="{{ resource['@id'] }}">
                     <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true"
-                            title="indienen"> {{ 'check-in without login'|trans|capitalize }} </button>
+                            title="indienen"> {{ 'check-in'|trans|capitalize }} </button>
+                {% endif %}
+            </div><!-- /.content -->
+        </div><!-- /.col -->
 
-                </div>
+        <script>
+            var questionModal;
+            // Load modal component
+            System.import('/uno/components/modal/modal.js').then(function (module) {
+                questionModal = new module.Modal(document.getElementById('questionModal'));
+            });
 
-                {#
-               <button clasbtn--digids="btn btn-block" title="bevestig" data-toggle="modal" data-target="#mySmallModal" onclick="openSmallModal()"> Ga door naar gegevens </button>
-               <div class="modal modal--backdrop" role="dialog" id="mySmallModal" tabindex="-1">
-                   <section class="modal__content modal--height-s modal--width-s" role="document">
-                       <header class="modal__title">
-                           <h1>Inloggen</h1>
-                           <button class="modal__close-button">
-                               <i class="icon icon-cross"></i>
-                               Sluit
-                           </button>
-                       </header>
-                       <div class="modal__body" tabindex="0" lang="en-US">
-                           <p> <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof"
-                                  class="btn btn--digid btn-block">{{ 'digid'|trans|capitalize }}</a></p>
-                           </div>
-                   </section>
-               </div>#}
-
-            {% else %}
-                {% set user = commonground_resource(app.user.person) %}
-                <div class="input">
-                    <label class="input__label" for="email">Naam <span
-                            style="color: red;"><strong>*</strong></span></label>
-                    <input required="" type="text" id="name" name="name" class="input__control input__control--text"
-                           value="{{ user.name }}">
-                </div>
-                <div class="input">
-                    <label class="input__label" for="email">E-mailadres <span
-                            style="color: red;"><strong>*</strong></span></label>
-                    <input required="" type="email" id="email" name="email" class="input__control input__control--text"
-                           {% if user.emails[0] is defined and user.emails[0] is not empty %}value="{{ user.emails[0].email }}" {% endif %}>
-                </div>
-                <div class="input">
-                    <label class="input__label" for="email">Telefoonnummer <span style="color: red;"><strong>*</strong></span></label>
-                    <input required="" type="tel" id="tel" name="tel" class="input__control input__control--text"
-                        {% if user.telephones[0] is defined and user.telephones[0] is not empty %} value="{{ user.telephones[0].telephone }}" {% endif %}>
-                </div>
-
-                <fieldset class="input">
-                    <legend class="input__legend">Algemene bepalingen</legend>
-                    <div class="input__group input__group--checkbox">
-                        <input name="hobbies[]" type="checkbox" id="chkbx1" class="input__control input__control--checkbox" checked="" required=""">
-                        <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a href="#" data-toggle="modal" data-target="#questionModal" onclick="openQuestionModal()">vragen</a> van de corona vragenlijst horeca</label>
-                    </div>
-                    <div class="input__group input__group--checkbox">
-                        <input name="hobbies[]" type="checkbox" id="chkbx2" class="input__control input__control--checkbox" required=""">
-                        <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy" target="_blank">privacy</a> regels</label>
-                    </div>
-                </fieldset>
-
-                <input type="hidden" name="node" value="{{ resource['@id'] }}">
-                <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true"
-                        title="indienen"> {{ 'check-in'|trans|capitalize }} </button>
-            {% endif %}
-        </div><!-- /.content -->
-    </div><!-- /.col -->
-
-    <script>
-        var questionModal;
-        // Load modal component
-        System.import('/uno/components/modal/modal.js').then(function (module) {
-            questionModal = new module.Modal(document.getElementById('questionModal'));
-        });
-
-        // Called when the user clicks the button
-        function openQuestionModal() {
-            questionModal.open();
-        }
-        function closeQuestionModal() {
-            questionModal.close();
-        }
-    </script>
-
-    <div class="modal modal--backdrop" role="dialog" id="questionModal" tabindex="-1" aria-describedby="modal-description3">
-        <section class="modal__content" role="document">
-            <div id="modal-description3" class="screenreader-only">
-                Vanwege de maatregelen rondom het coronavirus, zijn we verplicht je bij ontvangst de volgende vragen te stellen.
-            </div>
-            <header class="modal__title">
-                <h1>Check</h1>
-            </header>
-
-            <div class="modal__body" tabindex="0" >
-                <p>Vanwege de maatregelen rondom het coronavirus,
-                    zijn we verplicht je bij ontvangst de volgende vragen te stellen</p>
-                <ol class="list list--decimal-circled">
-                    <li>Heb je een of meerdere van deze klachten(Hoesten, Neusverkoudheid, Koorts vanaf 38 graden, Benauwdheidsklachten) gehad in de afgelopen 24 uur?</li>
-                    <li>Heb je op dit moment een huisgenoot met koorts en/of
-                        benauwdheidsklachten?</li>
-                    <li>Heb je het nieuwe coronavirus gehad en is dit de afgelopen 7 dagen
-                        vastgesteld (in een lab)?
-                    </li>
-                    <li>Heb je een huisgenoot/gezinslid met het nieuwe coronavirus en heb je
-                        in de afgelopen 14 dagen contact met hem/haar gehad terwijl hij/zij nog
-                        klachten had?</li>
-                    <li>Ben je in quarantaine omdat je direct contact hebt gehad met iemand
-                        waarbij het nieuwe coronavirus is vastgesteld?</li>
-                </ol>
-            </div>
-
-            <footer class="modal__footer" >
-                <p>Wanneer je een van bovenstaande vragen met ‘ja’ beantwoordt, kunnen
-                    we je helaas niet toelaten in ons bedrijf of op ons terras.</p>
-                <button class="modal__close-button btn btn--primary">Bevestig</button>
-            </footer>
-        </section>
-    </div>
-
-    <script>
-        var showForm = Boolean(false);
-        document.getElementById("infoForm").style.display = "none";
-
-        function showInfoForm(){
-            if(showForm === false) {
-                showForm = true;
-                document.getElementById("infoForm").style.display = "block";
-                document.getElementById("showInfoFormButton").style.display = "none";
-            } else {
-                document.getElementById("infoForm").style.display = "none";
-                document.getElementById("showInfoFormButton").style.display = "block";
-
+            // Called when the user clicks the button
+            function openQuestionModal() {
+                questionModal.open();
             }
-        }
-    </script>
-{% endif %}
+            function closeQuestionModal() {
+                questionModal.close();
+            }
+        </script>
+
+        <div class="modal modal--backdrop" role="dialog" id="questionModal" tabindex="-1" aria-describedby="modal-description3">
+            <section class="modal__content" role="document">
+                <div id="modal-description3" class="screenreader-only">
+                    Vanwege de maatregelen rondom het coronavirus, zijn we verplicht je bij ontvangst de volgende vragen te stellen.
+                </div>
+                <header class="modal__title">
+                    <h1>Check</h1>
+                </header>
+
+                <div class="modal__body" tabindex="0" >
+                    <p>Vanwege de maatregelen rondom het coronavirus,
+                        zijn we verplicht je bij ontvangst de volgende vragen te stellen</p>
+                    <ol class="list list--decimal-circled">
+                        <li>Heb je een of meerdere van deze klachten(Hoesten, Neusverkoudheid, Koorts vanaf 38 graden, Benauwdheidsklachten) gehad in de afgelopen 24 uur?</li>
+                        <li>Heb je op dit moment een huisgenoot met koorts en/of
+                            benauwdheidsklachten?</li>
+                        <li>Heb je het nieuwe coronavirus gehad en is dit de afgelopen 7 dagen
+                            vastgesteld (in een lab)?
+                        </li>
+                        <li>Heb je een huisgenoot/gezinslid met het nieuwe coronavirus en heb je
+                            in de afgelopen 14 dagen contact met hem/haar gehad terwijl hij/zij nog
+                            klachten had?</li>
+                        <li>Ben je in quarantaine omdat je direct contact hebt gehad met iemand
+                            waarbij het nieuwe coronavirus is vastgesteld?</li>
+                    </ol>
+                </div>
+
+                <footer class="modal__footer" >
+                    <p>Wanneer je een van bovenstaande vragen met ‘ja’ beantwoordt, kunnen
+                        we je helaas niet toelaten in ons bedrijf of op ons terras.</p>
+                    <button class="modal__close-button btn btn--primary">Bevestig</button>
+                </footer>
+            </section>
+        </div>
+
+        <script>
+            var showForm = Boolean(false);
+            document.getElementById("infoForm").style.display = "none";
+
+            function showInfoForm(){
+                if(showForm === false) {
+                    showForm = true;
+                    document.getElementById("infoForm").style.display = "block";
+                    document.getElementById("showInfoFormButton").style.display = "none";
+                } else {
+                    document.getElementById("infoForm").style.display = "none";
+                    document.getElementById("showInfoFormButton").style.display = "block";
+
+                }
+            }
+        </script>
+    {% endif %}

@@ -651,7 +651,7 @@
       </trans-unit>
       <trans-unit id="089Hb2N" resname="subscribe">
         <source>subscribe</source>
-        <target>abboneren</target>
+        <target>abonneren</target>
       </trans-unit>
       <trans-unit id="bCoDPGD" resname="iDin">
         <source>iDin</source>
@@ -720,6 +720,10 @@
       <trans-unit id="6VEW3z1" resname="your e-mail">
         <source>your e-mail</source>
         <target>uw e-mail</target>
+      </trans-unit>
+      <trans-unit id="5Bah43s" resname="phone number">
+        <source>phone number</source>
+        <target>telefoonnummer</target>
       </trans-unit>
     </body>
   </file>
