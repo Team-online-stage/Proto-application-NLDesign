@@ -56,6 +56,7 @@
                 {% for stage in process.stages %}
                     {% for section in stage.sections %}
                         {% for property in section.propertiesForms %}
+                            {% if property.value is defined and property.value is not empty %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title" style="max-width: 100%;">
                                     <a href="{{ path('app_ptc_process_stage',{id:process.id, stage:stage.slug}) }}#{{ property.id }}">{{ property.title|capitalize }}</a>
@@ -138,6 +139,7 @@
                                     </p>
                                 </div>
                             </li>
+                            {% endif %}
                         {% endfor %}
                     {% endfor %}
                 {% endfor %}
