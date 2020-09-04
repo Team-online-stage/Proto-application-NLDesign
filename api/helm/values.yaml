@@ -9,7 +9,7 @@ settings:
   title: Proto Applicatie NL Design
   version: V.0.1
   id: 3f44c00e-d919-4f89-bd4c-b730c9b2620a
-  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
+  description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&quot;'
   type: application
   repro: https://github.com/ConductionNL/pan
   demo: www.zuid-drecht.nl
