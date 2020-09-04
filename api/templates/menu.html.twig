@@ -13,7 +13,7 @@
                     <li class="navigation__item col-xs" >
                         <a class="navigation__link {% if item.href == currentPath %} navigation__link--active {% endif %}"
                            href="{{ item.href }}">
-                            <i class="{{ item.icon }}" role="presentation"></i> <h2>{{ item.name }}</h2>
+                            <i class="{{ item.icon }}" role="presentation"></i> {{ item.name }}
                         </a>
                     </li>
                 {% endfor %}
