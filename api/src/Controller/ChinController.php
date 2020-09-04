@@ -89,7 +89,23 @@ class ChinController extends AbstractController
      */
     public function nodesCreateAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
-        $variables = [];
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //create the node
+            $resource['organization'] = ''; //get the organization of this 'medewerker'
+            $resource['place'] = ''; //the selected place for this qr code
+            $commonGroundService->createResource($resource, ['component' => 'chin', 'type' => 'nodes']);
+
+            return $this->redirectToRoute('app_default_index');
+        }
 
         return $variables;
     }
