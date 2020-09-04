@@ -58,8 +58,8 @@
 <div class="row">
     {% if request %}
 
-    {% if request.process_type is defined and request.process_type is not empty %}
-        {% set pT = commonground_resource(request.process_type) %}
+    {% if request.processType is defined and request.processType is not empty %}
+        {% set pT = commonground_resource(request.processType) %}
     {% endif %}
 
     {% if pT is defined and pT.stages|length > 1 %}
