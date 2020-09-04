@@ -1,5 +1,9 @@
 <div class="content-background">
     <div class="content">
+        {% if process.submittedText is defined and process.submittedText is not empty %}
+            {{ process.submittedText }}
+        {% endif %}
+
         <h2>
             {{ 'this request is currently'|trans|capitalize }}: {{ request.status|trans|capitalize }}
         </h2>
