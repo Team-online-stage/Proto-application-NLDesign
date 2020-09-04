@@ -58,11 +58,7 @@
 <div class="row">
     {% if request %}
 
-    {% if request.process_type is defined and request.process_type is not empty %}
-        {% set pT = commonground_resource(request.process_type) %}
-    {% endif %}
-
-    {% if pT is defined and pT.stages|length > 1 %}
+    {% if process.stages is defined and process.stages|length > 1 %}
     <div class="col-md-8  col-sm-12">
         {% else %}
         <div class="col-sm-12">
@@ -108,7 +104,7 @@
 
         </div><!-- /.col -->
 
-        {% if pT is defined and pT.stages|length > 1 %}
+        {% if process.stages is defined and process.stages|length > 1 %}
             <div class="col-md-4  col-sm-12">
                 {% if request.currentStage is not defined or request.currentStage is empty %}
                     {% include 'ptc/widgets/requests.html.twig' %}
