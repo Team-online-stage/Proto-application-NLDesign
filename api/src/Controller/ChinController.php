@@ -84,17 +84,6 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/nodes/create")
-     * @Template
-     */
-    public function nodesCreateAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-
-        return $variables;
-    }
-
-    /**
      * This function shows all available locations.
      *
      * @Route("/")
