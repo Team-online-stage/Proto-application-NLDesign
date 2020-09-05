@@ -19,6 +19,9 @@
     "api-platform/schema-generator": {
         "version": "v2.1.0"
     },
+    "bacon/bacon-qr-code": {
+        "version": "2.0.2"
+    },
     "behat/transliterator": {
         "version": "v1.2.0"
     },
@@ -33,6 +36,9 @@
     },
     "conduction/commongroundbundle": {
         "version": "dev-master"
+    },
+    "dasprid/enum": {
+        "version": "1.0.2"
     },
     "doctrine/annotations": {
         "version": "1.0",
@@ -121,6 +127,15 @@
     "easyrdf/easyrdf": {
         "version": "0.9.1"
     },
+    "endroid/installer": {
+        "version": "1.2.3"
+    },
+    "endroid/qr-code": {
+        "version": "3.9.1"
+    },
+    "endroid/qr-code-bundle": {
+        "version": "3.4.2"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -148,6 +163,9 @@
     "guzzlehttp/psr7": {
         "version": "1.5.2"
     },
+    "khanamiryan/qrcode-detector-decoder": {
+        "version": "1.0.3"
+    },
     "knplabs/knp-markdown-bundle": {
         "version": "1.8.1"
     },
@@ -168,6 +186,9 @@
     },
     "moneyphp/money": {
         "version": "v1.3.0"
+    },
+    "myclabs/php-enum": {
+        "version": "1.7.6"
     },
     "nelmio/cors-bundle": {
         "version": "1.5",
