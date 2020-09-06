@@ -14,7 +14,8 @@
                 <tr>
                     <th scope="col">{{ 'name'|trans|capitalize }}</th>
                     <th scope="col">{{ 'place'|trans|capitalize }}</th>
-                    <th scope="col">{{ 'organization'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'code'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'qr'|trans|capitalize }}</th>
                     <th scope="col"></th>
                 </tr>
                 </thead>
@@ -23,7 +24,8 @@
                     <tr>
                         <td>{{ node.name }}</td>
                         <td>{{ commonground_resource(node.place).name }}</td>
-                        <td>{{ commonground_resource(node.organization).name }}</td>
+                        <td>{{ node.reference }}</td>
+                        <td><img src="{{ qr_code_path(node.reference )}}" /></td>
                         </td>
                     </tr>
                 {% endfor %}
