@@ -25,7 +25,7 @@
                         <td>{{ node.name }}</td>
                         <td>{{ commonground_resource(node.place).name }}</td>
                         <td>{{ node.reference }}</td>
-                        <td><img src="{{ qr_code_path(node.reference )}}" /></td>
+                        <td><img src="{{ qr_code_data_uri( absolute_url(path('app_chin_checkin',{"code":node.reference})) , { writer: 'svg', size: 150 }) }}" /></td>
                         </td>
                     </tr>
                 {% endfor %}
