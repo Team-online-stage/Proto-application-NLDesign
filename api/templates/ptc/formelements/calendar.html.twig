@@ -225,17 +225,11 @@
                 {#console.log({{ event.endDate|date("U") }});#}
                 {#console.log("-----");#}
                 if ("{{ event.startDate|date("U") }}" > optionStartDateMs  && "{{ event.startDate|date("U") }}" < optionEndDateMs) {
-                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
-                    buttons[j].innerText = '';
-                    buttons[j].setAttribute('disabled', 'disabled');
+                    blockButton(j);
                 } else if ("{{ event.endDate|date("U") }}" > optionStartDateMs  && "{{ event.endDate|date("U") }}" < optionEndDateMs) {
-                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
-                    buttons[j].innerText = '';
-                    buttons[j].setAttribute('disabled', 'disabled');
+                    blockButton(j);
                 } else if ("{{ event.startDate|date("U") }}" < optionStartDateMs && "{{ event.endDate|date("U") }}" > optionEndDateMs) {
-                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
-                    buttons[j].innerText = '';
-                    buttons[j].setAttribute('disabled', 'disabled');
+                    blockButton(j);
                 } else {
                     console.log("fail");
                 }
@@ -245,6 +239,12 @@
             days[i].innerHTML = date.getDate() + ' ' + months[date.getMonth()];
             date.setDate(date.getDate() + 1);
         }
+    }
+
+    function blockButton(j) {
+        buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
+        buttons[j].innerText = '';
+        buttons[j].setAttribute('disabled', 'disabled');
     }
 
     function selectDate(timeFrame, date, button) {
