@@ -84,17 +84,6 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/nodes/create")
-     * @Template
-     */
-    public function nodesCreateAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-
-        return $variables;
-    }
-
-    /**
      * This function shows all available locations.
      *
      * @Route("/")
@@ -240,6 +229,18 @@ class ChinController extends AbstractController
     public function onboardingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $variables = $applicationService->getVariables();
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/nodes")
+     * @Template
+     */
+    public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['nodes'] =  $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
         return $variables;
     }

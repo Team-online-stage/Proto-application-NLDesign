@@ -1,8 +1,11 @@
-{% extends "content.html.twig" %}
 
-{% block content %}
+{% extends 'base.html.twig' %}
 
-    <section class="row">
+{% block container %}
+
+
+<div class="row">
+    <div class="container background--grijs-2">
         <div class="col-md-12">
             <div class="content">
                 <header class="content__header">
@@ -14,9 +17,12 @@
                 </header>
             </div><!-- ./content -->
         </div><!-- ./col -->
-    </section>
+    </div><!-- .container -->
+</div><!-- .row -->
 
-    <div class="row">
+
+<div class="row">
+    <div class="container background--grijs-2">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <aside class="col-md-4 col-sm-modal">
             <nav class="sidenav">
@@ -43,5 +49,6 @@
                 </div>
             </div>
         {% endif %}
-    </div>
+    </div><!-- .container -->
+</div><!-- .row -->
 {% endblock %}
