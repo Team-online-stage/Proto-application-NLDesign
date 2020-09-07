@@ -38,11 +38,26 @@
         let geslachtsnaam = document.getElementById('familyName').value;
 
         let list = document.getElementById('persoonsLijst');
+
         while(list.firstChild){
             list.firstChild.remove();
         }
 
-
+        if(geslachtsnaam === "" || voornamen === "" || bsn === ""){
+            let response = "De volgende velden zijn niet ingevoerd:<ul>";
+            $('.spinner').hide();
+            if(geslachtsnaam === ""){
+                response = response + '<li> {{ 'family name'|trans|capitalize }} </li>';
+            }
+            if(voornamen === ""){
+                response = response + '<li> {{ 'given names'|trans|capitalize }} </li>';
+            }
+            if(bsn === ""){
+                response = response + '<li>Bsn</li>';
+            }
+            $('#persoonsLijst').append('<p>'+response+'</p>');
+            return;
+        }
 
         $.ajax({
             url: "/api/brp/ingeschrevenpersonen",
@@ -70,7 +85,6 @@
             success: function(result) {
                 $('.spinner').hide();
                 if(result["hydra:member"].length >= 1){
-                    console.log('found '+result["hydra:member"].length+" people");
                     $('#persoonsLijst').append('<legend class="input__legend">Persoon:</legend>')
                     for(let i = 0; i < result['hydra:member'].length; i++){
 
