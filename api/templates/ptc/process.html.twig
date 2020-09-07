@@ -117,7 +117,9 @@
 
                     {% include 'ptc/widgets/order.html.twig' %}
 
-                    {% include 'ptc/widgets/properties.html.twig' %}
+                    {% if not app.request.get('submit') %}
+                        {% include 'ptc/widgets/properties.html.twig' %}
+                    {% endif %}
 
                     {% include 'ptc/widgets/contact.html.twig' %}
                 {% endif %}
