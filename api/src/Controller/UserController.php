@@ -89,7 +89,7 @@ class UserController extends AbstractController
      */
     public function FacebookAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id=2712725532283785&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
+        return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id=2712725532283785&scope=email&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
     }
 
     /**
