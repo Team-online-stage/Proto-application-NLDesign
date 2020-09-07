@@ -162,12 +162,12 @@
         let days = document.getElementsByClassName('day');
         for(let i = 0; i < days.length; i ++){
             let buttons = document.getElementsByClassName('button-'+i.toString());
-            let dayOfButtonRowInMs = n.setDate(n.getDate() + i-1) ;
+            let dayOfButtonRowInMs = n.setDate(n.getDate() + i-1);
             for(let j = 0; j < buttons.length; j++){
                 buttons[j].name = date.getDate() + ' ' + months[date.getMonth()];
                 buttons[j].innerText = 'kies';
                 buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: #148839; border: 1px solid lightgray;');
-                if(dayOfButtonRowInMs < currentDateInMs || currentWeek == arr[0] && currentDay === (i+1)){
+                if(currentWeek == arr[0] && (currentDay === (i+1) || currentDay > (i+1))){
                     buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
                     buttons[j].innerText = '';
                     buttons[j].setAttribute('disabled', 'disabled');
