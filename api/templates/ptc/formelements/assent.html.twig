@@ -50,8 +50,6 @@
 
     function addGetuigen(propertyName, items) {
         $("#getuigenVoornaam").removeAttr("readonly");
-        $("#getuigenAchternaam").removeAttr("readonly");
-        let input = document.getElementById('getuigenEmail');
         if(!input.checkValidity()){
             document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult';
         }else{
@@ -107,12 +105,16 @@
 
             {% if request['@id'] is defined and request['@id'] is not empty %}
             hRequest.value = '{{ request['@id'] }}';
+            {% endif %}
+
+            {% if request.organization is defined and request.organization is not null %}
             hRequester.value = '{{ request.organization }}';
             {% elseif application is not empty %}
             hRequester.value = '{{ application.organization['@id'] }}';
             {% else %}
             hRequester.value = '{{ process.sourceOrganization }}';
             {% endif %}
+
 
 
             {% if property.type == 'array' %}
@@ -190,6 +192,8 @@
             document.getElementById('getuigenVoornaam').value = null;
             document.getElementById('getuigenAchternaam').value = null;
         }
+        $("#getuigenAchternaam").removeAttr("readonly");
+        let input = document.getElementById('getuigenEmail');
 
     }
 
