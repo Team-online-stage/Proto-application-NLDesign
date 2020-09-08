@@ -205,7 +205,7 @@ class PtcController extends AbstractController
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
 
-        if(key_exists('show', $variables['stage']) && !$variables['stage']['show']){
+        if (key_exists('show', $variables['stage']) && !$variables['stage']['show']) {
             $this->redirect($this->generateUrl('app_ptc_process', ['id' => $id, 'stage'=>$variables['stage']['next']]));
         }
 
