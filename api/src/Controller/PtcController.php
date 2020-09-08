@@ -104,7 +104,6 @@ class PtcController extends AbstractController
 
         $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
 
-
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
             (array_key_exists('processType', $variables['request']) && $variables['request']['processType'] != $variables['process']['@id'])
@@ -123,7 +122,6 @@ class PtcController extends AbstractController
         if ($stage && $stage != 'start') {
             $variables['request']['currentStage'] = $stage;
         }
-
 
         // Aditionally some one might have tried to pre-fill the form, wich we will then use overwrite the data
         $variables['request'] = array_merge($variables['request'], $request->query->all());
@@ -207,10 +205,9 @@ class PtcController extends AbstractController
             $variables['stage'] = ['next' => $variables['process']['stages'][0]];
         }
 
-        if(!$variables['stage']['show']){
+        if (!$variables['stage']['show']) {
             $this->redirect($this->generateUrl('app_ptc_process', ['id' => $id, 'stage'=>$variables['stage']['next']]));
         }
-
 
         /* lagacy */
         $variables['resource'] = $variables['request'];
