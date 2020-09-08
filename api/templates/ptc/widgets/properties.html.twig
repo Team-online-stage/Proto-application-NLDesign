@@ -58,32 +58,32 @@
                         {% for property in section.propertiesForms %}
                             <li class="definition-list__item definition-list__item--horizontal">
                                 <div class="definition-list__title" style="max-width: 100%;">
-                                    <a href="{{ path('app_ptc_process_stage',{id:process.id, stage:stage.slug}) }}#{{ property.id }}">{{ property.title|capitalize }}</a>
+                                    <span>{{ property.title|capitalize }}</span>
                                 </div>
 
                                 <div class="definition-list__description">
                                     <p>
                                         {% if property.value is iterable %}
                                         {% for key, value in property.value %}
-                                        {% if value is iterable %}
-                                    <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 100%; margin-left: 0px;">
-                                        {% for item in value %}
-                                            {% if item is iterable %}
-                                                {% for subItem in item %}
-                                                    {% if 'http' in subItem %}
-                                                        <li>{{ commonground_resource(subItem).name|capitalize }}</li>
-                                                    {% else %}
-                                                        {% if subItem != '' %}
-                                                            <li>{{ subItem|capitalize }}</li>
+                                            {% if value is iterable %}
+                                                <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 100%; margin-left: 0px;">
+                                            {% for item in value %}
+                                                {% if item is iterable %}
+                                                    {% for subItem in item %}
+                                                        {% if 'http' in subItem %}
+                                                            <li>{{ commonground_resource(subItem).name|capitalize }}</li>
+                                                        {% else %}
+                                                            {% if subItem != '' %}
+                                                                <li>{{ subItem|capitalize }}</li>
+                                                            {% endif %}
                                                         {% endif %}
-                                                    {% endif %}
-                                                {% endfor %}
-                                            {% else %}
-                                                {% if 'http' in item %}
-                                                    <li>{{ commonground_resource(item).name|capitalize }}</li>
+                                                    {% endfor %}
                                                 {% else %}
-                                                    {% if item != '' %}
-                                                        <li>{{ item|capitalize }}</li>
+                                                    {% if 'http' in item %}
+                                                        <li>{{ commonground_resource(item).name|capitalize }}</li>
+                                                    {% else %}
+                                                        {% if item != '' %}
+                                                            <li>{{ item|capitalize }}</li>
                                                     {% endif %}
                                                 {% endif %}
                                             {% endif %}

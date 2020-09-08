@@ -65,7 +65,6 @@ class LcController extends AbstractController
         $variables = [];
         $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc', 'type'=>'places'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
-
         return $variables;
     }
 }

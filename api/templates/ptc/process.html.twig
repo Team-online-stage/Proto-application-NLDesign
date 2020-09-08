@@ -107,7 +107,9 @@
         {% if process.stages is defined and process.stages|length > 1 %}
             <div class="col-md-4  col-sm-12">
                 {% if request.currentStage is not defined or request.currentStage is empty %}
-                    {% include 'ptc/widgets/requests.html.twig' %}
+                    {% if app.user is not empty and process.requireLogin == 'true' %}
+                        {% include 'ptc/widgets/requests.html.twig' %}
+                    {% endif %}
                 {% else %}
                     {% include 'ptc/widgets/progressbar.html.twig' %}
 
@@ -115,7 +117,9 @@
 
                     {% include 'ptc/widgets/order.html.twig' %}
 
-                    {% include 'ptc/widgets/properties.html.twig' %}
+                    {% if not app.request.get('submit') %}
+                        {% include 'ptc/widgets/properties.html.twig' %}
+                    {% endif %}
 
                     {% include 'ptc/widgets/contact.html.twig' %}
                 {% endif %}
