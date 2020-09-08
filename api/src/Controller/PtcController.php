@@ -104,7 +104,8 @@ class PtcController extends AbstractController
 
         $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
 
-        //var_dump($variables['process']);
+        // Let load the request on the procces and validate it
+        $variables['process'] = $ptcService->extendProcess($variables['process'], $variables['request']);
 
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
@@ -130,6 +131,12 @@ class PtcController extends AbstractController
             /* @todo dit is lelijk */
             foreach ($variables['process']['stages'] as $tempStage) {
                 if ($tempStage['slug'] == $stage) {
+                    $variables['stage'] = $tempStage;
+                }
+            }
+        }else{
+            foreach($variables['process']['stages'] as $tempStage){
+                if($tempStage['id'] == $variables['stage']['id']){
                     $variables['stage'] = $tempStage;
                 }
             }
@@ -205,8 +212,7 @@ class PtcController extends AbstractController
             $session->set('request', $request);
         }
 
-        // Let load the request on the procces and validate it
-        $variables['process'] = $ptcService->extendProcess($variables['process'], $variables['request']);
+
 
         /* lagacy */
         $variables['resource'] = $variables['request'];

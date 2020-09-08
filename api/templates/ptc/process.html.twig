@@ -1,6 +1,11 @@
 {% extends "content.html.twig" %}
 
 {% block content %}
+{% if stage.show is defined and stage.show != true %}
+    <script>
+        window.location.replace('{{ path('app_ptc_process_stage',{id:process.id, stage:stage.next.slug}) }}');
+    </script>
+{% else %}
 <section class="row">
     <div class="col-md-12">
         <div class="content">
@@ -125,7 +130,8 @@
                 {% endif %}
             </div>
         {% endif %}
-
+        </div>
         {% endif %}
     </div>
+    {% endif %}
     {% endblock %}
