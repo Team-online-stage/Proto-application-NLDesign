@@ -25,6 +25,9 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "brick/math": {
+        "version": "0.9.1"
+    },
     "composer/ca-bundle": {
         "version": "1.2.6"
     },
@@ -136,6 +139,9 @@
     "endroid/qr-code-bundle": {
         "version": "3.4.2"
     },
+    "fgrosse/phpasn1": {
+        "version": "v2.1.1"
+    },
     "fig/link-util": {
         "version": "1.0.0"
     },
@@ -244,6 +250,15 @@
     "psr/container": {
         "version": "1.0.0"
     },
+    "psr/event-dispatcher": {
+        "version": "1.0.0"
+    },
+    "psr/http-client": {
+        "version": "1.0.1"
+    },
+    "psr/http-factory": {
+        "version": "1.0.1"
+    },
     "psr/http-message": {
         "version": "1.0.1"
     },
@@ -297,6 +312,12 @@
         "files": [
             "config/packages/security_checker.yaml"
         ]
+    },
+    "spomky-labs/aes-key-wrap": {
+        "version": "v6.0.0"
+    },
+    "spomky-labs/base64url": {
+        "version": "v2.0.3"
     },
     "stof/doctrine-extensions-bundle": {
         "version": "1.2",
@@ -606,6 +627,9 @@
     "tbbc/money-bundle": {
         "version": "v3.1.9"
     },
+    "thecodingmachine/safe": {
+        "version": "v1.2.0"
+    },
     "twig/extensions": {
         "version": "1.0",
         "recipe": {
@@ -620,6 +644,9 @@
     },
     "twig/twig": {
         "version": "v2.11.3"
+    },
+    "web-token/jwt-framework": {
+        "version": "v2.2.1"
     },
     "webmozart/assert": {
         "version": "1.4.0"
