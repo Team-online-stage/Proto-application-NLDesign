@@ -32,10 +32,6 @@
                            class="btn btn--gmail btn-block">{{ 'gmail'|trans|capitalize }}</a></p>
                 {% endif %}
 
-                <p>
-                    <a href="{{ path('app_user_gmail') }}"
-                       class="btn btn--gmail btn-block">{{ 'gmail'|trans|capitalize }}</a></p>
-
                 {% if application['defaultConfiguration']['configuration']['login']['digid'] is defined and application['defaultConfiguration']['configuration']['login']['digid'] %}
                     <h2 id="inloggen-verzuimloket">{{ 'for citizen'|trans|capitalize }}</h2>
                     <p>
