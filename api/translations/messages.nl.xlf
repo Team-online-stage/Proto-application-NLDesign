@@ -145,14 +145,6 @@
         <source>type</source>
         <target>type</target>
       </trans-unit>
-      <trans-unit id="2BxV9Jr" resname="placename">
-        <source>placename</source>
-        <target>woonplaats</target>
-      </trans-unit>
-      <trans-unit id="2BxQ9Jr" resname="location">
-        <source>location</source>
-        <target>locatie</target>
-      </trans-unit>
       <trans-unit id="qp6bXJB" resname="see">
         <source>see</source>
         <target>bekijken</target>
