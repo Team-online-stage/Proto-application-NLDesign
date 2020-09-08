@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-sm-12 col-lg-3">
-        <label class="input__label" for="bsn">Bsn</label>
-        <input class="input__control input__control--text" id="bsn" type="text">
-    </div>
-    <div class="col-sm-12 col-lg-3">
         <label class="input__label" for="givenNames">{{ 'given names'|trans|capitalize }}</label>
         <input class="input__control input__control--text" id="givenNames" type="text">
     </div>
     <div class="col-sm-12 col-lg-3">
         <label class="input__label" for="familyName">{{ 'family name'|trans|capitalize }}</label>
         <input class="input__control input__control--text" id="familyName" type="text">
+    </div>
+    <div class="col-sm-12 col-lg-3">
+        <label class="input__label" for="bsn">{{ 'social service number'|trans|capitalize }}</label>
+        <input class="input__control input__control--text" id="bsn" type="text">
     </div>
     <div class="col-sm-12 col-lg-2">
         <br>
@@ -53,7 +53,7 @@
                 response = response + '<li> {{ 'given names'|trans|capitalize }} </li>';
             }
             if(bsn === ""){
-                response = response + '<li>Bsn</li>';
+                response = response + '<li>{{ 'social service number'|trans|capitalize }}</li>';
             }
             $('#persoonsLijst').append('<p>'+response+'</p>');
             return;
@@ -98,7 +98,7 @@
                         $('#persoonsLijst').append('</div>');
                     }
                 } else {
-                    $('#persoonsLijst').append('<p>Geen persoon gevonden op ingevulde BSN</p>');
+                    $('#persoonsLijst').append('<p>Geen persoon gevonden op ingevulde combinatie van naam en BSN</p>');
                 }
             },
         });
