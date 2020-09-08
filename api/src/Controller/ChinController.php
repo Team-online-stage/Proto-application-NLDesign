@@ -50,6 +50,18 @@ class ChinController extends AbstractController
     }
 
     /**
+     * @Route("/checkin/statistics")
+     * @Template
+     */
+    public function checkinStatisticsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/nodes/user")
      * @Template
      */
