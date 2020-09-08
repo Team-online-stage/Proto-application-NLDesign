@@ -89,7 +89,14 @@ class UserController extends AbstractController
      */
     public function FacebookAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id=2712725532283785&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'facebook'])['hydra:member'];
+        $provider = $provider[0];
+
+        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
+            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.$provider['configuration']['app_id'].'&scope=email&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
+        } else {
+            return $this->render('500.html.twig');
+        }
     }
 
     /**
@@ -101,6 +108,22 @@ class UserController extends AbstractController
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
         return $this->redirect('https://github.com/login/oauth/authorize?state='.getenv('APP_ID').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
+    }
+
+    /**
+     * @Route("/gmail")
+     * @Template
+     */
+    public function gmailAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'gmail'])['hydra:member'];
+        $provider = $provider[0];
+
+        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
+            return $this->redirect('https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=46119456250-gad8g8342inudo8gp8v63ovokq21itt2.apps.googleusercontent.com&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.phonenumbers.read&redirect_uri='.$request->getUri());
+        } else {
+            return $this->render('500.html.twig');
+        }
     }
 
     /**
