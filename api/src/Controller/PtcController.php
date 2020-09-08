@@ -134,12 +134,6 @@ class PtcController extends AbstractController
                     $variables['stage'] = $tempStage;
                 }
             }
-        }else{
-            foreach($variables['process']['stages'] as $tempStage){
-                if($tempStage['id'] == $variables['stage']['id']){
-                    $variables['stage'] = $tempStage;
-                }
-            }
         }
 
         if (!array_key_exists('stage', $variables)) {
