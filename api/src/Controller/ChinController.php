@@ -72,7 +72,7 @@ class ChinController extends AbstractController
 
         return $variables;
     }
-    
+
     /**
      * @Route("/nodes/organization")
      * @Template
