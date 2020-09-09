@@ -91,13 +91,13 @@
 
 <input id="calendarValue" type="hidden" name="request[properties][{{ property.name }}]"
        value="">
+
 <script>
 
     Date.prototype.getWeek = function (dowOffset) {
 
         var d = new Date();
         var n = d.getDay();
-
 
         dowOffset = typeof (dowOffset) == 'int' ? dowOffset : 0;
         let newYear = new Date(this.getFullYear(), 0, 1);
@@ -119,18 +119,15 @@
         return weekNum;
     };
 
-
     // function getDateOfWeek(w, y) {
     //     let date = new Date(y, 0, (1 + (w - 1) * 7));
     //     date.setDate(date.getDate() + (1 - date.getDay()));
     //     return date
     // }
 
-
     //test data
     let test = new Date();
     test.setDate(test.getDate() + 2);
-
 
     let today = new Date();
     let currentYear = today.getFullYear();
@@ -184,6 +181,7 @@
 
         var currentDay = new Date().getDay();
         var currentWeek = new Date().getWeek();
+        var currentYear = new Date().getFullYear();
 
         var startHour = 9;
 
@@ -201,37 +199,67 @@
                 var dateOfThisDay = new Date(dateOfSelectedWeek);
             }
             let buttons = document.getElementsByClassName('button-' + i.toString());
+            // console.log(dateOfThisDay);
             var timeOfThisDay = new Date(dateOfThisDay);
             timeOfThisDay.addHours(startHour);
+            // console.log("---");
+            var abc = new Date(timeOfThisDay);
+            var abc2 = new Date(timeOfThisDay);
             for (let j = 0; j < buttons.length; j++) {
-                var optionStartDate = new Date(timeOfThisDay.addHours(j));
-                var optionEndDate = new Date(timeOfThisDay.addHours(j + 1));
+                var optionStartDate = new Date(abc).addHours(j + 2);
+                var optionYear = new Date(optionStartDate);
+                optionYear = optionYear.getFullYear();
+                var optionEndDate = new Date(abc2).addHours(j + 1 + 2);
                 var optionStartDateMs = optionStartDate.getTime();
                 var optionEndDateMs = optionEndDate.getTime();
-                buttons[j].name = date.getDate() + ' ' + months[date.getMonth()];
+                buttons[j].name = date.getDate() + ' ' + months[date.getMonth()] + ' ' + optionYear;
                 buttons[j].innerText = 'kies';
                 buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: #148839; border: 1px solid lightgray;');
-                // if (currentWeek == arr[0] && (currentDay === (i + 1) || currentDay > (i + 1))) {
-                //     buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
-                //     buttons[j].innerText = '';
-                //     buttons[j].setAttribute('disabled', 'disabled');
-                // }
+                if (currentWeek == arr[0] && currentYear == optionYear && (currentDay === (i + 1) || currentDay > (i + 1))) {
+                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
+                    buttons[j].innerText = '';
+                    buttons[j].setAttribute('disabled', 'disabled');
+                }
+                let eventStartDate = 0;
+                let eventEndDate = 0;
                 {% for calendar in calendars %}
                 {% for event in calendar.events %}
-                {#console.log("----- Knop "+j+" Dag "+i);#}
+                eventStartDate = {{ event.startDate|date("U", false) }};
+                eventEndDate = {{ event.endDate|date("U", false) }};
+                eventStartDate = eventStartDate * 1000;
+                eventEndDate = eventEndDate * 1000;
+                // console.log("----- Knop " + j + " Dag " + i);
+                // console.log(dateOfThisDay);
+                // console.log(timeOfThisDay);
                 {#console.log(optionStartDateMs);#}
+                {#console.log(optionStartDate);#}
                 {#console.log(optionEndDateMs);#}
-                {#console.log({{ event.startDate|date("U") }});#}
-                {#console.log({{ event.endDate|date("U") }});#}
-                {#console.log("-----");#}
-                if ("{{ event.startDate|date("U") }}" > optionStartDateMs  && "{{ event.startDate|date("U") }}" < optionEndDateMs) {
-                    blockButton(j);
-                } else if ("{{ event.endDate|date("U") }}" > optionStartDateMs  && "{{ event.endDate|date("U") }}" < optionEndDateMs) {
-                    blockButton(j);
-                } else if ("{{ event.startDate|date("U") }}" < optionStartDateMs && "{{ event.endDate|date("U") }}" > optionEndDateMs) {
-                    blockButton(j);
-                } else {
-                    console.log("fail");
+                {#console.log(optionEndDate);#}
+                {#console.log("{{ event.startDate|date }}");#}
+                {#console.log("{{ event.endDate|date }}");#}
+                {#console.log(eventStartDate);#}
+                {#console.log(eventEndDate);#}
+                // console.log("-----");
+                if (eventStartDate >= optionStartDateMs && eventStartDate < optionEndDateMs) {
+                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
+                    buttons[j].innerText = '';
+                    buttons[j].setAttribute('disabled', 'disabled');
+                    // console.log("succes");
+                } else if (eventEndDate > optionStartDateMs && eventEndDate < optionEndDateMs) {
+                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
+                    buttons[j].innerText = '';
+                    buttons[j].setAttribute('disabled', 'disabled');
+                    // console.log("succes");
+                } else if (eventStartDate < optionStartDateMs && eventEndDate > optionEndDateMs) {
+                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
+                    buttons[j].innerText = '';
+                    buttons[j].setAttribute('disabled', 'disabled');
+                    // console.log("succes");
+                } else if (eventStartDate === optionStartDate && eventEndDate === optionStartDate) {
+                    buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
+                    buttons[j].innerText = '';
+                    buttons[j].setAttribute('disabled', 'disabled')
+                    // console.log("succes");
                 }
                 {% endfor %}
                 {% endfor %}
@@ -241,21 +269,42 @@
         }
     }
 
-    function blockButton(j) {
-        buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
-        buttons[j].innerText = '';
-        buttons[j].setAttribute('disabled', 'disabled');
-    }
-
     function selectDate(timeFrame, date, button) {
         removeClass('activeBtn');
         button.classList.add('activeBtn');
         if (date !== '') {
             let testData = document.getElementById('testData');
             let time = timeFrame.split('-');
-            let hiddenInput = document.getElementById('calendarValue');
-            hiddenInput.value = date + ' ' + time[0] + '-' + time[1];
+
             testData.innerText = 'Gekozen datum: ' + date + ' tussen: ' + time[0] + ' - ' + time[1];
+
+            let date2 = date.split(' ');
+            let month = getMonthFromString(date2[1]);
+
+            time[0] = time[0].replace(/\s/g, '');
+            time[1] = time[1].replace(/\s/g, '');
+
+            month = parseInt(month);
+            if (month < 10) {
+                month = month.toString();
+                month = "0" + month;
+            } else {
+                month = month.toString();
+            }
+
+            date2[0] = parseInt(date2[0]);
+            if (date2[0] < 10) {
+                date2[0] = date2[0].toString();
+                date2[0] = "0" + date2[0];
+            } else {
+                date2[0] = date2[0].toString();
+            }
+
+            let startDate = date2[2] + '-' + month + '-' + date2[0] + ' ' + time[0] + ':00';
+
+            let hiddenInput = document.getElementById('calendarValue');
+
+            hiddenInput.value = startDate;
         }
     }
 
@@ -281,6 +330,10 @@
         else
             ISOweekStart.setDate(simple.getDate() + 8 - simple.getDay());
         return ISOweekStart;
+    }
+
+    function getMonthFromString(mon) {
+        return new Date(Date.parse(mon + " 1, 2012")).getMonth() + 1
     }
 
     Date.prototype.addHours = function (h) {
