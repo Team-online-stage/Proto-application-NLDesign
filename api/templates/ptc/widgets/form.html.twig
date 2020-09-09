@@ -35,12 +35,14 @@
 
                     {% elseif property.iri == 'brp/ingeschrevenpersoon' %}
                         {% include 'widgets/brp/ingeschreven_persoon.html.twig' %}
-                    {% elseif property.iri == 'irc/assent' %}
+                    {% elseif property.iri == 'irc/assents' %}
                         {% include 'ptc/formelements/assent.html.twig' %}
                     {% elseif property.iri == 'cc/people' %}
                         {% include 'ptc/formelements/people.html.twig' %}
                     {% elseif property.iri == 'cc/organization' %}
                         {% include 'ptc/formelements/ccOrganization.html.twig' %}
+                    {% elseif property.iri == 'cc/addresses' %}
+                        {% include 'ptc/formelements/ccAddress.html.twig' %}
                     {% elseif property.iri == 'wrc/organization' %}
                         {% include 'ptc/formelements/wrcOrganization.html.twig' %}
 
@@ -74,8 +76,12 @@
                     {% elseif property.format == 'btw' %}
                         {% include 'ptc/formelements/btw.html.twig' %}
 
+
+                    {% elseif property.format == 'checkbox' %}
+                        {% include 'ptc/formelements/checkbox.html.twig' %}
+
                         {# Generic HTML 5 input types #}
-                    {% elseif property.format in {'button':'','checkbox':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
+                    {% elseif property.format in {'button':'','color':'','date':'','datetime-local':'','email':'','file':'','hidden':'','image':'','month':'','number':'','password':'','radio':'','range':'','reset':'','search':'','submit':'','tel':'','text':'','time':'','url':'','week':''}|keys %}
                         {% include 'ptc/formelements/generic.html.twig'  with {'type': property.format} %}
                     {% else %}
                         <p>No applicable format {{ property.format }}, type {{ property.type }} or

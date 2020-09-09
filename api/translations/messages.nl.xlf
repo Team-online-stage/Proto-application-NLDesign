@@ -61,6 +61,42 @@
         <source>status</source>
         <target>status</target>
       </trans-unit>
+      <trans-unit id="H1i5FFs" resname="request">
+        <source>request</source>
+        <target>verzoek</target>
+      </trans-unit>
+      <trans-unit id="uOH4C9c" resname="event">
+        <source>event</source>
+        <target>afspraak</target>
+      </trans-unit>
+      <trans-unit id="UVJ5Die" resname="calendar">
+        <source>calendar</source>
+        <target>agenda</target>
+      </trans-unit>
+      <trans-unit id="KY0hL.s" resname="orderitem">
+        <source>orderitem</source>
+        <target>product bij bestelling</target>
+      </trans-unit>
+      <trans-unit id="EooHv_L" resname="givenname">
+        <source>givenname</source>
+        <target>voornaam</target>
+      </trans-unit>
+      <trans-unit id="QXv8pBt" resname="value is empty">
+        <source>value is empty</source>
+        <target>nog geen waarde opgegeven</target>
+      </trans-unit>
+      <trans-unit id="x.lhO2E" resname="given names">
+        <source>given names</source>
+        <target>voornamen</target>
+      </trans-unit>
+      <trans-unit id="t1ViRAm" resname="family name">
+        <source>family name</source>
+        <target>geslachtsnaam</target>
+      </trans-unit>
+      <trans-unit id="k2UvC4f" resname="social service number">
+        <source>social service number</source>
+        <target>burgerservicenummer</target>
+      </trans-unit>
       <trans-unit id="qDoxMg2" resname="resume">
         <source>resume</source>
         <target>hervat</target>
@@ -649,7 +685,7 @@
         <source>pay</source>
         <target>betalen</target>
       </trans-unit>
-      <trans-unit id="089Hb2N" resname="subscribe">
+      <trans-unit id="9A.VYvY" resname="subscribe">
         <source>subscribe</source>
         <target>abonneren</target>
       </trans-unit>
@@ -701,29 +737,137 @@
         <source>view check-in</source>
         <target>check-in bekijken</target>
       </trans-unit>
-      <trans-unit id="ehg2QA2" resname="check-in without login">
+      <trans-unit id="YMWvKe7" resname="check-in without login">
         <source>check-in without login</source>
         <target>inchecken zonder inloggen</target>
       </trans-unit>
-      <trans-unit id="67Dv2Aw" resname="additional name">
+      <trans-unit id="swL3um1" resname="additional name">
         <source>additional name</source>
         <target>tussenvoegsel</target>
       </trans-unit>
-      <trans-unit id="iN72G2e" resname="your name">
+      <trans-unit id="guDCACD" resname="your name">
         <source>your name</source>
         <target>uw naam</target>
       </trans-unit>
-      <trans-unit id="3gAfe14" resname="your phone number">
+      <trans-unit id="SP_ER9a" resname="your phone number">
         <source>your phone number</source>
         <target>uw telefoonnummer</target>
       </trans-unit>
-      <trans-unit id="6VEW3z1" resname="your e-mail">
+      <trans-unit id="XRtuzlL" resname="your e-mail">
         <source>your e-mail</source>
         <target>uw e-mail</target>
       </trans-unit>
-      <trans-unit id="5Bah43s" resname="phone number">
+      <trans-unit id="PnqTnpb" resname="phone number">
         <source>phone number</source>
         <target>telefoonnummer</target>
+      </trans-unit>
+      <trans-unit id="RZeOyym" resname="nodes">
+        <source>nodes</source>
+        <target>__nodes</target>
+      </trans-unit>
+      <trans-unit id="VpTQii5" resname="code">
+        <source>code</source>
+        <target>__code</target>
+      </trans-unit>
+      <trans-unit id="2Ees97q" resname="qr">
+        <source>qr</source>
+        <target>__qr</target>
+      </trans-unit>
+      <trans-unit id="uUBgdEu" resname="no nodes">
+        <source>no nodes</source>
+        <target>__no nodes</target>
+      </trans-unit>
+      <trans-unit id="5urqGOi" resname="location">
+        <source>location</source>
+        <target>__location</target>
+      </trans-unit>
+      <trans-unit id="zZgbuVz" resname="bag id">
+        <source>bag id</source>
+        <target>__bag id</target>
+      </trans-unit>
+      <trans-unit id="KOXrq9n" resname="url">
+        <source>url</source>
+        <target>__url</target>
+      </trans-unit>
+      <trans-unit id="czlyUVm" resname="telephone">
+        <source>telephone</source>
+        <target>__telephone</target>
+      </trans-unit>
+      <trans-unit id="XWdwnUK" resname="opening time">
+        <source>opening time</source>
+        <target>__opening time</target>
+      </trans-unit>
+      <trans-unit id="96czj_6" resname="closing time">
+        <source>closing time</source>
+        <target>__closing time</target>
+      </trans-unit>
+      <trans-unit id="bse4eIC" resname="public access">
+        <source>public access</source>
+        <target>__public access</target>
+      </trans-unit>
+      <trans-unit id="AjD5Mws" resname="smoking allowed">
+        <source>smoking allowed</source>
+        <target>__smoking allowed</target>
+      </trans-unit>
+      <trans-unit id="gjiiXDV" resname="Bag id">
+        <source>Bag id</source>
+        <target>__Bag id</target>
+      </trans-unit>
+      <trans-unit id="pI.LcTJ" resname="places">
+        <source>places</source>
+        <target>__places</target>
+      </trans-unit>
+      <trans-unit id="_m2HRXF" resname="no places">
+        <source>no places</source>
+        <target>__no places</target>
+      </trans-unit>
+      <trans-unit id="PVn3VI4" resname="facebook">
+        <source>facebook</source>
+        <target>facebook</target>
+      </trans-unit>
+      <trans-unit id="fp5aww8" resname="add">
+        <source>add</source>
+        <target>toevoegen</target>
+      </trans-unit>
+      <trans-unit id="ZKeZTG." resname="codes">
+        <source>codes</source>
+        <target>codes</target>
+      </trans-unit>
+      <trans-unit id="V2unwuS" resname="gmail">
+        <source>gmail</source>
+        <target>gmail</target>
+      </trans-unit>
+      <trans-unit id="YAjCb0R" resname="street">
+        <source>street</source>
+        <target>straat</target>
+      </trans-unit>
+      <trans-unit id="rBYOWvF" resname="house number">
+        <source>house number</source>
+        <target>huisnummer</target>
+      </trans-unit>
+      <trans-unit id="v4p3Dn2" resname="house number suffix">
+        <source>house number suffix</source>
+        <target>huisnummer toevoeging</target>
+      </trans-unit>
+      <trans-unit id="C.lz6Ex" resname="postal code">
+        <source>postal code</source>
+        <target>postcode</target>
+      </trans-unit>
+      <trans-unit id="PXmor8y" resname="locality">
+        <source>locality</source>
+        <target>plaats</target>
+      </trans-unit>
+      <trans-unit id="xQHAxGi" resname="regio">
+        <source>regio</source>
+        <target>regio</target>
+      </trans-unit>
+      <trans-unit id="r.ZOT9U" resname="country">
+        <source>country</source>
+        <target>land</target>
+      </trans-unit>
+      <trans-unit id="PHFEiU2" resname="post office number">
+        <source>post office number</source>
+        <target>postkantoor nummer</target>
       </trans-unit>
     </body>
   </file>
