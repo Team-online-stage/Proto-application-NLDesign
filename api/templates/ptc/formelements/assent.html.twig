@@ -50,8 +50,6 @@
 
     function addGetuigen(propertyName, items) {
         $("#getuigenVoornaam").removeAttr("readonly");
-        $("#getuigenAchternaam").removeAttr("readonly");
-        let input = document.getElementById('getuigenEmail');
         if(!input.checkValidity()){
             document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult';
         }else{
@@ -70,6 +68,10 @@
             let hTelefoon = document.createElement('input');
             let hVoornaam = document.createElement('input');
             let hAchternaam = document.createElement('input');
+            let hName = document.createElement('input');
+            let hDescription = document.createElement('input');
+            let hRequest = document.createElement('input');
+            let hRequester = document.createElement('input');
             let counter;
 
             if(nameCount !== undefined){
@@ -88,16 +90,54 @@
             hTelefoon.type = 'hidden';
             hVoornaam.type = 'hidden';
             hAchternaam.type = 'hidden';
+            hName.type = 'hidden';
+            hDescription.type = 'hidden';
+            hRequest.type = 'hidden';
+            hRequester.type = 'hidden';
 
             hEmail.value = email;
             hTelefoon.value = telefoon;
             hVoornaam.value = voornaam;
             hAchternaam.value = achternaam;
 
-            hEmail.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][email]';
-            hTelefoon.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][telephone]';
-            hVoornaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][person][givenName]';
-            hAchternaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][person][familyName]';
+            hName.value = 'Instemmingsverzoek voor {{ process.name }}';
+            hDescription.value = 'U heeft een instemmingsverzoek ontvangen als {{ property.name }} voor een {{ process.name }} aangevraagd door {% if app.user.name is defined and app.user.name is not empty %}{{ app.user.name }}{% endif %}';
+
+            {% if request['@id'] is defined and request['@id'] is not empty %}
+            hRequest.value = '{{ request['@id'] }}';
+            {% endif %}
+
+            {% if request.organization is defined and request.organization is not null %}
+            hRequester.value = '{{ request.organization }}';
+            {% elseif application is not empty %}
+            hRequester.value = '{{ application.organization['@id'] }}';
+            {% else %}
+            hRequester.value = '{{ process.sourceOrganization }}';
+            {% endif %}
+
+
+
+            {% if property.type == 'array' %}
+            hEmail.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][contact][emails][][email]';
+            hTelefoon.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][contact][telephones][][telephone]';
+            hVoornaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][contact][givenName]';
+            hAchternaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][contact][familyName]';
+
+            hName.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][name]';
+            hDescription.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][description]';
+            hRequest.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][request]';
+            hRequester.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][requester]';
+            {% else %}
+            hEmail.name = 'request[properties]['+ propertyName +'][contact][emails][][email]';
+            hTelefoon.name = 'request[properties]['+ propertyName +'][contact][telephones][][telephone]';
+            hVoornaam.name = 'request[properties]['+ propertyName +'][contact][givenName]';
+            hAchternaam.name = 'request[properties]['+ propertyName +'][contact][familyName]';
+
+            hName.name = 'request[properties]['+ propertyName +'][name]';
+            hDescription.name = 'request[properties]['+ propertyName +'][description]';
+            hRequest.name = 'request[properties]['+ propertyName +'][request]';
+            hRequester.name = 'request[properties]['+ propertyName +'][requester]';
+            {% endif %}
 
 
             let outerDiv = document.createElement('div');
@@ -142,12 +182,18 @@
             innerDiv.appendChild(hTelefoon);
             innerDiv.appendChild(hVoornaam);
             innerDiv.appendChild(hAchternaam);
+            innerDiv.appendChild(hName);
+            innerDiv.appendChild(hDescription);
+            innerDiv.appendChild(hRequest);
+            innerDiv.appendChild(hRequester);
 
             document.getElementById('getuigenEmail').value = null;
             document.getElementById('getuigenTelefoon').value = null;
             document.getElementById('getuigenVoornaam').value = null;
             document.getElementById('getuigenAchternaam').value = null;
         }
+        $("#getuigenAchternaam").removeAttr("readonly");
+        let input = document.getElementById('getuigenEmail');
 
     }
 

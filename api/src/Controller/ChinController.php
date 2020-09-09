@@ -232,4 +232,16 @@ class ChinController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/nodes")
+     * @Template
+     */
+    public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
+
+        return $variables;
+    }
 }

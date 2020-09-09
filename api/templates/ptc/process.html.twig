@@ -1,6 +1,11 @@
 {% extends "content.html.twig" %}
 
 {% block content %}
+{% if stage.show is defined and stage.show != true %}
+    <script>
+        window.location.replace('{{ path('app_ptc_process_stage',{id:process.id, stage:stage.next.slug}) }}');
+    </script>
+{% else %}
 <section class="row">
     <div class="col-md-12">
         <div class="content">
@@ -107,7 +112,9 @@
         {% if process.stages is defined and process.stages|length > 1 %}
             <div class="col-md-4  col-sm-12">
                 {% if request.currentStage is not defined or request.currentStage is empty %}
-                    {% include 'ptc/widgets/requests.html.twig' %}
+                    {% if app.user is not empty and process.requireLogin == 'true' %}
+                        {% include 'ptc/widgets/requests.html.twig' %}
+                    {% endif %}
                 {% else %}
                     {% include 'ptc/widgets/progressbar.html.twig' %}
 
@@ -115,13 +122,16 @@
 
                     {% include 'ptc/widgets/order.html.twig' %}
 
-                    {% include 'ptc/widgets/properties.html.twig' %}
+                    {% if not app.request.get('submit') %}
+                        {% include 'ptc/widgets/properties.html.twig' %}
+                    {% endif %}
 
                     {% include 'ptc/widgets/contact.html.twig' %}
                 {% endif %}
             </div>
         {% endif %}
-
+        </div>
         {% endif %}
     </div>
+    {% endif %}
     {% endblock %}
