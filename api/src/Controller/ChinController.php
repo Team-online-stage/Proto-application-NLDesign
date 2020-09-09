@@ -163,7 +163,7 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            if (isset($node['passthroughUrl'])){
+            if (isset($node['passthroughUrl'])) {
                 $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
                 if ($isUrlToZD === false) {
                     return $this->redirect($node['passthroughUrl']);
@@ -205,7 +205,7 @@ class ChinController extends AbstractController
             $node = $commonGroundService->getResource($node);
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            if (isset($node['passthroughUrl'])){
+            if (isset($node['passthroughUrl'])) {
                 $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
                 if ($isUrlToZD === false) {
                     return $this->redirect($node['passthroughUrl']);
