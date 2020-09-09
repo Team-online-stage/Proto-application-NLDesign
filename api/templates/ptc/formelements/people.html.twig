@@ -91,6 +91,18 @@
                 <label class="input__label" for="birthday">Geboortedatum</label>
                 <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][birthday]">
             {% endif %}
+            {% if property.configuration.address is defined and property.configuration.address %}
+                <label class="input__label" for="street">{{ 'street'|trans|capitalize }}</label>
+                <input class="input__control input__control--text" id="street" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][street]">
+                <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
+                <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][houseNumber]">
+                <label class="input__label" for="houseNumberSuffix">{{ 'house number suffix'|trans|capitalize }}</label>
+                <input class="input__control input__control--text" style="width: 100%" type="text"  name="request[properties][{{ property.name }}][adresses][0][houseNumberSuffix]">
+                <label class="input__label" for="postalCode">{{ 'postal code'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
+                <input required class="input__control input__control--text" id="postalCode" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][postalCode]">
+                <label class="input__label" for="locality">{{ 'locality'|trans|capitalize }}</label>
+                <input class="input__control input__control--text" id="locality" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][locality]">
+            {% endif %}
         </div>
     {% endif %}
 </div>

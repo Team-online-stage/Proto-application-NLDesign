@@ -85,6 +85,18 @@
         <source>value is empty</source>
         <target>nog geen waarde opgegeven</target>
       </trans-unit>
+      <trans-unit id="x.lhO2E" resname="given names">
+        <source>given names</source>
+        <target>voornamen</target>
+      </trans-unit>
+      <trans-unit id="t1ViRAm" resname="family name">
+        <source>family name</source>
+        <target>geslachtsnaam</target>
+      </trans-unit>
+      <trans-unit id="k2UvC4f" resname="social service number">
+        <source>social service number</source>
+        <target>burgerservicenummer</target>
+      </trans-unit>
       <trans-unit id="qDoxMg2" resname="resume">
         <source>resume</source>
         <target>hervat</target>
@@ -811,7 +823,7 @@
       </trans-unit>
       <trans-unit id="PVn3VI4" resname="facebook">
         <source>facebook</source>
-        <target>__facebook</target>
+        <target>facebook</target>
       </trans-unit>
       <trans-unit id="fp5aww8" resname="add">
         <source>add</source>
@@ -819,7 +831,43 @@
       </trans-unit>
       <trans-unit id="ZKeZTG." resname="codes">
         <source>codes</source>
-        <target>__codes</target>
+        <target>codes</target>
+      </trans-unit>
+      <trans-unit id="V2unwuS" resname="gmail">
+        <source>gmail</source>
+        <target>gmail</target>
+      </trans-unit>
+      <trans-unit id="YAjCb0R" resname="street">
+        <source>street</source>
+        <target>straat</target>
+      </trans-unit>
+      <trans-unit id="rBYOWvF" resname="house number">
+        <source>house number</source>
+        <target>huisnummer</target>
+      </trans-unit>
+      <trans-unit id="v4p3Dn2" resname="house number suffix">
+        <source>house number suffix</source>
+        <target>huisnummer toevoeging</target>
+      </trans-unit>
+      <trans-unit id="C.lz6Ex" resname="postal code">
+        <source>postal code</source>
+        <target>postcode</target>
+      </trans-unit>
+      <trans-unit id="PXmor8y" resname="locality">
+        <source>locality</source>
+        <target>plaats</target>
+      </trans-unit>
+      <trans-unit id="xQHAxGi" resname="regio">
+        <source>regio</source>
+        <target>regio</target>
+      </trans-unit>
+      <trans-unit id="r.ZOT9U" resname="country">
+        <source>country</source>
+        <target>land</target>
+      </trans-unit>
+      <trans-unit id="PHFEiU2" resname="post office number">
+        <source>post office number</source>
+        <target>postkantoor nummer</target>
       </trans-unit>
     </body>
   </file>
