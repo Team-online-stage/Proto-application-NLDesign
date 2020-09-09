@@ -67,19 +67,19 @@
         </div>
     {% elseif property.type == 'string' %}
         <div id="personForm">
-            {% if  property.configuration is not defined or property.configuration.givenName is defined and property.configuration.givenName %}
+            {% if  property.configuration is empty or property.configuration.givenName is defined and property.configuration.givenName %}
                 <label class="input__label" for="voornaam">Voornaam</label>
                 <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]">
             {% endif %}
-            {% if property.configuration is not defined or  property.configuration.familyName is defined and property.configuration.familyName %}
+            {% if property.configuration is empty or property.configuration.familyName is defined and property.configuration.familyName %}
                 <label class="input__label" for="achternaam">Achternaam</label>
                 <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]">
             {% endif %}
-            {% if property.configuration is not defined or  property.configuration.email is defined and property.configuration.email %}
+            {% if property.configuration is empty or property.configuration.email is defined and property.configuration.email %}
                 <label class="input__label" for="email">Email</label>
                 <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][email]">
             {% endif %}
-            {% if property.configuration is not defined or property.configuration.telephone is defined and property.configuration.telephone %}
+            {% if property.configuration is empty or property.configuration.telephone is defined and property.configuration.telephone %}
                 <label class="input__label" for="telephone">Telefoonnummer</label>
                 <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephone]">
             {% endif %}
@@ -88,7 +88,7 @@
                 <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][placeOfBirth]">
             {% endif %}
             {% if property.configuration.birthday is defined and property.configuration.birthday %}
-                <label class="input__label" for="birthday">Verjaardag</label>
+                <label class="input__label" for="birthday">Geboortedatum</label>
                 <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][birthday]">
             {% endif %}
         </div>
