@@ -192,6 +192,10 @@
 
         {% if application is not empty and application['style']['css'] is defined %}
         {{ application['style']['css']|raw }}
+
+        html {
+            background-color: var(--footer) !important;
+        }
         {% endif %}
 
         .header {
