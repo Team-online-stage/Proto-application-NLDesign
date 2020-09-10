@@ -222,12 +222,21 @@
                 }
                 let eventStartDate = 0;
                 let eventEndDate = 0;
+                let pickedEventStartDate = 0;
+                let pickedEventEndDate = 0;
                 {% for calendar in calendars %}
                 {% for event in calendar.events %}
                 eventStartDate = {{ event.startDate|date("U", false) }};
                 eventEndDate = {{ event.endDate|date("U", false) }};
                 eventStartDate = eventStartDate * 1000;
                 eventEndDate = eventEndDate * 1000;
+                {% if request.properties.datum is defined and request.properties.datum is not empty %}
+                pickedEventStartDate = {{ request.properties.datum|date("U", false) }};
+                pickedEventStartDate = pickedEventStartDate * 1000;
+                if (pickedEventStartDate === optionStartDateMs) {
+                    selectDate(buttons[j].value, buttons[j].name, buttons[j]);
+                }
+                {% endif %}
                 // console.log("----- Knop " + j + " Dag " + i);
                 // console.log(dateOfThisDay);
                 // console.log(timeOfThisDay);
