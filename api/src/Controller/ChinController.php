@@ -238,17 +238,6 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/onboarding")
-     * @Template
-     */
-    public function onboardingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
-    {
-        $variables = $applicationService->getVariables();
-
-        return $variables;
-    }
-
-    /**
      * @Route("/nodes")
      * @Template
      */
