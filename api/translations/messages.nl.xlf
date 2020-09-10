@@ -763,63 +763,63 @@
       </trans-unit>
       <trans-unit id="RZeOyym" resname="nodes">
         <source>nodes</source>
-        <target>__nodes</target>
+        <target>nodes</target>
       </trans-unit>
       <trans-unit id="VpTQii5" resname="code">
         <source>code</source>
-        <target>__code</target>
+        <target>code</target>
       </trans-unit>
       <trans-unit id="2Ees97q" resname="qr">
         <source>qr</source>
-        <target>__qr</target>
+        <target>qr</target>
       </trans-unit>
       <trans-unit id="uUBgdEu" resname="no nodes">
         <source>no nodes</source>
-        <target>__no nodes</target>
+        <target>geen nodes beschikbaar</target>
       </trans-unit>
       <trans-unit id="5urqGOi" resname="location">
         <source>location</source>
-        <target>__location</target>
+        <target>locatie</target>
       </trans-unit>
       <trans-unit id="zZgbuVz" resname="bag id">
         <source>bag id</source>
-        <target>__bag id</target>
+        <target>bag nummer</target>
       </trans-unit>
       <trans-unit id="KOXrq9n" resname="url">
         <source>url</source>
-        <target>__url</target>
+        <target>url</target>
       </trans-unit>
       <trans-unit id="czlyUVm" resname="telephone">
         <source>telephone</source>
-        <target>__telephone</target>
+        <target>telefoon</target>
       </trans-unit>
       <trans-unit id="XWdwnUK" resname="opening time">
         <source>opening time</source>
-        <target>__opening time</target>
+        <target>openingstijd</target>
       </trans-unit>
       <trans-unit id="96czj_6" resname="closing time">
         <source>closing time</source>
-        <target>__closing time</target>
+        <target>sluitingstijd</target>
       </trans-unit>
       <trans-unit id="bse4eIC" resname="public access">
         <source>public access</source>
-        <target>__public access</target>
+        <target>publieke toegang</target>
       </trans-unit>
       <trans-unit id="AjD5Mws" resname="smoking allowed">
         <source>smoking allowed</source>
-        <target>__smoking allowed</target>
+        <target>roken toegestaan</target>
       </trans-unit>
       <trans-unit id="gjiiXDV" resname="Bag id">
         <source>Bag id</source>
-        <target>__Bag id</target>
+        <target>Bag nummer</target>
       </trans-unit>
       <trans-unit id="pI.LcTJ" resname="places">
         <source>places</source>
-        <target>__places</target>
+        <target>plaatsen</target>
       </trans-unit>
       <trans-unit id="_m2HRXF" resname="no places">
         <source>no places</source>
-        <target>__no places</target>
+        <target>geen plaatsen</target>
       </trans-unit>
       <trans-unit id="PVn3VI4" resname="facebook">
         <source>facebook</source>
