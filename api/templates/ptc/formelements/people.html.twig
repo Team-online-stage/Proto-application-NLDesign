@@ -4,8 +4,10 @@
             {% if property.icon is defined and property.icon is not empty %}
                 <i style="margin-right: 10px;" class="{{ property.icon }}"></i>
             {% endif %}
-            {{ property.title }} {% if property.required is defined and property.required %}<span style="color: red;"><strong>*</strong></span>{% endif %}</label>
+            {{ property.title }} {% if property.required is defined and property.required %}<span
+                style="color: red;"><strong>*</strong></span>{% endif %}</label>
     </div>
+
     {% if property.type == 'array' %}
         <div class="row">
             <div class="col-sm-12">
@@ -14,7 +16,8 @@
                     {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
                         {% set value = 1 %}
                         {% for getuige in request.properties[property.name] %}
-                            <div id="{{ value }}" class="col-sm-12 col-md-5" style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
+                            <div id="{{ value }}" class="col-sm-12 col-md-5"
+                                 style="min-height: 131px; margin: 1%; width: 48%; border: 2px solid #19c3e6; text-align: center;">
                                 <h2 id="{{ value }}">{{ getuige.givenName }} {{ getuige.familyName }}</h2>
                                 <div id="{{ value }}" style="line-height: 15px">
                                     <p id="{{ value }}">Email: {{ getuige.email }}</p>
@@ -37,31 +40,40 @@
                 {% endif %}
                 <div>
                     {% if property.configuration is not defined or property.configuration.givenName is defined and property.configuration.givenName %}
-                    <label class="input__label" for="voornaam">Voornaam</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam" type="text" {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" {% endif %}>
+                        <label class="input__label" for="voornaam">Voornaam</label>
+                        <input class="input__control input__control--text" style="width: 100%" id="getuigenVoornaam"
+                               type="text" {% if assent is defined and assent is not empty %} value="{{ assent.naam.voornamen }}" {% endif %}>
                     {% endif %}
                     {% if property.configuration is not defined or property.configuration.familyName is defined and property.configuration.familyName %}
-                    <label class="input__label" for="achternaam">Achternaam</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam" type="text" {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
+                        <label class="input__label" for="achternaam">Achternaam</label>
+                        <input class="input__control input__control--text" style="width: 100%" id="getuigenAchternaam"
+                               type="text" {% if assent is defined and assent is not empty %} value="{{ assent.naam.geslachtsnaam }}" {% endif %}>
                     {% endif %}
                     {% if property.configuration is not defined or property.configuration.email is defined and property.configuration.email %}
-                    <label class="input__label" for="email">Email</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail" type="email">
+                        <label class="input__label" for="email">Email</label>
+                        <input class="input__control input__control--text" style="width: 100%" id="getuigenEmail"
+                               type="email">
                     {% endif %}
                     <span id="inputResult"></span>
                     {% if property.configuration is not defined or property.configuration.telephone and property.configuration.telephone %}
-                    <label class="input__label" for="telephone">Telefoonnummer</label>
-                        <input class="input__control input__control--text" style="width: 100%" id="getuigenTelefoon" type="tel">
+                        <label class="input__label" for="telephone">Telefoonnummer</label>
+                        <input class="input__control input__control--text" style="width: 100%" id="getuigenTelefoon"
+                               type="tel">
                     {% endif %}
                     {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
-                    <label class="input__label" for="placeOfBirth">Geborteplaats</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="placeOfBirth" type="text">
+                        <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
+                        <input class="input__control input__control--text" style="width: 100%" id="placeOfBirth"
+                               type="text">
                     {% endif %}
                     {% if property.configuration.birthday is defined and property.configuration.birthday %}
-                    <label class="input__label" for="birthday">Geboortedatum</label>
-                    <input class="input__control input__control--text" style="width: 100%" id="birthday" type="date">
+                        <label class="input__label" for="birthday">Geboortedatum</label>
+                        <input class="input__control input__control--text" style="width: 100%" id="birthday"
+                               type="date">
                     {% endif %}
-                    <button class="btn" id="toevoegen" onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button" style="margin-top: 5px; width: 100%">Toevoegen</button>
+                    <button class="btn" id="toevoegen"
+                            onclick="addGetuigen('{{ property.name }}', '{{ property.maxItems }}')" type="button"
+                            style="margin-top: 5px; width: 100%">Toevoegen
+                    </button>
                 </div>
             </div>
         </div>
@@ -169,12 +181,12 @@
 
     function addGetuigen(propertyName, items) {
         let input = document.getElementById('getuigenEmail');
-        if(!input.checkValidity()){
+        if (!input.checkValidity()) {
             document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult';
-        }else{
+        } else {
             document.getElementById('inputResult').innerHTML = '';
             let container = document.getElementById("getuigen-container");
-            if(container.children.length === parseInt(items)){
+            if (container.children.length === parseInt(items)) {
                 $('#toevoegen').prop('disabled', true);
                 personForm.setAttribute('style', 'display: none;');
             }
@@ -182,14 +194,14 @@
             let telefoon = document.getElementById('getuigenTelefoon').value;
             let voornaam = document.getElementById('getuigenVoornaam').value;
             let achternaam = document.getElementById('getuigenAchternaam').value;
-            let nameCount = document.getElementById("getuigen-container").children[container.children.length-1].id;
+            let nameCount = document.getElementById("getuigen-container").children[container.children.length - 1].id;
             let hEmail = document.createElement('input');
             let hTelefoon = document.createElement('input');
             let hVoornaam = document.createElement('input');
             let hAchternaam = document.createElement('input');
             let counter;
 
-            if(nameCount !== undefined){
+            if (nameCount !== undefined) {
                 counter = parseInt(nameCount) + 1;
             } else {
                 counter = parent.children.length;
@@ -246,7 +258,7 @@
 
             let button = document.createElement('button');
             button.innerHTML = '<i style="margin-right: 10px" class="fas fa-trash-alt"></i> Verwijderen';
-            button.addEventListener('click', function(){
+            button.addEventListener('click', function () {
                 removeGetuigen(outerDiv, '{{ property.maxItems }}');
             });
             button.className = 'btn btn-primary';
@@ -271,20 +283,20 @@
     function removeGetuigen(target, items) {
         let container = document.getElementById("getuigen-container");
         target.remove();
-        if(container.children.length < parseInt(items) + 1){
+        if (container.children.length < parseInt(items) + 1) {
             $('#toevoegen').prop('disabled', false);
             personForm.setAttribute('style', 'display: block;');
         }
     }
 
-    function storedDelete(given, items){
+    function storedDelete(given, items) {
         let container = document.getElementById("getuigen-container");
         let td = given.parentNode;
         let tr = td.parentNode;
         given.remove();
         td.remove();
         tr.remove();
-        if(container.children.length < parseInt(items) + 1){
+        if (container.children.length < parseInt(items) + 1) {
             $('#toevoegen').prop('disabled', false);
             personForm.setAttribute('style', 'display: block;');
         }

@@ -83,7 +83,13 @@
                                                         <li>{{ commonground_resource(subItem).name|capitalize }}</li>
                                                     {% else %}
                                                         {% if subItem != '' %}
-                                                            <li>{{ subItem|capitalize }}</li>
+                                                            {% if subItem is iterable %}
+                                                                {% for item in subItem %}
+                                                                    <li>{{ item|capitalize }}</li>
+                                                                {% endfor %}
+                                                            {% else %}
+                                                                <li>{{ subItem|capitalize }}</li>
+                                                            {% endif %}
                                                         {% endif %}
                                                     {% endif %}
                                                 {% endfor %}
