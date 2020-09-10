@@ -11,9 +11,9 @@
 
                 {% for property in section.properties %}
                     {% set property = commonground_resource(property) %}
+
                     {% if property.type == 'array' and property.format == 'bsn' %}
                         {% include 'ptc/formelements/person.html.twig' %}
-
                     {# should be depracticed#}
                     {% elseif property.format == 'bag' %}
                         {% include 'ptc/formelements/bag/address.html.twig' %}
