@@ -67,42 +67,85 @@
         </div>
     {% elseif property.type == 'string' %}
         <div id="personForm">
-            {% if  property.configuration is empty or property.configuration.givenName is defined and property.configuration.givenName %}
-                <label class="input__label" for="voornaam">Voornaam</label>
-                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]">
-            {% endif %}
-            {% if property.configuration is empty or property.configuration.familyName is defined and property.configuration.familyName %}
-                <label class="input__label" for="achternaam">Achternaam</label>
-                <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]">
-            {% endif %}
-            {% if property.configuration is empty or property.configuration.email is defined and property.configuration.email %}
-                <label class="input__label" for="email">Email</label>
-                <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][email]">
-            {% endif %}
-            {% if property.configuration is empty or property.configuration.telephone is defined and property.configuration.telephone %}
-                <label class="input__label" for="telephone">Telefoonnummer</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephone]">
-            {% endif %}
-            {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
-                <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][placeOfBirth]">
-            {% endif %}
-            {% if property.configuration.birthday is defined and property.configuration.birthday %}
-                <label class="input__label" for="birthday">Geboortedatum</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][birthday]">
-            {% endif %}
+            <span>Persoon</span>
+            <div class="row" style="margin-bottom: 40px">
+                {% if property.configuration.givenName is not defined or property.configuration.givenName %}
+                    <div class="col-md-4">
+                        <label class="input__label" for="voornaam">Voornaam</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]">
+                    </div>
+                {% endif %}
+
+                {% if property.configuration.additionalName is not defined or property.configuration.additionalName %}
+                    <div class="col-md-4">
+                        <label class="input__label" for="achternaam">Tussenvoegels</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][additionalName]">
+                    </div>
+                {% endif %}
+                {% if property.configuration.familyName is not defined or property.configuration.familyName %}
+                    <div class="col-md-4">
+                        <label class="input__label" for="achternaam">Achternaam</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]">
+                    </div>
+                {% endif %}
+            </div>
             {% if property.configuration.address is defined and property.configuration.address %}
-                <label class="input__label" for="street">{{ 'street'|trans|capitalize }}</label>
-                <input class="input__control input__control--text" id="street" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][street]">
-                <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][houseNumber]">
-                <label class="input__label" for="houseNumberSuffix">{{ 'house number suffix'|trans|capitalize }}</label>
-                <input class="input__control input__control--text" style="width: 100%" type="text"  name="request[properties][{{ property.name }}][adresses][0][houseNumberSuffix]">
-                <label class="input__label" for="postalCode">{{ 'postal code'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                <input required class="input__control input__control--text" id="postalCode" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][postalCode]">
-                <label class="input__label" for="locality">{{ 'locality'|trans|capitalize }}</label>
-                <input class="input__control input__control--text" id="locality" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][locality]">
+                <span>Adres</span>
+
+                <div class="row" style="margin-bottom: 5px">
+                    <div class="col-md-4">
+                        <label class="input__label" for="street">{{ 'streetname'|trans|capitalize }}</label>
+                        <input class="input__control input__control--text" id="street" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][street]">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
+                        <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][houseNumber]">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="input__label" for="houseNumberSuffix">Toevoeging</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="text"  name="request[properties][{{ property.name }}][adresses][0][houseNumberSuffix]">
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 40px">
+                    <div class="col-md-6">
+                        <label class="input__label" for="postalCode">{{ 'postal code'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
+                        <input required class="input__control input__control--text" id="postalCode" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][postalCode]">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="input__label" for="locality">{{ 'locality'|trans|capitalize }}</label>
+                        <input class="input__control input__control--text" id="locality" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][locality]">
+                    </div>
+                </div>
             {% endif %}
+            <span>Overig</span>
+            <div class="row" style="margin-bottom: 5px">
+                {% if property.configuration.email is not defined or property.configuration.email %}
+                    <div class="col-md-6">
+                        <label class="input__label" for="email">Email</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][email]">
+                    </div>
+                {% endif %}
+                {% if property.configuration.telephone is not defined or property.configuration.telephone %}
+                    <div class="col-md-6">
+                        <label class="input__label" for="telephone">Telefoonnummer</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephone]">
+                    </div>
+                {% endif %}
+            </div>
+            <div class="row" style="margin-bottom: 5px">
+                {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
+                    <div class="col-md-6">
+                        <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][placeOfBirth]">
+                    </div>
+                {% endif %}
+                {% if property.configuration.birthday is defined and property.configuration.birthday %}
+                    <div class="col-md-6">
+                        <label class="input__label" for="birthday">Geboortedatum</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][birthday]">
+                    </div>
+                {% endif %}
+            </div>
         </div>
     {% endif %}
 </div>
