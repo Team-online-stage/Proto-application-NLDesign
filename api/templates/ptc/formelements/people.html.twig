@@ -81,12 +81,6 @@
         <div id="personForm">
             {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
                 {% set person = commonground_resource(request.properties[property.name]) %}
-                {% if person.telephones[0] is defined %}
-                    {% set telephone = commonground_resource(person.telephones[0]) %}
-                {% endif %}
-                {% if person.emails[0] is defined %}
-                    {% set email = commonground_resource(person.emails[0]) %}
-                {% endif %}
             {% endif %}
             {% if  property.configuration is empty or property.configuration.givenName is defined and property.configuration.givenName %}
                 <label class="input__label" for="voornaam">Voornaam</label>
@@ -102,17 +96,19 @@
             {% endif %}
             {% if property.configuration is empty or property.configuration.email is defined and property.configuration.email %}
                 <label class="input__label" for="email">Email</label>
-                <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][][email]">
+                <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][][email]"
+                    {% if person.emails.0.email is defined %} value="{{ person.emails.0.email }}"{% endif %}>
             {% endif %}
             {% if property.configuration is empty or property.configuration.telephone is defined and property.configuration.telephone %}
                 <label class="input__label" for="telephone">Telefoonnummer</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][][telephone]">
+                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][][telephone]"
+                    {% if person.telephones.0.telephone is defined %} value="{{ person.telephones.0.telephone }}"{% endif %}>
             {% endif %}
-            {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
-                <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
+            {% if property.configuration.birthplace is defined and property.configuration.birthplace %}
+                <label class="input__label" for="birthplace">Geboorteplaats</label>
                 <input class="input__control input__control--text" style="width: 100%" type="tel"
-                       name="request[properties][{{ property.name }}][placeOfBirth]"
-                    {% if person.placeOfBirth is defined %} value="{{ person.placeOfBirth }}"{% endif %}>
+                       name="request[properties][{{ property.name }}][birthplace]"
+                    {% if person.birthplace is defined %} value="{{ person.birthplace }}"{% endif %}>
             {% endif %}
             {% if property.configuration.birthday is defined and property.configuration.birthday %}
                 <label class="input__label" for="birthday">Geboortedatum</label>
