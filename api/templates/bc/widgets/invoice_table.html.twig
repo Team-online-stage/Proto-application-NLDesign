@@ -10,7 +10,7 @@
                             <th scope="col">{{ 'reference'|trans|capitalize }}</th>
                             <th scope="col">{{ 'status'|trans|capitalize }}</th>
                             <th scope="col">{{ 'amount'|trans|capitalize }}</th>
-                            <th scope="col"></th>
+                            <th scope="col">{{ 'download invoice'|trans|capitalize }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -21,7 +21,7 @@
                             <td>{{ resource.paid }}</td>
                             <td>{{ resource.price }} {{ resource.priceCurrency }}</td>
                             <td>
-                                {# download knop #}
+                                <a href="{{ path('app_download_invoice',{'id': resource.id}) }}">download</a>
                             </td>
                         </tr>
                         {% endfor %}
