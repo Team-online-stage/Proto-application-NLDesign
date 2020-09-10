@@ -19,8 +19,8 @@
                                 <div id="{{ value }}" style="line-height: 15px">
                                     <p id="{{ value }}">Email: {{ getuige.email }}</p>
                                     <p id="{{ value }}">Telefoon: {{ getuige.telephone }}</p>
-                                    <input type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="request[properties][{{ property.name }}][{{ value }}][email]">
-                                    <input type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="request[properties][{{ property.name }}][{{ value }}][telephone]">
+                                    <input type="hidden" id="{{ value }}" value="{{ getuige.email }}" name="request[properties][{{ property.name }}][{{ value }}][emails][][email]">
+                                    <input type="hidden" id="{{ value }}" value="{{ getuige.telephone }}" name="request[properties][{{ property.name }}][{{ value }}][telephones][][telephone]">
                                     <input type="hidden" id="{{ value }}" value="{{ getuige.givenName }}" name="request[properties][{{ property.name }}][{{ value }}][givenName]">
                                     <input type="hidden" id="{{ value }}" value="{{ getuige.familyName }}" name="request[properties][{{ property.name }}][{{ value }}][familyName]">
                                     <button class="btn btn-primary" id="{{ value }}" onclick="storedDelete(this, '{{ property.maxItems }}')" style="background-color:red; margin-bottom: 5px; width: 100%" type="button"><i style="margin-right: 10px" class="fas fa-trash-alt"></i>Verwijderen</button>
@@ -77,11 +77,11 @@
             {% endif %}
             {% if property.configuration is empty or property.configuration.email is defined and property.configuration.email %}
                 <label class="input__label" for="email">Email</label>
-                <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][email]">
+                <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][][email]">
             {% endif %}
             {% if property.configuration is empty or property.configuration.telephone is defined and property.configuration.telephone %}
                 <label class="input__label" for="telephone">Telefoonnummer</label>
-                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephone]">
+                <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][][telephone]">
             {% endif %}
             {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
                 <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
@@ -153,8 +153,8 @@
             hVoornaam.value = voornaam;
             hAchternaam.value = achternaam;
 
-            hEmail.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][email]';
-            hTelefoon.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][telephone]';
+            hEmail.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][emails][][email]';
+            hTelefoon.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][telephones][][telephone]';
             hVoornaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][givenName]';
             hAchternaam.name = 'request[properties]['+ propertyName +']['+ counter.toString() +'][familyName]';
 
