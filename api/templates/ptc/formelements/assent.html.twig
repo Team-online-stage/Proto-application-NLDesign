@@ -50,6 +50,8 @@
 
     function addGetuigen(propertyName, items) {
         $("#getuigenVoornaam").removeAttr("readonly");
+        $("#getuigenAchternaam").removeAttr("readonly");
+        let input = document.getElementById('getuigenEmail');
         if(!input.checkValidity()){
             document.getElementById('inputResult').innerHTML = 'Zorg dat je een geldig e-mail adres invult';
         }else{
@@ -192,8 +194,7 @@
             document.getElementById('getuigenVoornaam').value = null;
             document.getElementById('getuigenAchternaam').value = null;
         }
-        $("#getuigenAchternaam").removeAttr("readonly");
-        let input = document.getElementById('getuigenEmail');
+
 
     }
 
