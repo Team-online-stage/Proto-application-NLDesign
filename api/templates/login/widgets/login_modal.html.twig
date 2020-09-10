@@ -64,8 +64,21 @@
                                     style="color: red">*</span></label>
                             <input required="" type="password" id="password" name="password"
                                    class="input__control input__control--l input__control--text">
+                            <div class="input">
+                                <input id="passwordcheck" type="checkbox" onclick="showPassword()" name="owner" value="true">  Show password
+                            </div>
                         </div>
 
+                        <script>
+                            function showPassword() {
+                                var x = document.getElementById("password");
+                                if (x.type === "password") {
+                                    x.type = "text";
+                                } else {
+                                    x.type = "password";
+                                }
+                            }
+                        </script>
 
                         <div class="input">
                             <button type="submit" id="registreren" class="btn">{{ 'login'|trans|capitalize }} <i

@@ -5,17 +5,19 @@
         <table class="table table-hover">
             <thead>
             <tr>
+                <th scope="col">{{ 'reference'|trans|capitalize }}</th>
                 <th scope="col">{{ 'location'|trans|capitalize }}</th>
                 <th scope="col">{{ 'placename'|trans|capitalize }}</th>
                 <th scope="col">{{ 'check-in date'|trans|capitalize }}</th>
                 <th scope="col">{{ 'deletion date'|trans|capitalize }}</th>
-
-                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
+            {% set today = 'now' | date('U') %}
             {% for checkin in checkins %}
+            {% if checkin['dateCreated'] >= date(today) and date(event['startDate']) <= date(today|date_modify("-1 days"))%}
             <tr>
+                <td>{{ commonground_resource(checkin.node.reference) }}</td>
                 <td>{{ commonground_resource(checkin.node.organization).name|capitalize }}</td>
                 <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
                 <td>{{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
