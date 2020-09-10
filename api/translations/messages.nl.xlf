@@ -469,6 +469,10 @@
         <source>no invoices available</source>
         <target>geen facturen beschikbaar</target>
       </trans-unit>
+      <trans-unit id="1Yq5yR1" resname="download invoice">
+        <source>download invoice</source>
+        <target>download factuur</target>
+       </trans-unit>
       <trans-unit id="4HJQ5hl" resname="assents">
         <source>assents</source>
         <target>instemmingen</target>
