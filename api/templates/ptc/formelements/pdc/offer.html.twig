@@ -50,7 +50,8 @@
             <fieldset class="input">
                 {% for offer in offers %}
                     <div class="input__group input__group--radio">
-                        <input id="{{ offer.id }}" type="radio" class="input__control input__control--radio" value="{{ offer['@id'] }}" name="request[properties][{{ property.name }}]">
+                        <input id="{{ offer.id }}" type="radio" class="input__control input__control--radio" value="{{ offer['@id'] }}" name="request[properties][{{ property.name }}]"
+                               {% if request.properties[property.name] is defined and request.properties[property.name] == offer['@id'] %}checked{% endif %}>
                         <label for="{{ offer.id }}" class="input__label input__label--radio">{{ offer.name }}
                         {% if offer.price != 0 %}
                             <span style="float:right;">
