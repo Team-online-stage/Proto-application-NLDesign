@@ -175,11 +175,12 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-            if ($isUrlToZD === false) {
-                return $this->redirect($node['passthroughUrl']);
+            if (isset($node['passthroughUrl'])) {
+                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+                if ($isUrlToZD === false) {
+                    return $this->redirect($node['passthroughUrl']);
+                }
             }
-
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -216,9 +217,11 @@ class ChinController extends AbstractController
             $node = $commonGroundService->getResource($node);
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-            if ($isUrlToZD === false) {
-                return $this->redirect($node['passthroughUrl']);
+            if (isset($node['passthroughUrl'])) {
+                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+                if ($isUrlToZD === false) {
+                    return $this->redirect($node['passthroughUrl']);
+                }
             }
 
             $session->set('newcheckin', true);
@@ -230,17 +233,6 @@ class ChinController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/onboarding")
-     * @Template
-     */
-    public function onboardingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
-    {
-        $variables = $applicationService->getVariables();
 
         return $variables;
     }
