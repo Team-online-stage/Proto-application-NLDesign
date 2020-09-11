@@ -74,6 +74,12 @@
                                {% if item.methods is defined and 'gmail' in item.methods|keys %}checked{% endif %}>
                         <label class="input__label input__label--checkbox" for="gmail{{ item.id|replace({'-': ''}) }}">gmail</label>
                     </div>
+                    {% if item['id'] is defined %}
+                        <input type="hidden" id="id" name ="id" value="{{ item['id'] }}">
+                    {% endif %}
+                    {% if item['@id'] is defined %}
+                        <input type="hidden" id="@id" name ="@id" value="{{ item['@id'] }}">
+                    {% endif %}
                 </div>
             </div>
                 <footer class="modal__footer" lang="en-US">
