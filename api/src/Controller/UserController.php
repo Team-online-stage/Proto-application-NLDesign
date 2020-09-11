@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-use Conduction\CommonGroundBundle\Service\CamundaService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,13 +16,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
-
 /**
  * Class UserController.
  */
 class UserController extends AbstractController
 {
-
     /**
      * @var FlashBagInterface
      */
@@ -40,8 +37,7 @@ class UserController extends AbstractController
      * @Route("/login/{loggedOut}", name="loggedOut")
      * @Template
      */
-    public
-    function login(
+    public function login(
         Session $session,
         Request $request,
         AuthorizationCheckerInterface $authChecker,
@@ -49,17 +45,15 @@ class UserController extends AbstractController
         ParameterBagInterface $params,
         EventDispatcherInterface $dispatcher,
         $loggedOut = false
-    )
-    {
+    ) {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
         if ($loggedOut == 'loggedOut') {
-            $text = "U bent uitgelogd omdat de sessie is verlopen.";
+            $text = 'U bent uitgelogd omdat de sessie is verlopen.';
             $this->flash->add('error', $text);
 
             $session->set('loggedOut', null);
         }
-
 
         // Dealing with backUrls
         if ($backUrl = $request->query->get('backUrl')) {
@@ -83,48 +77,44 @@ class UserController extends AbstractController
      * @Route("/digispoof")
      * @Template
      */
-    public
-    function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $redirect = $commonGroundService->cleanUrl(['component' => 'ds']);
 
-        return $this->redirect($redirect . '?responceUrl=' . $request->query->get('response') . '&backUrl=' . $request->query->get('back_url'));
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
     }
 
     /**
      * @Route("/eherkenning")
      * @Template
      */
-    public
-    function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $redirect = $commonGroundService->cleanUrl(['component' => 'eh']);
 
-        return $this->redirect($redirect . '?responceUrl=' . $request->query->get('response') . '&backUrl=' . $request->query->get('back_url'));
+        return $this->redirect($redirect.'?responceUrl='.$request->query->get('response').'&backUrl='.$request->query->get('back_url'));
     }
 
     /**
      * @Route("/idin")
      * @Template
      */
-    public
-    function IdinAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function IdinAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri=' . $request->getUri() . '&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$request->getUri().'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
     }
 
     /**
      * @Route("/facebook")
      * @Template
      */
-    public
-    function FacebookAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function FacebookAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'facebook'])['hydra:member'];
         $provider = $provider[0];
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id=' . $provider['configuration']['app_id'] . '&scope=email&redirect_uri=' . $request->getUri() . '&state={st=state123abc,ds=123456789}');
+            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.$provider['configuration']['app_id'].'&scope=email&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
         } else {
             return $this->render('500.html.twig');
         }
@@ -134,26 +124,24 @@ class UserController extends AbstractController
      * @Route("/github")
      * @Template
      */
-    public
-    function githubAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function githubAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
-        return $this->redirect('https://github.com/login/oauth/authorize?state=' . getenv('APP_ID') . '&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
+        return $this->redirect('https://github.com/login/oauth/authorize?state='.getenv('APP_ID').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
     }
 
     /**
      * @Route("/gmail")
      * @Template
      */
-    public
-    function gmailAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function gmailAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'gmail'])['hydra:member'];
         $provider = $provider[0];
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            return $this->redirect('https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=46119456250-gad8g8342inudo8gp8v63ovokq21itt2.apps.googleusercontent.com&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.phonenumbers.read&redirect_uri=' . $request->getUri());
+            return $this->redirect('https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=46119456250-gad8g8342inudo8gp8v63ovokq21itt2.apps.googleusercontent.com&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.phonenumbers.read&redirect_uri='.$request->getUri());
         } else {
             return $this->render('500.html.twig');
         }
@@ -163,8 +151,7 @@ class UserController extends AbstractController
      * @Route("/logout")
      * @Template
      */
-    public
-    function logoutAction(Session $session, Request $request)
+    public function logoutAction(Session $session, Request $request)
     {
         $session->set('requestType', null);
         $session->set('request', null);
@@ -183,8 +170,7 @@ class UserController extends AbstractController
      * @Route("/register")
      * @Template
      */
-    public
-    function registerAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    public function registerAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
         $content = false;
         $variables = $applicationService->getVariables();
