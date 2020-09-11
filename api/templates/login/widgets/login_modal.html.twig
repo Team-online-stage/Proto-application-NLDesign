@@ -85,8 +85,14 @@
                                     class="icon icon-arr-forward"></i></button>
                         </div>
 
-                        <p><a href="{{ path('app_user_register') }}"
-                              class="btn btn-block">{{ 'register'|trans|capitalize }}</a></p>
+                        {% if application['defaultConfiguration']['configuration']['onboardId'] is defined and application['defaultConfiguration']['configuration']['onboardId'] is not empty %}
+                            <p><a href="{{ path('app_ptc_process_stage',{"id":application['defaultConfiguration']['configuration']['onboardId']}) }}"
+                                  class="btn btn-block">{{ 'register'|trans|capitalize }}</a></p>
+                        {% else %}
+                            <p><a href="{{ path('app_user_register') }}"
+                                  class="btn btn-block">{{ 'register'|trans|capitalize }}</a></p>
+
+                        {% endif %}
 
                     </form>
                 {% endif %}
