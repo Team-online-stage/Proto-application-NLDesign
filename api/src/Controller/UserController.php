@@ -53,9 +53,6 @@ class UserController extends AbstractController
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
-        var_dump($loggedOut);
-//        die;
-
         if ($loggedOut == 'loggedOut') {
             $text = "U bent uitgelogd omdat de sessie is verlopen.";
             $this->flash->add('error', $text);
