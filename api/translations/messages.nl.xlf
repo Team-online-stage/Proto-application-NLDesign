@@ -873,6 +873,10 @@
         <source>post office number</source>
         <target>postkantoor nummer</target>
       </trans-unit>
+      <trans-unit id="EUlqyFV" resname="streetname">
+        <source>streetname</source>
+        <target>straatnaam</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
