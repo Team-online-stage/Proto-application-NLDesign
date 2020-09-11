@@ -37,6 +37,7 @@ class UserController extends AbstractController
 
     /**
      * @Route("/login")
+     * @Route("/login/{loggedOut}", name="loggedOut")
      * @Template
      */
     public
@@ -46,15 +47,16 @@ class UserController extends AbstractController
         AuthorizationCheckerInterface $authChecker,
         CommonGroundService $commonGroundService,
         ParameterBagInterface $params,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
+        $loggedOut = false
     )
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
-        // If we got logged out because the session expired throw flash
-        $loggedOut = $session->get('loggedOut');
+        var_dump($loggedOut);
+//        die;
 
-        if ($loggedOut === true) {
+        if ($loggedOut == 'loggedOut') {
             $text = "U bent uitgelogd omdat de sessie is verlopen.";
             $this->flash->add('error', $text);
 
