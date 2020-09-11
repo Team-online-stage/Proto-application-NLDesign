@@ -37,7 +37,7 @@
                     <div>
                         <label class="input__label" for="place">{{ 'place'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <select id="place" disabled name="place" class="input__control input__control--xl input__control--select">
+                    <select id="place" name="place" class="input__control input__control--xl input__control--select">
                         {% if places is defined and places is not empty %}
                             {% for place in places %}
                                 <option {% if item.place is defined and item.place == place['@id']%} selected {% endif %} value="{{ place['@id'] }}">{{ place.name }}</option>
@@ -49,7 +49,7 @@
                     <div>
                         <label class="input__label" for="organization">{{ 'organization'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <select id="organization" disabled name="organization" class="input__control input__control--xl input__control--select">
+                    <select id="organization" name="organization" class="input__control input__control--xl input__control--select">
                         {% if organizations is defined and organizations is not empty %}
                             {% for organization in organizations %}
                                 <option {% if item.organization is defined and item.organization == organization['@id']%} selected {% endif %} value="{{ organization['@id'] }}">{{ organization.name }}</option>
@@ -60,19 +60,19 @@
                 <div class="input input--horizontal">
                     <legend class="input__legend">{{ 'login methodes'|trans|capitalize }}:</legend>
                     <div class="input__group input__group--checkbox">
-                        <input name="methods[idin]" value="true" type="checkbox" id="idin" class="input__control input__control--l input__control--checkbox"
+                        <input name="methods[idin]" value="true" type="checkbox" id="idin{{ item.id|replace({'-': ''}) }}" class="input__control input__control--l input__control--checkbox"
                                 {% if item.methods is defined and 'idin' in item.methods|keys %}checked{% endif %}>
-                        <label class="input__label input__label--checkbox" for="idin">Idin</label>
+                        <label class="input__label input__label--checkbox" for="idin{{ item.id|replace({'-': ''}) }}">Idin</label>
                     </div>
                     <div class="input__group input__group--checkbox">
-                        <input name="methods[facebook]" value="true" type="checkbox" id="facebook" class="input__control input__control--l input__control--checkbox"
+                        <input name="methods[facebook]" value="true" type="checkbox" id="facebook{{ node.id|replace({'-': ''}) }}" class="input__control input__control--l input__control--checkbox"
                                {% if item.methods is defined and 'facebook' in item.methods|keys %}checked{% endif %}>
-                        <label class="input__label input__label--checkbox" for="facebook">facebook</label>
+                        <label class="input__label input__label--checkbox" for="facebook{{ item.id|replace({'-': ''}) }}">facebook</label>
                     </div>
                     <div class="input__group input__group--checkbox">
-                        <input name="methods[gmail]" value="true" type="checkbox" id="gmail" class="input__control input__control--l input__control--checkbox"
+                        <input name="methods[gmail]" value="true" type="checkbox" id="gmail{{ node.id|replace({'-': ''}) }}" class="input__control input__control--l input__control--checkbox"
                                {% if item.methods is defined and 'gmail' in item.methods|keys %}checked{% endif %}>
-                        <label class="input__label input__label--checkbox" for="gmail">gmail</label>
+                        <label class="input__label input__label--checkbox" for="gmail{{ item.id|replace({'-': ''}) }}">gmail</label>
                     </div>
                 </div>
             </div>
