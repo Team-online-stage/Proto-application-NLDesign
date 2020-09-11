@@ -51,6 +51,17 @@ class UserController extends AbstractController
     {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
+        // If we got logged out because the session expired throw flash
+        $loggedOut = $session->get('loggedOut');
+
+        if ($loggedOut === true) {
+            $text = "U bent uitgelogd omdat de sessie is verlopen.";
+            $this->flash->add('error', $text);
+
+            $session->set('loggedOut', null);
+        }
+
+
         // Dealing with backUrls
         if ($backUrl = $request->query->get('backUrl')) {
         } else {
