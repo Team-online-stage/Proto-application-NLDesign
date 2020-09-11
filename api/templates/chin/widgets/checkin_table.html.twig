@@ -20,6 +20,8 @@
                 <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
                 <td>{{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
                 <td>{{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
+                <td><a data-toggle="modal" data-target="#checkin-{{ checkin.id }}" onclick="openModal{{ checkin.id|replace({'-': ''}) }}()">{{ 'edit'|trans|capitalize }}</a></td>
+
             </tr>
             {% endfor %}
             </tbody>
