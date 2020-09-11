@@ -22,8 +22,7 @@
     {% if app.user is defined and app.user is not empty %}
         <script>
             setTimeout(function () {
-                {{ app.session.set('loggedOut', true) }}
-                window.location.href = '/login';
+                window.location.href = '/login/loggedOut';
             }, 910000);
         </script>
     {% endif %}
