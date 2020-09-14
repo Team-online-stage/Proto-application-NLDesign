@@ -22,7 +22,7 @@
     {% if app.user is defined and app.user is not empty %}
         <script>
             setTimeout(function () {
-                window.location.href = '/login';
+                window.location.href = '/login/loggedOut';
             }, 910000);
         </script>
     {% endif %}
@@ -393,15 +393,45 @@
             text-decoration: none;
         }
 
-        /*
-        .mobile-nav-collapse {
-            background: var(--menu);
+        .noFocus:focus {
+            outline: none !important;
         }
 
-        .mobile-nav ul li {
-            color: var(--menu-color);
+
+            /*
+            .mobile-nav-collapse {
+                background: var(--menu);
+            }
+
+            .mobile-nav ul li {
+                color: var(--menu-color);
+            }
+            */
+
+
+        .icon--password {
+            margin-right: 50px !important;
+            margin-right: 5rem !important;
+            position: relative
         }
-        */
+
+        .icon--password:before {
+            background-image: url("../images/password.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            content: "";
+            height: 40px;
+            height: 4rem;
+            position: absolute;
+            right: -50px;
+            right: -5rem;
+            top: 4px;
+            top: .4rem;
+            width: 40px;
+            width: 4rem;
+
+        }
+
 
         /* new button icons */
         .btn--block {

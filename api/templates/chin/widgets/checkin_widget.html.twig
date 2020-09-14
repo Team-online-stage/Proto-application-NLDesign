@@ -107,8 +107,29 @@
                 </ul>
                 {% if not app.user %}
                     <div class="row">
-                        <a id="checkinIdin" href="{{ path('app_user_idin') }}"
-                           class="btn btn--idin">{{ 'check-in'|trans|capitalize }}</a>
+                        {% if resource.methods is defined and resource.methods is not empty %}
+                            {% if resource.methods['idin'] is defined and resource.methods['idin'] %}
+                                <div style="margin-top: 10px">
+                                    <a id="checkinIdin" href="{{ path('app_user_idin') }}"
+                                       class="btn btn--idin">{{ 'idin'|trans|capitalize }}</a>
+                                </div>
+                            {% endif %}
+                            {% if resource.methods['facebook'] is defined and resource.methods['facebook'] %}
+                                <div style="margin-top: 10px">
+                                    <a id="checkinFacebook" href="{{ path('app_user_facebook') }}"
+                                       class="btn btn--facebook">{{ 'facebook'|trans|capitalize }}</a>
+                                </div>
+                            {% endif %}
+                            {% if resource.methods['gmail'] is defined and resource.methods['gmail'] %}
+                                <div style="margin-top: 10px">
+                                    <a id="checkinGmail" href="{{ path('app_user_gmail') }}"
+                                       class="btn btn--gmail">{{ 'google'|trans|capitalize }}</a>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <a id="checkinIdin" href="{{ path('app_user_idin') }}"
+                               class="btn btn--idin">{{ 'check-in'|trans|capitalize }}</a>
+                        {% endif %}
                         <button style="margin-top: 10px" id="showInfoFormButton" onclick="showInfoForm()"
                                 class="btn">{{ 'check-in without login'|trans|capitalize }}</button>
                     </div>
