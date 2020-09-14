@@ -37,7 +37,7 @@
                     <div>
                         <label class="input__label" for="place">{{ 'place'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <select id="place" name="place" class="input__control input__control--xl input__control--select">
+                    <select disabled id="place" name="place" class="input__control input__control--xl input__control--select">
                         {% if places is defined and places is not empty %}
                             {% for place in places %}
                                 <option {% if item.place is defined and item.place == place['@id']%} selected {% endif %} value="{{ place['@id'] }}">{{ place.name }}</option>
@@ -49,7 +49,7 @@
                     <div>
                         <label class="input__label" for="organization">{{ 'organization'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <select id="organization" name="organization" class="input__control input__control--xl input__control--select">
+                    <select disabled id="organization" name="organization" class="input__control input__control--xl input__control--select">
                         {% if organizations is defined and organizations is not empty %}
                             {% for organization in organizations %}
                                 <option {% if item.organization is defined and item.organization == organization['@id']%} selected {% endif %} value="{{ organization['@id'] }}">{{ organization.name }}</option>
@@ -83,7 +83,7 @@
                 </div>
             </div>
                 <footer class="modal__footer" lang="en-US">
-                <button class="btn btn--primary">{{ 'create'|trans|capitalize }}</button>
+                <button class="btn btn--primary">{{ 'edit'|trans|capitalize }}</button>
             </footer>
         </form>
     </section>

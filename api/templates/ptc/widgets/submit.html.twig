@@ -79,7 +79,7 @@
                                         {% for item in value %}
                                             {% if item is iterable %}
                                                 {% for subItem in item %}
-                                                    {% if 'http' in subItem %}
+                                                    {% if 'http' in subItem and commonground_is_resource(subItem) %}
                                                         <li>{{ commonground_resource(subItem).name|capitalize }}</li>
                                                     {% else %}
                                                         {% if subItem != '' %}
@@ -94,7 +94,7 @@
                                                     {% endif %}
                                                 {% endfor %}
                                             {% else %}
-                                                {% if 'http' in item %}
+                                                {% if 'http' in item and commonground_is_resource(item) %}
                                                     <li>{{ commonground_resource(item).name|capitalize }}</li>
                                                 {% else %}
                                                     {% if item != '' %}
@@ -105,7 +105,7 @@
                                         {% endfor %}
                                     </ul>
                                     {% else %}
-                                        {% if 'http' in value %}
+                                        {% if 'http' in value and commonground_is_resource(value) %}
                                             {% if commonground_resource(value)['@type'] == 'Ingeschrevenpersoon' %}
                                                 {{ commonground_resource(value).naam.voornamen }} {{ commonground_resource(value).naam.geslachtsnaam }}
                                                 <br>
@@ -129,7 +129,7 @@
                                                 {{ property.name }}
                                             {% endif #}
                                     {% else %}
-                                        {% if 'http' in property.value %}
+                                        {% if 'http' in property.value and commonground_is_resource(property.value) %}
                                             {% if 'enkelvoudiginformatieobjecten' in property.value %}
                                                 {% set file = commonground_resource(property.value) %}
                                                 <a href="{{ path('app_drc_download',{'resource':file.id}) }}">{{ file.bestandsnaam }}</a>
