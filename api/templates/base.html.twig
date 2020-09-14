@@ -22,7 +22,7 @@
     {% if app.user is defined and app.user is not empty %}
         <script>
             setTimeout(function () {
-                window.location.href = '/login';
+                window.location.href = '/login/loggedOut';
             }, 910000);
         </script>
     {% endif %}
@@ -393,15 +393,20 @@
             text-decoration: none;
         }
 
-        /*
-        .mobile-nav-collapse {
-            background: var(--menu);
+        .noFocus:focus {
+            outline: none !important;
         }
 
-        .mobile-nav ul li {
-            color: var(--menu-color);
-        }
-        */
+
+            /*
+            .mobile-nav-collapse {
+                background: var(--menu);
+            }
+
+            .mobile-nav ul li {
+                color: var(--menu-color);
+            }
+            */
 
         /* new button icons */
         .btn--block {
