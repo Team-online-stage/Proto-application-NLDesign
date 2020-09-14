@@ -97,6 +97,14 @@
         <source>social service number</source>
         <target>burgerservicenummer</target>
       </trans-unit>
+      <trans-unit id="FgCjUsp" resname="placename">
+        <source>placename</source>
+        <target>woonplaats</target>
+      </trans-unit>
+      <trans-unit id="5urqGOi" resname="location">
+        <source>location</source>
+        <target>locatie</target>
+      </trans-unit>
       <trans-unit id="qDoxMg2" resname="resume">
         <source>resume</source>
         <target>hervat</target>
@@ -481,10 +489,10 @@
         <source>no invoices available</source>
         <target>geen facturen beschikbaar</target>
       </trans-unit>
-      <trans-unit id="1Yq5yR1" resname="download invoice">
+      <trans-unit id="kC6pSou" resname="download invoice">
         <source>download invoice</source>
         <target>download factuur</target>
-       </trans-unit>
+      </trans-unit>
       <trans-unit id="4HJQ5hl" resname="assents">
         <source>assents</source>
         <target>instemmingen</target>
@@ -767,7 +775,7 @@
       </trans-unit>
       <trans-unit id="RZeOyym" resname="nodes">
         <source>nodes</source>
-        <target>nodes</target>
+        <target>codes</target>
       </trans-unit>
       <trans-unit id="VpTQii5" resname="code">
         <source>code</source>
@@ -779,11 +787,7 @@
       </trans-unit>
       <trans-unit id="uUBgdEu" resname="no nodes">
         <source>no nodes</source>
-        <target>geen nodes beschikbaar</target>
-      </trans-unit>
-      <trans-unit id="5urqGOi" resname="location">
-        <source>location</source>
-        <target>locatie</target>
+        <target>geen codes beschikbaar</target>
       </trans-unit>
       <trans-unit id="zZgbuVz" resname="bag id">
         <source>bag id</source>
@@ -876,6 +880,34 @@
       <trans-unit id="EUlqyFV" resname="streetname">
         <source>streetname</source>
         <target>straatnaam</target>
+      </trans-unit>
+      <trans-unit id="CT59X9u" resname="contact">
+        <source>contact</source>
+        <target>__contact</target>
+      </trans-unit>
+      <trans-unit id="lzgBh6h" resname="tip">
+        <source>tip</source>
+        <target>__tip</target>
+      </trans-unit>
+      <trans-unit id="zk32HMI" resname="passthrough Url">
+        <source>passthrough Url</source>
+        <target>doorverwijspagina</target>
+      </trans-unit>
+      <trans-unit id="PiQMJnl" resname="login methodes">
+        <source>login methodes</source>
+        <target>inlog methodes</target>
+      </trans-unit>
+      <trans-unit id="VF6lOEY" resname="node">
+        <source>node</source>
+        <target>code</target>
+      </trans-unit>
+      <trans-unit id="xi5mtep" resname="idin">
+        <source>idin</source>
+        <target>idin</target>
+      </trans-unit>
+      <trans-unit id="u976KVD" resname="google">
+        <source>google</source>
+        <target>google</target>
       </trans-unit>
     </body>
   </file>
