@@ -139,89 +139,91 @@
                 </div>
             </div>
         </div>
-        <div id="infoForm" class="col-md-12 col-sm-12" style="background:#fff">
-            <div class="content">
-                <div style="margin-top: 20px">
+        <div id="infoForm">
+            <div class="col-md-12 col-sm-12" style="background:#fff">
+                <div class="content">
+                    <div style="margin-top: 20px">
 
-                    <div class="row">
+                        <div class="row">
 
-                        <div class="col-xs-12 col-sm-4">
-                            <div class="input">
-                                <label class="input__label" for="firstName">{{ 'first name'|trans|capitalize }}
-                                    <span
-                                        style="color: red;"><strong>*</strong></span></label>
-                                <input required="" type="text" id="firstName" name="firstName"
-                                       class="input__control input__control--text">
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="input">
+                                    <label class="input__label" for="firstName">{{ 'first name'|trans|capitalize }}
+                                        <span
+                                            style="color: red;"><strong>*</strong></span></label>
+                                    <input required="" type="text" id="firstName" name="firstName"
+                                           class="input__control input__control--text">
+                                </div>
                             </div>
+
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="input">
+                                    <label class="input__label"
+                                           for="additionalName">{{ 'additional name'|trans|capitalize }}</label>
+                                    <input type="text" id="additionalName" name="additionalName"
+                                           class="input__control input__control--text">
+                                </div>
+                            </div>
+
+
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="input">
+                                    <label class="input__label" for="lastName">{{ 'last name'|trans|capitalize }} <span
+                                            style="color: red;"><strong>*</strong></span></label>
+                                    <input required="" type="text" id="lastName" name="lastName"
+                                           class="input__control input__control--text">
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="col-xs-12 col-sm-4">
-                            <div class="input">
-                                <label class="input__label"
-                                       for="additionalName">{{ 'additional name'|trans|capitalize }}</label>
-                                <input type="text" id="additionalName" name="additionalName"
-                                       class="input__control input__control--text">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="input">
+                                    <label class="input__label" for="email">E-mailadres <span
+                                            style="color: red;"><strong>*</strong></span></label>
+                                    <input required="" type="email" id="email" name="email"
+                                           class="input__control input__control--text">
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="input">
+                                    <label class="input__label" for="email">Telefoonnummer <span
+                                            style="color: red;"><strong>*</strong></span></label>
+                                    <input required="" type="tel" id="tel" name="tel"
+                                           class="input__control input__control--text">
+                                </div>
                             </div>
                         </div>
-
-
-                        <div class="col-xs-12 col-sm-4">
-                            <div class="input">
-                                <label class="input__label" for="lastName">{{ 'last name'|trans|capitalize }} <span
-                                        style="color: red;"><strong>*</strong></span></label>
-                                <input required="" type="text" id="lastName" name="lastName"
-                                       class="input__control input__control--text">
+                        <fieldset class="input">
+                            <legend class="input__legend">Algemene bepalingen</legend>
+                            <div class="input__group input__group--checkbox">
+                                <input name="hobbies[]" type="checkbox" id="chkbx1"
+                                       class="input__control input__control--m input__control--checkbox" checked=""
+                                       required="">
+                                <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a
+                                        href="#"
+                                        data-toggle="modal"
+                                        data-target="#questionModal"
+                                        onclick="openQuestionModal()">vragen</a>
+                                    van de corona vragenlijst horeca</label>
                             </div>
-                        </div>
+                            <div class="input__group input__group--checkbox">
+                                <input name="hobbies[]" type="checkbox" id="chkbx2"
+                                       class="input__control input__control--m input__control--checkbox" required="">
+                                <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a
+                                        href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy"
+                                                                                                   target="_blank">privacy</a>
+                                    regels</label>
+                            </div>
+                        </fieldset>
+
+                        <input type="hidden" name="node" value="{{ resource['@id'] }}">
+                        <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true"
+                                title="indienen"> {{ 'check-in without login'|trans|capitalize }} </button>
 
                     </div>
-
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="input">
-                                <label class="input__label" for="email">E-mailadres <span
-                                        style="color: red;"><strong>*</strong></span></label>
-                                <input required="" type="email" id="email" name="email"
-                                       class="input__control input__control--text">
-                            </div>
-                        </div>
-
-                        <div class="col-xs-12 col-sm-6">
-                            <div class="input">
-                                <label class="input__label" for="email">Telefoonnummer <span
-                                        style="color: red;"><strong>*</strong></span></label>
-                                <input required="" type="tel" id="tel" name="tel"
-                                       class="input__control input__control--text">
-                            </div>
-                        </div>
-                    </div>
-                    <fieldset class="input">
-                        <legend class="input__legend">Algemene bepalingen</legend>
-                        <div class="input__group input__group--checkbox">
-                            <input name="hobbies[]" type="checkbox" id="chkbx1"
-                                   class="input__control input__control--m input__control--checkbox" checked=""
-                                   required="">
-                            <label class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a
-                                    href="#"
-                                    data-toggle="modal"
-                                    data-target="#questionModal"
-                                    onclick="openQuestionModal()">vragen</a>
-                                van de corona vragenlijst horeca</label>
-                        </div>
-                        <div class="input__group input__group--checkbox">
-                            <input name="hobbies[]" type="checkbox" id="chkbx2"
-                                   class="input__control input__control--m input__control--checkbox" required="">
-                            <label class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a
-                                    href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy"
-                                                                                               target="_blank">privacy</a>
-                                regels</label>
-                        </div>
-                    </fieldset>
-
-                    <input type="hidden" name="node" value="{{ resource['@id'] }}">
-                    <button style="margin-bottom: 20px;" class="btn btn-block" name="createCheckin" value="true"
-                            title="indienen"> {{ 'check-in without login'|trans|capitalize }} </button>
-
                 </div>
             </div>
         </div>
