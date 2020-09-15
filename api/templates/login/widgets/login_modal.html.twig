@@ -62,11 +62,10 @@
                         <div class="input">
                             <label class="input__label" for="password">{{ 'password'|trans|capitalize }}<span
                                     style="color: red">*</span></label>
+
                             <input required="" type="password" id="password" name="password"
                                    class="input__control input__control--l input__control--text">
-
-                                <icon id="passwordcheck" class="icon--password" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" name="passwordcheck">
-
+                            <i class="fas fa-eye-slash" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" role="presentation"></i>
                         </div>
 
                         <script>
