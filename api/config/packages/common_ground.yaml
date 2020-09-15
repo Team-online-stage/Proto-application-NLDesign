@@ -38,6 +38,7 @@ parameters:
     env(APP_WEB): false
     env(APP_INTERNAL): false
     env(APP_BUILD_ALL_FIXTURES): false
+    env(APP_SESSION_DURATION): 900
 
     env(APP_CONTAINER): ""
     env(APP_REPRO): ""
@@ -68,6 +69,7 @@ parameters:
     app_web: "%env(APP_WEB)%"
     app_internal: "%env(APP_INTERNAL)%"
     app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+    app_session_duration: "%env(APP_SESSION_DURATION)%"
 
     # Organisatie details
     env(GOOGLE_TAG_MANAGER_ID): ""
@@ -313,6 +315,7 @@ twig:
         app_web: "%env(APP_WEB)%"
         app_internal: "%env(APP_INTERNAL)%"
         app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+        app_session_duration: "%env(APP_SESSION_DURATION)%"
 
         # Security Details
         app_commonground_id: "%env(APP_COMMONGROUND_ID)%"
