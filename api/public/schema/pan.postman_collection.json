@@ -12,18 +12,18 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "893efe06-122d-4406-86b9-9ea05e4f5de8",
+						"id": "a2284865-349d-424b-b62d-34406c55c66d",
 						"exec": [
-							"// example using pm.response.to.have\r",
-							"pm.test(\"response is ok\", function () {\r",
-							"    pm.response.to.have.status(200);\r",
-							"});\r",
+							"// // example using pm.response.to.have\r",
+							"// pm.test(\"response is ok\", function () {\r",
+							"//     pm.response.to.have.status(200);\r",
+							"// });\r",
 							"\r",
-							"// example using response assertions\r",
-							"pm.test(\"response should be okay to process\", function () {\r",
-							"    pm.response.to.not.be.error;\r",
-							"    pm.response.to.not.have.jsonBody(\"error\");\r",
-							"});"
+							"// // example using response assertions\r",
+							"// pm.test(\"response should be okay to process\", function () {\r",
+							"//     pm.response.to.not.be.error;\r",
+							"//     pm.response.to.not.have.jsonBody(\"error\");\r",
+							"// });"
 						],
 						"type": "text/javascript"
 					}
@@ -87,12 +87,12 @@
 	],
 	"variable": [
 		{
-			"id": "8753c521-8cd4-45ca-aeae-15e0f62cdf3a",
+			"id": "4a323f68-551b-4ff1-9d07-1a41a57f56a0",
 			"key": "baseUrl",
-			"value": "https://dev.zuid-drecht.nl"
+			"value": "localhost"
 		},
 		{
-			"id": "a294803c-e498-4d82-b3af-aec0dfb65fc3",
+			"id": "16ba40d4-669e-4b92-9ecb-51d8e7aeb0fc",
 			"key": "authorization",
 			"value": "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
 		}
