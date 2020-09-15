@@ -65,32 +65,38 @@
                                     <p>
                                         {% if property.value is iterable %}
                                         {% for key, value in property.value %}
-                                            {% if value is iterable %}
-                                                <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 100%; margin-left: 0px;">
-                                            {% for item in value %}
-                                                {% if item is iterable %}
-                                                    {% for subItem in item %}
-                                                        {% if 'http' in subItem %}
-                                                            <li>{{ commonground_resource(subItem).name|capitalize }}</li>
-                                                        {% else %}
-                                                            {% if subItem != '' %}
+                                        {% if value is iterable %}
+                                    <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 100%; margin-left: 0px;">
+                                        {% for item in value %}
+                                            {% if item is iterable %}
+                                                {% for subItem in item %}
+                                                    {% if 'http' in subItem and commonground_is_resource(subItem) %}
+                                                        <li>{{ commonground_resource(subItem).name|capitalize }}</li>
+                                                    {% else %}
+                                                        {% if subItem != '' %}
+                                                            {% if subItem is iterable %}
+                                                                {% for item in subItem %}
+                                                                    <li>{{ item|capitalize }}</li>
+                                                                {% endfor %}
+                                                            {% else %}
                                                                 <li>{{ subItem|capitalize }}</li>
                                                             {% endif %}
                                                         {% endif %}
-                                                    {% endfor %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% else %}
+                                                {% if 'http' in item and commonground_is_resource(item) %}
+                                                    <li>{{ commonground_resource(item).name|capitalize }}</li>
                                                 {% else %}
-                                                    {% if 'http' in item %}
-                                                        <li>{{ commonground_resource(item).name|capitalize }}</li>
-                                                    {% else %}
-                                                        {% if item != '' %}
-                                                            <li>{{ item|capitalize }}</li>
+                                                    {% if item != '' %}
+                                                        <li>{{ item|capitalize }}</li>
                                                     {% endif %}
                                                 {% endif %}
                                             {% endif %}
                                         {% endfor %}
                                     </ul>
                                     {% else %}
-                                        {% if 'http' in value %}
+                                        {% if 'http' in value and commonground_is_resource(value) %}
                                             {% if commonground_resource(value)['@type'] == 'Ingeschrevenpersoon' %}
                                                 {{ commonground_resource(value).naam.voornamen }} {{ commonground_resource(value).naam.geslachtsnaam }}
                                                 <br>
@@ -114,7 +120,7 @@
                                                 {{ property.name }}
                                             {% endif #}
                                     {% else %}
-                                        {% if 'http' in property.value %}
+                                        {% if 'http' in property.value and commonground_is_resource(property.value) %}
                                             {% if 'enkelvoudiginformatieobjecten' in property.value %}
                                                 {% set file = commonground_resource(property.value) %}
                                                 <a href="{{ path('app_drc_download',{'resource':file.id}) }}">{{ file.bestandsnaam }}</a>

@@ -50,6 +50,18 @@ class ChinController extends AbstractController
     }
 
     /**
+     * @Route("/checkin/statistics")
+     * @Template
+     */
+    public function checkinStatisticsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/nodes/user")
      * @Template
      */
@@ -68,9 +80,9 @@ class ChinController extends AbstractController
     public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['places'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'places'])['hydra:member'];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+        $variables['places'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'places'], ['organization' => $variables['organizations']['@id']])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organizations']['@id']])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
@@ -163,11 +175,12 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-            if ($isUrlToZD === false) {
-                return $this->redirect($node['passthroughUrl']);
+            if (isset($node['passthroughUrl'])) {
+                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+                if ($isUrlToZD === false) {
+                    return $this->redirect($node['passthroughUrl']);
+                }
             }
-
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -204,9 +217,11 @@ class ChinController extends AbstractController
             $node = $commonGroundService->getResource($node);
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-            if ($isUrlToZD === false) {
-                return $this->redirect($node['passthroughUrl']);
+            if (isset($node['passthroughUrl'])) {
+                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+                if ($isUrlToZD === false) {
+                    return $this->redirect($node['passthroughUrl']);
+                }
             }
 
             $session->set('newcheckin', true);
@@ -218,17 +233,6 @@ class ChinController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/onboarding")
-     * @Template
-     */
-    public function onboardingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
-    {
-        $variables = $applicationService->getVariables();
 
         return $variables;
     }
