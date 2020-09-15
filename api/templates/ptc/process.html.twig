@@ -26,10 +26,10 @@
                                                                                          role="presentation" x-uno-tooltip=""
                                                                                          title="{{ 'You have correctly filled out all required questions for this stage'|trans|capitalize }}"></span>{% endif %}
                                 </h1>
-                                {{ stage.description }}
+                                {{ stage.description|raw }}
                             {% else %}
                                 <h1 class="content__header-title">{{ process.name|capitalize }}</h1>
-                                {{ process.description }}
+                                {{ process.description|raw }}
                             {% endif %}
                         </header>
                     </header>
