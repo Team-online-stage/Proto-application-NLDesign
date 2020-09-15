@@ -23,25 +23,25 @@
 </div>
 
 <!-- Page Break -->
-<div style="height: 20px;"></div>
+
 
 <div class="row">
 {% if not app.user %}
     {% if process.requireLogin is defined and process.requireLogin != 'true' %}
         <div class="col-md-6" >
-            <a class="btn btn--block" style="width:100%" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
+            <a class="btn btn--block" style="width:100%; margin-top: 20px;" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
         </div>
         <div class="col-md-6" >
-            <button class="btn btn--block" style="width:100%" name="submit">{{ 'continue without logging in'|trans|capitalize }}</button>
+            <button class="btn btn--block" style="width:100%; margin-top: 20px;" name="submit">{{ 'continue without logging in'|trans|capitalize }}</button>
         </div>
     {%  else %}
     <div class="col-md-12" >
-        <a class="btn btn--block" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
+        <a class="btn btn--block" style="margin-top: 20px;" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
     </div>
     {% endif %}
 {% else %}
     <div class="col-md-12" >
-        <button class="btn btn--block" name="submit">{% if resource.reference is defined and resource.reference is not empty %}{{ 'next'|trans|capitalize }}{% else %}{{ 'start'|trans|capitalize }}{% endif %}</button>
+        <button class="btn btn--block" style="margin-top: 20px;" name="submit">{% if resource.reference is defined and resource.reference is not empty %}{{ 'next'|trans|capitalize }}{% else %}{{ 'start'|trans|capitalize }}{% endif %}</button>
     </div>
 {% endif %}
 </div>
