@@ -26,7 +26,7 @@
                         <td>{{ commonground_resource(node.place).name }}</td>
                         <td>{{ node.reference }}</td>
                         <td><img src="{{ qr_code_data_uri( absolute_url(path('app_chin_checkin',{"code":node.reference})) , { writer: 'svg', size: 150 }) }}" /></td>
-                        </td>
+                        <td><a data-toggle="modal" data-target="#node-{{ node.id }}" onclick="openModal{{ node.id|replace({'-': ''}) }}()">{{ 'edit'|trans|capitalize }}</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -41,3 +41,23 @@
 
 
 {% include 'chin/modals/node_modal.html.twig' %}
+
+{% for node in nodes %}
+    {% include 'chin/modals/node_modal_edit.html.twig' with { 'item':node } %}
+    <script>
+        let myModal{{ node.id|replace({'-': ''}) }};
+        // Load modal component
+        System.import('/uno/components/modal/modal.js').then(function (module) {
+            myModal{{ node.id|replace({'-': ''}) }} = new module.Modal(document.getElementById('node-{{ node.id }}'));
+        });
+
+        // Called when the user clicks the button
+        function openModal{{ node.id|replace({'-': ''}) }}() {
+            myModal{{ node.id|replace({'-': ''}) }}.open();
+        }
+        // Called when the user clicks the button
+        function closeModal{{ node.id|replace({'-': ''}) }}() {
+            myModal{{ node.id|replace({'-': ''}) }}.close();
+        }
+    </script>
+{% endfor %}
