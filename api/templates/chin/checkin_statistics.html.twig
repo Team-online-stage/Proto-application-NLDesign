@@ -18,15 +18,15 @@
 
     <div class="row">
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <aside class="col-md-4 col-sm-modal">
-                <nav class="sidenav">
-                    {% include 'uc/widgets/menu.html.twig' %}
-                </nav>
-            </aside>
+        <aside class="col-md-4 col-sm-modal">
+            <nav class="sidenav">
+                {% include 'uc/widgets/menu.html.twig' %}
+            </nav>
+        </aside>
 
-            <div class="col-md-8">
-                {% include 'chin/widgets/checkin_table.html.twig' %}
-            </div>
+        <div class="col-md-8">
+            {% include 'chin/widgets/checkin_table_statistics.html.twig' %}
+        </div>
         {% else %}
             <div class="col-md-12">
                 <div class="content-background" >

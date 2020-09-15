@@ -1,5 +1,9 @@
 <div class="content-background">
     <div class="content">
+        {% if process.instructionText is defined and process.instructionText is not empty %}
+            {{ process.instructionText|raw }}
+        {% endif %}
+
         <h2>{{ 'stages'|trans|capitalize }}</h2>
 
         <ul class="list list--timeline list--timeline-compact">
@@ -25,10 +29,10 @@
 {% if not app.user %}
     {% if process.requireLogin is defined and process.requireLogin != 'true' %}
         <div class="col-md-6" >
-            <a class="btn btn--block" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
+            <a class="btn btn--block" style="width:100%" data-toggle="modal" data-target="#myModal" onclick="openModal()"><i style="margin-right: 10px" class="fas fa-lock"></i> {{ 'login'|trans|capitalize }}</a>
         </div>
         <div class="col-md-6" >
-            <button class="btn btn--block" name="submit">{{ 'continue without logging in'|trans|capitalize }}</button>
+            <button class="btn btn--block" style="width:100%" name="submit">{{ 'continue without logging in'|trans|capitalize }}</button>
         </div>
     {%  else %}
     <div class="col-md-12" >

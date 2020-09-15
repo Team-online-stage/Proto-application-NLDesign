@@ -15,6 +15,23 @@
 
             <div class="skiplink-target content" id="main-content">
 
+                {% if application['defaultConfiguration']['configuration']['login']['idin'] is defined and application['defaultConfiguration']['configuration']['login']['idin'] %}
+                    <p>
+                        <a href="{{ path('app_user_idin') }}"
+                           class="btn btn--idin btn-block">{{ 'iDin'|trans|capitalize }}</a></p>
+                {% endif %}
+
+                {% if application['defaultConfiguration']['configuration']['login']['facebook'] is defined and application['defaultConfiguration']['configuration']['login']['facebook'] %}
+                    <p>
+                        <a href="{{ path('app_user_facebook') }}"
+                           class="btn btn--facebook btn-block">{{ 'facebook'|trans|capitalize }}</a></p>
+                {% endif %}
+                {% if application['defaultConfiguration']['configuration']['login']['gmail'] is defined and application['defaultConfiguration']['configuration']['login']['gmail'] %}
+                    <p>
+                        <a href="{{ path('app_user_gmail') }}"
+                           class="btn btn--gmail btn-block">{{ 'gmail'|trans|capitalize }}</a></p>
+                {% endif %}
+
                 {% if application['defaultConfiguration']['configuration']['login']['digid'] is defined and application['defaultConfiguration']['configuration']['login']['digid'] %}
                     <h2 id="inloggen-verzuimloket">{{ 'for citizen'|trans|capitalize }}</h2>
                     <p>
@@ -27,18 +44,6 @@
                     <p>
                         <a href="{{ commonground_cleanurl({"component":"eh"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}eherkenning&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
                            class="btn btn--eherkenning btn-block">{{ 'e-herkening'|trans|capitalize }}</a></p>
-                {% endif %}
-
-                {% if application['defaultConfiguration']['configuration']['login']['idin'] is defined and application['defaultConfiguration']['configuration']['login']['idin'] %}
-                    <p>
-                        <a href="{{ path('app_user_idin') }}"
-                           class="btn btn--idin btn-block">{{ 'iDin'|trans|capitalize }}</a></p>
-                {% endif %}
-
-                {% if application['defaultConfiguration']['configuration']['login']['facebook'] is defined and application['defaultConfiguration']['configuration']['login']['facebook'] %}
-                    <p>
-                        <a href="{{ path('app_user_facebook') }}"
-                           class="btn btn--facebook btn-block">{{ 'facebook'|trans|capitalize }}</a></p>
                 {% endif %}
 
                 {% if application['defaultConfiguration']['configuration']['login']['user'] is defined and application['defaultConfiguration']['configuration']['login']['user'] %}
@@ -59,16 +64,35 @@
                                     style="color: red">*</span></label>
                             <input required="" type="password" id="password" name="password"
                                    class="input__control input__control--l input__control--text">
+
+                                <icon id="passwordcheck" class="icon--password" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" name="passwordcheck">
+
                         </div>
 
+                        <script>
+                            function mouseoverPass(obj) {
+                                var obj = document.getElementById('password');
+                                obj.type = "text";
+                            }
+                            function mouseoutPass(obj) {
+                                var obj = document.getElementById('password');
+                                obj.type = "password";
+                            }
+                        </script>
 
                         <div class="input">
                             <button type="submit" id="registreren" class="btn">{{ 'login'|trans|capitalize }} <i
                                     class="icon icon-arr-forward"></i></button>
                         </div>
 
-                        <p><a href="{{ path('app_user_register') }}"
-                              class="btn btn-block">{{ 'register'|trans|capitalize }}</a></p>
+                        {% if application['defaultConfiguration']['configuration']['onboardId'] is defined and application['defaultConfiguration']['configuration']['onboardId'] is not empty %}
+                            <p><a href="{{ path('app_ptc_process_stage',{"id":application['defaultConfiguration']['configuration']['onboardId']}) }}"
+                                  class="btn btn-block">{{ 'register'|trans|capitalize }}</a></p>
+                        {% else %}
+                            <p><a href="{{ path('app_user_register') }}"
+                                  class="btn btn-block">{{ 'register'|trans|capitalize }}</a></p>
+
+                        {% endif %}
 
                     </form>
                 {% endif %}

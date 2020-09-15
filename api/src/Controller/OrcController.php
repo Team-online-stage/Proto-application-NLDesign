@@ -36,10 +36,10 @@ class OrcController extends AbstractController
     }
 
     /**
-     * @Route("/organisation")
+     * @Route("/organization")
      * @Template
      */
-    public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
         $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$this->getUser()->getOrganization()])['hydra:member'];

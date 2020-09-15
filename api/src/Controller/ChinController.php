@@ -44,7 +44,19 @@ class ChinController extends AbstractController
     public function checkinOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$variables['user']['@id']])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/checkin/statistics")
+     * @Template
+     */
+    public function checkinStatisticsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -68,14 +80,14 @@ class ChinController extends AbstractController
     public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['places'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'places'])['hydra:member'];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'])['hydra:member'];
+        $variables['organizations'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+        $variables['places'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'places'], ['organization' => $variables['organizations']['@id']])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organizations']['@id']])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
-            $commonGroundService->saveResource($resource, (['component'=>'chin', 'type'=>'nodes']));
+            $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
             return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
         }
@@ -162,6 +174,13 @@ class ChinController extends AbstractController
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
+            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
+            if (isset($node['passthroughUrl'])) {
+                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+                if ($isUrlToZD === false) {
+                    return $this->redirect($node['passthroughUrl']);
+                }
+            }
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -195,6 +214,16 @@ class ChinController extends AbstractController
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
+            $node = $commonGroundService->getResource($node);
+
+            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
+            if (isset($node['passthroughUrl'])) {
+                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
+                if ($isUrlToZD === false) {
+                    return $this->redirect($node['passthroughUrl']);
+                }
+            }
+
             $session->set('newcheckin', true);
             $session->set('person', $person);
 
@@ -209,12 +238,13 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/onboarding")
+     * @Route("/nodes")
      * @Template
      */
-    public function onboardingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
-        $variables = $applicationService->getVariables();
+        $variables = [];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
         return $variables;
     }

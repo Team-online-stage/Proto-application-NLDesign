@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -21,7 +22,19 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 class UserController extends AbstractController
 {
     /**
+     * @var FlashBagInterface
+     */
+    private $flash;
+    private $translator;
+
+    public function __construct(FlashBagInterface $flash)
+    {
+        $this->flash = $flash;
+    }
+
+    /**
      * @Route("/login")
+     * @Route("/login/{loggedOut}", name="loggedOut")
      * @Template
      */
     public function login(
@@ -30,9 +43,17 @@ class UserController extends AbstractController
         AuthorizationCheckerInterface $authChecker,
         CommonGroundService $commonGroundService,
         ParameterBagInterface $params,
-        EventDispatcherInterface $dispatcher
+        EventDispatcherInterface $dispatcher,
+        $loggedOut = false
     ) {
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
+        if ($loggedOut == 'loggedOut') {
+            $text = 'U bent uitgelogd omdat de sessie is verlopen.';
+            $this->flash->add('error', $text);
+
+            $session->set('loggedOut', null);
+        }
 
         // Dealing with backUrls
         if ($backUrl = $request->query->get('backUrl')) {
@@ -48,7 +69,7 @@ class UserController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         } else {
-            return $this->render('login/index.html.twig', ['backUrl'=>$backUrl]);
+            return $this->render('login/index.html.twig', ['backUrl' => $backUrl]);
         }
     }
 
@@ -89,7 +110,14 @@ class UserController extends AbstractController
      */
     public function FacebookAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id=2712725532283785&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'facebook'])['hydra:member'];
+        $provider = $provider[0];
+
+        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
+            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.$provider['configuration']['app_id'].'&scope=email&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
+        } else {
+            return $this->render('500.html.twig');
+        }
     }
 
     /**
@@ -104,6 +132,22 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/gmail")
+     * @Template
+     */
+    public function gmailAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'gmail'])['hydra:member'];
+        $provider = $provider[0];
+
+        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
+            return $this->redirect('https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=46119456250-gad8g8342inudo8gp8v63ovokq21itt2.apps.googleusercontent.com&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.phonenumbers.read&redirect_uri='.$request->getUri());
+        } else {
+            return $this->render('500.html.twig');
+        }
+    }
+
+    /**
      * @Route("/logout")
      * @Template
      */
@@ -113,6 +157,11 @@ class UserController extends AbstractController
         $session->set('request', null);
         $session->set('contact', null);
         $session->set('organisation', null);
+
+        $text = $this->translator->trans('U bent uitgelogd');
+
+        // Throw te actual flash
+        $this->flash->add('error', $text);
 
         return $this->redirect($this->generateUrl('app_default_index'));
     }
@@ -174,7 +223,7 @@ class UserController extends AbstractController
                     //create the employee in MRC
                     $employee = [];
                     $employee['person'] = $contact['@id'];
-                    $employee['organization'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'organizations']);
+                    $employee['organization'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations']);
                     $commonGroundService->createResource($employee, ['component' => 'mrc', 'type' => 'employees']);
                 } elseif ($userGroup['name'] == 'Bedrijven') { //check if the group bedrijven is selected
                     $contactPerson = [];
