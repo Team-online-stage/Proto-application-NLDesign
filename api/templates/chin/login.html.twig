@@ -1,0 +1,103 @@
+{# templates/home/index.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block style %}
+    <style>
+        {% if org.style.css is defined and org.style.css is not empty %}
+        {{ org.style.css|raw }}
+        {% else %}
+        .background {
+            background-color: white;
+        }
+        {% endif %}
+    </style>
+{% endblock %}
+
+{% block container %}
+    <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
+        <div class="row">
+            <div class="container">
+                <div class="col-md-4 col-sm-12" style="background:#fff;padding-bottom: 10px;">
+                    <div class="content checkinBackground" style="padding-top: 1px;">
+                        <ul class="definition-list">
+                            <a href="{{ path('app_default_index') }}" class="backlink">{{ 'back'|trans|capitalize }}</a>
+                            <h1>Check-In</h1>
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    <span>Locatie</span>
+                                </div>
+                                <div class="definition-list__description">
+                                    <p style="color: #000000">{{ commonground_resource(resource.place).name }}</p>
+                                </div>
+                            </li>
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    <span>Onderneming</span>
+                                </div>
+                                <div class="definition-list__description">
+                                    <p style="color: #000000">{{ commonground_resource(resource.organization).name }}</p>
+                                </div>
+                            </li>
+                            {% set place = commonground_resource(resource.place) %}
+                            {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                            {% if adres is defined and adres is not empty %}
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">
+                                        <span>Adres</span>
+                                    </div>
+                                    <div class="definition-list__description">
+                                        <p style="color: #000000">{{ adres.straat }} {{ adres.huisnummer }}</p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">
+                                        <span>Plaats</span>
+                                    </div>
+                                    <div class="definition-list__description">
+                                        <p style="color: #000000">{{ adres.woonplaats }}</p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">
+                                        <span>Datum</span>
+                                    </div>
+                                    <div class="definition-list__description">
+                                        <p style="color: #000000">{{ "now"|date("H:i d-m-Y", "Europe/Amsterdam") }}</p>
+                                    </div>
+                                </li>
+                            {% endif %}
+                        </ul>
+                        <div class="row">
+                            {% if resource.methods is defined and resource.methods is not empty %}
+                                {% if resource.methods['idin'] is defined and resource.methods['idin'] %}
+                                    <div style="margin-top: 10px">
+                                        <a id="checkinIdin" href="{{ path('app_user_idin') }}"
+                                           class="btn btn--idin">{{ 'idin'|trans|capitalize }}</a>
+                                    </div>
+                                {% endif %}
+                                {% if resource.methods['facebook'] is defined and resource.methods['facebook'] %}
+                                    <div style="margin-top: 10px">
+                                        <a id="checkinFacebook" href="{{ path('app_user_facebook') }}"
+                                           class="btn btn--facebook">{{ 'facebook'|trans|capitalize }}</a>
+                                    </div>
+                                {% endif %}
+                                {% if resource.methods['gmail'] is defined and resource.methods['gmail'] %}
+                                    <div style="margin-top: 10px">
+                                        <a id="checkinGmail" href="{{ path('app_user_gmail') }}"
+                                           class="btn btn--gmail">{{ 'google'|trans|capitalize }}</a>
+                                    </div>
+                                {% endif %}
+                            {% else %}
+                                <a id="checkinIdin" href="{{ path('app_user_idin') }}"
+                                   class="btn btn--idin">{{ 'check-in'|trans|capitalize }}</a>
+                            {% endif %}
+                            <button style="margin-top: 10px" id="showInfoFormButton" onclick="showInfoForm()"
+                                    class="btn">{{ 'check-in without login'|trans|capitalize }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- /.container -->
+        </div><!-- /.row -->
+    </form>
+{% endblock %}

@@ -1,6 +1,19 @@
 {# templates/home/index.html.twig #}
 
 {% extends 'base.html.twig' %}
+
+{% block style %}
+    <style>
+    {% if org.style.css is defined and org.style.css is not empty %}
+        {{ org.style.css|raw }}
+    {% else %}
+        .checkinBackground {
+        background-color: lightgrey;
+        }
+    {% endif %}
+    </style>
+{% endblock %}
+
 {% block container %}
     <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
         <div class="row">

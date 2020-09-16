@@ -3313,7 +3313,7 @@ components:
           type: string
     LoginLog-read:
       type: object
-      description: 'An entity representing an login log'
+      description: 'An entity representing an login log.'
       properties:
         id:
           readOnly: true
@@ -3348,7 +3348,7 @@ components:
         - status
     LoginLog-write:
       type: object
-      description: 'An entity representing an login log'
+      description: 'An entity representing an login log.'
       required:
         - address
         - method
@@ -3365,7 +3365,7 @@ components:
           type: string
     'LoginLog:jsonld-read':
       type: object
-      description: 'An entity representing an login log'
+      description: 'An entity representing an login log.'
       properties:
         '@context':
           readOnly: true
@@ -3409,7 +3409,7 @@ components:
         - status
     'LoginLog:jsonld-write':
       type: object
-      description: 'An entity representing an login log'
+      description: 'An entity representing an login log.'
       required:
         - address
         - method
@@ -3538,12 +3538,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-09-16 12:01:53'
+        example: '2020-09-16 16:10:09'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-09-16 12:01:53'
+        example: '2020-09-16 16:10:09'
     required: []
   AuditTrail-write:
     properties:
@@ -3591,12 +3591,12 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
-        example: '2020-09-16 12:01:53'
+        example: '2020-09-16 16:10:09'
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
-        example: '2020-09-16 12:01:53'
+        example: '2020-09-16 16:10:09'
     required: []
   ChangeLog-write:
     properties:
@@ -3677,7 +3677,7 @@ tags:
   -
     name: LoginLog
     description: |
-      An entity representing an login log
+      An entity representing an login log.
       
       This entity logs all the login attempts
 securityDefinitions:

@@ -32,7 +32,7 @@ class ChinController extends AbstractController
     public function checkinUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -108,6 +108,42 @@ class ChinController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/login/{code}")
+     * @Template
+     */
+    public function loginAction(Session $session, $code = null,  Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
+        $variables = [];
+
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+
+        if ($code) {
+            $session->set('code', $code);
+            $variables['code'] = $code;
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+            if (count($variables['resources']) > 0) {
+                $variables['resource'] = $variables['resources'][0];
+            }
+        }
+
+        return $variables;
+    }
+
 
     /**
      * This function will kick of the suplied proces with given values.
