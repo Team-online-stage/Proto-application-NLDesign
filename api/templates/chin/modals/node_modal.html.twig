@@ -1,10 +1,10 @@
-<div class="modal modal--backdrop" role="dialog" id="myModal" tabindex="0" aria-describedby="modal-description3">
+<div class="modal modal--backdrop noFocus" role="dialog" id="myModal" tabindex="0" aria-describedby="modal-description3">
     <section class="modal__content" role="document">
         <form action="{{ path('app_chin_nodesorganization') }}" method="post">
-            <div class="modal__body" tabindex="0" lang="en-US">
+            <div class="modal__body noFocus" tabindex="0" lang="en-US">
                 <div class="row" style="margin-top: 20px;">
                     <div class="col-xs-6">
-                        <h1>{{ 'organization'|trans|capitalize }}</h1>
+                        <h1>{{ 'node'|trans|capitalize }}</h1>
                     </div>
                     <div class="col-xs-6">
                         <button style="float: right;" class="modal__close-button">
@@ -46,14 +46,10 @@
                 <div class="input input--horizontal">
                     <div>
                         <label class="input__label" for="organization">{{ 'organization'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
+                        <input disabled required="" type="text" id="organization" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
+                        value="{{ organizations.name }}">
+                        <input type="hidden" name="organization" value="{{ organizations['@id'] }}">
                     </div>
-                    <select id="organization" name="organization" class="input__control input__control--xl input__control--select">
-                        {% if organizations is defined and organizations is not empty %}
-                            {% for organization in organizations %}
-                                <option value="{{ organization['@id'] }}">{{ organization.name }}</option>
-                            {% endfor %}
-                        {% endif %}
-                    </select>
                 </div>
                 <div class="input input--horizontal">
                     <legend class="input__legend">{{ 'login methodes'|trans|capitalize }}:</legend>

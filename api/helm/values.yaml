@@ -7,7 +7,8 @@ settings:
   projectName: pan
   name: pan
   title: Proto Applicatie NL Design
-  version: V.0.1
+  version: V1.0
+  majorVersion: v1
   id: 31a2ad29-ee03-4aa9-be81-abf1fda7bbcc
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: application
@@ -16,6 +17,8 @@ settings:
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: zuid-drecht.nl
   subdomain: false
+  subpath: false
+  subpathRouting: false
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
@@ -27,6 +30,7 @@ settings:
   internal: false
   debug: 1
   cache: 1
+  sessionDuration: 900
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^.+$'
@@ -52,8 +56,8 @@ security:
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.conduction.nl
-  authorisationProviderApplication: https://uc.conduction.nl
+  authorisationProviderUser: https://uc.zuid-drecht.nl
+  authorisationProviderApplication: https://openzaak.dev.zuid-drecht.nl/authorizaties/api/v1
 
 
 php:
