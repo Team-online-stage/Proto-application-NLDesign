@@ -909,6 +909,30 @@
         <source>google</source>
         <target>google</target>
       </trans-unit>
+      <trans-unit id="oAB21Je" resname="show subscriptions">
+        <source>show subscriptions</source>
+        <target>toon abbonementen</target>
+      </trans-unit>
+      <trans-unit id="ubn2Iz1" resname="subscriptions">
+        <source>subscriptions</source>
+        <target>abbonementen</target>
+      </trans-unit>
+      <trans-unit id="bq231mb" resname="subscription">
+        <source>subscription</source>
+        <target>abbonement</target>
+      </trans-unit>
+      <trans-unit id="2543GAG" resname="show current subscriptions">
+        <source>show current subscriptions</source>
+        <target>toon huidige abbonementen</target>
+      </trans-unit>
+      <trans-unit id="Uian214" resname="current subscriptions">
+        <source>current subscriptions</source>
+        <target>huidige abbonementen</target>
+      </trans-unit>
+      <trans-unit id="Oepwn21" resname="purchase">
+        <source>purchase</source>
+        <target>aanschaffen</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
