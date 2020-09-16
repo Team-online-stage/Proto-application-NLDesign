@@ -79,17 +79,17 @@
             <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-4">
                         <label class="input__label" for="voornaam">Voornaam</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][people][0][givenName]"
+                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][persons][0][givenName]"
                             {% if organization.people.0.givenName is defined %} value="{{ organization.people.0.givenName }}"{% endif %}>
                     </div>
                     <div class="col-md-4">
                         <label class="input__label" for="achternaam">Tussenvoegels</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][people][0][additionalName]"
+                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][persons][0][additionalName]"
                             {% if organization.people.0.additionalName is defined %} value="{{ organization.people.0.additionalName }}"{% endif %}>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4"persons
                         <label class="input__label" for="achternaam">Achternaam</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][people][0][familyName]"
+                        <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][persons][0][familyName]"
                             {% if organization.people.0.familyName is defined %} value="{{ organization.people.0.familyName }}"{% endif %}>
                     </div>
             </div>
