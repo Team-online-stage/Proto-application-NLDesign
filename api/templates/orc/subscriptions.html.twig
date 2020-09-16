@@ -5,13 +5,15 @@
     <div class="content-background">
         <div class="content">
             <div class="row">
-                <h1 style="display: inline-block">{{ 'current subscriptions'|trans|capitalize }}</h1>
-                <button id="newSubButton" style="float: right"
-                        class="btn btn-primary">{{ 'new subscription'|trans|capitalize }}</button>
-                <button id="showSubsButton" style="float: right"
-                        class="btn btn-primary">{{ 'show subscriptions'|trans|capitalize }}</button>
 
                 <div id="subs">
+
+                    <div id="subsText">
+                        <h1 style="display: inline-block">{{ 'current subscriptions'|trans|capitalize }}</h1>
+                        <button id="newSubButton" style="float: right"
+                                class="btn btn-primary">{{ 'new'|trans|capitalize~' '~'subscription'|trans }}</button>
+                    </div>
+
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -35,8 +37,30 @@
                 </div>
 
                 <div id="newSubForm">
+
+                    <div id="newSubText">
+                        <h1 style="display: inline-block">{{ 'new'|trans|capitalize~' '~'subscription'|trans }}</h1>
+                        <button id="showSubsButton" style="float: right"
+                                class="btn btn-primary">{{ 'show current subscriptions'|trans|capitalize }}</button>
+                    </div>
+
                     <form action="{{ path('app_orc_subscriptions') }}" method="post">
 
+                        <div class="input">
+                            <label class="input__label"
+                                   for="subscription">{{ 'subscriptions'|trans|capitalize }}</label>
+                            <select id="subscription" name="subscription"
+                                    class="input__control input__control--l input__control--select">
+                                <option hidden="" value=''></option>
+                                {% for sub in availableSubscriptions %}
+                                    <option value="{{ sub['@id'] }}">{{ sub['name'] }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="input">
+                            <button type="submit" class="btn btn-block">{{ 'purchase'|trans|capitalize }}</button>
+                        </div>
 
                     </form>
                 </div>
@@ -50,6 +74,8 @@
         var showSubsButton = document.getElementById('showSubsButton');
         var newSubForm = document.getElementById('newSubForm');
         var subs = document.getElementById('subs');
+        var subsText = document.getElementById('subs');
+        var newSubText = document.getElementById('subs');
 
         newSubButton.style.display = "inline-block";
         showSubsButton.style.display = "none";
