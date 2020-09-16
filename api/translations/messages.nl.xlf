@@ -933,6 +933,14 @@
         <source>purchase</source>
         <target>aanschaffen</target>
       </trans-unit>
+      <trans-unit id="eut8912" resname="u must be logged in to visit this page">
+        <source>u must be logged in to visit this page</source>
+        <target>u moet ingelogd zijn om deze pagina te bezoeken</target>
+      </trans-unit>
+      <trans-unit id="ub21kAg" resname="your">
+        <source>your</source>
+        <target>uw</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
