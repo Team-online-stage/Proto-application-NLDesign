@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -57,8 +56,8 @@ class OrcController extends AbstractController
         $today = new \DateTime('today');
         $today = date_format($today, 'Y-m-d');
 
-        $variables['currentSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['availabiltyStarts[exists]' => 'true', 'availabilityEnds[after]' => $today])['hydra:member'];
-        $variables['availableSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['availabiltyStarts[exists]' => 'true', 'availabilityEnds[after]' => $today])['hydra:member'];
+        $variables['currentSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['recurrence[exists]' => 'true', 'availabilityEnds[after]' => $today])['hydra:member'];
+        $variables['availableSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['recurrence[exists]' => 'true'])['hydra:member'];
 
         return $variables;
     }
@@ -68,6 +67,5 @@ class OrcController extends AbstractController
      */
     public function orderAction()
     {
-
     }
 }
