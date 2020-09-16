@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -68,6 +67,5 @@ class OrcController extends AbstractController
      */
     public function orderAction()
     {
-
     }
 }
