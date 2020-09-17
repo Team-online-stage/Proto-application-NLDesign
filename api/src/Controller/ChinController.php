@@ -321,7 +321,7 @@ class ChinController extends AbstractController
             $session->set('newcheckin', true);
             $session->set('person', $person);
 
-            $test = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'idin');
+            $test = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
 
             $token = new UsernamePasswordToken($test, null, 'main', $test->getRoles());
             $this->container->get('security.token_storage')->setToken($token);
