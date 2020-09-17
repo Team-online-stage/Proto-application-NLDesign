@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
@@ -14,9 +15,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * The Procces test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
@@ -117,7 +117,7 @@ class ChinController extends AbstractController
      * @Route("/login/{code}")
      * @Template
      */
-    public function loginAction(Session $session, $code = null,  Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function loginAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         $session->set('newcheckin', false);
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
@@ -145,9 +145,25 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
+        if ($request->isMethod('POST') && $request->request->get('method')) {
+            $method = $request->request->get('method');
+
+            switch ($method) {
+                case 'idin':
+                    return $this->redirect($this->generateUrl('app_user_idin'));
+                case 'facebook':
+                    return $this->redirect($this->generateUrl('app_user_facebook'));
+                case 'google':
+                    return $this->redirect($this->generateUrl('app_user_gmail'));
+                case 'email':
+                    return $this->redirect($this->generateUrl('app_chin_checkin'));
+
+            }
+        }
+
         return $variables;
     }
-
 
     /**
      * This function will kick of the suplied proces with given values.
@@ -157,7 +173,6 @@ class ChinController extends AbstractController
      */
     public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-
         $session->set('newcheckin', false);
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
@@ -203,25 +218,24 @@ class ChinController extends AbstractController
                 $emailResource['email'] = $email;
                 $emailResource = $commonGroundService->updateResource($emailResource);
                 $person['emails'][0] = $emailResource['@id'];
-            }else {
+            } else {
                 $emailObject['email'] = $email;
                 $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
                 $person['emails'][0] = $emailObject['@id'];
             }
 
-            if (isset($person['telephones'][0])){
+            if (isset($person['telephones'][0])) {
                 $telephoneResource = $person['telephones'][0];
                 $telephoneResource['telephone'] = $tel;
                 $telephoneResource = $commonGroundService->updateResource($telephoneResource);
-                $person['emails'][0] = $telephoneResource['@id'];
-            }else {
+                $person['telephones'][0] = $telephoneResource['@id'];
+            } else {
                 $telephoneObject['telephone'] = $tel;
                 $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
                 $person['telephones'][0] = $telephoneObject['@id'];
             }
 
             $person = $commonGroundService->updateResource($person);
-
 
             //create check-in
             $checkIn = [];
@@ -231,8 +245,6 @@ class ChinController extends AbstractController
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
-
-
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -240,19 +252,17 @@ class ChinController extends AbstractController
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
-
         } elseif ($request->isMethod('POST')) {
-
             $node = $request->request->get('node');
             $name = $request->request->get('name');
 
             $name = explode(' ', $name);
 
-            if(count($name) < 2){
+            if (count($name) < 2) {
                 $firstName = $name[0];
                 $additionalName = '';
                 $lastName = $name[0];
-            } else if (count($name) < 3) {
+            } elseif (count($name) < 3) {
                 $firstName = $name[0];
                 $additionalName = '';
                 $lastName = $name[1];
@@ -278,6 +288,17 @@ class ChinController extends AbstractController
             $person['telephones'][0] = $telObject['@id'];
             $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
+            $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+            $validChars = '0123456789abcdefghijklmnopqrstuvwxyz';
+            $password = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 8);
+            $user = [];
+            $user['username'] = $email;
+            $user['password'] = $password;
+            $user['person'] = $person['@id'];
+            $user['organization'] = $application['organization']['@id'];
+
+            $user = $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
+
             $checkIn['node'] = $node;
             $checkIn['person'] = $person['@id'];
 
@@ -285,9 +306,14 @@ class ChinController extends AbstractController
 
             $node = $commonGroundService->getResource($node);
 
-
             $session->set('newcheckin', true);
             $session->set('person', $person);
+
+            $test = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
+
+            $token = new UsernamePasswordToken($test, null, 'main', $test->getRoles());
+            $this->container->get('security.token_storage')->setToken($token);
+            $this->container->get('session')->set('_security_main', serialize($token));
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
                 return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
@@ -297,6 +323,7 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
         return $variables;
     }
 

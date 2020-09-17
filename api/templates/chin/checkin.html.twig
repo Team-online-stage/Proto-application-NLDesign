@@ -28,7 +28,7 @@
     {% set person = commonground_resource(app.user.person) %}
     {% endif %}
     <form method="post" action="{{ path('app_chin_checkin', {"code":code}) }}" class="form">
-        <div class="container background" style="background-size: 300px" >
+        <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;" >
             <div class="row">
                 <div class="col-md-12 col-sm-12 " style="padding: 0;">
                     <div class="" style="height: calc(100vh - 56px); text-align: center; display: flex; flex-direction: column; justify-content: space-around">
@@ -86,14 +86,6 @@
                                                     data-target="#questionModal"
                                                     onclick="openQuestionModal()">vragen</a>
                                                 van de corona vragenlijst horeca</label>
-                                        </div>
-                                        <div class="input__group input__group--checkbox">
-                                            <input name="hobbies[]" type="checkbox" id="chkbx2"
-                                                   class="input__control input__control--m input__control--checkbox" required="">
-                                            <label style="line-height: 14px" class="input__label input__label--checkbox" for="chkbx2">Ik ga akkoord met de <a
-                                                    href="/proclaimer" target="_blank">proclaimer</a> en de <a href="/privacy"
-                                                                                                               target="_blank">privacy</a>
-                                                regels</label>
                                         </div>
                                     </div>
                                     <input type="hidden" name="node" value="{{ resource['@id'] }}">
@@ -168,4 +160,19 @@
             </footer>
         </section>
     </div>
+{% endblock %}
+
+{% block script %}
+
+    <script>
+        function onScanSuccess(qrCodeMessage) {
+            // handle on success condition with the decoded message
+        }
+
+        $(document).ready(function(){
+            var html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", { fps: 10, qrbox: 250 });
+            html5QrcodeScanner.render(onScanSuccess);
+        });
+    </script>
 {% endblock %}
