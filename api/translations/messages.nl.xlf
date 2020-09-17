@@ -695,7 +695,7 @@
       </trans-unit>
       <trans-unit id="k1CHLXE" resname="pay">
         <source>pay</source>
-        <target>betalen</target>
+        <target>afrekenen</target>
       </trans-unit>
       <trans-unit id="9A.VYvY" resname="subscribe">
         <source>subscribe</source>
@@ -940,6 +940,10 @@
       <trans-unit id="ub21kAg" resname="your">
         <source>your</source>
         <target>uw</target>
+      </trans-unit>
+      <trans-unit id="T32GawG" resname="view order">
+        <source>view order</source>
+        <target>naar bestelling</target>
       </trans-unit>
     </body>
   </file>
