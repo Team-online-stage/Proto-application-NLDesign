@@ -198,28 +198,30 @@ class ChinController extends AbstractController
 
             $user = $user[0];
 
-            if (isset($person['emails'][0])){
+            if (isset($person['emails'][0])) {
                 $emailResource = $person['emails'][0];
                 $emailResource['email'] = $email;
-                $commonGroundService->updateResource($emailResource);
+                $emailResource = $commonGroundService->updateResource($emailResource);
+                $person['emails'][0] = $emailResource['@id'];
             }else {
                 $emailObject['email'] = $email;
                 $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
                 $person['emails'][0] = $emailObject['@id'];
-                $person = $commonGroundService->updateResource($person);
             }
 
             if (isset($person['telephones'][0])){
                 $telephoneResource = $person['telephones'][0];
                 $telephoneResource['telephone'] = $tel;
-                $commonGroundService->updateResource($telephoneResource);
+                $telephoneResource = $commonGroundService->updateResource($telephoneResource);
+                $person['emails'][0] = $telephoneResource['@id'];
             }else {
                 $telephoneObject['telephone'] = $tel;
                 $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
-
                 $person['telephones'][0] = $telephoneObject['@id'];
-                $person = $commonGroundService->updateResource($person);
             }
+
+            $person = $commonGroundService->updateResource($person);
+
 
             //create check-in
             $checkIn = [];
@@ -230,13 +232,7 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
 
-            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            if (isset($node['passthroughUrl'])) {
-                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-                if ($isUrlToZD === false) {
-                    return $this->redirect($node['passthroughUrl']);
-                }
-            }
+
             $session->set('newcheckin', true);
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
@@ -289,14 +285,6 @@ class ChinController extends AbstractController
 
             $node = $commonGroundService->getResource($node);
 
-            // Deze gooit een 502
-            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            if (isset($node['passthroughUrl'])) {
-                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-                if ($isUrlToZD === false) {
-                    return $this->redirect($node['passthroughUrl']);
-                }
-            }
 
             $session->set('newcheckin', true);
             $session->set('person', $person);

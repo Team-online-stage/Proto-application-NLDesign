@@ -28,10 +28,10 @@
     {% set person = commonground_resource(app.user.person) %}
     {% endif %}
     <form method="post" action="{{ path('app_chin_checkin', {"code":code}) }}" class="form">
-        <div class="container">
+        <div class="container background" style="background-size: 300px" >
             <div class="row">
-                <div class="col-md-4 col-sm-12 background" style="padding: 0;">
-                    <div class="" style="height: 100vh; text-align: center; display: flex; flex-direction: column; justify-content: space-around">
+                <div class="col-md-12 col-sm-12 " style="padding: 0;">
+                    <div class="" style="height: calc(100vh - 56px); text-align: center; display: flex; flex-direction: column; justify-content: space-around">
                         <div class="row">
                             {% if org.style.favicon.base64 is defined and org.style.favicon.base64 is not empty %}
                                 <div class="col-xs-12">
@@ -44,11 +44,21 @@
                             {% endif %}
                         </div>
                         <div class="row">
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-8" style="margin-bottom: 15px;">
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-10" style="margin-bottom: 15px;">
                                 <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
                                     <div class="definition-list__description">
-                                        <p style="color: #000000">-{{ commonground_resource(resource.place).name }}-</p>
+                                        {% if resource.place is defined and resource.place is not empty %}
+                                            {% set place = commonground_resource(resource.place) %}
+                                            {% if place.bagId is defined and place.bagId is not empty %}
+                                                {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+                                            {% endif %}
+                                            <p style="margin-bottom: 0; color: #000000">-{{ place.name }}-</p>
+                                            <p style="color: #000000">
+                                                {% if adres is defined and adres is not empty %}
+                                                    {{ adres.straat }} {{ adres.huisnummer }}, {{ adres.woonplaats }}
+                                                {% endif %}</p>
+                                        {% endif %}
                                     </div>
                                     <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
                                         <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Naam"
@@ -66,7 +76,7 @@
                                             {% if person.telephones[0].telephone is defined and person.telephones[0].telephone is not empty %}value="{{ person.telephones[0].telephone }}"{% endif %}>
                                     </div>
                                     <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
-                                        <div class="input__group input__group--checkbox">
+                                        <div class="input__group input__group--checkbox" style="margin-bottom: 5px;">
                                             <input name="hobbies[]" type="checkbox" id="chkbx1"
                                                    class="input__control input__control--m input__control--checkbox" checked=""
                                                    required="">
@@ -92,7 +102,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-2"></div>
+                            <div class="col-xs-1"></div>
                         </div>
                     </div>
                 </div>
