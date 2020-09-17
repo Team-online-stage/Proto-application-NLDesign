@@ -1,7 +1,17 @@
 {# templates/home/index.html.twig #}
 
 {% extends 'base.html.twig' %}
+
+{% block style %}
+    <style>
+        /* node->(WRC)organisation->style->css */
+    </style>
+{% endblock %}
+
+
 {% block container %}
+
+
     <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
         <div class="row">
             <div class="container">
@@ -9,4 +19,19 @@
             </div><!-- /.container -->
         </div><!-- /.row -->
     </form>
+{% endblock %}
+
+{% block script %}
+
+    <script>
+        function onScanSuccess(qrCodeMessage) {
+            // handle on success condition with the decoded message
+        }
+
+        $(document).ready(function(){
+            var html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", { fps: 10, qrbox: 250 });
+            html5QrcodeScanner.render(onScanSuccess);
+        });
+    </script>
 {% endblock %}
