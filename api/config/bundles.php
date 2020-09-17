@@ -17,4 +17,5 @@ return [
     Tbbc\MoneyBundle\TbbcMoneyBundle::class                              => ['all' => true],
     Knp\Bundle\MarkdownBundle\KnpMarkdownBundle::class                   => ['all' => true],
     Endroid\QrCodeBundle\EndroidQrCodeBundle::class                      => ['all' => true],
+    Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle::class     => ['all' => true],
 ];

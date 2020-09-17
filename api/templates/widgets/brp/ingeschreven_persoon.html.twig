@@ -1,19 +1,28 @@
+{% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
+    {% set person = commonground_resource(request.properties[property.name]) %}
+{% endif %}
+
 <div class="row">
     <div class="col-sm-12 col-lg-3">
         <label class="input__label" for="givenNames">{{ 'given names'|trans|capitalize }}</label>
-        <input class="input__control input__control--text" id="givenNames" type="text">
+        <input class="input__control input__control--text" id="givenNames" type="text"
+            {% if person.naam.voornamen is defined %} value="{{ person.naam.voornamen }}"{% endif %}>
     </div>
     <div class="col-sm-12 col-lg-3">
         <label class="input__label" for="familyName">{{ 'family name'|trans|capitalize }}</label>
-        <input class="input__control input__control--text" id="familyName" type="text">
+        <input class="input__control input__control--text" id="familyName" type="text"
+            {% if person.naam.geslachtsnaam is defined %} value="{{ person.naam.geslachtsnaam }}"{% endif %}>
     </div>
     <div class="col-sm-12 col-lg-3">
         <label class="input__label" for="bsn">{{ 'social service number'|trans|capitalize }}</label>
-        <input class="input__control input__control--text" id="bsn" type="text">
+        <input class="input__control input__control--text" id="bsn" type="text"
+            {% if person.burgerservicenummer is defined %} value="{{ person.burgerservicenummer }}"{% endif %}>
     </div>
     <div class="col-sm-12 col-lg-2">
         <br>
-        <button type="button" onclick="getPeople()" style="width: 100%; color: black; background-color: #f9e11e" class="btn btn-primary">Zoeken</button>
+        <button type="button" onclick="getPeople()" style="width: 100%; color: black; background-color: #f9e11e"
+                class="btn btn-primary">Zoeken
+        </button>
     </div>
 </div>
 
@@ -31,7 +40,7 @@
 <script>
     $('.spinner').hide();
 
-    function getPeople(){
+    function getPeople() {
         $('.spinner').show();
         let bsn = document.getElementById('bsn').value;
         let voornamen = document.getElementById('givenNames').value;
@@ -39,23 +48,23 @@
 
         let list = document.getElementById('persoonsLijst');
 
-        while(list.firstChild){
+        while (list.firstChild) {
             list.firstChild.remove();
         }
 
-        if(geslachtsnaam === "" || voornamen === "" || bsn === ""){
+        if (geslachtsnaam === "" || voornamen === "" || bsn === "") {
             let response = "De volgende velden zijn niet ingevoerd:<ul>";
             $('.spinner').hide();
-            if(geslachtsnaam === ""){
+            if (geslachtsnaam === "") {
                 response = response + '<li> {{ 'family name'|trans|capitalize }} </li>';
             }
-            if(voornamen === ""){
+            if (voornamen === "") {
                 response = response + '<li> {{ 'given names'|trans|capitalize }} </li>';
             }
-            if(bsn === ""){
+            if (bsn === "") {
                 response = response + '<li>{{ 'social service number'|trans|capitalize }}</li>';
             }
-            $('#persoonsLijst').append('<p>'+response+'</p>');
+            $('#persoonsLijst').append('<p>' + response + '</p>');
             return;
         }
 
@@ -67,30 +76,30 @@
                 Accept: 'application/ld+json'
             },
             data: {
-                burgerservicenummer:bsn,
-                'naam.geslachtsnaam':geslachtsnaam,
-                'naam.voornamen':voornamen,
+                burgerservicenummer: bsn,
+                'naam.geslachtsnaam': geslachtsnaam,
+                'naam.voornamen': voornamen,
             },
             statusCode: {
-                404: function() {
-                    console.log( "page not found" );
+                404: function () {
+                    console.log("page not found");
                 },
-                500: function() {
-                    console.log( "internal server error" );
+                500: function () {
+                    console.log("internal server error");
                 },
-                200: function() {
-                    console.log( "worked" );
+                200: function () {
+                    console.log("worked");
                 }
             },
-            success: function(result) {
+            success: function (result) {
                 $('.spinner').hide();
-                if(result["hydra:member"].length >= 1){
+                if (result["hydra:member"].length >= 1) {
                     $('#persoonsLijst').append('<legend class="input__legend">Persoon:</legend>')
-                    for(let i = 0; i < result['hydra:member'].length; i++){
+                    for (let i = 0; i < result['hydra:member'].length; i++) {
 
                         $('#persoonsLijst').append('<div class="input__group input__group--radio test">');
-                        $('#persoonsLijst').append('<input value="'+ result["hydra:member"][i]['@id'] +'" type="radio" name="request[properties][{{ property.name }}]" id="'+i+'" class="input__control--radio">');
-                        $('#persoonsLijst').append('<label class="input__label input__label--radio" for="'+i+'"> '
+                        $('#persoonsLijst').append('<input value="' + result["hydra:member"][i]['@id'] + '" type="radio" name="request[properties][{{ property.name }}]" id="' + i + '" class="input__control--radio">');
+                        $('#persoonsLijst').append('<label class="input__label input__label--radio" for="' + i + '"> '
                             + result["hydra:member"][i]["naam"]["voornamen"]
                             + ' '
                             + result["hydra:member"][i]["naam"]["geslachtsnaam"]

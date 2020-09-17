@@ -10,7 +10,7 @@ framework:
 #        handler_id: ~
         cookie_secure: auto
         cookie_samesite: lax
-        gc_maxlifetime: 900
+        gc_maxlifetime: '%env(APP_SESSION_DURATION)%'
 
     #esi: true
     #fragments: true
