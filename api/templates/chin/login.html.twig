@@ -14,6 +14,13 @@
     {% block style %}
         <style>
 
+            @media (max-width: 555px) {
+                body {
+                    position: fixed;
+                    width: 100%;
+                }
+            }
+
             .background{
                 color: white;
             }
@@ -64,28 +71,25 @@
                                     {% if resource.methods is defined and resource.methods is not empty %}
                                         {% if resource.methods['idin'] is defined and resource.methods['idin'] %}
                                             <div style="margin-top: 10px; padding: 0 10px;">
-                                                <button name="method" value="idin" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 0;"><h2 style="margin-top: 4px;">Idin</h2></button>
+                                                <button name="method" value="idin" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Idin</h2></button>
                                             </div>
                                         {% endif %}
                                         {% if resource.methods['facebook'] is defined and resource.methods['facebook'] %}
                                             <div style="margin-top: 10px; padding: 0 10px;">
-                                                <button name="method" value="facebook" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 0;"><h2 style="margin-top: 4px;">Facebook</h2></button>
+                                                <button name="method" value="facebook" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Facebook</h2></button>
                                             </div>
                                         {% endif %}
                                         {% if resource.methods['google'] is defined and resource.methods['google'] %}
                                             <div style="margin-top: 10px; padding: 0 10px;">
-                                                <button name="method" value="google" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 0;"><h2 style="margin-top: 4px;">Google</h2></button>
+                                                <button name="method" value="google" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Google</h2></button>
                                             </div>
                                         {% endif %}
                                         <div style="margin-top: 10px; padding: 0 10px;">
-                                            <button name="method" value="email" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 0;"><h2 style="margin-top: 4px;">Email</h2></button>
+                                            <button name="method" value="email" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Email</h2></button>
                                         </div>
                                     {% else %}
-                                        <div style="padding: 0 10px;">
-                                            <button name="method" value="idin" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 0;"><h2 style="margin-top: 4px;">Idin</h2></button>
-                                        </div>
                                         <div style="margin-top: 10px; padding: 0 10px;">
-                                            <button name="method" value="email" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 0;"><h2 style="margin-top: 4px;">Email</h2></button>
+                                            <button name="method" value="email" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Email</h2></button>
                                         </div>
                                     {% endif %}
                                     <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
