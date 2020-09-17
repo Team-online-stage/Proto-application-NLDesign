@@ -110,7 +110,6 @@ class UserController extends AbstractController
      */
     public function FacebookAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-
         $session->set('code', $request->query->get('nodeCode'));
 
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'facebook'])['hydra:member'];
@@ -143,7 +142,6 @@ class UserController extends AbstractController
      */
     public function gmailAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-
         $session->set('code', $request->query->get('nodeCode'));
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'gmail'])['hydra:member'];
         $provider = $provider[0];
