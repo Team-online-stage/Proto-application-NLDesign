@@ -9,13 +9,17 @@ settings:
   title: Proto Applicatie NL Design
   version: V1.0
   majorVersion: v1
+<<<<<<< HEAD
   id: 31a2ad29-ee03-4aa9-be81-abf1fda7bbcc
+=======
+  id: 3f44c00e-d919-4f89-bd4c-b730c9b2620a
+>>>>>>> development
   description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&quot;'
   type: application
   repro: https://github.com/ConductionNL/pan
   demo: www.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: zuid-drecht.nl
+  domain: westfriesland.commonground.nu
   subdomain: false
   subpath: false
   subpathRouting: false
@@ -52,7 +56,7 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "31a2ad29-ee03-4aa9-be81-abf1fda7bbcc"
+  commongroundId: "3f44c00e-d919-4f89-bd4c-b730c9b2620a"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
