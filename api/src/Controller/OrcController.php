@@ -57,7 +57,7 @@ class OrcController extends AbstractController
         $today = new \DateTime('today');
         $today = date_format($today, 'Y-m-d');
 
-        $variables['currentSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['recurrence[exists]' => 'true', 'availabilityEnds[after]' => $today])['hydra:member'];
+//        $variables['currentSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'orderItems'], ['exists[recurrence]' => 'true', 'dateEnd[after]' => $today, 'order[customer]'=>$this->getUser()->getPerson()])['hydra:member'];
         $variables['availableSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['exists[recurrence]' => 'true'])['hydra:member'];
 
         return $variables;
@@ -70,53 +70,93 @@ class OrcController extends AbstractController
     public function orderAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
 
-        if(!empty($session->get('order'))) {
+        if (!empty($session->get('order'))) {
             $variables['order'] = $session->get('order');
         } else {
             $variables['order'] = null;
 
         }
+        if (!empty($session->get('orderItems'))) {
+            $variables['orderItems'] = $session->get('orderItems');
+        } else {
+            $variables['orderItems'] = null;
 
-        if ($request->isMethod('POST')) {
+        }
+
+        $makeOrder = $request->request->get('make-order');
+
+        if ($request->isMethod('POST') && empty($variables['order'])) {
+            $request = $request->request->all();
+
+//            $user = $this->getUser()->getPerson();
+//            $userOrg = $this->getUser()->getOrganization();
+
+            $order['name'] = 'test';
+//            $order['organization'] = $userOrg;
+//            $order['customer'] = $user;
+
+//            $order = $commonGroundService->createResource($order, ['component' => 'orc', 'type' => 'orders']);
+
+            foreach ($request['offers'] as $offer) {
+                $offer = $commonGroundService->getResource($offer);
+                $offers[] = $offer;
+                $orderItem['name'] = $offer['name'];
+                if (!empty($offer['description'])) {
+                    $orderItem['description'] = $offer['description'];
+                }
+                $orderItem['offer'] = $offer['@id'];
+                if (!empty($offer['quantity'])) {
+                    $orderItem['quantity'] = $offer['quantity'];
+                } else {
+                    $orderItem['quantity'] = 1;
+                }
+                $orderItem['price'] = strval($offer['price']);
+                $orderItem['priceCurrency'] = $offer['priceCurrency'];
+
+                if (!empty($offer['recurrence'])) {
+                    $orderItem['recurrence'] = $offer['recurrence'];
+                }
+                if (!empty($offer['notice'])) {
+                    $orderItem['notice'] = $offer['notice'];
+                }
+
+
+//                        $orderItem['order'] = $order['@id'];
+
+//                        $orderItem = $commonGroundService->createResource($orderItem, ['component' => 'orc', 'type' => 'order_items']);
+                $orderItems[] = $orderItem;
+//                        $order = $commonGroundService->saveResource($order);
+                $session->set('order', $order);
+                $session->set('orderItems', $orderItems);
+            }
+        } elseif ($request->isMethod('POST') && !empty($variables['order']) && !empty($variables['orderItems'] && $makeOrder == true)) {
             $request = $request->request->all();
 
             $user = $this->getUser()->getPerson();
             $userOrg = $this->getUser()->getOrganization();
 
-            $order['name'] = 'test';
-            $order['organization'] = $userOrg;
-            $order['customer'] = $user;
+            $variables['order']['organization'] = $userOrg;
+            $variables['order']['customer'] = $user;
 
-            $order = $commonGroundService->createResource($order, ['component' => 'orc', 'type' => 'orders']);
+            $variables['order'] = $commonGroundService->createResource($variables['order'], ['component' => 'orc', 'type' => 'orders']);
 
-
-            if (!empty($order['@id'])) {
-                if (!empty($order))
-                    foreach ($request['offers'] as $offer) {
-                        $offer = $commonGroundService->getResource($offer);
-                        $offers[] = $offer;
-                        $orderItem['name'] = $offer['name'];
-                        if (!empty($offer['description'])) {
-                            $orderItem['description'] = $offer['description'];
-                        }
-                        $orderItem['offer'] = $offer['@id'];
-                        if (!empty($offer['quantity'])) {
-                            $orderItem['quantity'] = $offer['quantity'];
-                        } else {
-                            $orderItem['quantity'] = 1;
-                        }
-                        $orderItem['price'] = strval($offer['price']);
-                        $orderItem['priceCurrency'] = $offer['priceCurrency'];
-
-
-                        $orderItem['order'] = $order['@id'];
-
-                        $orderItem = $commonGroundService->createResource($orderItem, ['component' => 'orc', 'type' => 'order_items']);
-                        $order['items'][] = $orderItem['@id'];
-                        $order = $commonGroundService->saveResource($order);
-                        $session->set('order', $order);
-                    }
+            foreach ($variables['orderItems'] as $item) {
+                $item['order'] = $variables['order']['@id'];
+                $item = $commonGroundService->createResource($item, ['component' => 'orc', 'type' => 'order_items']);
+                $variables['order']['items'][] = $item;
             }
+
+            $variables['order'] = $commonGroundService->saveResource($variables['order']);
+
+            // If this order is not an subscription make invoice
+            if(empty($variables['order']['items'][0]['recurrence'])) {
+
+                $session->remove('order');
+                $session->remove('orderItems');
+                return $this->redirectToRoute('app_orc_subscriptions');
+            }
+
+            return $this->redirect('/me');
         }
 
 

@@ -3,16 +3,16 @@
 {% block content %}
 
 
-    {% if app.user is null %}
+{#    {% if app.user is null %}#}
 
-        <div class="notification notification--error">
-            <div class="notification__content">
-                <div class="notification__type">ERROR</div>
-                <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>
-            </div>
-        </div>
+{#        <div class="notification notification--error">#}
+{#            <div class="notification__content">#}
+{#                <div class="notification__type">ERROR</div>#}
+{#                <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>#}
+{#            </div>#}
+{#        </div>#}
 
-    {% else %}
+{#    {% else %}#}
 
         <div class="content-background">
             <div class="content">
@@ -90,7 +90,7 @@
                             </div>
 
                             <div class="input">
-                                <button type="submit" class="btn btn-block">{{ 'purchase'|trans|capitalize }}</button>
+                                <button type="submit" class="btn btn-block">{{ 'view order'|trans|capitalize }}</button>
                             </div>
 
                         </form>
@@ -142,7 +142,7 @@
                     document.getElementById('subDes').innerText = subDes;
                 } else {
                     document.getElementById('subDes').style.color = "lightgray";
-                    document.getElementById('subDes').innerText = "Dit product heeft geen bescrhijving"
+                    document.getElementById('subDes').innerText = "Dit product heeft geen beschrijving"
                 }
                 document.getElementById('subPrice').innerText = subPrice;
                 {% endfor %}
@@ -150,6 +150,6 @@
 
         </script>
 
-    {% endif %}
+{#    {% endif %}#}
 
 {% endblock %}

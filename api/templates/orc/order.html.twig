@@ -3,16 +3,16 @@
 {% block content %}
 
 
-    {% if app.user is null %}
+    {#    {% if app.user is null %}#}
 
-    <div class="notification notification--error">
-        <div class="notification__content">
-            <div class="notification__type">ERROR</div>
-            <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>
-        </div>
-    </div>
+    {#    <div class="notification notification--error">#}
+    {#        <div class="notification__content">#}
+    {#            <div class="notification__type">ERROR</div>#}
+    {#            <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>#}
+    {#        </div>#}
+    {#    </div>#}
 
-{% else %}
+    {#{% else %}#}
 
     <style>
         .custom-ul {
@@ -33,80 +33,108 @@
         }
 
         .custom-li-head {
-            max-width: 50%;
+            width: 48%;
             display: inline-block;
+        }
+
+        .custom-li-price {
+            text-align: center;
+            display: inline-block;
+            width: 25%;
         }
 
         .quantity-buttons {
             display: inline-block;
             text-align: right;
             float: right;
+            width: 25%;
         }
     </style>
 
-<div class="content-background">
-    <div class="content">
+    <div class="content-background">
+        <div class="content">
 
-        {% if order is defined and order is not empty %}
+            {% if order is defined and order is not empty
+                and orderItems is defined and orderItems is not empty %}
 
-        <h1>{{ 'your'|trans|capitalize~' '~'order'|trans }}</h1>
+                <h1>{{ 'your'|trans|capitalize~' '~'order'|trans }}</h1>
 
-        <ul class="custom-ul">
-            {% for item in order.items %}
-                <li class="custom-li">
-                    <div class="custom-li-head">
-                        <span class="custom-li-name">{{ item.name }}</span>
-                        {% if item.description is defined %}
-                            <span class="custom-li-des">{{ item.description }}</span>
-                        {% endif %}
-                    </div>
-                    <div class="quantity-buttons">
-                        <button id="decQuan">-</button>
-                        <span id="quan">{{ item.quantity }}</span>
-                        <button id="incQuan">+</button>
-                    </div>
-                </li>
-            {% endfor %}
+                <ul class="custom-ul">
+                    {% set i = 0 %}
+                    {% for item in orderItems %}
+                        {% set i = i + 1 %}
+                        <li class="custom-li">
+                            <div class="custom-li-head">
+                                <span class="custom-li-name">{{ item.name }}</span>
+                                {% if item.description is defined %}
+                                    <span class="custom-li-des">{{ item.description }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="custom-li-price">
+                                <span>&euro; {{ item.price }},-</span>
+                            </div>
+                            <div class="quantity-buttons">
+{#                                <button id="decQuan{{ i }}" value="{{ i }}">-</button>#}
+{#                                <span id="quan{{ i }}">{{ item.quantity }}</span>#}
+{#                                <button id="incQuan{{ i }}">+</button>#}
+                                <button style="background: red !important;" class="btn" id="deleteItem{{ i }}" name="deleteItem[{{ i }}]"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </li>
+                    {% endfor %}
 
-        </ul>
+                </ul>
 
-        <form action="#" method="post">
-            {% for item in order.items %}
-            <input type="hidden" name="items[quantity]" value="{{ item.quantity }}">
-            {% endfor %}
+                <form action="{{ path('app_orc_order') }}" method="post">
+                    {% set i = 0 %}
+                    {% for item in orderItems %}
+                        {% set i = i + 1 %}
+                        <input type="hidden" id="item{{ i }}" name="items[{{ i }}][quantity]" value="">
+                    {% endfor %}
 
-            <button class="btn btn-block">{{ 'pay'|trans|capitalize }}</button>
-        </form>
+                    <input type="hidden" name="make-order" value="true">
+
+                    <button class="btn btn-block">{{ 'pay'|trans|capitalize }}</button>
+                </form>
 
 
-        {% else %}
+            {% else %}
 
-            <h3>Something went wrong</h3>
+                <h3>Something went wrong</h3>
 
-        {% endif %}
+            {% endif %}
+        </div>
     </div>
-</div>
 
-        <script>
+    <script>
 
-            document.getElementById('decQuan').onclick = function () {
-                var quan = document.getElementById('quan');
-                if(quan.value <= 0) {
-                    quan.value = 0;
-                } else {
-                    quan.value = quan - 1
-                }
+        {% set i = 0 %}
+        {% for item in orderItems %}
+        {% set i = i + 1 %}
+        document.getElementById('decQuan{{ i }}').onclick = function () {
+            var quan = parseInt(document.getElementById('quan{{ i }}').innerText, 10);
+            quan = isNaN(quan) ? 0 : quan;
+            if (quan <= 0) {
+                quan = 0;
+            } else {
+                quan--;
             }
-            document.getElementById('incQuan').onclick = function () {
-                var quan = document.getElementById('quan');
-                if(quan.value >= 99) {
-                    quan.value = 99;
-                } else {
-                    quan.value = quan + 1
-                }
+            document.getElementById('quan{{ i }}').innerText = quan;
+            document.getElementById('item{{ i }}').value = quan;
+        }
+        document.getElementById('incQuan{{ i }}').onclick = function () {
+            var quan = parseInt(document.getElementById('quan{{ i }}').innerText, 10);
+            if (quan >= 99) {
+                quan = 99;
+            } else {
+                quan++;
             }
-        </script>
+            document.getElementById('quan{{ i }}').innerText = quan;
+            document.getElementById('item{{ i }}').value = quan;
+        }
+        {% endfor %}
 
-{% endif %}
+    </script>
+
+    {#{% endif %}#}
 
 {% endblock %}
