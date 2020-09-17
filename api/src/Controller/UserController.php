@@ -116,7 +116,9 @@ class UserController extends AbstractController
         $provider = $provider[0];
 
         $redirect = $request->getUri();
-        $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        if (strpos($redirect, '?') == true) {
+            $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        }
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
             return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.$provider['configuration']['app_id'].'&scope=email&redirect_uri='.$redirect.'&state={st=state123abc,ds=123456789}');
@@ -147,7 +149,9 @@ class UserController extends AbstractController
         $provider = $provider[0];
 
         $redirect = $request->getUri();
-        $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        if (strpos($redirect, '?') == true) {
+            $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        }
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
             return $this->redirect('https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=46119456250-gad8g8342inudo8gp8v63ovokq21itt2.apps.googleusercontent.com&scope=openid%20email%20profile%20https://www.googleapis.com/auth/user.phonenumbers.read&redirect_uri='.$redirect);
