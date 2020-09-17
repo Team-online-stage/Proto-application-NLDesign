@@ -15,31 +15,10 @@
         <div class="content" style="padding-top: 20px;">
             <h2>Scan je code</h2>
             <a href="#" class="btn btn--block" title="start scannen" onclick="startQrScan()" id="startScan">Start scannen</a>
-            <a href="#" class="btn btn--block" title="stop scannen" onclick="stopQrScan()" id="stopScan" style="display: none;">Stop scannen</a>
 
         </div><!-- /.content -->
 
         <script>
-
-            function stopQrScan(qrCodeMessage) {
-                document.getElementById('readerView').style.display = 'none';
-                document.getElementById('stopScan').style.display = 'none';
-                document.getElementById('readerAlt').style.display = 'block';
-                document.getElementById('startScan').style.display = 'block';
-                html5QrCode.stop();
-            }
-
-            function onScanSuccess(qrCodeMessage) {
-                // handle on success condition with the decoded message
-                //html5QrcodeScanner.clear();
-                document.getElementById('readerView').style.display = 'none';
-                document.getElementById('stopScan').style.display = 'none';
-                document.getElementById('readerAlt').style.display = 'none';
-                document.getElementById('startScan').style.display = 'none';
-                document.getElementById('readerSucces').style.display = 'block';
-                // redirect
-                window.location.href = qrCodeMessage;
-            }
 
             function onScanError(errorMessage) {
                 // handle on error condition, with error message
@@ -48,7 +27,6 @@
 
             function startQrScan() {
                 document.getElementById('readerView').style.display = 'block';
-                document.getElementById('stopScan').style.display = 'block';
                 document.getElementById('readerAlt').style.display = 'none';
                 document.getElementById('startScan').style.display = 'none';
 
@@ -64,7 +42,28 @@
                         const html5QrCode = new Html5Qrcode("readerView");
                         const config = { fps: 10, qrbox: 250 };
 
-                        html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess, onScanError);
+                        //html5QrCode.start({ facingMode: "environment" }, config, onScanSuccess , onScanError);
+
+                        html5QrCode.start(
+                            { facingMode: "environment" },
+                            {
+                                fps: 1,    // Optional frame per seconds for qr code scanning
+                                qrbox: 250  // Optional if you want bounded box UI
+                            },
+                            qrCodeMessage => {
+                                document.getElementById('readerSucces').style.display = 'block';
+                                document.getElementById('readerView').style.display = 'none';
+                                document.getElementById('readerAlt').style.display = 'block';
+                                window.location.href = qrCodeMessage;
+                                html5QrCode.stop();
+                            },
+                            errorMessage => {
+                                // parse error, ignore it.
+                            })
+                            .catch(err => {
+                                // Start failed, handle it.
+                                console.log(errorMessage);
+                            });
 
                     }
                 }).catch(err => {
@@ -95,7 +94,7 @@
     </div><!-- /.col -->
     <div class="col-md-6 col-sm-12">
         <div class="content background--primary" style="padding-top: 20px;">
-            <h2>Waarom moet ik in inchecken?</h2>
+            <h2>Waarom moet ik inchecken?</h2>
             <p>In verband met corona richtlijnen vanuit de rijksoverheid is de horeca verplicht om contact gegevens van gasten voor 14 dagen op te slaan.</p>
             <p>Lees <a href="/about" style="text-decoration: underline; color: white;">hier</a> meer over hoe we dat veilig doen.</p>
         </div><!-- /.content -->
