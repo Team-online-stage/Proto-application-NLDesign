@@ -38,7 +38,7 @@
         <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;" >
             <div class="row">
                 <div class="col-md-12 col-sm-12 " style="padding: 0;">
-                    <div class="" style="height: calc(100vh - 56px); text-align: center; display: flex; flex-direction: column; justify-content: space-around">
+                    <div class="" style="height: calc(100vh - 56px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
                         <div class="row">
                             {% if org.style.favicon.base64 is defined and org.style.favicon.base64 is not empty %}
                                 <div class="col-xs-12">
@@ -60,7 +60,7 @@
                                             {% if place.bagId is defined and place.bagId is not empty %}
                                                 {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
                                             {% endif %}
-                                            <p style="margin-bottom: 0; color: #000000"><h2>-{{ place.name }}-</h2></p>
+                                            <p style="margin-bottom: 0;"><h2 style="color: black; margin-top: 0;">-{{ place.name }}-</h2></p>
                                             <p style="color: #000000; margin-bottom: 30px;">
                                                 {% if adres is defined and adres is not empty %}
                                                     <i style="margin-right: 10px;" class="fas fa-map-marker-alt"></i>{{ adres.straat }} {{ adres.huisnummer }}, {{ adres.postcode }} <br>

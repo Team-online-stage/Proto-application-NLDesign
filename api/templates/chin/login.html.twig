@@ -38,7 +38,7 @@
         <form action="{{ path('app_chin_login') }}" method="post">
             <div class="row">
                 <div class="col-md-12 col-sm-12" style="padding: 0;">
-                    <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-around">
+                    <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
                         <div class="row">
                             {% if org.style.favicon.base64 is defined and org.style.favicon.base64 is not empty %}
                                 <div class="col-xs-12">
@@ -51,8 +51,8 @@
                             {% endif %}
                         </div>
                         <div class="row">
-                            <div class="col-xs-2"></div>
-                            <div class="col-xs-8" style="margin-bottom: 15px;">
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-10" style="margin-bottom: 15px;">
                                 <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
                                     <div class="definition-list__description">
                                         {% if resource.place is defined and resource.place is not empty %}
@@ -60,35 +60,36 @@
                                             {% if place.bagId is defined and place.bagId is not empty %}
                                                 {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
                                             {% endif %}
-                                            <p style="margin-bottom: 0; color: #000000">-{{ place.name }}-</p>
-                                            <p style="color: #000000">
+                                            <p style="margin-bottom: 0;"><h2 style="color: black; margin-top: 0;">-{{ place.name }}-</h2></p>
+                                            <p style="color: #000000; margin-bottom: 30px;">
                                                 {% if adres is defined and adres is not empty %}
-                                                    {{ adres.straat }} {{ adres.huisnummer }}, {{ adres.woonplaats }}
+                                                    <i style="margin-right: 10px;" class="fas fa-map-marker-alt"></i>{{ adres.straat }} {{ adres.huisnummer }}, {{ adres.postcode }} <br>
+                                                    {{ adres.woonplaats }}
                                                 {% endif %}</p>
                                         {% endif %}
                                     </div>
                                     <span style="color: black">Aanmelden met</span>
                                     {% if resource.methods is defined and resource.methods is not empty %}
                                         {% if resource.methods['idin'] is defined and resource.methods['idin'] %}
-                                            <div style="margin-top: 10px; padding: 0 10px;">
+                                            <div style="margin-top: 5px; padding: 0 10px;">
                                                 <button name="method" value="idin" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Idin</h2></button>
                                             </div>
                                         {% endif %}
                                         {% if resource.methods['facebook'] is defined and resource.methods['facebook'] %}
-                                            <div style="margin-top: 10px; padding: 0 10px;">
+                                            <div style="margin-top: 5px; padding: 0 10px;">
                                                 <button name="method" value="facebook" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Facebook</h2></button>
                                             </div>
                                         {% endif %}
                                         {% if resource.methods['google'] is defined and resource.methods['google'] %}
-                                            <div style="margin-top: 10px; padding: 0 10px;">
+                                            <div style="margin-top: 5px; padding: 0 10px;">
                                                 <button name="method" value="google" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Google</h2></button>
                                             </div>
                                         {% endif %}
-                                        <div style="margin-top: 10px; padding: 0 10px;">
+                                        <div style="margin-top: 5px; padding: 0 10px;">
                                             <button name="method" value="email" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Email</h2></button>
                                         </div>
                                     {% else %}
-                                        <div style="margin-top: 10px; padding: 0 10px;">
+                                        <div style="margin-top: 5px; padding: 0 10px;">
                                             <button name="method" value="email" style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Email</h2></button>
                                         </div>
                                     {% endif %}
@@ -111,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-xs-2"></div>
+                            <div class="col-xs-1"></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-2"></div>
