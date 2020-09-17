@@ -145,14 +145,14 @@
                 {% if property.configuration.email is not defined or property.configuration.email %}
                     <div class="col-md-6">
                         <label class="input__label" for="email">Email</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][][email]"
+                        <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][0][email]"
                             {% if person.emails.0.email is defined %} value="{{ person.emails.0.email }}"{% endif %}>
                     </div>
                 {% endif %}
                 {% if property.configuration.telephone is not defined or property.configuration.telephone %}
                     <div class="col-md-6">
                         <label class="input__label" for="telephone">Telefoonnummer</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][][telephone]"
+                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][0][telephone]"
                             {% if person.telephones.0.telephone is defined %} value="{{ person.telephones.0.telephone }}"{% endif %}>
                     </div>
                 {% endif %}

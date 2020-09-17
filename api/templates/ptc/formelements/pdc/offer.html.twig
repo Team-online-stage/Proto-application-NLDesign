@@ -1,16 +1,22 @@
 
-{% set queryArray = [] %}
-{% for key, value in property.query %}
-    {% if 'request.properties' in value %}
-        {% set newValue = include(template_from_string(value)) %}
-        {% set queryArray = queryArray|merge({ (key): newValue }) %}
-    {% else %}
-        {% set queryArray = queryArray|merge({ (key): value }) %}
-    {% endif %}
-{% endfor %}
-
-
-{% set offers = commonground_resource_list({'component':'pdc', 'type':'offers'}, queryArray)["hydra:member"] %}
+{% if property.query is defined and property.query is not empty %}
+    {% set queryArray = [] %}
+    {% for key, value in property.query %}
+        {% if 'request.properties' in value %}
+            {% if value|split('.')[2]|trim(' }}') in request.properties|keys %}
+            {% set newValue = include(template_from_string(value)) %}
+                {% set queryArray = queryArray|merge({ (key): newValue }) %}
+            {% else %}
+                {% set newValue = 'null' %}
+            {% endif %}
+        {% else %}
+            {% set queryArray = queryArray|merge({ (key): value }) %}
+        {% endif %}
+    {% endfor %}
+    {% set offers = commonground_resource_list({'component':'pdc', 'type':'offers'}, queryArray)["hydra:member"] %}
+{% else %}
+    {% set offers = commonground_resource_list({'component':'pdc', 'type':'offers'})["hydra:member"] %}
+{% endif %}
 <div class="input input--horizontal">
     <div>
         <label class="input__label" for="{{ property.id }}">
