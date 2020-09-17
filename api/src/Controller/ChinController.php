@@ -32,7 +32,7 @@ class ChinController extends AbstractController
     public function checkinUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -110,19 +110,17 @@ class ChinController extends AbstractController
     }
 
     /**
-     * This function will kick of the suplied proces with given values.
+     * This function shows all available locations.
      *
-     * @Route("/checkin/{code}")
+     * @Route("/login/{code}")
      * @Template
      */
-    public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function loginAction(Session $session, $code = null,  Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-        $session->remove('newcheckin');
-
+        $session->set('newcheckin', false);
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
         $variables = [];
-        $createCheckin = $request->request->get('createCheckin');
 
         // Fallback options of establishing
         if (!$code) {
@@ -144,27 +142,81 @@ class ChinController extends AbstractController
             }
         }
 
+        return $variables;
+    }
+
+
+    /**
+     * This function will kick of the suplied proces with given values.
+     *
+     * @Route("/checkin/{code}")
+     * @Template
+     */
+    public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+
+        $session->set('newcheckin', false);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
+        $variables = [];
+
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+
+        if ($code) {
+            $session->set('code', $code);
+            $variables['code'] = $code;
+            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+            if (count($variables['resources']) > 0) {
+                $variables['resource'] = $variables['resources'][0];
+            }
+        }
+
         // Alleen afgaan bij post EN ingelogde gebruiker
 
-        if ($request->isMethod('POST') && $this->getUser() && $createCheckin == 'true') {
+        if ($request->isMethod('POST') && $this->getUser()) {
 
             //update person
             $node = $request->request->get('node');
             $name = $request->request->get('name');
             $email = $request->request->get('email');
-            $tel = $request->request->get('tel');
+            $tel = $request->request->get('telephone');
 
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
-            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $person['@id']])['hydra:member'];
+
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
+
             $user = $user[0];
 
-            $emailResource = $person['emails'][0];
-            $emailResource['email'] = $email;
-            $commonGroundService->updateResource($emailResource);
+            if (isset($person['emails'][0])){
+                $emailResource = $person['emails'][0];
+                $emailResource['email'] = $email;
+                $commonGroundService->updateResource($emailResource);
+            }else {
+                $emailObject['email'] = $email;
+                $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
+                $person['emails'][0] = $emailObject['@id'];
+                $person = $commonGroundService->updateResource($person);
+            }
 
-            $telephoneResource = $person['telephones'][0];
-            $telephoneResource['telephone'] = $tel;
-            $commonGroundService->updateResource($telephoneResource);
+            if (isset($person['telephones'][0])){
+                $telephoneResource = $person['telephones'][0];
+                $telephoneResource['telephone'] = $tel;
+                $commonGroundService->updateResource($telephoneResource);
+            }else {
+                $telephoneObject['telephone'] = $tel;
+                $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
+
+                $person['telephones'][0] = $telephoneObject['@id'];
+                $person = $commonGroundService->updateResource($person);
+            }
 
             //create check-in
             $checkIn = [];
@@ -173,6 +225,7 @@ class ChinController extends AbstractController
             $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
 
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
             if (isset($node['passthroughUrl'])) {
@@ -188,13 +241,30 @@ class ChinController extends AbstractController
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
-        } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
+        } elseif ($request->isMethod('POST')) {
             $node = $request->request->get('node');
-            $firstName = $request->request->get('firstName');
-            $additionalName = $request->request->get('additionalName');
-            $lastName = $request->request->get('lastName');
+            $name = $request->request->get('name');
+
+
+
+            $name = explode(' ', $name);
+
+            if(count($name) < 2){
+                $firstName = $name[0];
+                $additionalName = '';
+                $lastName = $name[0];
+            } else if (count($name) < 3) {
+                $firstName = $name[0];
+                $additionalName = '';
+                $lastName = $name[1];
+            } else {
+                $firstName = $name[0];
+                $additionalName = $name[1];
+                $lastName = $name[2];
+            }
+
             $email = $request->request->get('email');
-            $tel = $request->request->get('tel');
+            $tel = $request->request->get('telephone');
 
             $emailObject['email'] = $email;
             $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
@@ -205,8 +275,8 @@ class ChinController extends AbstractController
             $person['givenName'] = $firstName;
             $person['additionalName'] = $additionalName;
             $person['familyName'] = $lastName;
-            $person['emails'][] = $emailObject['@id'];
-            $person['telephones'][] = $telObject['@id'];
+            $person['emails'][0] = $emailObject['@id'];
+            $person['telephones'][0] = $telObject['@id'];
             $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
             $checkIn['node'] = $node;

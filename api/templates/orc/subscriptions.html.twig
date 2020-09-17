@@ -1,0 +1,75 @@
+{% extends 'content.html.twig' %}
+
+{% block content %}
+
+    <div class="content-background">
+        <div class="content">
+            <div class="row">
+                <h1 style="display: inline-block">{{ 'current subscriptions'|trans|capitalize }}</h1>
+                <button id="newSubButton" style="float: right"
+                        class="btn btn-primary">{{ 'new subscription'|trans|capitalize }}</button>
+                <button id="showSubsButton" style="float: right"
+                        class="btn btn-primary">{{ 'show subscriptions'|trans|capitalize }}</button>
+
+                <div id="subs">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'price'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'start date'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'end date'|trans|capitalize }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                            <td>test</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="newSubForm">
+                    <form action="{{ path('app_orc_subscriptions') }}" method="post">
+
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var newSubButton = document.getElementById('newSubButton');
+        var showSubsButton = document.getElementById('showSubsButton');
+        var newSubForm = document.getElementById('newSubForm');
+        var subs = document.getElementById('subs');
+
+        newSubButton.style.display = "inline-block";
+        showSubsButton.style.display = "none";
+        newSubForm.style.display = "none";
+        subs.style.display = "block";
+
+        newSubButton.onclick = function () {
+            newSubButton.style.display = "none";
+            showSubsButton.style.display = "inline-block";
+            newSubForm.style.display = "block";
+            subs.style.display = "none";
+        };
+
+        showSubsButton.onclick = function () {
+            newSubButton.style.display = "inline-block";
+            showSubsButton.style.display = "none";
+            newSubForm.style.display = "none";
+            subs.style.display = "block";
+        };
+
+    </script>
+
+{% endblock %}
