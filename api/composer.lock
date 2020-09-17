@@ -681,12 +681,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConductionNL/CommonGroundBundle.git",
-                "reference": "d7c7b1bca8493facb0b1d3535352ec3b58ac1689"
+                "reference": "698d574fb6e7e21c2257e8304c3b5f7e59207c7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/d7c7b1bca8493facb0b1d3535352ec3b58ac1689",
-                "reference": "d7c7b1bca8493facb0b1d3535352ec3b58ac1689",
+                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/698d574fb6e7e21c2257e8304c3b5f7e59207c7b",
+                "reference": "698d574fb6e7e21c2257e8304c3b5f7e59207c7b",
                 "shasum": ""
             },
             "require": {
@@ -764,7 +764,7 @@
                 "postcode",
                 "rsin"
             ],
-            "time": "2020-09-17T12:42:38+00:00"
+            "time": "2020-09-17T14:18:57+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -1907,20 +1907,6 @@
                 "parser",
                 "php"
             ],
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine%2Flexer",
-                    "type": "tidelift"
-                }
-            ],
             "time": "2020-05-25T17:44:05+00:00"
         },
         {
@@ -2107,20 +2093,6 @@
             "keywords": [
                 "database",
                 "orm"
-            ],
-            "funding": [
-                {
-                    "url": "https://www.doctrine-project.org/sponsorship.html",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://www.patreon.com/phpdoctrine",
-                    "type": "patreon"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/doctrine/orm",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-05-26T16:03:49+00:00"
         },
@@ -7580,20 +7552,6 @@
                 "push",
                 "sse",
                 "updates"
-            ],
-            "funding": [
-                {
-                    "url": "https://symfony.com/sponsor",
-                    "type": "custom"
-                },
-                {
-                    "url": "https://github.com/fabpot",
-                    "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
-                    "type": "tidelift"
-                }
             ],
             "time": "2020-05-27T14:53:11+00:00"
         },
