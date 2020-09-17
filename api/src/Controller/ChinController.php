@@ -14,6 +14,8 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -142,6 +144,7 @@ class ChinController extends AbstractController
             }
         }
 
+        $variables['code'] = $code;
         return $variables;
     }
 
@@ -241,11 +244,11 @@ class ChinController extends AbstractController
             } else {
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
+
         } elseif ($request->isMethod('POST')) {
+
             $node = $request->request->get('node');
             $name = $request->request->get('name');
-
-
 
             $name = explode(' ', $name);
 
@@ -286,6 +289,7 @@ class ChinController extends AbstractController
 
             $node = $commonGroundService->getResource($node);
 
+            // Deze gooit een 502
             // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
             if (isset($node['passthroughUrl'])) {
                 $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
@@ -304,6 +308,7 @@ class ChinController extends AbstractController
             }
         }
 
+        $variables['code'] = $code;
         return $variables;
     }
 

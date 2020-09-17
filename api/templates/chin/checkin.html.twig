@@ -27,7 +27,7 @@
     {% if app.user.person is defined and app.user.person is not empty %}
     {% set person = commonground_resource(app.user.person) %}
     {% endif %}
-    <form method="post" action="{{ path('app_chin_checkin') }}" class="form">
+    <form method="post" action="{{ path('app_chin_checkin', {"code":code}) }}" class="form">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-12 background" style="padding: 0;">
