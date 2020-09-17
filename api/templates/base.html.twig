@@ -61,6 +61,7 @@
     <link rel="stylesheet" href="/uno/components/navigation/navigation.css">
     <link rel="stylesheet" href="/uno/components/donut-chart/donut-chart.css">
     <link rel="stylesheet" href="/uno/components/spinner/spinner.css">
+    <!--<link rel="stylesheet" href="/uno/components/memo/memo.css">-->
     <link rel="stylesheet" href="/uno/components/modal/modal.css">
     <link rel="stylesheet" href="/uno/components/tooltip/tooltip.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -114,14 +115,12 @@
         crossorigin="anonymous"></script>
 
     <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
+    <!--<script src="/uno/components/memo/memo.js"></script>-->
     <script src="/uno/components/tooltip/tooltip.js"></script>
-
-
-    {#  QR scanner      #}
-    <script src="/js/html5-qrcode.min.js"></script>
 
     {#  Google fonts     #}
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
 
     {#  Slick image slider  #}
     <script type="text/javascript" src="/slick/slick.min.js"></script>
@@ -136,6 +135,8 @@
         });
     </script>
 
+    {#  QR Code  #}
+    <script src="/js/html5-qrcode.min.js"></script>
 
     <style>
         /* deafult values for root variables */
@@ -575,10 +576,7 @@
 
     {% endif %}
 
-        {% block style %}
-
-        {% endblock %}
-
+    {% block style %}{% endblock %}
 
 </head>
 <body>
@@ -696,6 +694,7 @@
         }
     </script>
 
+    {% block script %}{% endblock %}
 </div>
 
 {% if application['defaultConfiguration']['configuration']['hubspotId'] is defined and application['defaultConfiguration']['configuration']['hubspotId'] is not empty %}
