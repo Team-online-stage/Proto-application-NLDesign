@@ -153,11 +153,11 @@ class ChinController extends AbstractController
                 case 'idin':
                     return $this->redirect($this->generateUrl('app_user_idin'));
                 case 'facebook':
-                    return $this->redirect($this->generateUrl('app_user_facebook'));
+                    return $this->redirect($this->generateUrl('app_user_facebook').'?nodeCode='.$code);
                 case 'google':
-                    return $this->redirect($this->generateUrl('app_user_gmail'));
+                    return $this->redirect($this->generateUrl('app_user_gmail').'?nodeCode='.$code);
                 case 'email':
-                    return $this->redirect($this->generateUrl('app_chin_checkin'));
+                    return $this->redirect($this->generateUrl('app_chin_checkin').'?code='.$code);
 
             }
         }
