@@ -30,14 +30,14 @@
 
             function onScanSuccess(qrCodeMessage) {
                 // handle on success condition with the decoded message
-                html5QrcodeScanner.clear();
+                //html5QrcodeScanner.clear();
                 // redirect
                 window.location.href = qrCodeMessage;
             }
 
             function onScanError(errorMessage) {
                 // handle on error condition, with error message
-                console.log(errorMessage);
+                //console.log(errorMessage);
             }
 
             function startQrScan() {
