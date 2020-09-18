@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -69,18 +68,15 @@ class OrcController extends AbstractController
      */
     public function orderAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
-
         if (!empty($session->get('order'))) {
             $variables['order'] = $session->get('order');
         } else {
             $variables['order'] = null;
-
         }
         if (!empty($session->get('orderItems'))) {
             $variables['orderItems'] = $session->get('orderItems');
         } else {
             $variables['orderItems'] = null;
-
         }
 
         $makeOrder = $request->request->get('make-order');
@@ -120,7 +116,6 @@ class OrcController extends AbstractController
                     $orderItem['notice'] = $offer['notice'];
                 }
 
-
 //                        $orderItem['order'] = $order['@id'];
 
 //                        $orderItem = $commonGroundService->createResource($orderItem, ['component' => 'orc', 'type' => 'order_items']);
@@ -149,16 +144,15 @@ class OrcController extends AbstractController
             $variables['order'] = $commonGroundService->saveResource($variables['order']);
 
             // If this order is not an subscription make invoice
-            if(empty($variables['order']['items'][0]['recurrence'])) {
-
+            if (empty($variables['order']['items'][0]['recurrence'])) {
                 $session->remove('order');
                 $session->remove('orderItems');
+
                 return $this->redirectToRoute('app_orc_subscriptions');
             }
 
             return $this->redirect('/me');
         }
-
 
         return $variables;
     }
