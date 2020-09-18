@@ -64,7 +64,7 @@
                                         {% if property.valid %}
                                             <span style="color: green" class="icon icon-check" role="presentation" x-uno-tooltip="" title="{{ 'You have correctly filled out all required questions for this stage'|trans|capitalize }}"></span>
                                         {% elseif not property.valid and property.required == 'true' %}
-                                            <i style="color: red" class="fas fa-times"></i>
+                                            <i style="color: red" x-uno-tooltip="" {% if property.messages is defined and property.messages is not empty %} title="{% for message in property.messages %}{{ message|capitalize }} {% endfor %}" {% endif %} class="fas fa-times"></i>
                                         {% endif %}
                                         {{ property.title|capitalize }}
                                     </span>

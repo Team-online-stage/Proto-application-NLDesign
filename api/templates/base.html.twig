@@ -699,6 +699,19 @@
         }
     </script>
 
+    <script>
+        // Load tooltip component
+        System.import('/uno/components/tooltip/tooltip.js').then(function (module) {
+            // Select all tooltip elements on the page
+            var tooltips = document.querySelectorAll('.example [x-uno-tooltip]');
+
+            // Initialize all tooltips
+            for (var i = 0; i < tooltips.length; i++) {
+                new module.Tooltip(tooltips.item(i));
+            }
+        });
+    </script>
+
     {% block script %}{% endblock %}
 </div>
 
