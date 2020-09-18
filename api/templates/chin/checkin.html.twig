@@ -9,6 +9,13 @@
 {% block style %}
     <style>
 
+        @media (max-width: 555px) {
+            body {
+                position: fixed;
+                width: 100%;
+            }
+        }
+
         .checkinFont {
             color: #01689b;
         }
@@ -31,7 +38,7 @@
         <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;" >
             <div class="row">
                 <div class="col-md-12 col-sm-12 " style="padding: 0;">
-                    <div class="" style="height: calc(100vh - 56px); text-align: center; display: flex; flex-direction: column; justify-content: space-around">
+                    <div class="" style="height: calc(100vh - 56px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
                         <div class="row">
                             {% if org.style.favicon.base64 is defined and org.style.favicon.base64 is not empty %}
                                 <div class="col-xs-12">
@@ -53,10 +60,11 @@
                                             {% if place.bagId is defined and place.bagId is not empty %}
                                                 {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
                                             {% endif %}
-                                            <p style="margin-bottom: 0; color: #000000">-{{ place.name }}-</p>
-                                            <p style="color: #000000">
+                                            <p style="margin-bottom: 0;"><h2 style="color: black; margin-top: 0;">-{{ place.name }}-</h2></p>
+                                            <p style="color: #000000; margin-bottom: 30px;">
                                                 {% if adres is defined and adres is not empty %}
-                                                    {{ adres.straat }} {{ adres.huisnummer }}, {{ adres.woonplaats }}
+                                                    <i style="margin-right: 10px;" class="fas fa-map-marker-alt"></i>{{ adres.straat }} {{ adres.huisnummer }}, {{ adres.postcode }} <br>
+                                                    {{ adres.woonplaats }}
                                                 {% endif %}</p>
                                         {% endif %}
                                     </div>
@@ -90,7 +98,7 @@
                                     </div>
                                     <input type="hidden" name="node" value="{{ resource['@id'] }}">
                                     <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
-                                        <button style="width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 0;"><h2 style="margin-top: 4px;">Inchecken</h2></button>
+                                        <button style=" width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">Inchecken</h2></button>
                                     </div>
                                 </div>
                             </div>
