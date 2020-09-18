@@ -113,9 +113,10 @@
                 {{ 'business'|trans|capitalize }}
             </div>
             <div id="business" class="definition-list__description">
-                {% if commonground_is_resource(app.user.organization) %}
+                {% if 'http' in app.user.organization and commonground_is_resource(app.user.organization) %}
                     {% set organization = commonground_resource(app.user.organization) %}
                 {% else %}
+
                     {% set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) %}
                 {% endif %}
                 {% if organization.name is defined %}
