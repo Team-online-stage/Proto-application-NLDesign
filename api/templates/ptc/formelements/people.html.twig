@@ -88,7 +88,7 @@
                     <div class="col-md-4">
                         <label class="input__label" for="voornaam">Voornaam</label>
                         <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]"
-                            {% if person.givenName is defined %} value="{{ person.givenName }}"{% endif %}>
+                            {% if person.givenName is defined %} value="{{ person.givenName }}"{% endif %} required>
                     </div>
                 {% endif %}
 
@@ -103,7 +103,7 @@
                     <div class="col-md-4">
                         <label class="input__label" for="achternaam">Achternaam</label>
                         <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]"
-                            {% if person.familyName is defined %} value="{{ person.familyName }}"{% endif %}>
+                            {% if person.familyName is defined %} value="{{ person.familyName }}"{% endif %} required>
                     </div>
                 {% endif %}
             </div>
@@ -159,7 +159,7 @@
                 {% endif %}
             </div>
             <div class="row" style="margin-bottom: 5px">
-                {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
+                {% if property.configuration.birthplace is defined and property.configuration.birthplace %}
                     <div class="col-md-6">
                         <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
                         <input class="input__control input__control--text" style="width: 100%" type="text"  name="request[properties][{{ property.name }}][birthplace]"
