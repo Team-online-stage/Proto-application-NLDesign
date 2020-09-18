@@ -88,7 +88,7 @@
                     <div class="col-md-4">
                         <label class="input__label" for="voornaam">Voornaam</label>
                         <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][givenName]"
-                            {% if person.givenName is defined %} value="{{ person.givenName }}"{% endif %} required>
+                            {% if person.givenName is defined %} value="{{ person.givenName }}"{% endif %}>
                     </div>
                 {% endif %}
 
@@ -103,7 +103,7 @@
                     <div class="col-md-4">
                         <label class="input__label" for="achternaam">Achternaam</label>
                         <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][familyName]"
-                            {% if person.familyName is defined %} value="{{ person.familyName }}"{% endif %} required>
+                            {% if person.familyName is defined %} value="{{ person.familyName }}"{% endif %}>
                     </div>
                 {% endif %}
             </div>
@@ -169,12 +169,8 @@
                 {% if property.configuration.birthday is defined and property.configuration.birthday %}
                     <div class="col-md-6">
                         <label class="input__label" for="birthday">Geboortedatum</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="text"  name="request[properties][{{ property.name }}][birthday]"
-                            {% if person.birthday is defined %} value="{{ person.birthday }}"{% endif %}>
-                        {#
                         <input class="input__control input__control--text" style="width: 100%" type="date"  name="request[properties][{{ property.name }}][birthday]"
                             {% if person.birthday is defined %} value="{{ person.birthday }}"{% endif %}>
-                        #}
                     </div>
                 {% endif %}
             </div>
