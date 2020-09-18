@@ -36,7 +36,7 @@
             {% endif %}
             {{ application['name'] }}{% else %} Applicatie{% endif %}</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     {% if application['style']['favicon']['base64'] is defined and application['style']['favicon']['base64'] is not empty %}
         <link rel="icon" href="{{ application['style']['favicon']['base64']|raw }}">
@@ -528,6 +528,7 @@
             width: 40px;
             idth: 4rem
         }
+
     </style>
 
     {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
@@ -567,6 +568,8 @@
                 position: absolute;
             }
 
+
+
             /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
             /*.sticky-nav + .content {*/
             /*    padding-top: 102px;*/
@@ -575,6 +578,8 @@
         </style>
 
     {% endif %}
+
+
 
     {% block style %}{% endblock %}
 
