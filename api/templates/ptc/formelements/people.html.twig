@@ -118,8 +118,9 @@
                     </div>
                     <div class="col-md-4">
                         <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                        <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][houseNumber]">
-                        {% if person.adresses.0.houseNumber is defined %} value="{{ person.adresses.0.houseNumber }}"{% endif %}
+                        <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][houseNumber]"
+                            {% if person.adresses.0.houseNumber is defined %} value="{{ person.adresses.0.houseNumber }}"{% endif %}>
+
                     </div>
                     <div class="col-md-4">
                         <label class="input__label" for="houseNumberSuffix">Toevoeging</label>
