@@ -4,6 +4,14 @@
 
 <div class="row">
     <div class="col-sm-12 col-lg-3">
+        <label class="input__label" for="bsn">{{ 'social service number'|trans|capitalize }}</label>
+        <input class="input__control input__control--text" id="bsn" type="text"
+            {% if person.burgerservicenummer is defined %} value="{{ person.burgerservicenummer }}"{% endif %}>
+    </div>
+    <div class="col-sm-12 col-lg-1">
+        <b>of</b>
+    </div>
+    <div class="col-sm-12 col-lg-3">
         <label class="input__label" for="givenNames">{{ 'given names'|trans|capitalize }}</label>
         <input class="input__control input__control--text" id="givenNames" type="text"
             {% if person.naam.voornamen is defined %} value="{{ person.naam.voornamen }}"{% endif %}>
@@ -12,11 +20,6 @@
         <label class="input__label" for="familyName">{{ 'family name'|trans|capitalize }}</label>
         <input class="input__control input__control--text" id="familyName" type="text"
             {% if person.naam.geslachtsnaam is defined %} value="{{ person.naam.geslachtsnaam }}"{% endif %}>
-    </div>
-    <div class="col-sm-12 col-lg-3">
-        <label class="input__label" for="bsn">{{ 'social service number'|trans|capitalize }}</label>
-        <input class="input__control input__control--text" id="bsn" type="text"
-            {% if person.burgerservicenummer is defined %} value="{{ person.burgerservicenummer }}"{% endif %}>
     </div>
     <div class="col-sm-12 col-lg-2">
         <br>
@@ -52,7 +55,7 @@
             list.firstChild.remove();
         }
 
-        if (geslachtsnaam === "" || voornamen === "" || bsn === "") {
+        if ((geslachtsnaam === "" || voornamen === "") && bsn === "") {
             let response = "De volgende velden zijn niet ingevoerd:<ul>";
             $('.spinner').hide();
             if (geslachtsnaam === "") {
@@ -68,6 +71,15 @@
             return;
         }
 
+        let data = {
+            'naam.geslachtsnaam': geslachtsnaam,
+            'naam.voornamen': voornamen,
+        }
+
+        if(bsn !== ""){
+            data.burgerservicenummer = bsn;
+        }
+
         $.ajax({
             url: "/api/brp/ingeschrevenpersonen",
             type: 'GET',
@@ -75,11 +87,7 @@
             headers: {
                 Accept: 'application/ld+json'
             },
-            data: {
-                burgerservicenummer: bsn,
-                'naam.geslachtsnaam': geslachtsnaam,
-                'naam.voornamen': voornamen,
-            },
+            data: data,
             statusCode: {
                 404: function () {
                     console.log("page not found");
