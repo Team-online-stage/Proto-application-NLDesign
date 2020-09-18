@@ -169,8 +169,12 @@
                 {% if property.configuration.birthday is defined and property.configuration.birthday %}
                     <div class="col-md-6">
                         <label class="input__label" for="birthday">Geboortedatum</label>
+                        <input class="input__control input__control--text" style="width: 100%" type="text"  name="request[properties][{{ property.name }}][birthday]"
+                            {% if person.birthday is defined %} value="{{ person.birthday }}"{% endif %}>
+                        {#
                         <input class="input__control input__control--text" style="width: 100%" type="date"  name="request[properties][{{ property.name }}][birthday]"
                             {% if person.birthday is defined %} value="{{ person.birthday }}"{% endif %}>
+                        #}
                     </div>
                 {% endif %}
             </div>
