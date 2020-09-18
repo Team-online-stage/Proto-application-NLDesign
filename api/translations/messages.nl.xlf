@@ -695,7 +695,7 @@
       </trans-unit>
       <trans-unit id="k1CHLXE" resname="pay">
         <source>pay</source>
-        <target>betalen</target>
+        <target>afrekenen</target>
       </trans-unit>
       <trans-unit id="9A.VYvY" resname="subscribe">
         <source>subscribe</source>
@@ -908,6 +908,42 @@
       <trans-unit id="u976KVD" resname="google">
         <source>google</source>
         <target>google</target>
+      </trans-unit>
+      <trans-unit id="oAB21Je" resname="show subscriptions">
+        <source>show subscriptions</source>
+        <target>toon abbonementen</target>
+      </trans-unit>
+      <trans-unit id="ubn2Iz1" resname="subscriptions">
+        <source>subscriptions</source>
+        <target>abbonementen</target>
+      </trans-unit>
+      <trans-unit id="bq231mb" resname="subscription">
+        <source>subscription</source>
+        <target>abbonement</target>
+      </trans-unit>
+      <trans-unit id="2543GAG" resname="show current subscriptions">
+        <source>show current subscriptions</source>
+        <target>toon huidige abbonementen</target>
+      </trans-unit>
+      <trans-unit id="Uian214" resname="current subscriptions">
+        <source>current subscriptions</source>
+        <target>huidige abbonementen</target>
+      </trans-unit>
+      <trans-unit id="Oepwn21" resname="purchase">
+        <source>purchase</source>
+        <target>aanschaffen</target>
+      </trans-unit>
+      <trans-unit id="eut8912" resname="u must be logged in to visit this page">
+        <source>u must be logged in to visit this page</source>
+        <target>u moet ingelogd zijn om deze pagina te bezoeken</target>
+      </trans-unit>
+      <trans-unit id="ub21kAg" resname="your">
+        <source>your</source>
+        <target>uw</target>
+      </trans-unit>
+      <trans-unit id="T32GawG" resname="view order">
+        <source>view order</source>
+        <target>naar bestelling</target>
       </trans-unit>
     </body>
   </file>
