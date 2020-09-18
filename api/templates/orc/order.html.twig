@@ -77,7 +77,7 @@
 {#                                <button id="decQuan{{ i }}" value="{{ i }}">-</button>#}
 {#                                <span id="quan{{ i }}">{{ item.quantity }}</span>#}
 {#                                <button id="incQuan{{ i }}">+</button>#}
-                                <button style="background: red !important;" class="btn" id="deleteItem{{ i }}" name="deleteItem[{{ i }}]"><i class="fas fa-trash"></i></button>
+                                <button type="submit" style="background: red !important;" class="btn" id="deleteItem{{ i }}" name="deleteItem[{{ i }}]"><i class="fas fa-trash"></i></button>
                             </div>
                         </li>
                     {% endfor %}
@@ -91,9 +91,7 @@
                         <input type="hidden" id="item{{ i }}" name="items[{{ i }}][quantity]" value="">
                     {% endfor %}
 
-                    <input type="hidden" name="make-order" value="true">
-
-                    <button class="btn btn-block">{{ 'pay'|trans|capitalize }}</button>
+                    <button type="submit" class="btn btn-block" name="make-order" value="true">{{ 'pay'|trans|capitalize }}</button>
                 </form>
 
 
