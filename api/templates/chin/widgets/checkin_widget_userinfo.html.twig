@@ -1,0 +1,34 @@
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Naam"
+           class="noFocus input__control input__control--text"
+           {% if person.name is defined and person.name is not empty %}value="{{ person.name }}"{% endif %}>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="text" id="additionalName" name="email" placeholder="Email"
+           class="noFocus input__control input__control--text"
+           {% if person.emails[0].email is defined and person.emails[0].email is not empty %}value="{{ person.emails[0].email }}"{% endif %}>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="text" id="additionalName" name="telephone" placeholder="Telefoon"
+           class="noFocus input__control input__control--text"
+           {% if person.telephones[0].telephone is defined and person.telephones[0].telephone is not empty %}value="{{ person.telephones[0].telephone }}"{% endif %}>
+</div>
+{% if not app.user %}
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="password" id="password" name="password" placeholder="Password"
+           class="noFocus input__control input__control--text">
+</div>
+{% endif %}
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <div class="input__group input__group--checkbox" style="margin-bottom: 5px;">
+        <input name="hobbies[]" type="checkbox" id="chkbx1"
+               class="input__control input__control--m input__control--checkbox" checked=""
+               required="">
+        <label style="line-height: 14px" class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a
+                href="#"
+                data-toggle="modal"
+                data-target="#questionModal"
+                onclick="openQuestionModal()">vragen</a>
+            van de corona vragenlijst horeca</label>
+    </div>
+</div>
