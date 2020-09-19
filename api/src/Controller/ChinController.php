@@ -260,11 +260,51 @@ class ChinController extends AbstractController
                 case 'google':
                     return $this->redirect($this->generateUrl('app_user_gmail',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]).'?nodeCode='.$code);
                 case 'acount':
-                    return $this->redirect($this->generateUrl('app_user_acount',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]));
+                    return $this->redirect($this->generateUrl('app_chin_acount',['code'=>$code]));
             }
         }
 
         return $variables;
+    }
+
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/acount/{code}")
+     * @Template
+     */
+    public function acountAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash("warning", "No node reference suplied");
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        }
+        else{
+            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables['code'] = $code;
     }
 
     /**
@@ -303,8 +343,15 @@ class ChinController extends AbstractController
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
+        // Lets handle a post
+        if ($request->isMethod('POST')) {
+
+        }
+
         $variables['code'] = $code;
     }
+
+
 
     /**
      * This function shows all available locations.
