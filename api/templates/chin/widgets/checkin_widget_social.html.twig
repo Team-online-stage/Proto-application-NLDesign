@@ -1,3 +1,12 @@
+{% if organization is defined and organization is not empty %}
+    {% set orgCc = commonground_resource_list({'component':'cc', 'type':'organizations'}, {'name':organization.name})['hydra:member'] %}
+    {% if orgCc[0] is defined and orgCc[0] is not empty %}
+        {% set orgCc = orgCc[0] %}
+        {% if orgCc.socials[0] is defined %}
+            {% set social = orgCc.socials[0] %}
+        {% endif %}
+    {% endif %}
+{% endif %}
 
 <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
 <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 ">

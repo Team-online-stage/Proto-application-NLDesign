@@ -3,7 +3,7 @@
 {% extends 'base.html.twig' %}
 
 {% if resource.organization is defined and resource.organization is not empty %}
-    {% set org = commonground_resource(resource.organization) %}
+    {% set organization = commonground_resource(resource.organization) %}
 {% endif %}
 
 {% block style %}
@@ -24,17 +24,15 @@
             background-color: white;
         }
 
-        {% if org.style.css is defined and org.style.css is not empty %}
-            {{ org.style.css|raw }}
+        {% if organization.style.css is defined and organization.style.css is not empty %}
+        {{ organization.style.css|raw }}
         {% endif %}
     </style>
 {% endblock %}
 
 {% block container %}
-    {% if app.user.person is defined and app.user.person is not empty %}
-    {% set person = commonground_resource(app.user.person) %}
-    {% endif %}
-    <form method="post" action="{{ path('app_chin_checkin', {"code":code}) }}" class="form">
+<div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;">
+    <form action="{{ path('app_chin_login',{"code":code}) }}" method="post">
         <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;" >
             <div class="row">
                 <div class="col-md-12 col-sm-12 " style="padding: 0;">
@@ -64,23 +62,6 @@
             </div>
         </div><!-- /.container -->
     </form>
-
-    <script>
-        var questionModal;
-        // Load modal component
-        System.import('/uno/components/modal/modal.js').then(function (module) {
-            questionModal = new module.Modal(document.getElementById('questionModal'));
-        });
-
-        // Called when the user clicks the button
-        function openQuestionModal() {
-            questionModal.open();
-        }
-
-        function closeQuestionModal() {
-            questionModal.close();
-        }
-    </script>
 
     <div class="modal modal--backdrop" role="dialog" id="questionModal" tabindex="-1"
          aria-describedby="modal-description3">
@@ -123,19 +104,5 @@
             </footer>
         </section>
     </div>
-{% endblock %}
-
-{% block script %}
-
-    <script>
-        function onScanSuccess(qrCodeMessage) {
-            // handle on success condition with the decoded message
-        }
-
-        $(document).ready(function(){
-            var html5QrcodeScanner = new Html5QrcodeScanner(
-                "reader", { fps: 10, qrbox: 250 });
-            html5QrcodeScanner.render(onScanSuccess);
-        });
-    </script>
+</div>
 {% endblock %}

@@ -237,7 +237,6 @@ class ChinController extends AbstractController
             return $this->redirect($this->generateUrl('app_chin_checkin',['code'=>$code]));
         }
 
-
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
@@ -305,6 +304,8 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
+        return $variables;
     }
 
     /**
@@ -349,6 +350,8 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
+        return $variables;
     }
 
 
@@ -499,6 +502,8 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
+        return $variables;
     }
 
     /**
