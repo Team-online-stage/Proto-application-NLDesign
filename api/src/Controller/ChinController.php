@@ -253,16 +253,12 @@ class ChinController extends AbstractController
 
             switch ($method) {
                 case 'idin':
-                    $session->set('backUrl', $this->generateUrl('app_chin_checkin',['code'=>$code]));
                     return $this->redirect($this->generateUrl('app_user_idin',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]));
                 case 'facebook':
-                    $session->set('backUrl', $this->generateUrl('app_chin_checkin',['code'=>$code]));
                     return $this->redirect($this->generateUrl('app_user_facebook',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]).'?nodeCode='.$code);
                 case 'google':
-                    $session->set('backUrl', $this->generateUrl('app_chin_checkin',['code'=>$code]));
                     return $this->redirect($this->generateUrl('app_user_gmail',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]).'?nodeCode='.$code);
                 case 'acount':
-                    $session->set('backUrl', $this->generateUrl('app_chin_checkin',['code'=>$code]));
                     return $this->redirect($this->generateUrl('app_chin_acount',['code'=>$code]));
             }
         }
