@@ -38,13 +38,13 @@
                 <div class="col-md-12 col-sm-12" style="padding: 0;">
                     <div class="" style="height: calc(100vh - 38px); text-align: center; display: flex; flex-direction: column; justify-content: space-evenly">
                         <div class="row">
-                            {% include 'chin/widgets/checkin__widget_organisationinfo.html.twig' %}
+                            {% include 'chin/widgets/checkin_widget_organizationinfo.html.twig' %}
                         </div>
                         <div class="row">
                             <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4"></div>
                             <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 " style="margin-bottom: 15px;">
                                 <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
-                                    {% include 'chin/widgets/checkin__widget_nodeinfo.html.twig' %}
+                                    {% include 'chin/widgets/checkin_widget_nodeinfo.html.twig' %}
 
                                     <span style="color: black">Aanmelden met</span>
                                     {% if resource.methods is defined and resource.methods is not empty %}
@@ -93,7 +93,7 @@
                             <div class="col-xs-1"></div>
                         </div>
                         <div class="row">
-                            {% include 'chin/widgets/checkin__widget_social.html.twig' %}
+                            {% include 'chin/widgets/checkin_widget_social.html.twig' %}
                         </div>
                     </div>
                 </div>
