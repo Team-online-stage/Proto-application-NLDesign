@@ -110,20 +110,14 @@ class ChinController extends AbstractController
 
         return $variables;
     }
-
     /**
-     * This function shows all available locations.
+     * This function will kick of the suplied proces with given values.
      *
-     * @Route("/login/{code}")
+     * @Route("/checkin/{code}")
      * @Template
      */
-    public function loginAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-        $session->set('newcheckin', false);
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
-
-        $variables = [];
-
         // Fallback options of establishing
         if (!$code) {
             $code = $request->query->get('code');
@@ -134,83 +128,42 @@ class ChinController extends AbstractController
         if (!$code) {
             $code = $session->get('code');
         }
+        if (!$code) {
+            $this->addFlash("warning", "No node reference suplied");
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
 
-        if ($code) {
-            $session->set('code', $code);
-            $variables['code'] = $code;
-            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
-            if (count($variables['resources']) > 0) {
-                $variables['resource'] = $variables['resources'][0];
-            }
+        $variables = [];
+        $session->set('code', $code);
+        $variables['code'] = $code;
+
+        // Oke we want a user so lets check if we have one
+        if(!$this->getUser()){
+            return $this->redirect($this->generateUrl('app_chin_login',['code'=>$code]));
+        }
+
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        }
+        else{
+            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+            return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
         $variables['code'] = $code;
 
-        if ($request->isMethod('POST') && $request->request->get('method')) {
-            $method = $request->request->get('method');
-
-            switch ($method) {
-                case 'idin':
-                    return $this->redirect($this->generateUrl('app_user_idin'));
-                case 'facebook':
-                    return $this->redirect($this->generateUrl('app_user_facebook').'?nodeCode='.$code);
-                case 'google':
-                    return $this->redirect($this->generateUrl('app_user_gmail').'?nodeCode='.$code);
-                case 'email':
-                    return $this->redirect($this->generateUrl('app_chin_checkin').'?code='.$code);
-
-            }
-        }
-
-        return $variables;
-    }
-
-    /**
-     * This function will kick of the suplied proces with given values.
-     *
-     * @Route("/checkin/{code}")
-     * @Template
-     */
-    public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
-    {
-        $session->set('newcheckin', false);
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
-
-        $variables = [];
-
-        if (!$code) {
-            $code = $request->query->get('code');
-        }
-        if (!$code) {
-            $code = $request->request->get('code');
-        }
-        if (!$code) {
-            $code = $session->get('code');
-        }
-
-        if ($code) {
-            $session->set('code', $code);
-            $variables['code'] = $code;
-            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
-            if (count($variables['resources']) > 0) {
-                $variables['resource'] = $variables['resources'][0];
-            }
-        }
-
-        // Alleen afgaan bij post EN ingelogde gebruiker
-
-        if ($request->isMethod('POST') && $this->getUser()) {
+        if ($request->isMethod('POST')) {
 
             //update person
-            $node = $request->request->get('node');
             $name = $request->request->get('name');
             $email = $request->request->get('email');
             $tel = $request->request->get('telephone');
 
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
 
+            // Wat doet dit?
             $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
-
             $user = $user[0];
 
             if (isset($person['emails'][0])) {
@@ -237,22 +190,159 @@ class ChinController extends AbstractController
 
             $person = $commonGroundService->updateResource($person);
 
-            //create check-in
+            // Create check-in
             $checkIn = [];
-            $checkIn['node'] = $node;
+            $checkIn['node'] = $variables['resource']['@id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
-            $session->set('newcheckin', true);
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+        }
 
-            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
-                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
-            } else {
-                return $this->redirect($this->generateUrl('app_default_index'));
+        return $variables;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/login/{code}")
+     * @Template
+     */
+    public function loginAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash("warning", "No node reference suplied");
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+
+        // If we have a valid user then we do not need to login
+        if($this->getUser()){
+            return $this->redirect($this->generateUrl('app_chin_checkin',['code'=>$code]));
+        }
+
+
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        }
+        else{
+            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables['code'] = $code;
+
+        if ($request->isMethod('POST') && $request->request->get('method')) {
+            $method = $request->request->get('method');
+
+            switch ($method) {
+                case 'idin':
+                    return $this->redirect($this->generateUrl('app_user_idin',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]));
+                case 'facebook':
+                    return $this->redirect($this->generateUrl('app_user_facebook',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]).'?nodeCode='.$code);
+                case 'google':
+                    return $this->redirect($this->generateUrl('app_user_gmail',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]).'?nodeCode='.$code);
+                case 'acount':
+                    return $this->redirect($this->generateUrl('app_user_acount',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]));
             }
-        } elseif ($request->isMethod('POST')) {
+        }
+
+        return $variables;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/confirmation/{code}")
+     * @Template
+     */
+    public function confirmationAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash("warning", "No node reference suplied");
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        }
+        else{
+            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables['code'] = $code;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/authorization/{code}")
+     * @Template
+     */
+    public function authorizationAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash("warning", "No node reference suplied");
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        }
+        else{
+            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        if ($request->isMethod('POST')) {
             $node = $request->request->get('node');
             $name = $request->request->get('name');
 
@@ -323,8 +413,45 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+    }
 
-        return $variables;
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/checkout/{code}")
+     * @Template
+     */
+    public function checkoutAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash("warning", "No node reference suplied");
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        }
+        else{
+            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+            return $this->redirect($this->generateUrl('app_zz_index'));
+        }
+
+        $variables['code'] = $code;
     }
 
     /**
