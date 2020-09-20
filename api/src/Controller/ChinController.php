@@ -305,6 +305,83 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
 
+        // Lets handle a post
+        if ($request->isMethod('POST')) {
+
+
+            $name = $request->request->get('name');
+            $email = $request->request->get('email');
+            $tel = $request->request->get('telephone');
+            $password = $request->request->get('password');
+            $crf = $request->request->get('_csrf_token'),
+
+            $users = $this->commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $email], true, false, true, false, false);
+            $users = $users['hydra:member'];
+
+            // Exsisting user
+            if($users > 0){
+                $user =  $users[0];
+                $person =  $this->commonGroundService->getResource($user['person']);
+
+                $credentials = [
+                    'username'   => $email,
+                    'password'   => $password,
+                    'csrf_token' => $crf,
+                ];
+
+                $user = $this->commonGroundService->createResource($credentials, ['component'=>'uc', 'type'=>'login'], false, true, false, false);
+
+                if (!$user) {
+                    $variables['password_error'] = 'Invalid password';
+                    return $variables;
+                }
+                // validate user
+            }
+            // Non-Exsisting user
+            else{
+                //create email
+                $email = [];
+                $email['name'] = 'Email';
+                $email['email'] = $email;
+                //$email = $this->commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+
+                $telephone = [];
+                $telephone['name'] = 'Phone';
+                $telephone['phone'] = $tel;
+                //$email = $this->commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
+
+                //create person
+                $names = explode(' ', $name);
+                $person = [];
+                $person['givenName'] = $names[0];
+                $person['familyName'] = end($names);
+                $person['emails'] = [$email];
+                $person['telephones'] = [$telephone];
+                $person = $this->commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+
+                //create user
+                $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+                $user = [];
+                $user['username'] = $email;
+                $user['password'] = $password;
+                $user['person'] = $person['@id'];
+                $user['organization'] = $application['organization']['@id'];
+                $user = $this->commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
+
+                $userObject = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
+
+                $token = new UsernamePasswordToken($userObject, null, 'main', $userObject->getRoles());
+                $this->container->get('security.token_storage')->setToken($token);
+                $this->container->get('session')->set('_security_main', serialize($token));
+            }
+
+            $checkIn['node'] = $variables['resource']['@id'];
+            $checkIn['person'] = $person['@id'];
+            $checkIn['userUrl'] = $user['@id'];
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+        }
+
         return $variables;
     }
 
@@ -396,6 +473,8 @@ class ChinController extends AbstractController
             $node = $request->request->get('node');
             $name = $request->request->get('name');
 
+            $email = $request->request->get('email');
+            $tel = $request->request->get('telephone');
             $name = explode(' ', $name);
 
             if (count($name) < 2) {
@@ -412,8 +491,6 @@ class ChinController extends AbstractController
                 $lastName = $name[2];
             }
 
-            $email = $request->request->get('email');
-            $tel = $request->request->get('telephone');
 
             $emailObject['email'] = $email;
             $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
