@@ -681,12 +681,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConductionNL/CommonGroundBundle.git",
-                "reference": "468f7b928f4d4fb7ef82e328f1766452eb1ae1d5"
+                "reference": "8d8b0c04f32a17a5aba105887e93ed41fbffc0f9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/468f7b928f4d4fb7ef82e328f1766452eb1ae1d5",
-                "reference": "468f7b928f4d4fb7ef82e328f1766452eb1ae1d5",
+                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/8d8b0c04f32a17a5aba105887e93ed41fbffc0f9",
+                "reference": "8d8b0c04f32a17a5aba105887e93ed41fbffc0f9",
                 "shasum": ""
             },
             "require": {
@@ -764,7 +764,7 @@
                 "postcode",
                 "rsin"
             ],
-            "time": "2020-09-21T14:41:55+00:00"
+            "time": "2020-09-21T15:22:04+00:00"
         },
         {
             "name": "dasprid/enum",
