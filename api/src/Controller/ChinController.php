@@ -318,7 +318,7 @@ class ChinController extends AbstractController
             $users = $users['hydra:member'];
 
             // Exsisting user
-            if($users > 0){
+            if(count($users) > 0){
                 $user =  $users[0];
                 $person =  $commonGroundService->getResource($user['person']);
 
