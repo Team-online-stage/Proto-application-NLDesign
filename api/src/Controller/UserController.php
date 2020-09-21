@@ -111,8 +111,9 @@ class UserController extends AbstractController
     public function FacebookAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $session->set('backUrl', $request->query->get('backUrl'));
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
-        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'facebook'])['hydra:member'];
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'facebook', 'application' => $application['@id']])['hydra:member'];
         $provider = $provider[0];
 
         $redirect = $request->getUri();
@@ -146,8 +147,9 @@ class UserController extends AbstractController
     public function gmailAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $session->set('backUrl', $request->query->get('backUrl'));
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
-        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'gmail'])['hydra:member'];
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $application['@id']])['hydra:member'];
         $provider = $provider[0];
 
         $redirect = $request->getUri();
