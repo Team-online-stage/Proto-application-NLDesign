@@ -313,7 +313,7 @@ class ChinController extends AbstractController
             $email = $request->request->get('email');
             $tel = $request->request->get('telephone');
             $password = $request->request->get('password');
-            $crf = $request->request->get('_csrf_token'),
+            $crf = $request->request->get('_csrf_token');
 
             $users = $this->commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $email], true, false, true, false, false);
             $users = $users['hydra:member'];
@@ -380,6 +380,9 @@ class ChinController extends AbstractController
             $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+
         }
 
         return $variables;
