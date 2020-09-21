@@ -5,6 +5,7 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
+
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -49,15 +50,20 @@ class OrcController extends AbstractController
 
     /**
      * @Route("/subscriptions")
+     * @Route("/subscriptions/{subscription}", name="subscription")
      * @Template
      */
-    public function subscriptionsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function subscriptionsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $subscription = false)
     {
         $today = new \DateTime('today');
         $today = date_format($today, 'Y-m-d');
 
-//        $variables['currentSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'orderItems'], ['exists[recurrence]' => 'true', 'dateEnd[after]' => $today, 'order[customer]'=>$this->getUser()->getPerson()])['hydra:member'];
-        $variables['availableSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['exists[recurrence]' => 'true'])['hydra:member'];
+        if (!empty($subscription) && $subscription === true) {
+            $variables['subscription'] = $commonGroundService->getResourceList(['component' => 'orc', 'type' => 'order_items'], ['order[dateCreated]' => 'desc', 'dateCreated[after]' => 'today', 'exists[recurrence]' => 'true', 'order[customer]' => $this->getUser()->getPerson()])['hydra:member'][0];
+        } else {
+            $variables['currentSubscriptions'] = $commonGroundService->getResourceList(['component' => 'orc', 'type' => 'orderItems'], ['exists[recurrence]' => 'true', 'dateEnd[after]' => $today, 'order[customer]' => $this->getUser()->getPerson()])['hydra:member'];
+            $variables['availableSubscriptions'] = $commonGroundService->getResourceList(['component' => 'pdc', 'type' => 'offers'], ['exists[recurrence]' => 'true'])['hydra:member'];
+        }
 
         return $variables;
     }
@@ -150,10 +156,12 @@ class OrcController extends AbstractController
 
                 return $this->redirectToRoute('app_orc_subscriptions');
             }
-
-            return $this->redirect('/me');
         }
 
-        return $variables;
+        if (!empty($variables['orderItems'][0]['recurrence'])) {
+            return $this->redirectToRoute('app_orc_subscription', ['subscription' => 'true']);
+        } else {
+            return $variables;
+        }
     }
 }
