@@ -330,11 +330,18 @@ class ChinController extends AbstractController
 
                 $user = $commonGroundService->createResource($credentials, ['component'=>'uc', 'type'=>'login'], false, true, false, false);
 
+                // validate user
                 if (!$user) {
                     $variables['password_error'] = 'Invalid password';
                     return $variables;
                 }
-                // validate user
+
+                // Login the user
+                $userObject = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
+
+                $token = new UsernamePasswordToken($userObject, null, 'main', $userObject->getRoles());
+                $this->container->get('security.token_storage')->setToken($token);
+                $this->container->get('session')->set('_security_main', serialize($token));
             }
             // Non-Exsisting user
             else{
