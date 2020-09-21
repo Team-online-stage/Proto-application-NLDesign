@@ -314,13 +314,13 @@ class ChinController extends AbstractController
             $password = $request->request->get('password');
             $crf = $request->request->get('_csrf_token');
 
-            $users = $this->commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $email], true, false, true, false, false);
+            $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $email], true, false, true, false, false);
             $users = $users['hydra:member'];
 
             // Exsisting user
             if($users > 0){
                 $user =  $users[0];
-                $person =  $this->commonGroundService->getResource($user['person']);
+                $person =  $commonGroundService->getResource($user['person']);
 
                 $credentials = [
                     'username'   => $email,
@@ -328,7 +328,7 @@ class ChinController extends AbstractController
                     'csrf_token' => $crf,
                 ];
 
-                $user = $this->commonGroundService->createResource($credentials, ['component'=>'uc', 'type'=>'login'], false, true, false, false);
+                $user = $commonGroundService->createResource($credentials, ['component'=>'uc', 'type'=>'login'], false, true, false, false);
 
                 if (!$user) {
                     $variables['password_error'] = 'Invalid password';
@@ -356,7 +356,7 @@ class ChinController extends AbstractController
                 $person['familyName'] = end($names);
                 $person['emails'] = [$email];
                 $person['telephones'] = [$telephone];
-                $person = $this->commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+                $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
                 //create user
                 $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
@@ -365,7 +365,7 @@ class ChinController extends AbstractController
                 $user['password'] = $password;
                 $user['person'] = $person['@id'];
                 $user['organization'] = $application['organization']['@id'];
-                $user = $this->commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
+                $user = $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
 
                 $userObject = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
 
