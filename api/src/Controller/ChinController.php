@@ -110,6 +110,7 @@ class ChinController extends AbstractController
 
         return $variables;
     }
+
     /**
      * This function will kick of the suplied proces with given values.
      *
@@ -129,7 +130,8 @@ class ChinController extends AbstractController
             $code = $session->get('code');
         }
         if (!$code) {
-            $this->addFlash("warning", "No node reference suplied");
+            $this->addFlash('warning', 'No node reference suplied');
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -138,16 +140,16 @@ class ChinController extends AbstractController
         $variables['code'] = $code;
 
         // Oke we want a user so lets check if we have one
-        if(!$this->getUser()){
-            return $this->redirect($this->generateUrl('app_chin_login',['code'=>$code]));
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
         }
 
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
-        }
-        else{
-            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -223,7 +225,8 @@ class ChinController extends AbstractController
             $code = $session->get('code');
         }
         if (!$code) {
-            $this->addFlash("warning", "No node reference suplied");
+            $this->addFlash('warning', 'No node reference suplied');
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -233,16 +236,16 @@ class ChinController extends AbstractController
         $variables['code'] = $code;
 
         // If we have a valid user then we do not need to login
-        if($this->getUser()){
-            return $this->redirect($this->generateUrl('app_chin_checkin',['code'=>$code]));
+        if ($this->getUser()) {
+            return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
         }
 
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
-        }
-        else{
-            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -253,19 +256,18 @@ class ChinController extends AbstractController
 
             switch ($method) {
                 case 'idin':
-                    return $this->redirect($this->generateUrl('app_user_idin',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]));
+                    return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]));
                 case 'facebook':
-                    return $this->redirect($this->generateUrl('app_user_facebook',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]).'?nodeCode='.$code);
+                    return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]).'?nodeCode='.$code);
                 case 'google':
-                    return $this->redirect($this->generateUrl('app_user_gmail',['backUrl'=>$this->generateUrl('app_chin_checkin',['code'=>$code])]).'?nodeCode='.$code);
+                    return $this->redirect($this->generateUrl('app_user_gmail', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]).'?nodeCode='.$code);
                 case 'acount':
-                    return $this->redirect($this->generateUrl('app_chin_acount',['code'=>$code]));
+                    return $this->redirect($this->generateUrl('app_chin_acount', ['code'=>$code]));
             }
         }
 
         return $variables;
     }
-
 
     /**
      * This function shows all available locations.
@@ -286,7 +288,8 @@ class ChinController extends AbstractController
             $code = $session->get('code');
         }
         if (!$code) {
-            $this->addFlash("warning", "No node reference suplied");
+            $this->addFlash('warning', 'No node reference suplied');
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -297,9 +300,9 @@ class ChinController extends AbstractController
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
-        }
-        else{
-            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -307,7 +310,6 @@ class ChinController extends AbstractController
 
         // Lets handle a post
         if ($request->isMethod('POST')) {
-
             $name = $request->request->get('name');
             $username = $request->request->get('email');
             $tel = $request->request->get('telephone');
@@ -318,9 +320,9 @@ class ChinController extends AbstractController
             $users = $users['hydra:member'];
 
             // Exsisting user
-            if(count($users) > 0){
-                $user =  $users[0];
-                $person =  $commonGroundService->getResource($user['person']);
+            if (count($users) > 0) {
+                $user = $users[0];
+                $person = $commonGroundService->getResource($user['person']);
 
                 $credentials = [
                     'username'   => $username,
@@ -333,6 +335,7 @@ class ChinController extends AbstractController
                 // validate user
                 if (!$user) {
                     $variables['password_error'] = 'Invalid password';
+
                     return $variables;
                 }
 
@@ -344,7 +347,7 @@ class ChinController extends AbstractController
                 $this->container->get('session')->set('_security_main', serialize($token));
             }
             // Non-Exsisting user
-            else{
+            else {
                 //create email
                 $email = [];
                 $email['name'] = 'Email';
@@ -362,7 +365,9 @@ class ChinController extends AbstractController
                 $person['givenName'] = $names[0];
                 $person['familyName'] = end($names);
                 $person['emails'] = [$email];
-                if($tel)$person['telephones'] = [$telephone];
+                if ($tel) {
+                    $person['telephones'] = [$telephone];
+                }
 
                 $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
@@ -389,7 +394,6 @@ class ChinController extends AbstractController
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
             return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
-
         }
 
         return $variables;
@@ -414,7 +418,8 @@ class ChinController extends AbstractController
             $code = $session->get('code');
         }
         if (!$code) {
-            $this->addFlash("warning", "No node reference suplied");
+            $this->addFlash('warning', 'No node reference suplied');
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -425,23 +430,20 @@ class ChinController extends AbstractController
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
-        }
-        else{
-            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
         // Lets handle a post
         if ($request->isMethod('POST')) {
-
         }
 
         $variables['code'] = $code;
 
         return $variables;
     }
-
-
 
     /**
      * This function shows all available locations.
@@ -462,7 +464,8 @@ class ChinController extends AbstractController
             $code = $session->get('code');
         }
         if (!$code) {
-            $this->addFlash("warning", "No node reference suplied");
+            $this->addFlash('warning', 'No node reference suplied');
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -473,9 +476,9 @@ class ChinController extends AbstractController
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
-        }
-        else{
-            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -500,7 +503,6 @@ class ChinController extends AbstractController
                 $additionalName = $name[1];
                 $lastName = $name[2];
             }
-
 
             $emailObject['email'] = $email;
             $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
@@ -571,7 +573,8 @@ class ChinController extends AbstractController
             $code = $session->get('code');
         }
         if (!$code) {
-            $this->addFlash("warning", "No node reference suplied");
+            $this->addFlash('warning', 'No node reference suplied');
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
@@ -582,9 +585,9 @@ class ChinController extends AbstractController
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
-        }
-        else{
-            $this->addFlash("warning", "Could not find a valid node for reference ".$code);
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
             return $this->redirect($this->generateUrl('app_zz_index'));
         }
 
