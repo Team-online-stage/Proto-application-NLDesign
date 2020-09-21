@@ -110,7 +110,7 @@ class UserController extends AbstractController
      */
     public function FacebookAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        $session->set('code', $request->query->get('nodeCode'));
+        $session->set('backUrl', $request->query->get('backUrl'));
 
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'facebook'])['hydra:member'];
         $provider = $provider[0];
@@ -131,8 +131,9 @@ class UserController extends AbstractController
      * @Route("/github")
      * @Template
      */
-    public function githubAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function githubAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
+        $session->set('backUrl', $request->query->get('backUrl'));
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
 
         return $this->redirect('https://github.com/login/oauth/authorize?state='.getenv('APP_ID').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
@@ -144,7 +145,8 @@ class UserController extends AbstractController
      */
     public function gmailAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        $session->set('code', $request->query->get('nodeCode'));
+        $session->set('backUrl', $request->query->get('backUrl'));
+
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'gmail'])['hydra:member'];
         $provider = $provider[0];
 
