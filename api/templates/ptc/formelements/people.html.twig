@@ -118,8 +118,9 @@
                     </div>
                     <div class="col-md-4">
                         <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                        <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][houseNumber]">
-                        {% if person.adresses.0.houseNumber is defined %} value="{{ person.adresses.0.houseNumber }}"{% endif %}
+                        <input required class="input__control input__control--text" id="houseNumber" style="width: 100%" type="text" name="request[properties][{{ property.name }}][adresses][0][houseNumber]"
+                            {% if person.adresses.0.houseNumber is defined %} value="{{ person.adresses.0.houseNumber }}"{% endif %}>
+
                     </div>
                     <div class="col-md-4">
                         <label class="input__label" for="houseNumberSuffix">Toevoeging</label>
@@ -158,17 +159,17 @@
                 {% endif %}
             </div>
             <div class="row" style="margin-bottom: 5px">
-                {% if property.configuration.placeOfBirth is defined and property.configuration.placeOfBirth %}
+                {% if property.configuration.birthplace is defined and property.configuration.birthplace %}
                     <div class="col-md-6">
                         <label class="input__label" for="placeOfBirth">Geboorteplaats</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][birthplace]"
+                        <input class="input__control input__control--text" style="width: 100%" type="text"  name="request[properties][{{ property.name }}][birthplace]"
                             {% if person.birthplace is defined %} value="{{ person.birthplace }}"{% endif %}>
                     </div>
                 {% endif %}
                 {% if property.configuration.birthday is defined and property.configuration.birthday %}
                     <div class="col-md-6">
                         <label class="input__label" for="birthday">Geboortedatum</label>
-                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][birthday]"
+                        <input class="input__control input__control--text" style="width: 100%" type="date"  name="request[properties][{{ property.name }}][birthday]"
                             {% if person.birthday is defined %} value="{{ person.birthday }}"{% endif %}>
                     </div>
                 {% endif %}
