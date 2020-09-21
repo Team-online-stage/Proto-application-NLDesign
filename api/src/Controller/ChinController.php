@@ -354,8 +354,12 @@ class ChinController extends AbstractController
                 $person = [];
                 $person['givenName'] = $names[0];
                 $person['familyName'] = end($names);
-                $person['emails'] = [$email];
-                $person['telephones'] = [$telephone];
+                $test = $person;
+                $test['emails'] = [$email];
+                $test['telephones'] = [$telephone];
+
+                var_dump(json_encode($person));
+                var_dump(json_encode($test));
                 $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
                 //create user

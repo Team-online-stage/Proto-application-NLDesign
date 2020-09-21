@@ -40,10 +40,10 @@
                     <div class="navigation__popout">
                         <ul class="list list--links list--chevrons navigation__popout-items">
                             <li class="navigation__popout-item">
-                                <a class="navigation__popout-link" href="#" >NL</a>
+                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}&&_locale=nl" >NL</a>
                             </li>
                             <li class="navigation__popout-item">
-                                <a class="navigation__popout-link" href="#">EN</a>
+                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}&_locale=en">EN</a>
                             </li>
                         </ul>
                     </div>
