@@ -132,7 +132,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -150,7 +150,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
@@ -227,7 +227,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -246,7 +246,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
@@ -290,7 +290,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -303,7 +303,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
@@ -420,7 +420,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -433,7 +433,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         // Lets handle a post
@@ -466,7 +466,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -479,7 +479,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         if ($request->isMethod('POST')) {
@@ -575,7 +575,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -588,7 +588,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
