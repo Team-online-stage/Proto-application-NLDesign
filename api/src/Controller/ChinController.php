@@ -323,7 +323,7 @@ class ChinController extends AbstractController
                 $person =  $commonGroundService->getResource($user['person']);
 
                 $credentials = [
-                    'username'   => $email,
+                    'username'   => $username,
                     'password'   => $password,
                     'csrf_token' => $crf,
                 ];
