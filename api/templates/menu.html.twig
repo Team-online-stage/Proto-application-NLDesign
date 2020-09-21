@@ -35,6 +35,19 @@
         <div class="top-nav__block top-nav__block--right" style="display: flex; justify-content: flex-end">
 
             <ul class="navigation">
+                <li class="navigation__item navigation__item--has-popout">
+                    <a class="navigation__link" href="#"><i class="fas fa-language" role="presentation"></i> NL</a>
+                    <div class="navigation__popout">
+                        <ul class="list list--links list--chevrons navigation__popout-items">
+                            <li class="navigation__popout-item">
+                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}&&_locale=nl" >NL</a>
+                            </li>
+                            <li class="navigation__popout-item">
+                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}&_locale=en">EN</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
 
                 {# onderstaande is nu bij wijze van hotfix, de ventigid het coole rechts zwevende menu item #}
                 {% if not app.user %}

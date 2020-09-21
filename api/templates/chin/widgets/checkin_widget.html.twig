@@ -56,6 +56,7 @@
                                 document.getElementById('readerAlt').style.display = 'block';
                                 window.location.href = qrCodeMessage;
                                 html5QrCode.stop();
+                                window.alert('QR Code Succesvol Verwerk');
                             },
                             errorMessage => {
                                 // parse error, ignore it.
@@ -75,9 +76,7 @@
     </div><!-- /.col -->
     <div class="col-lg-6 col-md-6 col-sm-12 background--primary">
         <div class="content" style="padding-top: 20px;">
-
-            <h2>Of vul deze zelf in</h2>
-
+            <h2>Vul deze zelf in</h2>
             <div class="input input--search {% if code is defined %}input--invalid{% endif %}"
                  style="padding-top: 20px;">
                 {% if code is defined %}
@@ -88,6 +87,17 @@
                     <button class="btn" style="margin-left: 10px;" title="incheken"> Inchecken</button>
                     {#                Search Button #}
                     {#                <button class="btn btn--icon" style="margin-left: 10px;" title="scan"><i class="icon icon-magnifier"></i></button>#}
+                </div>
+            </div><!-- /.input -->
+        </div><!-- /.content -->
+    </div><!-- /.col -->
+    <div class="col-lg-6 col-md-6 col-sm-12 background--primary">
+        <div class="content" style="padding-top: 20px;">
+            <h2>Of vind een onderneming</h2>
+            <div class="input input--search" style="padding-top: 20px;">
+                <div class="input__control-group">
+                    <input type="search" id="code" name="search" class="input__control input__control--m input__control--search" placeholder="Naam van onderneming">
+                    {# hier dus een optionele lijst van nodes als de onderneming er meer dan 1 heeft#}
                 </div>
             </div><!-- /.input -->
         </div><!-- /.content -->
