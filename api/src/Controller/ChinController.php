@@ -309,7 +309,7 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST')) {
 
             $name = $request->request->get('name');
-            $email = $request->request->get('email');
+            $username = $request->request->get('email');
             $tel = $request->request->get('telephone');
             $password = $request->request->get('password');
             $crf = $request->request->get('_csrf_token');
@@ -341,7 +341,7 @@ class ChinController extends AbstractController
                 //create email
                 $email = [];
                 $email['name'] = 'Email';
-                $email['email'] = $email;
+                $email['email'] = $username;
                 //$email = $this->commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
 
                 $telephone = [];
@@ -355,7 +355,7 @@ class ChinController extends AbstractController
                 $person['givenName'] = $names[0];
                 $person['familyName'] = end($names);
                 $test = $person;
-                $test['emails'] = [$email];
+                if($tel)$test['emails'] = [$email];
                 $test['telephones'] = [$telephone];
 
                 var_dump(json_encode($person));
@@ -365,7 +365,7 @@ class ChinController extends AbstractController
                 //create user
                 $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
                 $user = [];
-                $user['username'] = $email;
+                $user['username'] = $username;
                 $user['password'] = $password;
                 $user['person'] = $person['@id'];
                 $user['organization'] = $application['organization']['@id'];
