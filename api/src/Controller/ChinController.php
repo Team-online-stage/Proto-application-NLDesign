@@ -346,7 +346,7 @@ class ChinController extends AbstractController
 
                 $telephone = [];
                 $telephone['name'] = 'Phone';
-                $telephone['phone'] = $tel;
+                $telephone['telephone'] = $tel;
                 //$email = $this->commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
 
                 //create person
@@ -354,12 +354,9 @@ class ChinController extends AbstractController
                 $person = [];
                 $person['givenName'] = $names[0];
                 $person['familyName'] = end($names);
-                $test = $person;
-                if($tel)$test['emails'] = [$email];
-                $test['telephones'] = [$telephone];
+                $person['emails'] = [$email];
+                if($tel)$person['telephones'] = [$telephone];
 
-                var_dump(json_encode($person));
-                var_dump(json_encode($test));
                 $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
                 //create user
