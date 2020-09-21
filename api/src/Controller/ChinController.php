@@ -308,7 +308,6 @@ class ChinController extends AbstractController
         // Lets handle a post
         if ($request->isMethod('POST')) {
 
-
             $name = $request->request->get('name');
             $email = $request->request->get('email');
             $tel = $request->request->get('telephone');
