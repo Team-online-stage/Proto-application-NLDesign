@@ -314,7 +314,7 @@ class ChinController extends AbstractController
             $password = $request->request->get('password');
             $crf = $request->request->get('_csrf_token');
 
-            $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $email], true, false, true, false, false);
+            $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $username], true, false, true, false, false);
             $users = $users['hydra:member'];
 
             // Exsisting user
