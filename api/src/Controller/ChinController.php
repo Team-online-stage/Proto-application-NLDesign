@@ -172,6 +172,8 @@ class ChinController extends AbstractController
             if (isset($person['emails'][0])) {
                 $emailResource = $person['emails'][0];
                 $emailResource['email'] = $email;
+                // @Hotfix
+                $emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id'] ]);
                 $emailResource = $commonGroundService->updateResource($emailResource);
                 $person['emails'][0] = $emailResource['@id'];
             } else {
@@ -183,6 +185,8 @@ class ChinController extends AbstractController
             if (isset($person['telephones'][0])) {
                 $telephoneResource = $person['telephones'][0];
                 $telephoneResource['telephone'] = $tel;
+                // @Hotfix
+                $telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id'] ]);
                 $telephoneResource = $commonGroundService->updateResource($telephoneResource);
                 $person['telephones'][0] = $telephoneResource['@id'];
             } else {
@@ -191,6 +195,8 @@ class ChinController extends AbstractController
                 $person['telephones'][0] = $telephoneObject['@id'];
             }
 
+            // @Hotfix
+            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id'] ]);
             $person = $commonGroundService->updateResource($person);
 
             // Create check-in
