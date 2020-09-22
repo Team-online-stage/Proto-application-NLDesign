@@ -149,8 +149,15 @@ class UserController extends AbstractController
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $application = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'applications', 'id'=>$params->get('app_id')]);
-        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $application])['hydra:member'];
-        $provider = $provider[0];
+        $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $application])['hydra:member'];
+
+        var_dump($commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'providers']));
+        var_dump($application);
+        var_dump($providers);
+
+        die;
+
+        $provider = $providers[0];
 
         $redirect = $request->getUri();
         if (strpos($redirect, '?') == true) {
