@@ -1,7 +1,9 @@
 <div class="definition-list__description">
     {% if resource.place is defined and resource.place is not empty %}
         {% set place = commonground_resource(resource.place) %}
-
+        {% if place.bagId is defined and place.bagId is not empty %}
+            {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
+        {% endif %}
         <p style="margin-bottom: 0;"><h2 style="color: black; margin-top: 0;">- {{ place.name }} -</h2></p>
         <p style="color: #000000; margin-bottom: 30px;">
             {% if adres is defined and adres is not empty %}
