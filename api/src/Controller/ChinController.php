@@ -197,7 +197,7 @@ class ChinController extends AbstractController
 
             // @Hotfix
             $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
-            $person = $commonGroundService->updateResource($person);
+            //$person = $commonGroundService->updateResource($person);
 
             // Create check-in
             $checkIn = [];
