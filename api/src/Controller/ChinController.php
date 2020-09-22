@@ -170,12 +170,12 @@ class ChinController extends AbstractController
             $user = $user[0];
 
             if (isset($person['emails'][0])) {
-                $emailResource = $person['emails'][0];
-                $emailResource['email'] = $email;
+                //$emailResource = $person['emails'][0];
+                //$emailResource['email'] = $email;
                 // @Hotfix
-                $emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id']]);
-                $emailResource = $commonGroundService->updateResource($emailResource);
-                $person['emails'][0] = 'emails/'.$emailResource['id'];
+                //$emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id']]);
+                //$emailResource = $commonGroundService->updateResource($emailResource);
+                //$person['emails'][0] = 'emails/'.$emailResource['id'];
             } else {
                 $emailObject['email'] = $email;
                 $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
@@ -183,12 +183,12 @@ class ChinController extends AbstractController
             }
 
             if (isset($person['telephones'][0])) {
-                $telephoneResource = $person['telephones'][0];
-                $telephoneResource['telephone'] = $tel;
+                //$telephoneResource = $person['telephones'][0];
+                //$telephoneResource['telephone'] = $tel;
                 // @Hotfix
-                $telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
-                $telephoneResource = $commonGroundService->updateResource($telephoneResource);
-                $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
+                //$telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
+                //$telephoneObject = $commonGroundService->updateResource($telephoneResource);
+                //$person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
             } elseif ($tel) {
                 $telephoneObject['telephone'] = $tel;
                 $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
