@@ -112,9 +112,7 @@ class UserController extends AbstractController
     {
         $session->set('backUrl', $request->query->get('backUrl'));
 
-        $application = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'applications', 'id'=> $params->get('app_id')]);
-        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'facebook', 'application' => $application])['hydra:member'];
-
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $provider[0];
 
         $redirect = $request->getUri();
@@ -136,7 +134,10 @@ class UserController extends AbstractController
     public function githubAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $session->set('backUrl', $request->query->get('backUrl'));
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
+
+        $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'github', 'application' => $params->get('app_id')])['hydra:member'];
+        $provider = $providers[0];
+
 
         return $this->redirect('https://github.com/login/oauth/authorize?state='.$this->params->get('app_id').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
     }
@@ -149,9 +150,8 @@ class UserController extends AbstractController
     {
         $session->set('backUrl', $request->query->get('backUrl'));
 
-        $application = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'applications', 'id'=>$params->get('app_id')]);
-        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $application])['hydra:member'];
-        $provider = $provider[0];
+        $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $params->get('app_id')])['hydra:member'];
+        $provider = $providers[0];
 
         $redirect = $request->getUri();
         if (strpos($redirect, '?') == true) {
