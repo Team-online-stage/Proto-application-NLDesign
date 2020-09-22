@@ -187,7 +187,7 @@ class ChinController extends AbstractController
                 $telephoneResource['telephone'] = $tel;
                 // @Hotfix
                 $telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
-                $telephoneResource = $commonGroundService->updateResource($telephoneResource);
+                $telephoneObject = $commonGroundService->updateResource($telephoneResource);
                 $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
             } elseif ($tel) {
                 $telephoneObject['telephone'] = $tel;
