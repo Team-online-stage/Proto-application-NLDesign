@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
@@ -257,11 +258,11 @@ class ChinController extends AbstractController
 
             switch ($method) {
                 case 'idin':
-                    return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]));
+                    return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'facebook':
-                    return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]).'?nodeCode='.$code);
+                    return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'google':
-                    return $this->redirect($this->generateUrl('app_user_gmail', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]).'?nodeCode='.$code);
+                    return $this->redirect($this->generateUrl('app_user_gmail', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'acount':
                     return $this->redirect($this->generateUrl('app_chin_acount', ['code'=>$code]));
             }
