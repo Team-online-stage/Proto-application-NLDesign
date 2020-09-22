@@ -156,7 +156,7 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST')  && $request->request->get('method') == "checkin") {
 
             //update person
             $name = $request->request->get('name');
@@ -175,11 +175,11 @@ class ChinController extends AbstractController
                 // @Hotfix
                 $emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id'] ]);
                 $emailResource = $commonGroundService->updateResource($emailResource);
-                $person['emails'][0] = $emailResource['@id'];
+                $person['emails'][0] = 'emails/'.$emailResource['id'];
             } else {
                 $emailObject['email'] = $email;
                 $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
-                $person['emails'][0] = $emailObject['@id'];
+                $person['emails'][0] = 'emails/'.$emailObject['id'];
             }
 
             if (isset($person['telephones'][0])) {
@@ -188,11 +188,11 @@ class ChinController extends AbstractController
                 // @Hotfix
                 $telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id'] ]);
                 $telephoneResource = $commonGroundService->updateResource($telephoneResource);
-                $person['telephones'][0] = $telephoneResource['@id'];
-            } else {
+                $person['telephones'][0] = 'telephones/'.['id'];
+            } elseif($tel) {
                 $telephoneObject['telephone'] = $tel;
                 $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
-                $person['telephones'][0] = $telephoneObject['@id'];
+                $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
             }
 
             // @Hotfix
@@ -201,7 +201,7 @@ class ChinController extends AbstractController
 
             // Create check-in
             $checkIn = [];
-            $checkIn['node'] = $variables['resource']['id'];
+            $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
 
@@ -395,7 +395,7 @@ class ChinController extends AbstractController
                 $this->container->get('session')->set('_security_main', serialize($token));
             }
 
-            $checkIn['node'] = $variables['resource']['@id'];
+            $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
 
