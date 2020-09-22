@@ -4,6 +4,7 @@
 
 namespace App\Controller;
 
+use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
@@ -15,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
  * The Procces test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
@@ -32,7 +35,7 @@ class ChinController extends AbstractController
     public function checkinUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -117,13 +120,6 @@ class ChinController extends AbstractController
      */
     public function checkinAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
-        $session->remove('newcheckin');
-
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
-
-        $variables = [];
-        $createCheckin = $request->request->get('createCheckin');
-
         // Fallback options of establishing
         if (!$code) {
             $code = $request->query->get('code');
@@ -134,67 +130,388 @@ class ChinController extends AbstractController
         if (!$code) {
             $code = $session->get('code');
         }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
 
-        if ($code) {
-            $session->set('code', $code);
-            $variables['code'] = $code;
-            $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
-            if (count($variables['resources']) > 0) {
-                $variables['resource'] = $variables['resources'][0];
-            }
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
-        // Alleen afgaan bij post EN ingelogde gebruiker
+        $variables = [];
+        $session->set('code', $code);
+        $variables['code'] = $code;
 
-        if ($request->isMethod('POST') && $this->getUser() && $createCheckin == 'true') {
+        // Oke we want a user so lets check if we have one
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
+        }
+
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables['code'] = $code;
+
+        if ($request->isMethod('POST')) {
 
             //update person
-            $node = $request->request->get('node');
             $name = $request->request->get('name');
             $email = $request->request->get('email');
-            $tel = $request->request->get('tel');
+            $tel = $request->request->get('telephone');
 
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
-            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $person['@id']])['hydra:member'];
+
+            // Wat doet dit?
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
             $user = $user[0];
 
-            $emailResource = $person['emails'][0];
-            $emailResource['email'] = $email;
-            $commonGroundService->updateResource($emailResource);
+            if (isset($person['emails'][0])) {
+                $emailResource = $person['emails'][0];
+                $emailResource['email'] = $email;
+                // @Hotfix
+                $emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id'] ]);
+                $emailResource = $commonGroundService->updateResource($emailResource);
+                $person['emails'][0] = $emailResource['@id'];
+            } else {
+                $emailObject['email'] = $email;
+                $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
+                $person['emails'][0] = $emailObject['@id'];
+            }
 
-            $telephoneResource = $person['telephones'][0];
-            $telephoneResource['telephone'] = $tel;
-            $commonGroundService->updateResource($telephoneResource);
+            if (isset($person['telephones'][0])) {
+                $telephoneResource = $person['telephones'][0];
+                $telephoneResource['telephone'] = $tel;
+                // @Hotfix
+                $telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id'] ]);
+                $telephoneResource = $commonGroundService->updateResource($telephoneResource);
+                $person['telephones'][0] = $telephoneResource['@id'];
+            } else {
+                $telephoneObject['telephone'] = $tel;
+                $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
+                $person['telephones'][0] = $telephoneObject['@id'];
+            }
 
-            //create check-in
+            // @Hotfix
+            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id'] ]);
+            $person = $commonGroundService->updateResource($person);
+
+            // Create check-in
             $checkIn = [];
-            $checkIn['node'] = $node;
+            $checkIn['node'] = $variables['resource']['@id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
-            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            if (isset($node['passthroughUrl'])) {
-                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-                if ($isUrlToZD === false) {
-                    return $this->redirect($node['passthroughUrl']);
-                }
-            }
-            $session->set('newcheckin', true);
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+        }
 
-            if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
-                return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
-            } else {
-                return $this->redirect($this->generateUrl('app_default_index'));
+        return $variables;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/login/{code}")
+     * @Template
+     */
+    public function loginAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+
+        // If we have a valid user then we do not need to login
+        if ($this->getUser()) {
+            return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
+        }
+
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables['code'] = $code;
+
+
+
+        if ($request->isMethod('POST') && $request->request->get('method')) {
+            $method = $request->request->get('method');
+
+            switch ($method) {
+                case 'idin':
+                    return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
+                case 'facebook':
+                    return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
+                case 'google':
+                    return $this->redirect($this->generateUrl('app_user_gmail', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
+                case 'acount':
+                    return $this->redirect($this->generateUrl('app_chin_acount', ['code'=>$code]));
             }
-        } elseif ($request->isMethod('POST') && $createCheckin == 'true') {
+        }
+
+        return $variables;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/acount/{code}")
+     * @Template
+     */
+    public function acountAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables['code'] = $code;
+
+        // Lets handle a post
+        if ($request->isMethod('POST')) {
+            $name = $request->request->get('name');
+            $username = $request->request->get('email');
+            $tel = $request->request->get('telephone');
+            $password = $request->request->get('password');
+            $crf = $request->request->get('_csrf_token');
+
+            $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $username], true, false, true, false, false);
+            $users = $users['hydra:member'];
+
+            // Exsisting user
+            if (count($users) > 0) {
+                $user = $users[0];
+                $person = $commonGroundService->getResource($user['person']);
+
+                $credentials = [
+                    'username'   => $username,
+                    'password'   => $password,
+                    'csrf_token' => $crf,
+                ];
+
+                $user = $commonGroundService->createResource($credentials, ['component'=>'uc', 'type'=>'login'], false, true, false, false);
+
+                // validate user
+                if (!$user) {
+                    $variables['password_error'] = 'Invalid password';
+
+                    return $variables;
+                }
+
+                // Login the user
+                $userObject = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
+
+                $token = new UsernamePasswordToken($userObject, null, 'main', $userObject->getRoles());
+                $this->container->get('security.token_storage')->setToken($token);
+                $this->container->get('session')->set('_security_main', serialize($token));
+            }
+            // Non-Exsisting user
+            else {
+                //create email
+                $email = [];
+                $email['name'] = 'Email';
+                $email['email'] = $username;
+                //$email = $this->commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+
+                $telephone = [];
+                $telephone['name'] = 'Phone';
+                $telephone['telephone'] = $tel;
+                //$email = $this->commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
+
+                //create person
+                $names = explode(' ', $name);
+                $person = [];
+                $person['givenName'] = $names[0];
+                $person['familyName'] = end($names);
+                $person['emails'] = [$email];
+                if ($tel) {
+                    $person['telephones'] = [$telephone];
+                }
+
+                $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+
+                //create user
+                $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+                $user = [];
+                $user['username'] = $username;
+                $user['password'] = $password;
+                $user['person'] = $person['@id'];
+                $user['organization'] = $application['organization']['@id'];
+                $user = $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
+
+                $userObject = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
+
+                $token = new UsernamePasswordToken($userObject, null, 'main', $userObject->getRoles());
+                $this->container->get('security.token_storage')->setToken($token);
+                $this->container->get('session')->set('_security_main', serialize($token));
+            }
+
+            $checkIn['node'] = $variables['resource']['@id'];
+            $checkIn['person'] = $person['@id'];
+            $checkIn['userUrl'] = $user['@id'];
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+        }
+
+        return $variables;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/confirmation/{code}")
+     * @Template
+     */
+    public function confirmationAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        // Lets handle a post
+        if ($request->isMethod('POST')) {
+        }
+
+        $variables['code'] = $code;
+
+        return $variables;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/authorization/{code}")
+     * @Template
+     */
+    public function authorizationAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        if ($request->isMethod('POST')) {
             $node = $request->request->get('node');
-            $firstName = $request->request->get('firstName');
-            $additionalName = $request->request->get('additionalName');
-            $lastName = $request->request->get('lastName');
+            $name = $request->request->get('name');
+
             $email = $request->request->get('email');
-            $tel = $request->request->get('tel');
+            $tel = $request->request->get('telephone');
+            $name = explode(' ', $name);
+
+            if (count($name) < 2) {
+                $firstName = $name[0];
+                $additionalName = '';
+                $lastName = $name[0];
+            } elseif (count($name) < 3) {
+                $firstName = $name[0];
+                $additionalName = '';
+                $lastName = $name[1];
+            } else {
+                $firstName = $name[0];
+                $additionalName = $name[1];
+                $lastName = $name[2];
+            }
 
             $emailObject['email'] = $email;
             $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
@@ -205,9 +522,20 @@ class ChinController extends AbstractController
             $person['givenName'] = $firstName;
             $person['additionalName'] = $additionalName;
             $person['familyName'] = $lastName;
-            $person['emails'][] = $emailObject['@id'];
-            $person['telephones'][] = $telObject['@id'];
+            $person['emails'][0] = $emailObject['@id'];
+            $person['telephones'][0] = $telObject['@id'];
             $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
+
+            $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+            $validChars = '0123456789abcdefghijklmnopqrstuvwxyz';
+            $password = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 8);
+            $user = [];
+            $user['username'] = $email;
+            $user['password'] = $password;
+            $user['person'] = $person['@id'];
+            $user['organization'] = $application['organization']['@id'];
+
+            $user = $commonGroundService->createResource($user, ['component' => 'uc', 'type' => 'users']);
 
             $checkIn['node'] = $node;
             $checkIn['person'] = $person['@id'];
@@ -216,16 +544,14 @@ class ChinController extends AbstractController
 
             $node = $commonGroundService->getResource($node);
 
-            // If the passthroughUrl is to Zuid-Drecht we will ignore it for testing purposes
-            if (isset($node['passthroughUrl'])) {
-                $isUrlToZD = strpos($node['passthroughUrl'], 'zuid-drecht');
-                if ($isUrlToZD === false) {
-                    return $this->redirect($node['passthroughUrl']);
-                }
-            }
-
             $session->set('newcheckin', true);
             $session->set('person', $person);
+
+            $test = new CommongroundUser($user['username'], $password, $person['name'], null, $user['roles'], $user['person'], null, 'user');
+
+            $token = new UsernamePasswordToken($test, null, 'main', $test->getRoles());
+            $this->container->get('security.token_storage')->setToken($token);
+            $this->container->get('session')->set('_security_main', serialize($token));
 
             if (isset($application['defaultConfiguration']['configuration']['userPage'])) {
                 return $this->redirect('/'.$application['defaultConfiguration']['configuration']['userPage']);
@@ -233,6 +559,48 @@ class ChinController extends AbstractController
                 return $this->redirect($this->generateUrl('app_default_index'));
             }
         }
+
+        $variables['code'] = $code;
+    }
+
+    /**
+     * This function shows all available locations.
+     *
+     * @Route("/checkout/{code}")
+     * @Template
+     */
+    public function checkoutAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables['code'] = $code;
 
         return $variables;
     }

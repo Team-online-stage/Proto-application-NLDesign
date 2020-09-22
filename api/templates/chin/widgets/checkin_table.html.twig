@@ -1,3 +1,14 @@
+<style>
+    .checkinFont {
+        color: #01689b;
+    }
+
+    .background {
+        background-color: white;
+        background-image: none;
+    }
+</style>
+
 <div class="content-background" >
     <div class="content">
         <h2>{{ 'check-ins'|capitalize }}</h2>
@@ -9,8 +20,6 @@
                 <th scope="col">{{ 'placename'|trans|capitalize }}</th>
                 <th scope="col">{{ 'check-in date'|trans|capitalize }}</th>
                 <th scope="col">{{ 'deletion date'|trans|capitalize }}</th>
-
-                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
@@ -20,8 +29,6 @@
                 <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
                 <td>{{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
                 <td>{{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
-                <td><a data-toggle="modal" data-target="#checkin-{{ checkin.id }}" onclick="openModal{{ checkin.id|replace({'-': ''}) }}()">{{ 'edit'|trans|capitalize }}</a></td>
-
             </tr>
             {% endfor %}
             </tbody>

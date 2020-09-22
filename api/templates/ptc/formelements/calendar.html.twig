@@ -219,6 +219,8 @@
                     buttons[j].setAttribute('style', 'width: 100%; display: block; height: 100%; background-color: lightgrey; border: 1px solid lightgray;');
                     buttons[j].innerText = '';
                     buttons[j].setAttribute('disabled', 'disabled');
+                } else {
+                    buttons[j].removeAttribute('disabled');
                 }
                 let eventStartDate = 0;
                 let eventEndDate = 0;
