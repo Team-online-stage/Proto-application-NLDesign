@@ -132,7 +132,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -150,7 +150,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
@@ -226,8 +226,7 @@ class ChinController extends AbstractController
         }
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
-
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -246,10 +245,12 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
+
+
 
         if ($request->isMethod('POST') && $request->request->get('method')) {
             $method = $request->request->get('method');
@@ -290,7 +291,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -303,7 +304,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
@@ -420,7 +421,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -433,7 +434,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         // Lets handle a post
@@ -466,7 +467,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -474,12 +475,13 @@ class ChinController extends AbstractController
         $session->set('code', $code);
         $variables['code'] = $code;
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         if ($request->isMethod('POST')) {
@@ -575,7 +577,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -588,7 +590,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
