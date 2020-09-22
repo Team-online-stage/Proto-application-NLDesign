@@ -30,7 +30,7 @@ class DownloadController extends AbstractController
      */
     public function orderAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
         $order = $commonGroundService->getResource(['component' => 'orc', 'type' => 'orders', 'id' => $id]);
         $orderTemplate = $commonGroundService->getResource($application['defaultConfiguration']['configuration']['orderTemplate']);
         $query = ['resource' => $order['@id']];
@@ -62,7 +62,7 @@ class DownloadController extends AbstractController
      */
     public function invoiceAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
         $order = $commonGroundService->getResource(['component' => 'bc', 'type' => 'invoices', 'id' => $id]);
         $orderTemplate = $commonGroundService->getResource($application['defaultConfiguration']['configuration']['invoiceTemplate']);
         $query = ['resource' => $order['@id']];

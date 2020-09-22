@@ -46,7 +46,7 @@ class UserController extends AbstractController
         EventDispatcherInterface $dispatcher,
         $loggedOut = false
     ) {
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
 
         if ($loggedOut == 'loggedOut') {
             $text = 'U bent uitgelogd omdat de sessie is verlopen.';
@@ -112,7 +112,8 @@ class UserController extends AbstractController
     {
         $session->set('backUrl', $request->query->get('backUrl'));
 
-        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'facebook'])['hydra:member'];
+        $application = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'applications', 'id'=> $params->get('app_id')]);
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $application])['hydra:member'];
         $provider = $provider[0];
 
         $redirect = $request->getUri();
@@ -134,9 +135,9 @@ class UserController extends AbstractController
     public function githubAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
         $session->set('backUrl', $request->query->get('backUrl'));
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
 
-        return $this->redirect('https://github.com/login/oauth/authorize?state='.getenv('APP_ID').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
+        return $this->redirect('https://github.com/login/oauth/authorize?state='.$this->params->get('app_id').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
     }
 
     /**
@@ -147,8 +148,16 @@ class UserController extends AbstractController
     {
         $session->set('backUrl', $request->query->get('backUrl'));
 
-        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['name' => 'gmail'])['hydra:member'];
-        $provider = $provider[0];
+        $application = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'applications', 'id'=>$params->get('app_id')]);
+        $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'gmail', 'application' => $application])['hydra:member'];
+
+        var_dump($commonGroundService->cleanUrl(['component' => 'uc', 'type' => 'providers']));
+        var_dump($application);
+        var_dump($providers);
+
+        die;
+
+        $provider = $providers[0];
 
         $redirect = $request->getUri();
         if (strpos($redirect, '?') == true) {
@@ -195,7 +204,7 @@ class UserController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
         $variables['userGroups'] = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'groups'], ['organization' => $application['organization']['@id'], 'canBeRegisteredFor' => true])['hydra:member'];
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
