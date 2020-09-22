@@ -373,7 +373,7 @@ class ChinController extends AbstractController
                 $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
                 //create user
-                $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+                $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
                 $user = [];
                 $user['username'] = $username;
                 $user['password'] = $password;
@@ -519,7 +519,7 @@ class ChinController extends AbstractController
             $person['telephones'][0] = $telObject['@id'];
             $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
-            $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+            $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
             $validChars = '0123456789abcdefghijklmnopqrstuvwxyz';
             $password = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 8);
             $user = [];
