@@ -138,7 +138,6 @@ class UserController extends AbstractController
         $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'github', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $providers[0];
 
-
         return $this->redirect('https://github.com/login/oauth/authorize?state='.$this->params->get('app_id').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
     }
 
