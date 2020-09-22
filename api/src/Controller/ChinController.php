@@ -156,7 +156,7 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
 
-        if ($request->isMethod('POST')  && $request->request->get('method') == "checkin") {
+        if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
 
             //update person
             $name = $request->request->get('name');
@@ -173,7 +173,7 @@ class ChinController extends AbstractController
                 $emailResource = $person['emails'][0];
                 $emailResource['email'] = $email;
                 // @Hotfix
-                $emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id'] ]);
+                $emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id']]);
                 $emailResource = $commonGroundService->updateResource($emailResource);
                 $person['emails'][0] = 'emails/'.$emailResource['id'];
             } else {
@@ -186,17 +186,17 @@ class ChinController extends AbstractController
                 $telephoneResource = $person['telephones'][0];
                 $telephoneResource['telephone'] = $tel;
                 // @Hotfix
-                $telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id'] ]);
+                $telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
                 $telephoneResource = $commonGroundService->updateResource($telephoneResource);
                 $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
-            } elseif($tel) {
+            } elseif ($tel) {
                 $telephoneObject['telephone'] = $tel;
                 $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
                 $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
             }
 
             // @Hotfix
-            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id'] ]);
+            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
             $person = $commonGroundService->updateResource($person);
 
             // Create check-in
@@ -233,6 +233,7 @@ class ChinController extends AbstractController
         }
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
+
             return $this->redirect($this->generateUrl('app_default_index'));
         }
 
@@ -256,8 +257,6 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
-
-
 
         if ($request->isMethod('POST') && $request->request->get('method')) {
             $method = $request->request->get('method');
