@@ -395,7 +395,7 @@ class ChinController extends AbstractController
                 $this->container->get('session')->set('_security_main', serialize($token));
             }
 
-            $checkIn['node'] = $variables['resource']['@id'];
+            $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
 
