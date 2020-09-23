@@ -18,11 +18,11 @@
         <div class="content">
             <div class="row">
 
-                {% if subscription is defined and is subscriptions not empty %}
+                {#                {% if subscription is defined and is subscription not empty %}#}
 
-                    <h4>{{ 'u have succesfully applied yourself for subscription '|capitalize~subscription.name }}</h4>
+                {#                    <h4>{{ 'u have succesfully applied yourself for subscription '|capitalize~subscription.name }}</h4>#}
 
-                {% endif %}
+                {#                {% endif %}#}
 
                 <div id="subs">
 
@@ -47,12 +47,20 @@
                         {% if currentSubscriptions is not empty and currentSubscriptions is not empty %}
                             {% for sub in currentSubscriptions %}
                                 <tr>
-                                    <td>{{ sub.name }}</td>
-                                    <td>{{ sub.description }}</td>
-                                    <td>&euro; {{ sub.price }},-</td>
-                                    <td>{{ sub.startDate }}|date</td>
-                                    <td>{{ sub.endDate }}|date</td>
-                                    <td><a href="#"><b>VIEW</b></a></td>
+                                <td>{{ sub.name }}</td>
+                                <td>{{ sub.description }}</td>
+                                <td>&euro; {{ sub.price }},-</td>
+                                {% if sub.dateStart is defined and sub.dateStart is not empty %}
+                                    <td>{{ sub.dateStart|date('Y-m-d') }}</td>
+                                {% else %}
+                                    <td style="color: lightgrey">No end date</td>
+                                {% endif %}
+                                {% if sub.dateEnd is defined and sub.dateEnd is not empty %}
+                                <td>{{ sub.dateEnd|date('Y-m-d') }}</td>
+                            {% else %}
+                                <td style="color: lightgrey">No end date</td>
+                                {% endif %}
+                                <td><a href="{{ path('app_orc_subscription', {id: sub.id}) }}"><b>VIEW</b></a></td>
                                 </tr>
                             {% endfor %}
                         {% else %}
@@ -117,7 +125,7 @@
                     </form>
                 </div>
 
-                {% endif %}
+                {#                {% endif %}#}
 
             </div>
         </div>
@@ -157,7 +165,7 @@
             if ('{{ sub['@id'] }}' === sub.value) {
                 {#var subName = '{{ sub.name }}';#}
                 var subDes = '{{ sub.description }}';
-                var subPrice = '{{ sub.price }},-';
+                var subPrice = '\u20AC {{ sub.price }},-';
             }
 
             // document.getElementById('subName').innerText = subName;
