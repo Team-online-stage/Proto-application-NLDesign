@@ -919,23 +919,23 @@
       </trans-unit>
       <trans-unit id="v3p2N3v" resname="show subscriptions">
         <source>show subscriptions</source>
-        <target>toon abbonementen</target>
+        <target>toon abonnementen</target>
       </trans-unit>
       <trans-unit id="nKyRwfV" resname="subscriptions">
         <source>subscriptions</source>
-        <target>abbonementen</target>
+        <target>abonnementen</target>
       </trans-unit>
       <trans-unit id="qPp.1gi" resname="subscription">
         <source>subscription</source>
-        <target>abbonement</target>
+        <target>abonnement</target>
       </trans-unit>
       <trans-unit id="UqMMhhE" resname="show current subscriptions">
         <source>show current subscriptions</source>
-        <target>toon huidige abbonementen</target>
+        <target>toon huidige abonnementen</target>
       </trans-unit>
       <trans-unit id="LJ42OE1" resname="current subscriptions">
         <source>current subscriptions</source>
-        <target>huidige abbonementen</target>
+        <target>huidige abonnementen</target>
       </trans-unit>
       <trans-unit id="cEjciqd" resname="purchase">
         <source>purchase</source>
@@ -1064,6 +1064,10 @@
       <trans-unit id="MLXnAAq" resname="link to instagram page">
         <source>link to instagram page</source>
         <target>link naar de instagram pagina</target>
+      </trans-unit>
+      <trans-unit id="8Hb21s0" resname="u have no active subscriptions">
+        <source>u have no active subscriptions</source>
+        <target>U heeft geen actieve abonnementen</target>
       </trans-unit>
     </body>
   </file>
