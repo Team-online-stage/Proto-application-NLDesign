@@ -32,7 +32,7 @@
 
 {% block container %}
 <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;">
-    <form action="{{ path('app_chin_login',{"code":code}) }}" method="post">
+    <form action="{{ path('app_chin_checkin',{"code":code}) }}" method="post">
         <div class="container background" style="background-size: 300px; width: 100%; max-width: 100%;" >
             <div class="row">
                 <div class="col-md-12 col-sm-12 " style="padding: 0;">
@@ -49,7 +49,7 @@
                                     {% include 'chin/widgets/checkin_widget_userinfo.html.twig' %}
 
                                     <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
-                                        <button style=" width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;"><h2 style="margin-top: 4px;">{{ 'checkin'|trans|capitalize }}</h2></button>
+                                        <button style=" width: 100%; background-color: #01689B; border: 0; color: white; border-radius: 20px;" name="method" value="checkin">{{ 'checkin'|trans|capitalize }}</button>
                                     </div>
                                 </div>
                             </div>

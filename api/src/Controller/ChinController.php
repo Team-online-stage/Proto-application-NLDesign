@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
 /**
@@ -132,7 +133,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -150,12 +151,12 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
 
             //update person
             $name = $request->request->get('name');
@@ -169,32 +170,38 @@ class ChinController extends AbstractController
             $user = $user[0];
 
             if (isset($person['emails'][0])) {
-                $emailResource = $person['emails'][0];
-                $emailResource['email'] = $email;
-                $emailResource = $commonGroundService->updateResource($emailResource);
-                $person['emails'][0] = $emailResource['@id'];
+                //$emailResource = $person['emails'][0];
+                //$emailResource['email'] = $email;
+                // @Hotfix
+                //$emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id']]);
+                //$emailResource = $commonGroundService->updateResource($emailResource);
+                //$person['emails'][0] = 'emails/'.$emailResource['id'];
             } else {
                 $emailObject['email'] = $email;
                 $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
-                $person['emails'][0] = $emailObject['@id'];
+                $person['emails'][0] = 'emails/'.$emailObject['id'];
             }
 
             if (isset($person['telephones'][0])) {
-                $telephoneResource = $person['telephones'][0];
-                $telephoneResource['telephone'] = $tel;
-                $telephoneResource = $commonGroundService->updateResource($telephoneResource);
-                $person['telephones'][0] = $telephoneResource['@id'];
-            } else {
+                //$telephoneResource = $person['telephones'][0];
+                //$telephoneResource['telephone'] = $tel;
+                // @Hotfix
+                //$telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
+                //$telephoneObject = $commonGroundService->updateResource($telephoneResource);
+                //$person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
+            } elseif ($tel) {
                 $telephoneObject['telephone'] = $tel;
                 $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
-                $person['telephones'][0] = $telephoneObject['@id'];
+                $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
             }
 
-            $person = $commonGroundService->updateResource($person);
+            // @Hotfix
+            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
+            //$person = $commonGroundService->updateResource($person);
 
             // Create check-in
             $checkIn = [];
-            $checkIn['node'] = $variables['resource']['@id'];
+            $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
 
@@ -227,7 +234,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -246,7 +253,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
@@ -256,11 +263,11 @@ class ChinController extends AbstractController
 
             switch ($method) {
                 case 'idin':
-                    return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]));
+                    return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'facebook':
-                    return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]).'?nodeCode='.$code);
+                    return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'google':
-                    return $this->redirect($this->generateUrl('app_user_gmail', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code])]).'?nodeCode='.$code);
+                    return $this->redirect($this->generateUrl('app_user_gmail', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'acount':
                     return $this->redirect($this->generateUrl('app_chin_acount', ['code'=>$code]));
             }
@@ -290,7 +297,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -303,7 +310,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;
@@ -372,7 +379,7 @@ class ChinController extends AbstractController
                 $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
                 //create user
-                $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+                $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
                 $user = [];
                 $user['username'] = $username;
                 $user['password'] = $password;
@@ -387,7 +394,7 @@ class ChinController extends AbstractController
                 $this->container->get('session')->set('_security_main', serialize($token));
             }
 
-            $checkIn['node'] = $variables['resource']['@id'];
+            $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
 
@@ -420,7 +427,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -433,7 +440,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         // Lets handle a post
@@ -466,7 +473,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -474,12 +481,13 @@ class ChinController extends AbstractController
         $session->set('code', $code);
         $variables['code'] = $code;
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         if ($request->isMethod('POST')) {
@@ -517,7 +525,7 @@ class ChinController extends AbstractController
             $person['telephones'][0] = $telObject['@id'];
             $person = $commonGroundService->createResource($person, ['component' => 'cc', 'type' => 'people']);
 
-            $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+            $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
             $validChars = '0123456789abcdefghijklmnopqrstuvwxyz';
             $password = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 8);
             $user = [];
@@ -575,7 +583,7 @@ class ChinController extends AbstractController
         if (!$code) {
             $this->addFlash('warning', 'No node reference suplied');
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
@@ -588,7 +596,7 @@ class ChinController extends AbstractController
         } else {
             $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
 
-            return $this->redirect($this->generateUrl('app_zz_index'));
+            return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables['code'] = $code;

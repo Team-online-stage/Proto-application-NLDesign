@@ -46,14 +46,17 @@
             <ul class="navigation">
 
                 <li class="navigation__item navigation__item--has-popout">
-                    <a class="navigation__link" href="#"><i class="fas fa-language" role="presentation"></i> {{ app.request.locale|capitalize  }}</a>
+                    <a class="navigation__link" href="#"><i class="fas fa-language" role="presentation"></i> {{ app.request.locale|upper }}</a>
                     <div class="navigation__popout">
                         <ul class="list list--links list--chevrons navigation__popout-items">
+                            {% set query = app.request.attributes.get('_route_params') %}
+                            {% set query = query|merge({'_locale': 'nl'}) %}
                             <li class="navigation__popout-item">{# absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) #}
-                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'))) }}?_locale=nl"> <i class="" role="presentation"></i>NL</a>
+                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'), query)) }}"> <i class="" role="presentation"></i>NL</a>
                             </li>
+                            {% set query = query|merge({'_locale': 'en'}) %}
                             <li class="navigation__popout-item">{# absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) #}
-                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'))) }}?_locale=en"> <i class="" role="presentation"></i>EN</a>
+                                <a class="navigation__popout-link" href="{{ absolute_url(path(app.request.attributes.get('_route'), query)) }}"> <i class="" role="presentation"></i>EN</a>
                             </li>
                         </ul>
                     </div>
