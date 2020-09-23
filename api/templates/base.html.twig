@@ -664,14 +664,12 @@
 
             // Get the header
             var header = document.getElementById("docs-nav");
-            var stickyMobileNav = document.getElementById("stickyMobileNav");
+            // var stickyMobileNav = document.getElementById("stickyMobileNav");
 
             // Get the offset position of the navbar
             var sticky = header.offsetTop;
-            console.log(header.offsetTop);
 
-            var sticky = stickyMobileNav.offsetTop;
-            console.log(stickyMobileNav.offsetTop);
+            // var sticky = stickyMobileNav.offsetTop;
 
             // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
             function myFunction() {
@@ -679,14 +677,14 @@
                     header.classList.remove("sticky-transition");
                     header.classList.add("sticky-nav");
 
-                    stickyMobileNav.classList.remove("sticky-mobile-transition");
-                    stickyMobileNav.classList.add("sticky-mobile-nav");
+                    // stickyMobileNav.classList.remove("sticky-mobile-transition");
+                    // stickyMobileNav.classList.add("sticky-mobile-nav");
                 } else {
                     header.classList.add("sticky-transition");
                     header.classList.remove("sticky-nav");
 
-                    stickyMobileNav.classList.add("sticky-mobile-transition");
-                    stickyMobileNav.classList.remove("sticky-mobile-nav");
+                    // stickyMobileNav.classList.add("sticky-mobile-transition");
+                    // stickyMobileNav.classList.remove("sticky-mobile-nav");
                 }
             }
         </script>
