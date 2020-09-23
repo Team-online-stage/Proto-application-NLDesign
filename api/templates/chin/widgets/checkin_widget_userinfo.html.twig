@@ -1,3 +1,6 @@
+{% if app.user.person is defined and app.user.person is not empty %}
+{% set person = commonground_resource(app.user.person) %}
+{% endif %}
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Naam"
            class="noFocus input__control input__control--text" required
