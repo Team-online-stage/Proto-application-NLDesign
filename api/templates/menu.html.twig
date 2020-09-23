@@ -46,7 +46,7 @@
             <ul class="navigation">
 
                 <li class="navigation__item navigation__item--has-popout">
-                    <a class="navigation__link" href="#"><i class="fas fa-language" role="presentation"></i> {{ app.request.locale|capitalize  }}</a>
+                    <a class="navigation__link" href="#"><i class="fas fa-language" role="presentation"></i> {{ app.request.locale|upper }}</a>
                     <div class="navigation__popout">
                         <ul class="list list--links list--chevrons navigation__popout-items">
                             {% set query = app.request.attributes.get('_route_params') %}
