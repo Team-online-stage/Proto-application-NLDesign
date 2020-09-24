@@ -1,5 +1,5 @@
 
-{% if request['@id'] is defined and request['@id'] is not empty %}
+{# if request['@id'] is defined and request['@id'] is not empty %}
     {% set validations = commonground_resource_list({'component': 'trc', 'type': 'tokens'}, {'resource': request['@id']})['hydra:member'] %}
 {% if validations is defined and validations is not empty %}
 <div class="content-background">
@@ -13,4 +13,4 @@
     </div>
 </div>
 {% endif %}
-{% endif %}
+{% endif #}
