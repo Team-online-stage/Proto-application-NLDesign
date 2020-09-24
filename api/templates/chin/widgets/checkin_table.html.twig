@@ -17,7 +17,7 @@
             <thead>
             <tr>
                 <th scope="col">{{ 'location'|trans|capitalize }}</th>
-                <th scope="col">{{ 'placename'|trans|capitalize }}</th>
+                <th scope="col">{{ 'accommodation'|trans|capitalize }}</th>
                 <th scope="col">{{ 'check-in date'|trans|capitalize }}</th>
                 <th scope="col">{{ 'deletion date'|trans|capitalize }}</th>
             </tr>
@@ -26,7 +26,7 @@
             {% for checkin in checkins %}
             <tr>
                 <td>{{ commonground_resource(checkin.node.organization).name|capitalize }}</td>
-                <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
+                <td>{{ commonground_resource(checkin.node.accommodation).name|capitalize }}</td>
                 <td>{{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
                 <td>{{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
             </tr>
