@@ -891,7 +891,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
-        <target>__contact</target>
+        <target>contact</target>
       </trans-unit>
       <trans-unit id="lzgBh6h" resname="tip">
         <source>tip</source>
@@ -1064,6 +1064,46 @@
       <trans-unit id="MLXnAAq" resname="link to instagram page">
         <source>link to instagram page</source>
         <target>link naar de instagram pagina</target>
+      </trans-unit>
+      <trans-unit id="jny0l5e" resname="succes">
+        <source>succes</source>
+        <target>succes</target>
+      </trans-unit>
+      <trans-unit id="Sz6Heuz" resname="Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.">
+        <source>Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.</source>
+        <target>Uw data is veilig opgesalgen in de data kluis en is alleen beschikbaar voor de GGD voor de komende 14 dagen.</target>
+      </trans-unit>
+      <trans-unit id="Ljhde2j" resname="Create a user account so that I can view my data">
+        <source>Create a user account so that I can view my data</source>
+        <target>maak een gebruiker aan zodat ik mijn gegevens kan bekijken</target>
+      </trans-unit>
+      <trans-unit id="bfJMNyw" resname="reserve">
+        <source>reserve</source>
+        <target>reserveren</target>
+      </trans-unit>
+      <trans-unit id="pzquTq4" resname="forgot password">
+        <source>forgot password</source>
+        <target>wachtwoord vergeten</target>
+      </trans-unit>
+      <trans-unit id="5cf.rCb" resname="click">
+        <source>click</source>
+        <target>klik</target>
+      </trans-unit>
+      <trans-unit id=".OyRUJd" resname="here">
+        <source>here</source>
+        <target>hier</target>
+      </trans-unit>
+      <trans-unit id="6opoRrV" resname="to change your password">
+        <source>to change your password</source>
+        <target>om uw wachtwoord te wijzigen</target>
+      </trans-unit>
+      <trans-unit id="Ap.eNAy" resname="invalid password">
+        <source>invalid password</source>
+        <target>ongeldig wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="oFdE4b_" resname="accommodation">
+        <source>accommodation</source>
+        <target>accommodatie</target>
       </trans-unit>
     </body>
   </file>
