@@ -66,13 +66,16 @@ class ZZController extends AbstractController
         if ($content) {
             $twigTemplate = $this->get('twig')->createTemplate($content);
             $twigTemplate = $twigTemplate->render($variables);
-        } else {
+        } elseif(array_key_exists('content', $template)) {
+            $content = "The template ".$template['id']." dosn't seem to contain a content";
 
-            var_dump($template);
-            die;
+            $twigTemplate = $this->get('twig')->createTemplate($content);
+            $twigTemplate = $twigTemplate->render($variables);
 
             $twigTemplate = $this->render('404.html.twig', $variables);
-
+            return $twigTemplate;
+        } else {
+            $twigTemplate = $this->render('404.html.twig', $variables);
             return $twigTemplate;
         }
 
