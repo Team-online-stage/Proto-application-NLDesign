@@ -521,7 +521,10 @@ class ChinController extends AbstractController
 
                 // validate user
                 if (!$user) {
-                    $variables['password_error'] = 'Invalid password';
+                    $variables['password_error'] = 'invalid password';
+                    $variables['user_info']['name'] = $name;
+                    $variables['user_info']['email'] = $username;
+                    $variables['user_info']['telephone'] = $tel;
 
                     return $variables;
                 }

@@ -4,23 +4,39 @@
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Naam"
            class="noFocus input__control input__control--text" required
-           {% if person.name is defined and person.name is not empty %}value="{{ person.name }}"{% endif %}>
+           {% if person.name is defined and person.name is not empty %}value="{{ person.name }}"
+           {% elseif user_info.name is defined and user_info.name is not empty %}value="{{ user_info.name }}"{% endif %}>
 </div>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <input style="height: 35px" type="text" id="additionalName" name="email" placeholder="Email"
            class="noFocus input__control input__control--text" required
-           {% if person.emails[0].email is defined and person.emails[0].email is not empty %}value="{{ person.emails[0].email }}"{% endif %}>
+           {% if person.emails[0].email is defined and person.emails[0].email is not empty %}value="{{ person.emails[0].email }}"
+        {% elseif user_info.email is defined and user_info.email is not empty %}value="{{ user_info.email }}"{% endif %}>
 </div>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <input style="height: 35px" type="text" id="additionalName" name="telephone" placeholder="Telefoon"
            class="noFocus input__control input__control--text"
-           {% if person.telephones[0].telephone is defined and person.telephones[0].telephone is not empty %}value="{{ person.telephones[0].telephone }}"{% endif %}>
+           {% if person.telephones[0].telephone is defined and person.telephones[0].telephone is not empty %}value="{{ person.telephones[0].telephone }}"
+           {% elseif user_info.telephone is defined and user_info.telephone is not empty %}value="{{ user_info.telephone }}"{% endif %}>
 </div>
 {% if not app.user %}
-<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
-    {% if password_error is defined %}{{ password_error }}{% endif %}
+<div class="input {% if password_error is defined %}input--invalid{% endif %}" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    {% if password_error is defined %}
+        <div class="input__error" style="margin-top: 5px;">{{ password_error|trans|capitalize }}</div>{% endif %}
     <input style="height: 35px" type="password" id="password" name="password" placeholder="{{ 'password'|trans|capitalize }}"
            class="noFocus input__control input__control--text" required>
+    {% if password_error is defined %}
+        <div class="notification notification--error" id="my-notification">
+            <div class="notification__content">
+                <span>{{ 'forgot password'|trans|capitalize }}?</span>
+                <span>{{ 'click'|trans|capitalize }} <a href="#">{{ 'here'|trans }}</a> {{ 'to change your password'|trans }}</span>
+            </div>
+            <button type="button" class="notification__close-button" onclick="myNotification.close()">
+                <i class="icon icon-cross"></i>
+                Sluit
+            </button>
+        </div>
+    {% endif %}
 </div>
 {% endif %}
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
@@ -36,3 +52,11 @@
             van de corona vragenlijst horeca</label>
     </div>
 </div>
+
+<script>
+    let myNotification;
+
+    System.import('/uno/components/notification/notification.js').then(function (module) {
+        myNotification = new module.Notification(document.getElementById('my-notification'));
+    });
+</script>
