@@ -14,11 +14,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * The Education controller handles any calls for education.
+ * The Education controller handles any calls for edu.
  *
  * Class EducationController
  *
- * @Route("/education")
+ * @Route("/edu")
  */
 class EduController extends AbstractController
 {

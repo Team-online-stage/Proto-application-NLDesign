@@ -1,11 +1,14 @@
+{% if app.user.person is defined and app.user.person is not empty %}
+{% set person = commonground_resource(app.user.person) %}
+{% endif %}
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Naam"
-           class="noFocus input__control input__control--text"
+           class="noFocus input__control input__control--text" required
            {% if person.name is defined and person.name is not empty %}value="{{ person.name }}"{% endif %}>
 </div>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <input style="height: 35px" type="text" id="additionalName" name="email" placeholder="Email"
-           class="noFocus input__control input__control--text"
+           class="noFocus input__control input__control--text" required
            {% if person.emails[0].email is defined and person.emails[0].email is not empty %}value="{{ person.emails[0].email }}"{% endif %}>
 </div>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
@@ -16,8 +19,9 @@
 {% if not app.user %}
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     {% if password_error is defined %}{{ password_error }}{% endif %}
-    <input style="height: 35px" type="password" id="password" name="password" placeholder="Password"
-           class="noFocus input__control input__control--text">
+    <input style="height: 35px" type="password" id="password" name="password" placeholder="{{ 'password'|trans|capitalize }}"
+           class="noFocus input__control input__control--text" required>
+    <a href="">wachtwoord vergeten?</a>
 </div>
 {% endif %}
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">

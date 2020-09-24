@@ -96,12 +96,28 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/idinLogin")
+     * @Template
+     */
+    public function IdinLoginAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $session->set('backUrl', $request->query->get('backUrl'));
+
+        $redirect = str_replace('http:', 'https:', $request->getUri());
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'idinLogin&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+    }
+
+    /**
      * @Route("/idin")
      * @Template
      */
-    public function IdinAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function IdinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$request->getUri().'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+
+        $session->set('backUrl', $request->query->get('backUrl'));
+
+        $redirect = str_replace('http:', 'https:', $request->getUri());
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
     }
 
     /**
@@ -153,6 +169,7 @@ class UserController extends AbstractController
         $provider = $providers[0];
 
         $redirect = $request->getUri();
+
         if (strpos($redirect, '?') == true) {
             $redirect = substr($redirect, 0, strpos($redirect, '?'));
         }
@@ -181,6 +198,52 @@ class UserController extends AbstractController
         $this->flash->add('error', $text);
 
         return $this->redirect($this->generateUrl('app_default_index'));
+    }
+
+    /**
+     * @Route("/edit")
+     * @Template
+     */
+    public function editAction(Session $session, Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $variables['code'] = $session->get('code');
+        $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
+        if (count($nodes) > 0) {
+            $variables['node'] = $nodes[0];
+        }
+
+        $variables['person'] = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        if($request->isMethod('POST')){
+
+            $person = $variables['person'];
+
+            $firstName = $request->get('firstName');
+            $lastName = $request->get('lastName');
+            $telephone = $request->get('telephone');
+            $email = $request->get('email');
+
+            $person['firstName'] = $firstName;
+            $person['familyName'] = $lastName;
+            if (isset($telephone)) {
+                $person['telephones'][0]['telephone'] = $telephone;
+            }
+            if (isset($email)) {
+                $person['emails'][0]['email'] = $email;
+            }
+
+            $person = $commonGroundService->updateResource($person);
+
+            $backUrl = $session->get('backUrl', false);
+            if ($backUrl) {
+                return $this->redirect($backUrl);
+            } else {
+                return $this->redirect($this->router->generate('app_default_index'));
+            }
+        }
+
+        return $variables;
     }
 
     /**
