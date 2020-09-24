@@ -155,13 +155,14 @@ class ChinController extends AbstractController
         }
 
         // We want this resource to be a checkin
-        if($variables['resource']['type'] != 'checkin'){
+        if ($variables['resource']['type'] != 'checkin') {
             switch ($variables['resource']['type']) {
                 case 'reservation':
                     return $this->redirect($this->generateUrl('app_chin_reservation', ['code'=>$code]));
                     break;
                 default:
                     $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
+
                     return $this->redirect($this->generateUrl('app_default_index'));
             }
         }
@@ -225,14 +226,12 @@ class ChinController extends AbstractController
         return $variables;
     }
 
-
     /**
      * @Route("/edit")
      * @Template
      */
     public function editAction(Session $session, Request $request, CommonGroundService $commonGroundService)
     {
-
         $variables['code'] = $session->get('code');
         $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
         $variables['person'] = $commonGroundService->getResource($this->getUser()->getPerson());
@@ -241,8 +240,7 @@ class ChinController extends AbstractController
             $variables['node'] = $nodes[0];
         }
 
-        if($request->isMethod('POST')){
-
+        if ($request->isMethod('POST')) {
             $person = $variables['person'];
 
             $firstName = $request->get('firstName');
@@ -273,8 +271,6 @@ class ChinController extends AbstractController
 
         return $variables;
     }
-
-
 
     /**
      * This function will kick of the suplied proces with given values.
@@ -319,13 +315,14 @@ class ChinController extends AbstractController
         }
 
         // We want this resource to be a checkin
-        if($variables['resource']['type'] != 'reservation'){
+        if ($variables['resource']['type'] != 'reservation') {
             switch ($variables['resource']['type']) {
                 case 'checkin':
                     return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
                     break;
                 default:
                     $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
+
                     return $this->redirect($this->generateUrl('app_default_index'));
             }
         }
