@@ -57,7 +57,7 @@ class OrcController extends AbstractController
         $today = new \DateTime('today');
         $today = date_format($today, 'Y-m-d');
 
-        $variables['resource'] = $commonGroundService->getResource('https://orc.dev.zuid-drecht.nl/order_items/'.$id);
+        $variables['resource'] = $commonGroundService->getResource('https://orc.dev.zuid-drecht.nl/order_items/' . $id);
 
         return $variables;
     }
@@ -75,8 +75,8 @@ class OrcController extends AbstractController
         if (!empty($subscription) && $subscription === true) {
             $variables['subscription'] = $commonGroundService->getResourceList('https://orc.dev.zuid-drecht.nl/order_items', ['order[dateCreated]' => 'desc', 'dateCreated[after]' => $today, 'exists[recurrence]' => 'true', 'order[customer]' => $this->getUser()->getPerson()])['hydra:member'][0];
         } else {
-            $variables['currentSubscriptions'] = $commonGroundService->getResourceList('https://orc.dev.zuid-drecht.nl/order_items',['exists[recurrence]' => 'true', 'order.customer' => $this->getUser()->getPerson(), 'order[name]' => 'asc'])['hydra:member'];
-            $variables['availableSubscriptions'] = $commonGroundService->getResourceList('https://pdc.dev.zuid-drecht.nl/offers', ['exists[recurrence]'=>'true'])['hydra:member'];
+            $variables['currentSubscriptions'] = $commonGroundService->getResourceList('https://orc.dev.zuid-drecht.nl/order_items', ['exists[recurrence]' => 'true', 'order.customer' => $this->getUser()->getPerson(), 'order[name]' => 'asc'])['hydra:member'];
+            $variables['availableSubscriptions'] = $commonGroundService->getResourceList('https://pdc.dev.zuid-drecht.nl/offers', ['exists[recurrence]' => 'true'])['hydra:member'];
         }
 
         return $variables;
@@ -107,7 +107,14 @@ class OrcController extends AbstractController
         if ($request->isMethod('POST') && empty($variables['order'])) {
             $request = $request->request->all();
 
-            $offer = $commonGroundService->getResource($request['offers'][0]);
+            if (!empty($request['offers'][0])) {
+                $offer = $commonGroundService->getResource($request['offers'][0]);
+            } elseif (!empty($request['offer'])) {
+                var_dump($request['offer']);
+                die;
+                $offer = $commonGroundService->getResource($request['offer']);
+
+            }
 
             $user = $this->getUser()->getPerson();
             $userOrg = $this->getUser()->getOrganization();
@@ -176,6 +183,6 @@ class OrcController extends AbstractController
             }
         }
 
-            return $variables;
+        return $variables;
     }
 }

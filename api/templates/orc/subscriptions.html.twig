@@ -90,19 +90,38 @@
 
                     <form action="{{ path('app_orc_order') }}" method="post">
 
-                        <div class="input">
-                            <label class="input__label"
-                                   for="subscription">{{ 'subscriptions'|trans|capitalize }}</label>
-                            <select onchange="showSelectedSub(this)" id="subscription" name="offers[]"
-                                    class="input__control input__control--l input__control--select" required>
-                                <option hidden="" value=''></option>
+                        {% if availableSubscriptions|length <= 6 %}
+
+                            <fieldset class="input">
+                                <legend class="input__legend">{{ 'subscriptions'|trans|capitalize }}</legend>
                                 {% for sub in availableSubscriptions %}
-                                    <option value="{{ sub['@id'] }}">{{ sub['name'] }}<span
-                                            style="float: right">{% if sub.priceCurrency is defined and sub.priceCurrency == 'EUR' %}&euro;{% endif %} {{ sub.price }},-</span>
-                                    </option>
+                                    <div class="input__group input__group--radio">
+                                        <input type="radio" name="offer" id="{{ sub['@id'] }}"
+                                               value="{{ sub['@id'] }}"
+                                               class="input__control input__control--radio" required
+                                               onchange="showSelectedSub(this)">
+                                        <label class="input__label input__label--radio"
+                                               for="{{ sub['@id'] }}">{{ sub['name'] }}</label>
+                                    </div>
                                 {% endfor %}
-                            </select>
-                        </div>
+                            </fieldset>
+
+                        {% else %}
+
+                            <div class="input">
+                                <label class="input__label"
+                                       for="subscription">{{ 'subscriptions'|trans|capitalize }}</label>
+                                <select onchange="showSelectedSub(this)" id="subscription" name="offers[]"
+                                        class="input__control input__control--l input__control--select" required>
+                                    <option hidden="" value=''></option>
+                                    {% for sub in availableSubscriptions %}
+                                        <option value="{{ sub['@id'] }}">{{ sub['name'] }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        {% endif %}
 
                         <div id="subDiv" style="display: none">
                             <ul class="definition-list">
