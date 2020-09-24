@@ -226,6 +226,55 @@ class ChinController extends AbstractController
     }
 
 
+    /**
+     * @Route("/edit")
+     * @Template
+     */
+    public function editAction(Session $session, Request $request, CommonGroundService $commonGroundService)
+    {
+
+        $variables['code'] = $session->get('code');
+        $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
+        $variables['person'] = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        if (count($nodes) > 0) {
+            $variables['node'] = $nodes[0];
+        }
+
+        if($request->isMethod('POST')){
+
+            $person = $variables['person'];
+
+            $firstName = $request->get('firstName');
+            $lastName = $request->get('lastName');
+            $telephone = $request->get('telephone');
+            $email = $request->get('email');
+
+            $person['firstName'] = $firstName;
+            $person['familyName'] = $lastName;
+            if (isset($telephone)) {
+                $person['telephones'][0] = [];
+                $person['telephones'][0]['telephone'] = $telephone;
+            }
+            if (isset($email)) {
+                $person['emails'][0] = [];
+                $person['emails'][0]['email'] = $email;
+            }
+
+            $person = $commonGroundService->updateResource($person);
+
+            $backUrl = $session->get('backUrl', false);
+            if ($backUrl) {
+                return $this->redirect($backUrl);
+            } else {
+                return $this->redirect($this->generateUrl('app_default_index'));
+            }
+        }
+
+        return $variables;
+    }
+
+
 
     /**
      * This function will kick of the suplied proces with given values.
@@ -393,6 +442,8 @@ class ChinController extends AbstractController
             switch ($method) {
                 case 'idin':
                     return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
+                case 'idinLogin':
+                    return $this->redirect($this->generateUrl('app_user_idinlogin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'facebook':
                     return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'google':
