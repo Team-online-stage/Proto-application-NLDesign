@@ -64,16 +64,20 @@ class ZZController extends AbstractController
 
         // Create the template
         if ($content) {
-            $template = $this->get('twig')->createTemplate($content);
-            $template = $template->render($variables);
+            $twigTemplate = $this->get('twig')->createTemplate($content);
+            $twigTemplate = $twigTemplate->render($variables);
         } else {
-            $template = $this->render('404.html.twig', $variables);
 
-            return $template;
+            var_dump($template);
+            die;
+
+            $twigTemplate = $this->render('404.html.twig', $variables);
+
+            return $twigTemplate;
         }
 
         return $response = new Response(
-            $template,
+            $twigTemplate,
             Response::HTTP_OK,
             ['content-type' => 'text/html']
         );
