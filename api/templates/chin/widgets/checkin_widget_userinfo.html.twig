@@ -28,6 +28,7 @@
     {% if password_error is defined %}
         <div class="notification notification--error" id="my-notification">
             <div class="notification__content">
+                {% if user_info.email is defined and user_info.email is not empty %}<span>{{ 'there is an existing user with the email:'|trans|capitalize }} {{ user_info.email }}</span><br>{% endif %}
                 <span>{{ 'forgot password'|trans|capitalize }}?</span>
                 <span>{{ 'click'|trans|capitalize }} <a href="#">{{ 'here'|trans }}</a> {{ 'to change your password'|trans }}</span>
             </div>
