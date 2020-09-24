@@ -96,12 +96,29 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/idinLogin")
+     * @Template
+     */
+    public function IdinLoginAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $session->set('backUrl', $request->query->get('backUrl'));
+
+        $redirect = str_replace('http:', 'https:', $request->getUri());
+
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'idinLogin&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+    }
+
+    /**
      * @Route("/idin")
      * @Template
      */
-    public function IdinAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    public function IdinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$request->getUri().'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+        $session->set('backUrl', $request->query->get('backUrl'));
+
+        $redirect = str_replace('http:', 'https:', $request->getUri());
+
+        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
     }
 
     /**
@@ -153,6 +170,7 @@ class UserController extends AbstractController
         $provider = $providers[0];
 
         $redirect = $request->getUri();
+
         if (strpos($redirect, '?') == true) {
             $redirect = substr($redirect, 0, strpos($redirect, '?'));
         }

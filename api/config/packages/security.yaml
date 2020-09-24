@@ -32,6 +32,7 @@ security:
                     - Conduction\CommonGroundBundle\Security\CommongroundUserAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundDigispoofAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundIdinAuthenticator
+                    - Conduction\CommonGroundBundle\Security\CommongroundIdinLoginAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundFacebookAuthenticator
                     - Conduction\CommonGroundBundle\Security\CommongroundGmailAuthenticator
                 entry_point: Conduction\CommonGroundBundle\Security\CommongroundApplicationAuthenticator
