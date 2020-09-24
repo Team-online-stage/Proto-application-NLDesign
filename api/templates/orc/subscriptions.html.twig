@@ -36,10 +36,10 @@
                         <thead>
                         <tr>
                             <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                            <th scope="col">{{ 'description'|trans|capitalize }}</th>
                             <th scope="col">{{ 'price'|trans|capitalize }}</th>
                             <th scope="col">{{ 'start date'|trans|capitalize }}</th>
                             <th scope="col">{{ 'end date'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'next invoice'|trans|capitalize }}</th>
                             <th scope="col"></th>
                         </tr>
                         </thead>
@@ -47,26 +47,29 @@
                         {% if currentSubscriptions is not empty and currentSubscriptions is not empty %}
                             {% for sub in currentSubscriptions %}
                                 <tr>
-                                <td>{{ sub.name }}</td>
-                                <td>{{ sub.description }}</td>
-                                <td>&euro; {{ sub.price }},-</td>
-                                {% if sub.dateStart is defined and sub.dateStart is not empty %}
-                                    <td>{{ sub.dateStart|date('Y-m-d') }}</td>
-                                {% else %}
-                                    <td style="color: lightgrey">No end date</td>
-                                {% endif %}
-                                {% if sub.dateEnd is defined and sub.dateEnd is not empty %}
-                                <td>{{ sub.dateEnd|date('Y-m-d') }}</td>
-                            {% else %}
-                                <td style="color: lightgrey">No end date</td>
-                                {% endif %}
-                                <td><a href="{{ path('app_orc_subscription', {id: sub.id}) }}"><b>VIEW</b></a></td>
+                                    <td>{{ sub.name }}</td>
+                                    <td>&euro; {{ sub.price }},-</td>
+                                    {% if sub.dateStart is defined and sub.dateStart is not empty %}
+                                        <td>{{ sub.dateStart|date('Y-m-d') }}</td>
+                                    {% else %}
+                                        <td style="color: lightgrey">No end date</td>
+                                    {% endif %}
+                                    {% if sub.dateEnd is defined and sub.dateEnd is not empty %}
+                                        <td>{{ sub.dateEnd|date('Y-m-d') }}</td>
+                                    {% else %}
+                                        <td style="color: lightgrey">No end date</td>
+                                    {% endif %}
+                                    {% if sub.recurrence is defined and sub.recurrence is not empty %}
+                                        <td>{{ sub.recurrence }}</td>
+                                    {% else %}
+                                        <td style="color: lightgrey">No end date</td>
+                                    {% endif %}
+                                    <td><a href="{{ path('app_orc_subscription', {id: sub.id}) }}"><b>VIEW</b></a></td>
                                 </tr>
                             {% endfor %}
                         {% else %}
                             <tr>
                                 <td style="color: lightgrey">{{ 'u have no active subscriptions'|trans|capitalize }}</td>
-                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -91,7 +94,7 @@
                             <label class="input__label"
                                    for="subscription">{{ 'subscriptions'|trans|capitalize }}</label>
                             <select onchange="showSelectedSub(this)" id="subscription" name="offers[]"
-                                    class="input__control input__control--l input__control--select">
+                                    class="input__control input__control--l input__control--select" required>
                                 <option hidden="" value=''></option>
                                 {% for sub in availableSubscriptions %}
                                     <option value="{{ sub['@id'] }}">{{ sub['name'] }}<span

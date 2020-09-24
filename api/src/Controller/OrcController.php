@@ -73,9 +73,9 @@ class OrcController extends AbstractController
         $today = date_format($today, 'Y-m-d');
 
         if (!empty($subscription) && $subscription === true) {
-            $variables['subscription'] = $commonGroundService->getResourceList('https://orc.dev.zuid-drecht.nl/order_items', ['order[dateCreated]' => 'desc', 'dateCreated[after]' => 'today', 'exists[recurrence]' => 'true', 'order[customer]' => $this->getUser()->getPerson()])['hydra:member'][0];
+            $variables['subscription'] = $commonGroundService->getResourceList('https://orc.dev.zuid-drecht.nl/order_items', ['order[dateCreated]' => 'desc', 'dateCreated[after]' => $today, 'exists[recurrence]' => 'true', 'order[customer]' => $this->getUser()->getPerson()])['hydra:member'][0];
         } else {
-            $variables['currentSubscriptions'] = $commonGroundService->getResourceList('https://orc.dev.zuid-drecht.nl/order_items?exists[recurrence]=true&dateEnd[after]&order[customer]=' . $this->getUser()->getPerson())['hydra:member'];
+            $variables['currentSubscriptions'] = $commonGroundService->getResourceList('https://orc.dev.zuid-drecht.nl/order_items',['exists[recurrence]' => 'true', 'order.customer' => $this->getUser()->getPerson(), 'order[name]' => 'asc'])['hydra:member'];
             $variables['availableSubscriptions'] = $commonGroundService->getResourceList('https://pdc.dev.zuid-drecht.nl/offers', ['exists[recurrence]'=>'true'])['hydra:member'];
         }
 
@@ -107,14 +107,14 @@ class OrcController extends AbstractController
         if ($request->isMethod('POST') && empty($variables['order'])) {
             $request = $request->request->all();
 
+            $offer = $commonGroundService->getResource($request['offers'][0]);
+
             $user = $this->getUser()->getPerson();
             $userOrg = $this->getUser()->getOrganization();
 
-            $order['name'] = 'test';
+            $order['name'] = $offer['name'];
             $order['organization'] = $userOrg;
             $order['customer'] = $user;
-
-            $order = $commonGroundService->createResource($order, 'https://orc.dev.zuid-drecht.nl/orders');
 
             foreach ($request['offers'] as $offer) {
                 $offer = $commonGroundService->getResource($offer);
@@ -140,14 +140,16 @@ class OrcController extends AbstractController
                     $orderItem['notice'] = $offer['notice'];
                 }
 
-                $orderItem['order'] = $order['@id'];
-
-                $orderItem = $commonGroundService->createResource($orderItem, 'https://orc.dev.zuid-drecht.nl/order_items');
                 $orderItems[] = $orderItem;
-                $order = $commonGroundService->getResource($order['@id']);
-                $session->set('order', $order);
-                $session->set('orderItems', $orderItems);
+
             }
+
+            $session->set('order', $order);
+            $session->set('orderItems', $orderItems);
+
+            $variables['order'] = $order;
+            $variables['orderItems'] = $orderItems;
+
         } elseif ($request->isMethod('POST') && !empty($variables['order']) && !empty($variables['orderItems'] && $makeOrder == true)) {
             $request = $request->request->all();
 
@@ -162,22 +164,18 @@ class OrcController extends AbstractController
             foreach ($variables['orderItems'] as $item) {
                 $item['order'] = $variables['order']['@id'];
                 $item = $commonGroundService->createResource($item, 'https://orc.dev.zuid-drecht.nl/order_items');
-                $variables['order']['items'][] = $item;
             }
 
-            // If this order is not an subscription make invoice
-            if (empty($variables['order']['items'][0]['recurrence'])) {
+            if (!empty($variables['order']['items'][0]['recurrence'])) {
                 $session->remove('order');
                 $session->remove('orderItems');
 
                 return $this->redirectToRoute('app_orc_subscriptions');
+            } else {
+                return $this->redirectToRoute('app_orc_subscriptions', ['subscription' => 'true']);
             }
         }
 
-        if (!empty($variables['orderItems'][0]['recurrence'])) {
-            return $this->redirectToRoute('app_orc_subscriptions', ['subscription' => 'true']);
-        } else {
             return $variables;
-        }
     }
 }
