@@ -1071,7 +1071,7 @@
       </trans-unit>
       <trans-unit id="Sz6Heuz" resname="Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.">
         <source>Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.</source>
-        <target>Uw data is veilig opgesalgen in de data kluis en is alleen beschikbaar voor de GGD voor de komende 14 dagen.</target>
+        <target>Uw data is veilig opgeslagen in de datakluis en is alleen beschikbaar voor de GGD voor de komende 14 dagen.</target>
       </trans-unit>
       <trans-unit id="Ljhde2j" resname="Create a user account so that I can view my data">
         <source>Create a user account so that I can view my data</source>
