@@ -1105,6 +1105,10 @@
         <source>accommodation</source>
         <target>accommodatie</target>
       </trans-unit>
+      <trans-unit id="Wwubxo2" resname="there is an existing user with the email:">
+        <source>there is an existing user with the email:</source>
+        <target>er bestaat een account voor:</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
