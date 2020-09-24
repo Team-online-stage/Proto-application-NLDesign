@@ -104,6 +104,7 @@ class UserController extends AbstractController
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $redirect = str_replace('http:', 'https:', $request->getUri());
+
         return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'idinLogin&acr_values=urn:signicat:oidc:method:idin-login&state=123');
     }
 
@@ -113,10 +114,10 @@ class UserController extends AbstractController
      */
     public function IdinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $redirect = str_replace('http:', 'https:', $request->getUri());
+
         return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
     }
 
