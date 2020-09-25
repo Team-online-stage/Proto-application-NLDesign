@@ -138,7 +138,7 @@ class UserController extends AbstractController
         }
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.$provider['configuration']['app_id'].'&scope=email&redirect_uri='.$redirect.'&state={st=state123abc,ds=123456789}');
+            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.str_replace("\"","",$provider['configuration']['app_id']).'&scope=email&redirect_uri='.$redirect.'&state={st=state123abc,ds=123456789}');
         } else {
             return $this->render('500.html.twig');
         }
