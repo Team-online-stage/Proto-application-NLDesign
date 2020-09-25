@@ -154,6 +154,19 @@ class ChinController extends AbstractController
             return $this->redirect($this->generateUrl('app_default_index'));
         }
 
+        // We want this resource to be a checkin
+        if ($variables['resource']['type'] != 'checkin') {
+            switch ($variables['resource']['type']) {
+                case 'reservation':
+                    return $this->redirect($this->generateUrl('app_chin_reservation', ['code'=>$code]));
+                    break;
+                default:
+                    $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
+
+                    return $this->redirect($this->generateUrl('app_default_index'));
+            }
+        }
+
         $variables['code'] = $code;
 
         if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
@@ -214,6 +227,168 @@ class ChinController extends AbstractController
     }
 
     /**
+     * @Route("/edit")
+     * @Template
+     */
+    public function editAction(Session $session, Request $request, CommonGroundService $commonGroundService)
+    {
+        $variables['code'] = $session->get('code');
+        $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
+        $variables['person'] = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        if (count($nodes) > 0) {
+            $variables['node'] = $nodes[0];
+        }
+
+        if ($request->isMethod('POST')) {
+            $person = $variables['person'];
+
+            $firstName = $request->get('firstName');
+            $lastName = $request->get('lastName');
+            $telephone = $request->get('telephone');
+            $email = $request->get('email');
+
+            $person['firstName'] = $firstName;
+            $person['familyName'] = $lastName;
+            if (isset($telephone)) {
+                $person['telephones'][0] = [];
+                $person['telephones'][0]['telephone'] = $telephone;
+            }
+            if (isset($email)) {
+                $person['emails'][0] = [];
+                $person['emails'][0]['email'] = $email;
+            }
+
+            $person = $commonGroundService->updateResource($person);
+
+            $backUrl = $session->get('backUrl', false);
+            if ($backUrl) {
+                return $this->redirect($backUrl);
+            } else {
+                return $this->redirect($this->generateUrl('app_default_index'));
+            }
+        }
+
+        return $variables;
+    }
+
+    /**
+     * This function will kick of the suplied proces with given values.
+     *
+     * @Route("/reservation/{code}")
+     * @Template
+     */
+    public function reservationAction(Session $session, $code = null, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    {
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+        $session->set('code', $code);
+        $variables['code'] = $code;
+
+        // Oke we want a user so lets check if we have one
+        if (!$this->getUser()) {
+            return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
+        }
+
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        // We want this resource to be a checkin
+        if ($variables['resource']['type'] != 'reservation') {
+            switch ($variables['resource']['type']) {
+                case 'checkin':
+                    return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
+                    break;
+                default:
+                    $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
+
+                    return $this->redirect($this->generateUrl('app_default_index'));
+            }
+        }
+
+        $variables['code'] = $code;
+        $variables['organization'] = $commonGroundService->getResource($variables['resource']['organization']);
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' =>$variables['organization']['id']])['hydra:member'];
+
+        if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
+
+            //update person
+            $name = $request->request->get('name');
+            $email = $request->request->get('email');
+            $tel = $request->request->get('telephone');
+
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+
+            // Wat doet dit?
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
+            $user = $user[0];
+
+            if (isset($person['emails'][0])) {
+                //$emailResource = $person['emails'][0];
+                //$emailResource['email'] = $email;
+                // @Hotfix
+                //$emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id']]);
+                //$emailResource = $commonGroundService->updateResource($emailResource);
+                //$person['emails'][0] = 'emails/'.$emailResource['id'];
+            } else {
+                $emailObject['email'] = $email;
+                $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
+                $person['emails'][0] = 'emails/'.$emailObject['id'];
+            }
+
+            if (isset($person['telephones'][0])) {
+                //$telephoneResource = $person['telephones'][0];
+                //$telephoneResource['telephone'] = $tel;
+                // @Hotfix
+                //$telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
+                //$telephoneObject = $commonGroundService->updateResource($telephoneResource);
+                //$person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
+            } elseif ($tel) {
+                $telephoneObject['telephone'] = $tel;
+                $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
+                $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
+            }
+
+            // @Hotfix
+            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
+            //$person = $commonGroundService->updateResource($person);
+
+            // Create check-in
+            $reservation = [];
+            $reservation['node'] = 'nodes/'.$variables['resource']['id'];
+            $reservation['person'] = $person['@id'];
+            $reservation['userUrl'] = $user['@id'];
+
+            $checkIn = $commonGroundService->createResource($reservation, ['component' => 'chin', 'type' => 'reservations']);
+
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+        }
+
+        return $variables;
+    }
+
+    /**
      * This function shows all available locations.
      *
      * @Route("/login/{code}")
@@ -264,6 +439,8 @@ class ChinController extends AbstractController
             switch ($method) {
                 case 'idin':
                     return $this->redirect($this->generateUrl('app_user_idin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
+                case 'idinLogin':
+                    return $this->redirect($this->generateUrl('app_user_idinlogin', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'facebook':
                     return $this->redirect($this->generateUrl('app_user_facebook', ['backUrl'=>$this->generateUrl('app_chin_checkin', ['code'=>$code], urlGeneratorInterface::ABSOLUTE_URL)]));
                 case 'google':
@@ -341,7 +518,10 @@ class ChinController extends AbstractController
 
                 // validate user
                 if (!$user) {
-                    $variables['password_error'] = 'Invalid password';
+                    $variables['password_error'] = 'invalid password';
+                    $variables['user_info']['name'] = $name;
+                    $variables['user_info']['email'] = $username;
+                    $variables['user_info']['telephone'] = $tel;
 
                     return $variables;
                 }
