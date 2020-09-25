@@ -126,15 +126,21 @@
                         <div id="subDiv" style="display: none">
                             <ul class="definition-list">
                                 <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">Beschrijving</div>
+                                    <div class="definition-list__title">{{ 'description'|trans|capitalize }}</div>
                                     <div class="definition-list__description">
                                         <p id="subDes"></p>
                                     </div>
                                 </li>
                                 <li class="definition-list__item definition-list__item--horizontal">
-                                    <div class="definition-list__title">Prijs</div>
+                                    <div class="definition-list__title">{{ 'price'|trans|capitalize }}</div>
                                     <div class="definition-list__description">
                                         <p id="subPrice"></p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">{{ 'recurrence'|trans|capitalize }}</div>
+                                    <div class="definition-list__description">
+                                        <p id="subRecurrence"></p>
                                     </div>
                                 </li>
                             </ul>
@@ -188,6 +194,7 @@
                 {#var subName = '{{ sub.name }}';#}
                 var subDes = '{{ sub.description }}';
                 var subPrice = '\u20AC {{ sub.price }},-';
+                var subRecurrence = '{{ 'every '|trans|capitalize~date_interval(sub.recurrence, '%m')~' month(s)'|trans }}';
             }
 
             // document.getElementById('subName').innerText = subName;
@@ -198,6 +205,7 @@
                 document.getElementById('subDes').innerText = "Dit product heeft geen beschrijving"
             }
             document.getElementById('subPrice').innerText = subPrice;
+            document.getElementById('subRecurrence').innerText = subRecurrence;
             {% endfor %}
         }
 
