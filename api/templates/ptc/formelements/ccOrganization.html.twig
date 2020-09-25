@@ -85,9 +85,9 @@
             <h3>{{ 'contact'|trans|capitalize }}</h3>
             <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-4">
-                        <label class="input__label" for="voornaam">{{ 'givenName'|trans|capitalize }}</label>
+                        <label class="input__label" for="voornaam">{{ 'givenName'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
                         <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][persons][0][givenName]"
-                            {% if organization.people.0.givenName is defined %} value="{{ organization.people.0.givenName }}"{% endif %}>
+                            {% if organization.people.0.givenName is defined %} value="{{ organization.people.0.givenName }}"{% endif %} required="">
                     </div>
                     <div class="col-md-4">
                         <label class="input__label" for="achternaam">{{ 'additionalName'|trans|capitalize }}</label>
@@ -95,9 +95,9 @@
                             {% if organization.people.0.additionalName is defined %} value="{{ organization.people.0.additionalName }}"{% endif %}>
                     </div>
                     <div class="col-md-4">
-                        <label class="input__label" for="achternaam">{{ 'familyName'|trans|capitalize }}</label>
+                        <label class="input__label" for="achternaam">{{ 'familyName'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
                         <input class="input__control input__control--text" style="width: 100%" type="text" name="request[properties][{{ property.name }}][persons][0][familyName]"
-                            {% if organization.people.0.familyName is defined %} value="{{ organization.people.0.familyName }}"{% endif %}>
+                            {% if organization.people.0.familyName is defined %} value="{{ organization.people.0.familyName }}"{% endif %} required="">
                     </div>
             </div>
         {% endif %}
@@ -105,16 +105,16 @@
         <div class="row">
             {% if property.configuration.email is not defined or property.configuration.email %}
                 <div class="col-md-6">
-                    <label class="input__label" for="email">{{ 'eMail'|trans|capitalize }}</label>
+                    <label class="input__label" for="email">{{ 'eMail'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
                     <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][0][email]"
-                        {% if organization.emails.0.email is defined %} value="{{ organization.emails.0.email }}"{% endif %}>
+                        {% if organization.emails.0.email is defined %} value="{{ organization.emails.0.email }}"{% endif %} required="">
                 </div>
             {% endif %}
             {% if property.configuration.telephone is not defined or property.configuration.telephone %}
                 <div class="col-md-6">
-                    <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}</label>
+                    <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
                     <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][0][telephone]"
-                        {% if organization.telephones.0.telephone is defined %} value="{{ organization.telephones.0.telephone }}"{% endif %}>
+                        {% if organization.telephones.0.telephone is defined %} value="{{ organization.telephones.0.telephone }}"{% endif %} required="">
                 </div>
             {% endif %}
         </div>
