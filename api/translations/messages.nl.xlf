@@ -1149,6 +1149,22 @@
         <source>you can not save or submit this procceses if you are not loged in</source>
         <target>je kan dit procces niet opslaan of inloggen als je niet bent ingelogd</target>
       </trans-unit>
+      <trans-unit id="UEW31bw" resname="every ">
+        <source>every </source>
+        <target>elke </target>
+      </trans-unit>
+      <trans-unit id="obHt56W" resname=" month(s)">
+        <source> month(s)</source>
+        <target> maand(en)</target>
+      </trans-unit>
+      <trans-unit id="Omn3ndg" resname="recurrence">
+        <source>recurrence</source>
+        <target>herhaling</target>
+      </trans-unit>
+      <trans-unit id="hbn2i87" resname="next invoice">
+        <source>next invoice</source>
+        <target>volgende factuur</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
