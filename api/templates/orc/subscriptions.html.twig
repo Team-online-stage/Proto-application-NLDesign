@@ -60,7 +60,7 @@
                                         <td style="color: lightgrey">No end date</td>
                                     {% endif %}
                                     {% if sub.recurrence is defined and sub.recurrence is not empty %}
-                                        <td>{{ sub.recurrence }}</td>
+                                        <td>{{ add_date_interval(sub.dateStart, sub.recurrence)|date('Y-m-d') }}</td>
                                     {% else %}
                                         <td style="color: lightgrey">No end date</td>
                                     {% endif %}
@@ -143,6 +143,12 @@
                                         <p id="subRecurrence"></p>
                                     </div>
                                 </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">{{ 'notice period'|trans|capitalize }}</div>
+                                    <div class="definition-list__description">
+                                        <p id="subNotice"></p>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
 
@@ -195,6 +201,7 @@
                 var subDes = '{{ sub.description }}';
                 var subPrice = '\u20AC {{ sub.price }},-';
                 var subRecurrence = '{{ 'every '|trans|capitalize~date_interval(sub.recurrence, '%m')~' month(s)'|trans }}';
+                var subNotice = '{{ date_interval(sub.recurrence, '%m')~' month(s)'|trans }}';
             }
 
             // document.getElementById('subName').innerText = subName;
@@ -206,6 +213,7 @@
             }
             document.getElementById('subPrice').innerText = subPrice;
             document.getElementById('subRecurrence').innerText = subRecurrence;
+            document.getElementById('subNotice').innerText = subNotice;
             {% endfor %}
         }
 

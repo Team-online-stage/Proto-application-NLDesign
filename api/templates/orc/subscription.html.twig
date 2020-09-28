@@ -23,11 +23,28 @@
             <div class="row">
                 <div id="subs">
 
-                    <div id="subsText">
-                        <h1 style="display: inline-block">{{ resource.name }}</h1>
-                        <button id="cancelSubButton" style="float: right; background: darkred !important"
-                                class="btn btn-danger">{{ 'cancel subscription'|trans|capitalize }}</button>
-                    </div>
+                    {{ (app_session_duration * 1000) + 5000 }}
+
+                    <form action="{{ path('app_orc_subscription', {id: resource.id}) }}" method="post">
+                        <div id="subsText">
+                            <h1 style="display: inline-block">{{ resource.name }}</h1>
+                            {% if resource.dateEnd is defined and resource.dateEnd is not empty %}
+                                <button id="resumeSubButton" style="float: right;"
+                                        name="resumeSubButton"
+                                        class="btn btn-danger"
+                                        type="submit"
+                                        value="true"
+                                >{{ 'resume subscription'|trans|capitalize }}</button>
+                            {% else %}
+                                <button id="cancelSubButton" style="float: right;"
+                                        name="cancelSub"
+                                        class="btn btn-danger"
+                                        type="submit"
+                                        value="true"
+                                >{{ 'cancel subscription'|trans|capitalize }}</button>
+                            {% endif %}
+                        </div>
+                    </form>
 
                     {% if resource.description is defined and resource.description is not empty %}
                         <p>{{ resource.description }}</p>
@@ -40,8 +57,10 @@
                     {% endif %}
 
                     {% if resource.price is defined and resource.price is not empty %}
-                        <p>This subscription costs &euro; {{ resource.price }},- every {{ date_interval(resource.recurrence, '%m '~'month'|trans) }}.</p>
-                        <p>Next invoice will be send at {{ date_interval(resource.recurrence, '') }}.</p>
+                        <p>This subscription costs &euro; {{ resource.price }},-
+                            every {{ date_interval(resource.recurrence, '%m '~'month'|trans) }}.</p>
+                        <p>Next invoice will be send
+                            at {{ add_date_interval(resource.dateStart, resource.recurrence)|date('Y-m-d') }}.</p>
                     {% else %}
                         <p style="color: lightgrey">This subscription has no description</p>
                     {% endif %}

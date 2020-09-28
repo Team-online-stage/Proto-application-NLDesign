@@ -12,6 +12,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,6 +25,15 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class OrcController extends AbstractController
 {
+    /**
+     * @var FlashBagInterface
+     */
+    private $flash;
+
+    public function __construct(FlashBagInterface $flash)
+    {
+        $this->flash = $flash;
+    }
     /**
      * @Route("/user")
      * @Template
@@ -58,6 +68,20 @@ class OrcController extends AbstractController
         $today = date_format($today, 'Y-m-d');
 
         $variables['resource'] = $commonGroundService->getResource('https://orc.dev.zuid-drecht.nl/order_items/' . $id);
+
+        if($request->isMethod('POST') && !empty($request->get('cancelSub') == true)){
+            $variables['resource']['dateEnd'] = $commonGroundService->addDateInterval($today, $variables['resource']['notice']);
+            $variables['resource']['dateEnd'] = date_format($variables['resource']['dateEnd'], 'Y-m-d');
+//            $variables['resource'] = $commonGroundService->saveResource($variables['resource']);
+
+            $this->flash->add('success', $variables['resource']['name'].' will end at '.$variables['resource']['dateEnd']);
+
+        } elseif ($request->isMethod('POST') && !empty($request->get('resumeSub') == true)){
+            $variables['resource']['dateEnd'] = "";
+//            $variables['resource'] = $commonGroundService->saveResource($variables['resource']);
+
+            $this->flash->add('success', $variables['resource']['name'].' will be continued');
+        }
 
         return $variables;
     }
