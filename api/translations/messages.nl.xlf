@@ -1109,6 +1109,42 @@
         <source>there is an existing user with the email:</source>
         <target>er bestaat een account voor:</target>
       </trans-unit>
+      <trans-unit id="j__78H0" resname="coc">
+        <source>coc</source>
+        <target>kvk</target>
+      </trans-unit>
+      <trans-unit id="fFErSLq" resname="vat">
+        <source>vat</source>
+        <target>btw</target>
+      </trans-unit>
+      <trans-unit id="obfG8aq" resname="suffix">
+        <source>suffix</source>
+        <target>toevoeging</target>
+      </trans-unit>
+      <trans-unit id="1p4ZCwp" resname="givenName">
+        <source>givenName</source>
+        <target>voornaam</target>
+      </trans-unit>
+      <trans-unit id="6KaQ.zB" resname="additionalName">
+        <source>additionalName</source>
+        <target>tussenvoegsel</target>
+      </trans-unit>
+      <trans-unit id="rPKZEFh" resname="familyName">
+        <source>familyName</source>
+        <target>achternaam</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target>overige</target>
+      </trans-unit>
+      <trans-unit id="zWdOl1T" resname="eMail">
+        <source>eMail</source>
+        <target>e-mail</target>
+      </trans-unit>
+      <trans-unit id="cxxtiQO" resname="you can not save or submit this procceses if you are not loged in">
+        <source>you can not save or submit this procceses if you are not loged in</source>
+        <target>je kan dit procces niet opslaan of inloggen als je niet bent ingelogd</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
