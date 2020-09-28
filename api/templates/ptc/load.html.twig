@@ -5,8 +5,10 @@
     <div class="col-md-12">
         <div class="content">
             <header class="content__header">
+                {% if process.showBackButton is defined and process.showBackButton %}
                 <a class="backlink" href="{{ path('app_ptc_index') }}">{{ 'processes'|trans|capitalize }}</a>
-                <header class="content__header">
+                {% endif %}
+                <header class="content__header" style="margin-top: 20px;">
                     <h1 class="content__header-title">{{ process.name|capitalize }}</h1>
                 </header>
             </header>
