@@ -5,7 +5,6 @@
 namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -67,7 +66,7 @@ class OrcController extends AbstractController
         $today = new \DateTime('today');
         $today = date_format($today, 'Y-m-d');
 
-        $variables['resource'] = $commonGroundService->getResource('https://orc.dev.zuid-drecht.nl/order_items/' . $id);
+        $variables['resource'] = $commonGroundService->getResource('https://orc.dev.zuid-drecht.nl/order_items/'.$id);
 
         if($request->isMethod('POST') && !empty($request->get('cancelSub') == true)){
             $variables['resource']['dateEnd'] = $commonGroundService->addDateInterval($today, $variables['resource']['notice']);
@@ -135,9 +134,8 @@ class OrcController extends AbstractController
                 $offer = $commonGroundService->getResource($request['offers'][0]);
             } elseif (!empty($request['offer'])) {
                 var_dump($request['offer']);
-                die;
+                exit;
                 $offer = $commonGroundService->getResource($request['offer']);
-
             }
 
             $user = $this->getUser()->getPerson();
@@ -172,7 +170,6 @@ class OrcController extends AbstractController
                 }
 
                 $orderItems[] = $orderItem;
-
             }
 
             $session->set('order', $order);
@@ -180,7 +177,6 @@ class OrcController extends AbstractController
 
             $variables['order'] = $order;
             $variables['orderItems'] = $orderItems;
-
         } elseif ($request->isMethod('POST') && !empty($variables['order']) && !empty($variables['orderItems'] && $makeOrder == true)) {
             $request = $request->request->all();
 
