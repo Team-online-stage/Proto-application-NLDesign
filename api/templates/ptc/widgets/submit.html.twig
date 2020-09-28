@@ -10,26 +10,6 @@
 
         {% if request is defined and request is not null %}
             <ul class="definition-list">
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title" style="max-width: 100%">
-                        {{ 'process'|trans|capitalize }}
-                    </div>
-                    <div class="definition-list__description">
-                        <p>
-                            {{ process.name|capitalize }}
-                        </p>
-                    </div>
-                </li>
-                <li class="definition-list__item definition-list__item--horizontal">
-                    <div class="definition-list__title" style="max-width: 100%">
-                        {{ 'description'|trans|capitalize }}
-                    </div>
-                    <div class="definition-list__description">
-                        <p>
-                            {{ process.description }}
-                        </p>
-                    </div>
-                </li>
                 {% if resource.reference is defined and resource.reference is not empty %}
                     <li class="definition-list__item definition-list__item--horizontal">
                         <div class="definition-list__title" style="max-width: 100%">
