@@ -12,7 +12,7 @@ info:
     - Docker Image: [online](https://hub.docker.com/repository/docker/conduction/pc-php) 
     - Datamodel: [postman](/schema/pan.postman_collection.json) / [oas](/schema/openapi.yaml) / [pdf](/schema/datamodel.pdf) / [modelio (zip)](/schema/Datamodel_Modelio.zip) 
     
-    Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.         
+    "Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar."         
     
 paths:
   /audit_trails:
@@ -3538,12 +3538,20 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
+<<<<<<< Updated upstream
         example: '2020-09-26 09:07:55'
+=======
+        example: '2020-09-25 12:21:34'
+>>>>>>> Stashed changes
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
+<<<<<<< Updated upstream
         example: '2020-09-26 09:07:55'
+=======
+        example: '2020-09-25 12:21:34'
+>>>>>>> Stashed changes
     required: []
   AuditTrail-write:
     properties:
@@ -3591,12 +3599,20 @@ definitions:
         description: 'The moment this request was created'
         type: string
         format: date-time
+<<<<<<< Updated upstream
         example: '2020-09-26 09:07:55'
+=======
+        example: '2020-09-25 12:21:34'
+>>>>>>> Stashed changes
       dateModified:
         description: 'The moment this request last Modified'
         type: string
         format: date-time
+<<<<<<< Updated upstream
         example: '2020-09-26 09:07:55'
+=======
+        example: '2020-09-25 12:21:34'
+>>>>>>> Stashed changes
     required: []
   ChangeLog-write:
     properties:
