@@ -23,8 +23,6 @@
             <div class="row">
                 <div id="subs">
 
-                    {{ (app_session_duration * 1000) + 5000 }}
-
                     <form action="{{ path('app_orc_subscription', {id: resource.id}) }}" method="post">
                         <div id="subsText">
                             <h1 style="display: inline-block">{{ resource.name }}</h1>
