@@ -179,7 +179,7 @@ class PtcController extends AbstractController
             }
 
             // We only support the posting and saving of
-            if ($this->getUser() || in_array ($request['status'],["submitted"])) {
+            if ($this->getUser() || in_array($request['status'], ['submitted'])) {
                 $request = $commonGroundService->saveResource($request, ['component' => 'vrc', 'type' => 'requests']);
             }
 
