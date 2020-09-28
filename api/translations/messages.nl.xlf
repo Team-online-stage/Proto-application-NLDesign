@@ -1065,7 +1065,7 @@
         <source>link to instagram page</source>
         <target>link naar de instagram pagina</target>
       </trans-unit>
-      <trans-unit id="8Hb21s0" resname="u have no active subscriptions">
+      <trans-unit id="xksD14u" resname="u have no active subscriptions">
         <source>u have no active subscriptions</source>
         <target>U heeft geen actieve abonnementen</target>
       </trans-unit>
@@ -1149,29 +1149,61 @@
         <source>you can not save or submit this procceses if you are not loged in</source>
         <target>je kan dit procces niet opslaan of inloggen als je niet bent ingelogd</target>
       </trans-unit>
-      <trans-unit id="UEW31bw" resname="every ">
+      <trans-unit id=".3zCxUP" resname="every ">
         <source>every </source>
         <target>elke </target>
       </trans-unit>
-      <trans-unit id="obHt56W" resname=" month(s)">
+      <trans-unit id="DA0s04h" resname=" month(s)">
         <source> month(s)</source>
         <target> maand(en)</target>
       </trans-unit>
-      <trans-unit id="Omn3ndg" resname="recurrence">
+      <trans-unit id="0xeOQx0" resname="recurrence">
         <source>recurrence</source>
         <target>herhaling</target>
       </trans-unit>
-      <trans-unit id="hbn2i87" resname="next invoice">
+      <trans-unit id="rzprHdB" resname="next invoice">
         <source>next invoice</source>
         <target>volgende factuur</target>
       </trans-unit>
-      <trans-unit id="9Wjn24a" resname="notice period">
-        <source>notice period</source>
-        <target>opzegtermijn</target>
+      <trans-unit id="WHg5j_N" resname="enter the email address of the account you wish to reset">
+        <source>enter the email address of the account you wish to reset</source>
+        <target>__enter the email address of the account you wish to reset</target>
       </trans-unit>
-      <trans-unit id="7Uh21Km" resname="resume subscription">
-        <source>resume subscription</source>
-        <target>abonnement hervatten</target>
+      <trans-unit id="giREF.l" resname="email">
+        <source>email</source>
+        <target>__email</target>
+      </trans-unit>
+      <trans-unit id="Uy4_u9Q" resname="join as organisation">
+        <source>join as organisation</source>
+        <target>meedoen als organisatie</target>
+      </trans-unit>
+      <trans-unit id="XVlnWI." resname="join as horeca owner">
+        <source>join as horeca owner</source>
+        <target>meedoen als horeca</target>
+      </trans-unit>
+      <trans-unit id="J.DUhrY" resname="your order">
+        <source>your order</source>
+        <target>__your order</target>
+      </trans-unit>
+      <trans-unit id="GnswjY3" resname="quantity">
+        <source>quantity</source>
+        <target>__quantity</target>
+      </trans-unit>
+      <trans-unit id="2e1LGzs" resname="cancel subscription">
+        <source>cancel subscription</source>
+        <target>__cancel subscription</target>
+      </trans-unit>
+      <trans-unit id="pcfRcZ4" resname="month">
+        <source>month</source>
+        <target>__month</target>
+      </trans-unit>
+      <trans-unit id="ZqQkqal" resname="every">
+        <source>every</source>
+        <target>__every</target>
+      </trans-unit>
+      <trans-unit id="Dp.NB8G" resname="month(s)">
+        <source>month(s)</source>
+        <target>__month(s)</target>
       </trans-unit>
     </body>
   </file>

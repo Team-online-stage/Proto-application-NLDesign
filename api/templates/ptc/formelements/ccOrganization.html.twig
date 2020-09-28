@@ -21,8 +21,8 @@
             {% endif %}
             {% if property.configuration.coc is not defined or property.configuration.coc %}
             <div class="col-md-4">
-                    <label class="input__label" for="coc">{{ 'coc'|trans|upper }}</label>
-                    <input class="input__control input__control--xl input__control--text" id="coc" name="request[properties][{{property.name}}][coc]" type="text"
+                    <label class="input__label" for="coc">{{ 'coc'|trans|upper }}<span style="color: red">*</span></label>
+                    <input required class="input__control input__control--xl input__control--text" id="coc" name="request[properties][{{property.name}}][coc]" type="text"
                         {% if organization.coc is defined %} value="{{ organization.coc }}"{% endif %}>
             </div>
             {% endif %}
@@ -40,14 +40,6 @@
                         {% if organization.type is defined %} value="{{ organization.type }}"{% endif %}>
             </div>
             {% endif %}
-        </div>
-        <div class="row" style="margin-bottom: 20px">
-            <div class="col-md-12">
-                {% if property.configuration.description is not defined or property.configuration.description %}
-                    <label class="input__label" for="description">{{ 'description'|trans|capitalize }} <span style="color: red">*</span></label>
-                    <textarea style="width: 100%" required name="request[properties][{{property.name}}][description]" id="description" cols="30" rows="10">{% if organization.description is defined %}{{ organization.description }}{% endif %}</textarea>
-                {% endif %}
-            </div>
         </div>
         {% if property.configuration.address is defined and property.configuration.address %}
             <h3>{{ 'address'|trans|capitalize }}</h3>
