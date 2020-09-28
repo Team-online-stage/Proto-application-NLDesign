@@ -217,6 +217,7 @@ class ChinController extends AbstractController
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
+            $checkIn['provider'] = $session->get('checkingProvider');
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
@@ -321,13 +322,15 @@ class ChinController extends AbstractController
 
                 $message = [];
                 $service = $commonGroundService->getResourceList(['component'=>'bs', 'type'=>'services'], "type=mailer")['hydra:member'][0];
-                $service = $commonGroundService->cleanUrl($service);
-                $message['service'] = $service;
+
+                $message['service'] = '/services/'.$service['id'];
                 $message['status'] = 'queued';
                 $message['data'] = ['resource'=>$link, 'sender'=>$organization, 'receiver'=>$person['@id']];
                 $message['content'] = $content;
+                $message['reciever'] = $person['@id'];
+                $message['sender'] = $organization;
 
-                $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages'])['@id'];
+                $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
 
             }
 
@@ -484,6 +487,7 @@ class ChinController extends AbstractController
 
         // If we have a valid user then we do not need to login
         if ($this->getUser()) {
+            $session->set('checkingProvider', 'session');
             return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
         }
 
@@ -641,6 +645,7 @@ class ChinController extends AbstractController
 
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
+            $checkIn['provider'] = 'email';
             $checkIn['userUrl'] = $user['@id'];
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
