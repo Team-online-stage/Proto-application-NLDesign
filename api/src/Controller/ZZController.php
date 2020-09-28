@@ -33,7 +33,7 @@ class ZZController extends AbstractController
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $content = false;
-        $variables = $applicationService->getVariables();
+        //$variables = $applicationService->getVariables();
 
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
