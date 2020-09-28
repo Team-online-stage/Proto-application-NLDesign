@@ -555,6 +555,22 @@
             idth: 4rem
         }
 
+        /* user circle on mobile */
+        .user--circle {
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            padding: 8px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+
+            background: var(--primary-color);
+            color: var(--background);
+            text-align: center;
+            font-style: normal;
+            font-weight: bold;
+        }
+
     </style>
 
     {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
