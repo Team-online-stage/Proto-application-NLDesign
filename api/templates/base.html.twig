@@ -19,11 +19,11 @@
             gtag('config', '{{ application['defaultConfiguration']['configuration']['googleTagId'] }}');
         </script>
     {% endif %}
-    {% if app.user is defined and app.user is not empty %}
+    {% if app.user is defined and app.user is not empty and app_session_duration is defined and app_session_duration is not empty %}
         <script>
             setTimeout(function () {
                 window.location.href = '/login/loggedOut';
-            }, 915000);
+            }, {{ (app_session_duration * 1000) + 5000 }});
         </script>
     {% endif %}
 

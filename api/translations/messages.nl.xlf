@@ -1165,6 +1165,14 @@
         <source>next invoice</source>
         <target>volgende factuur</target>
       </trans-unit>
+      <trans-unit id="9Wjn24a" resname="notice period">
+        <source>notice period</source>
+        <target>opzegtermijn</target>
+      </trans-unit>
+      <trans-unit id="7Uh21Km" resname="resume subscription">
+        <source>resume subscription</source>
+        <target>abonnement hervatten</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
