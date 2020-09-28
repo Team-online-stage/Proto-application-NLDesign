@@ -282,7 +282,7 @@ class ChinController extends AbstractController
         $variables['code'] = $session->get('code');
         $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
 
-        if($token !== null){
+        if ($token !== null) {
             $application = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id' => $params->get('app_id')]);
             $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
         }
@@ -291,7 +291,7 @@ class ChinController extends AbstractController
             $variables['node'] = $nodes[0];
         }
 
-        if ($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             $variables['message'] = true;
             $username = $request->get('email');
             $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $username], true, false, true, false, false);
@@ -301,7 +301,7 @@ class ChinController extends AbstractController
             $organization = $application['organization']['@id'];
             $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
 
-            if (count($users) > 0){
+            if (count($users) > 0) {
                 $user = $users[0];
                 $person = $commonGroundService->getResource($user['person']);
 
@@ -315,13 +315,12 @@ class ChinController extends AbstractController
                 $token = $commonGroundService->createResource($token, ['component' => 'uc', 'type' => 'tokens']);
 
                 $url = $request->getUri();
-                $link = $url."/".$token['token'];
+                $link = $url.'/'.$token['token'];
 
                 $content = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id'=>"{$params->get('app_id')}/e-mail-reset"])['@id'];
 
-
                 $message = [];
-                $service = $commonGroundService->getResourceList(['component'=>'bs', 'type'=>'services'], "type=mailer")['hydra:member'][0];
+                $service = $commonGroundService->getResourceList(['component'=>'bs', 'type'=>'services'], 'type=mailer')['hydra:member'][0];
 
                 $message['service'] = '/services/'.$service['id'];
                 $message['status'] = 'queued';
@@ -331,13 +330,10 @@ class ChinController extends AbstractController
                 $message['sender'] = $organization;
 
                 $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
-
             }
-
         }
 
         return $variables;
-
     }
 
     /**
@@ -488,6 +484,7 @@ class ChinController extends AbstractController
         // If we have a valid user then we do not need to login
         if ($this->getUser()) {
             $session->set('checkingProvider', 'session');
+
             return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
         }
 

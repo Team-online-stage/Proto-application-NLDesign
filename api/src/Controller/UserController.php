@@ -108,9 +108,9 @@ class UserController extends AbstractController
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'idin', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $provider[0];
 
-
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret']) && isset($provider['configuration']['endpoint'])) {
             $clientId = $provider['configuration']['app_id'];
+
             return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-login&state=123');
         } else {
             return $this->render('500.html.twig');
@@ -130,14 +130,13 @@ class UserController extends AbstractController
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'idin', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $provider[0];
 
-
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret']) && isset($provider['configuration']['endpoint'])) {
             $clientId = $provider['configuration']['app_id'];
+
             return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
         } else {
             return $this->render('500.html.twig');
         }
-
     }
 
     /**
@@ -146,7 +145,6 @@ class UserController extends AbstractController
      */
     public function IrmaAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
     {
-
     }
 
     /**
