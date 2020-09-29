@@ -42,6 +42,9 @@
             </div>
             {% endif %}
         </div>
+        {% if property.configuration.coc is not defined or property.configuration.coc %}
+            <span class="meta" style="text-transform: lowercase"><span style="text-transform: uppercase">U</span> kunt <a target="_blank" href="https://www.kvk.nl/zoeken/">hier</a> klikken om uw KVK nummer te vinden.</span>
+        {% endif %}
         {% if property.configuration.address is defined and property.configuration.address %}
             <h3>{{ 'address'|trans|capitalize }}</h3>
             <div class="row" style="margin-bottom: 5px">
