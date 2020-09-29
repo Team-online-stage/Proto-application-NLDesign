@@ -46,7 +46,7 @@
                                         {% elseif not property.valid and property.required == 'true' %}
                                             <i style="color: red" x-uno-tooltip="" {% if property.messages is defined and property.messages is not empty %} title="{% for message in property.messages %}{{ message|capitalize }} {% endfor %}" {% endif %} class="fas fa-times"></i>
                                         {% endif %}
-                                        {{ property.title|capitalize }}
+                                        {{ property.title|raw }}
                                     </span>
                                 </div>
 
