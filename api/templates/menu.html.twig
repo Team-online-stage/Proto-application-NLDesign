@@ -28,7 +28,7 @@
                         <a class="navigation__link" href="#"><i class="icon icon-hamburger" role="presentation"></i> Menu</a>
                         <div class="navigation__popout">
                             <ul class="list list--links list--chevrons navigation__popout-items">
-                                {% for item in menu.menuItems|sort((a, b) => a.order <=> b.order) %}
+                                {% for item in  menuItems['hydra:member']|sort((a, b) => a.order <=> b.order) %}
                                 <li class="navigation__popout-item  {% if item.href == currentPath %} navigation__link--active {% endif %}">
                                     <a class="navigation__popout-link" href="{{ item.href }}"><i class="{{ item.icon }}" role="presentation"></i> {{ item.name }}</a>
                                 </li>
