@@ -1233,6 +1233,14 @@
         <source>your password has been reset</source>
         <target>uw wachtwoord is gewijzigd</target>
       </trans-unit>
+      <trans-unit id="EFUiEFt" resname="houseNumber">
+        <source>houseNumber</source>
+        <target>huisnummer</target>
+      </trans-unit>
+      <trans-unit id="KBy8UM_" resname="postalCode">
+        <source>postalCode</source>
+        <target>postcode</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
