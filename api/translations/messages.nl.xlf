@@ -1167,11 +1167,11 @@
       </trans-unit>
       <trans-unit id="WHg5j_N" resname="enter the email address of the account you wish to reset">
         <source>enter the email address of the account you wish to reset</source>
-        <target>__enter the email address of the account you wish to reset</target>
+        <target>voer het e-mail adres in van het account dat u wenst te resetten</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email">
         <source>email</source>
-        <target>__email</target>
+        <target>email</target>
       </trans-unit>
       <trans-unit id="Uy4_u9Q" resname="join as organisation">
         <source>join as organisation</source>
