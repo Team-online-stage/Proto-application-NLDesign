@@ -48,6 +48,8 @@
                             {% include 'ptc/formelements/wrcOrganization.html.twig' %}
 
                             {# Let slook for formats #}
+                        {% elseif property.format == 'iban' and property.type == 'array' %}
+                            {% include 'ptc/formelements/iban.html.twig' %}
                         {% elseif property.format == 'phonenumber' %}
                             {% include 'ptc/formelements/generic.html.twig'  with {'type': 'tel'} %}
                         {% elseif property.format == 'datetime' %}

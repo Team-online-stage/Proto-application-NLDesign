@@ -1217,6 +1217,10 @@
         <source>join</source>
         <target>meedoen</target>
       </trans-unit>
+      <trans-unit id="knfe9sL" resname="account name">
+        <source>account name</source>
+        <target>tenaamstelling</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
