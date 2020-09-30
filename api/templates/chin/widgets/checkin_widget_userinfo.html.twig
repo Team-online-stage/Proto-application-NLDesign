@@ -25,6 +25,7 @@
         <div class="input__error" style="margin-top: 5px;">{{ password_error|trans|capitalize }}</div>{% endif %}
     <input style="height: 35px" type="password" id="password" name="password" placeholder="{{ 'password'|trans|capitalize }}"
            class="noFocus input__control input__control--text" required>
+    <i style="position:absolute; right: 15px; top: 8px" class="fas fa-eye-slash" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" role="presentation"></i>
     {% if password_error is defined %}
         <div class="notification notification--error" id="my-notification">
             <div class="notification__content">
@@ -60,4 +61,13 @@
     System.import('/uno/components/notification/notification.js').then(function (module) {
         myNotification = new module.Notification(document.getElementById('my-notification'));
     });
+
+    function mouseoverPass() {
+        let obj = document.getElementById('password');
+        obj.type = "text";
+    }
+    function mouseoutPass() {
+        let obj = document.getElementById('password');
+        obj.type = "password";
+    }
 </script>
