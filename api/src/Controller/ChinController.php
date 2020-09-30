@@ -35,7 +35,7 @@ class ChinController extends AbstractController
     public function checkinUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['order[dateCreated]' => 'desc'])['hydra:member'];
+        $variables['checkins'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
 
         return $variables;
     }
@@ -317,17 +317,14 @@ class ChinController extends AbstractController
                 $url = $request->getUri();
                 $link = $url.'/'.$token['token'];
 
-                $content = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id'=>"{$params->get('app_id')}/e-mail-reset"])['@id'];
-
                 $message = [];
-                $service = $commonGroundService->getResourceList(['component'=>'bs', 'type'=>'services'], 'type=mailer')['hydra:member'][0];
 
-                $message['service'] = '/services/'.$service['id'];
+                $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
                 $message['status'] = 'queued';
-                $message['data'] = ['resource'=>$link, 'sender'=>$organization, 'receiver'=>$person['@id']];
-                $message['content'] = $content;
-                $message['reciever'] = $person['@id'];
-                $message['sender'] = $organization;
+                $message['data'] = ['resource' => $link, 'sender'=> 'no-reply@conduction.nl'];
+                $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'60314e20-3760-4c17-9b18-3a99a11cbc5f']);
+                $message['reciever'] = $user['username'];
+                $message['sender'] = 'no-reply@conduction.nl';
 
                 $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
             }
