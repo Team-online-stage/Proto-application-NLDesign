@@ -22,7 +22,7 @@
     <div class="col-xs-12 col-md-4">
         <div class="input input--horizontal {%if property.valid is defined and not property.valid %}input--invalid{% endif %}">
             <label class="input__label" for="swift">SWIFT</label>
-            <input class="input__control input__control--text input__control--l" id="swift" type="text" name="request[properties][{{ property.name }}][swift]" {% if property.required is defined and property.required %}required{% endif %}
+            <input class="input__control input__control--text input__control--l" id="swift" type="text" name="request[properties][{{ property.name }}][swift]"
                 {% if property.example is defined and property.example is not empty %}placeholder="{{ property.example }}" {% endif %}
                 {% if request['properties'][property.name]['swift'] is defined and  request['properties'][property.name]['swift'] is not empty %}
                 value="{{  request['properties'][property.name]['swift'] }}"
