@@ -1167,11 +1167,11 @@
       </trans-unit>
       <trans-unit id="WHg5j_N" resname="enter the email address of the account you wish to reset">
         <source>enter the email address of the account you wish to reset</source>
-        <target>__enter the email address of the account you wish to reset</target>
+        <target>voer het e-mail adres in van het account dat u wenst te resetten</target>
       </trans-unit>
       <trans-unit id="giREF.l" resname="email">
         <source>email</source>
-        <target>__email</target>
+        <target>email</target>
       </trans-unit>
       <trans-unit id="Uy4_u9Q" resname="join as organisation">
         <source>join as organisation</source>
@@ -1220,6 +1220,26 @@
       <trans-unit id="knfe9sL" resname="account name">
         <source>account name</source>
         <target>tenaamstelling</target>
+      </trans-unit>
+      <trans-unit id="UKznb7Q" resname="enter your new password">
+        <source>enter your new password</source>
+        <target>voer uw nieuwe wachtwoord in</target>
+      </trans-unit>
+      <trans-unit id="idUPqG8" resname="new password">
+        <source>new password</source>
+        <target>nieuw wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="txDKmt0" resname="your password has been reset">
+        <source>your password has been reset</source>
+        <target>uw wachtwoord is gewijzigd</target>
+      </trans-unit>
+      <trans-unit id="EFUiEFt" resname="houseNumber">
+        <source>houseNumber</source>
+        <target>huisnummer</target>
+      </trans-unit>
+      <trans-unit id="KBy8UM_" resname="postalCode">
+        <source>postalCode</source>
+        <target>postcode</target>
       </trans-unit>
     </body>
   </file>
