@@ -104,6 +104,9 @@ class UserController extends AbstractController
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $redirect = str_replace('http:', 'https:', $request->getUri());
+        if (strpos($redirect, '?') == true) {
+            $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        }
 
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'idin', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $provider[0];
@@ -126,6 +129,9 @@ class UserController extends AbstractController
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $redirect = str_replace('http:', 'https:', $request->getUri());
+        if (strpos($redirect, '?') == true) {
+            $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        }
 
         $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'idin', 'application' => $params->get('app_id')])['hydra:member'];
         $provider = $provider[0];
