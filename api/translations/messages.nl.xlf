@@ -1241,6 +1241,22 @@
         <source>postalCode</source>
         <target>postcode</target>
       </trans-unit>
+      <trans-unit id="9MoRXNe" resname="you are currently still checked in">
+        <source>you are currently still checked in</source>
+        <target>u bent momenteel nog ingechecked</target>
+      </trans-unit>
+      <trans-unit id="nd0rGIv" resname="do you wish to checkout">
+        <source>do you wish to checkout</source>
+        <target>wilt u uitchecken</target>
+      </trans-unit>
+      <trans-unit id="x3YeWJa" resname="checkout">
+        <source>checkout</source>
+        <target>uitchecken</target>
+      </trans-unit>
+      <trans-unit id="ZZIF2by" resname="you have been checked out">
+        <source>you have been checked out</source>
+        <target>u bent uitgechecked</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
