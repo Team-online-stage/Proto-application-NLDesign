@@ -215,15 +215,14 @@ class ChinController extends AbstractController
             // Lets see if there if there is an active checking
             $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
-            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null ) {
-                $hourDiff = round((strtotime('now') - strtotime($checkIns[0]['dateCreated']))/3600);
+            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null) {
+                $hourDiff = round((strtotime('now') - strtotime($checkIns[0]['dateCreated'])) / 3600);
                 // edit this number to determine how many hours before you are not seens as checked in anymore
                 $hoursForCheckout = 4;
-                if ($hourDiff < $hoursForCheckout){
+                if ($hourDiff < $hoursForCheckout) {
                     return $this->redirect($this->generateUrl('app_chin_checkout', ['code'=>$code]));
                 }
             }
-
 
             // Create check-in
             $checkIn = [];
@@ -672,11 +671,11 @@ class ChinController extends AbstractController
             // Lets see if there if there is an active checking
             $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
-            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null ) {
-                $hourDiff = round((strtotime('now') - strtotime($checkIns[0]['dateCreated']))/3600);
+            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null) {
+                $hourDiff = round((strtotime('now') - strtotime($checkIns[0]['dateCreated'])) / 3600);
                 // edit this number to determine how many hours before you are not seens as checked in anymore
                 $hoursForCheckout = 4;
-                if ($hourDiff < $hoursForCheckout){
+                if ($hourDiff < $hoursForCheckout) {
                     return $this->redirect($this->generateUrl('app_chin_checkout', ['code'=>$code]));
                 }
             }
@@ -889,7 +888,7 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
 
-        if ($request->isMethod('POST') && $request->get('confirmation')){
+        if ($request->isMethod('POST') && $request->get('confirmation')) {
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
             $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
 
