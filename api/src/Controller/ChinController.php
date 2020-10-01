@@ -212,12 +212,28 @@ class ChinController extends AbstractController
             $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
             //$person = $commonGroundService->updateResource($person);
 
+            // Lets see if there if there is an active checking for the last 4 hours (subject to change)
+
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id']])['hydra:member'];
+            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] != null ) {
+                $timeA = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+                $diff = $checkIns[0]['dateCreated']->diff($timeA);
+                var_dump($diff->h);
+                die;
+            }
+
             // Create check-in
             $checkIn = [];
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
-            $checkIn['provider'] = $session->get('checkingProvider');
+            if ($session->get('checkingProvider')){
+                $checkIn['provider'] = $session->get('checkingProvider');
+
+            } else {
+                $checkIn['provider'] = 'session';
+
+            }
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
@@ -651,6 +667,8 @@ class ChinController extends AbstractController
                 $this->container->get('security.token_storage')->setToken($token);
                 $this->container->get('session')->set('_security_main', serialize($token));
             }
+
+
 
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
