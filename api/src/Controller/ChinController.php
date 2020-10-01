@@ -298,16 +298,14 @@ class ChinController extends AbstractController
             $commonGroundService->updateResource($user);
 
             $variables['reset'] = true;
-
-        } elseif ($request->isMethod('POST') && $token != null){
+        } elseif ($request->isMethod('POST') && $token != null) {
             $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
             $tokens = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'tokens'], ['token' => $token, 'provider.name' => $providers[0]['name']])['hydra:member'];
-            if (count($tokens) > 0){
+            if (count($tokens) > 0) {
                 $variables['token'] = $tokens[0];
                 $userUlr = $commonGroundService->cleanUrl(['component'=>'uc', 'type'=>'users', 'id'=>$tokens[0]['user']['id']]);
                 $variables['user'] = $commonGroundService->getResource($userUlr);
             }
-
         } elseif ($request->isMethod('POST')) {
             $variables['message'] = true;
             $username = $request->get('email');
