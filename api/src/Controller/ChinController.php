@@ -214,14 +214,6 @@ class ChinController extends AbstractController
 
             // Lets see if there if there is an active checking for the last 4 hours (subject to change)
 
-            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id']])['hydra:member'];
-            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] != null ) {
-                $timeA = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-                $diff = $checkIns[0]['dateCreated']->diff($timeA);
-                var_dump($diff->h);
-                die;
-            }
-
             // Create check-in
             $checkIn = [];
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
@@ -667,8 +659,6 @@ class ChinController extends AbstractController
                 $this->container->get('security.token_storage')->setToken($token);
                 $this->container->get('session')->set('_security_main', serialize($token));
             }
-
-
 
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
