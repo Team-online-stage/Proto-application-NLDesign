@@ -114,7 +114,12 @@ class UserController extends AbstractController
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret']) && isset($provider['configuration']['endpoint'])) {
             $clientId = $provider['configuration']['app_id'];
 
-            return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+            if ($params->get('app_env') == 'prod') {
+                return $this->redirect('https://eu01.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+            } else {
+                return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+            }
+
         } else {
             return $this->render('500.html.twig');
         }
@@ -139,7 +144,12 @@ class UserController extends AbstractController
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret']) && isset($provider['configuration']['endpoint'])) {
             $clientId = $provider['configuration']['app_id'];
 
-            return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+            if ($params->get('app_env') == 'prod') {
+                return $this->redirect('https://eu01.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+            } else {
+                return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+            }
+
         } else {
             return $this->render('500.html.twig');
         }
