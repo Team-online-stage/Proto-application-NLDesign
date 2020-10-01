@@ -119,7 +119,6 @@ class UserController extends AbstractController
             } else {
                 return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-login&state=123');
             }
-
         } else {
             return $this->render('500.html.twig');
         }
@@ -149,7 +148,6 @@ class UserController extends AbstractController
             } else {
                 return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
             }
-
         } else {
             return $this->render('500.html.twig');
         }
