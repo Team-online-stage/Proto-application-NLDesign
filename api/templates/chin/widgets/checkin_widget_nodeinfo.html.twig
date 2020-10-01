@@ -1,6 +1,7 @@
 <div class="definition-list__description">
-    {% if resource.place is defined and resource.place is not empty %}
-        {% set place = commonground_resource(resource.place) %}
+    {% if resource.accommodation is defined and resource.accommodation is not empty %}
+        {% set accommodation = commonground_resource(resource.accommodation) %}
+        {% set place = accommodation.place %}
         {% if place.bagId is defined and place.bagId is not empty %}
             {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
         {% endif %}

@@ -116,8 +116,7 @@
                 {% if 'http' in app.user.organization and commonground_is_resource(app.user.organization) %}
                     {% set organization = commonground_resource(app.user.organization) %}
                 {% else %}
-
-                    {% set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) %}
+                    {# set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) #}
                 {% endif %}
                 {% if organization.name is defined %}
                     <p>{{ organization.name }}</p>

@@ -19,11 +19,11 @@
             gtag('config', '{{ application['defaultConfiguration']['configuration']['googleTagId'] }}');
         </script>
     {% endif %}
-    {% if app.user is defined and app.user is not empty %}
+    {% if app.user is defined and app.user is not empty and app_session_duration is defined and app_session_duration is not empty %}
         <script>
             setTimeout(function () {
                 window.location.href = '/login/loggedOut';
-            }, 910000);
+            }, {{ (app_session_duration * 1000) + 5000 }});
         </script>
     {% endif %}
 
@@ -555,6 +555,22 @@
             idth: 4rem
         }
 
+        /* user circle on mobile */
+        .user--circle {
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            padding: 8px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+
+            background: var(--primary-color);
+            color: var(--background);
+            text-align: center;
+            font-style: normal;
+            font-weight: bold;
+        }
+
     </style>
 
     {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
@@ -626,7 +642,7 @@
 
     <main class="skiplink-target main" id="content" tabindex="-1">
 
-        <div class="container">
+        <div class="container flash">
             <!-- the alert box -->
             {% set flashes = [] %}
             {% for label, messages in app.flashes() %}
@@ -664,14 +680,12 @@
 
             // Get the header
             var header = document.getElementById("docs-nav");
-            var stickyMobileNav = document.getElementById("stickyMobileNav");
+            // var stickyMobileNav = document.getElementById("stickyMobileNav");
 
             // Get the offset position of the navbar
             var sticky = header.offsetTop;
-            console.log(header.offsetTop);
 
-            var sticky = stickyMobileNav.offsetTop;
-            console.log(stickyMobileNav.offsetTop);
+            // var sticky = stickyMobileNav.offsetTop;
 
             // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
             function myFunction() {
@@ -679,14 +693,14 @@
                     header.classList.remove("sticky-transition");
                     header.classList.add("sticky-nav");
 
-                    stickyMobileNav.classList.remove("sticky-mobile-transition");
-                    stickyMobileNav.classList.add("sticky-mobile-nav");
+                    // stickyMobileNav.classList.remove("sticky-mobile-transition");
+                    // stickyMobileNav.classList.add("sticky-mobile-nav");
                 } else {
                     header.classList.add("sticky-transition");
                     header.classList.remove("sticky-nav");
 
-                    stickyMobileNav.classList.add("sticky-mobile-transition");
-                    stickyMobileNav.classList.remove("sticky-mobile-nav");
+                    // stickyMobileNav.classList.add("sticky-mobile-transition");
+                    // stickyMobileNav.classList.remove("sticky-mobile-nav");
                 }
             }
         </script>

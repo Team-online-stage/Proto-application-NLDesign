@@ -891,7 +891,7 @@
       </trans-unit>
       <trans-unit id="CT59X9u" resname="contact">
         <source>contact</source>
-        <target>__contact</target>
+        <target>contact</target>
       </trans-unit>
       <trans-unit id="lzgBh6h" resname="tip">
         <source>tip</source>
@@ -919,23 +919,23 @@
       </trans-unit>
       <trans-unit id="v3p2N3v" resname="show subscriptions">
         <source>show subscriptions</source>
-        <target>toon abbonementen</target>
+        <target>toon abonnementen</target>
       </trans-unit>
       <trans-unit id="nKyRwfV" resname="subscriptions">
         <source>subscriptions</source>
-        <target>abbonementen</target>
+        <target>abonnementen</target>
       </trans-unit>
       <trans-unit id="qPp.1gi" resname="subscription">
         <source>subscription</source>
-        <target>abbonement</target>
+        <target>abonnement</target>
       </trans-unit>
       <trans-unit id="UqMMhhE" resname="show current subscriptions">
         <source>show current subscriptions</source>
-        <target>toon huidige abbonementen</target>
+        <target>toon huidige abonnementen</target>
       </trans-unit>
       <trans-unit id="LJ42OE1" resname="current subscriptions">
         <source>current subscriptions</source>
-        <target>huidige abbonementen</target>
+        <target>huidige abonnementen</target>
       </trans-unit>
       <trans-unit id="cEjciqd" resname="purchase">
         <source>purchase</source>
@@ -1064,6 +1064,162 @@
       <trans-unit id="MLXnAAq" resname="link to instagram page">
         <source>link to instagram page</source>
         <target>link naar de instagram pagina</target>
+      </trans-unit>
+      <trans-unit id="xksD14u" resname="u have no active subscriptions">
+        <source>u have no active subscriptions</source>
+        <target>U heeft geen actieve abonnementen</target>
+      </trans-unit>
+      <trans-unit id="jny0l5e" resname="succes">
+        <source>succes</source>
+        <target>succes</target>
+      </trans-unit>
+      <trans-unit id="Sz6Heuz" resname="Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.">
+        <source>Your data is safely stored in the data vault and only accessible to the GGD for the next 14 days.</source>
+        <target>Uw data is veilig opgeslagen in de datakluis en is alleen beschikbaar voor de GGD voor de komende 14 dagen.</target>
+      </trans-unit>
+      <trans-unit id="Ljhde2j" resname="Create a user account so that I can view my data">
+        <source>Create a user account so that I can view my data</source>
+        <target>maak een gebruiker aan zodat ik mijn gegevens kan bekijken</target>
+      </trans-unit>
+      <trans-unit id="bfJMNyw" resname="reserve">
+        <source>reserve</source>
+        <target>reserveren</target>
+      </trans-unit>
+      <trans-unit id="pzquTq4" resname="forgot password">
+        <source>forgot password</source>
+        <target>wachtwoord vergeten</target>
+      </trans-unit>
+      <trans-unit id="5cf.rCb" resname="click">
+        <source>click</source>
+        <target>klik</target>
+      </trans-unit>
+      <trans-unit id=".OyRUJd" resname="here">
+        <source>here</source>
+        <target>hier</target>
+      </trans-unit>
+      <trans-unit id="6opoRrV" resname="to change your password">
+        <source>to change your password</source>
+        <target>om uw wachtwoord te wijzigen</target>
+      </trans-unit>
+      <trans-unit id="Ap.eNAy" resname="invalid password">
+        <source>invalid password</source>
+        <target>ongeldig wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="oFdE4b_" resname="accommodation">
+        <source>accommodation</source>
+        <target>accommodatie</target>
+      </trans-unit>
+      <trans-unit id="Wwubxo2" resname="there is an existing user with the email:">
+        <source>there is an existing user with the email:</source>
+        <target>er bestaat een account voor:</target>
+      </trans-unit>
+      <trans-unit id="j__78H0" resname="coc">
+        <source>coc</source>
+        <target>kvk</target>
+      </trans-unit>
+      <trans-unit id="fFErSLq" resname="vat">
+        <source>vat</source>
+        <target>btw</target>
+      </trans-unit>
+      <trans-unit id="obfG8aq" resname="suffix">
+        <source>suffix</source>
+        <target>toevoeging</target>
+      </trans-unit>
+      <trans-unit id="1p4ZCwp" resname="givenName">
+        <source>givenName</source>
+        <target>voornaam</target>
+      </trans-unit>
+      <trans-unit id="6KaQ.zB" resname="additionalName">
+        <source>additionalName</source>
+        <target>tussenvoegsel</target>
+      </trans-unit>
+      <trans-unit id="rPKZEFh" resname="familyName">
+        <source>familyName</source>
+        <target>achternaam</target>
+      </trans-unit>
+      <trans-unit id="2SmKENG" resname="other">
+        <source>other</source>
+        <target>overige</target>
+      </trans-unit>
+      <trans-unit id="zWdOl1T" resname="eMail">
+        <source>eMail</source>
+        <target>e-mail</target>
+      </trans-unit>
+      <trans-unit id="cxxtiQO" resname="you can not save or submit this procceses if you are not loged in">
+        <source>you can not save or submit this procceses if you are not loged in</source>
+        <target>je kan dit procces niet opslaan of inloggen als je niet bent ingelogd</target>
+      </trans-unit>
+      <trans-unit id=".3zCxUP" resname="every ">
+        <source>every </source>
+        <target>elke </target>
+      </trans-unit>
+      <trans-unit id="DA0s04h" resname=" month(s)">
+        <source> month(s)</source>
+        <target> maand(en)</target>
+      </trans-unit>
+      <trans-unit id="0xeOQx0" resname="recurrence">
+        <source>recurrence</source>
+        <target>herhaling</target>
+      </trans-unit>
+      <trans-unit id="rzprHdB" resname="next invoice">
+        <source>next invoice</source>
+        <target>volgende factuur</target>
+      </trans-unit>
+      <trans-unit id="WHg5j_N" resname="enter the email address of the account you wish to reset">
+        <source>enter the email address of the account you wish to reset</source>
+        <target>__enter the email address of the account you wish to reset</target>
+      </trans-unit>
+      <trans-unit id="giREF.l" resname="email">
+        <source>email</source>
+        <target>__email</target>
+      </trans-unit>
+      <trans-unit id="Uy4_u9Q" resname="join as organisation">
+        <source>join as organisation</source>
+        <target>meedoen als organisatie</target>
+      </trans-unit>
+      <trans-unit id="XVlnWI." resname="join as horeca owner">
+        <source>join as horeca owner</source>
+        <target>meedoen als horeca</target>
+      </trans-unit>
+      <trans-unit id="J.DUhrY" resname="your order">
+        <source>your order</source>
+        <target>__your order</target>
+      </trans-unit>
+      <trans-unit id="GnswjY3" resname="quantity">
+        <source>quantity</source>
+        <target>__quantity</target>
+      </trans-unit>
+      <trans-unit id="2e1LGzs" resname="cancel subscription">
+        <source>cancel subscription</source>
+        <target>__cancel subscription</target>
+      </trans-unit>
+      <trans-unit id="pcfRcZ4" resname="month">
+        <source>month</source>
+        <target>__month</target>
+      </trans-unit>
+      <trans-unit id="ZqQkqal" resname="every">
+        <source>every</source>
+        <target>__every</target>
+      </trans-unit>
+      <trans-unit id="Dp.NB8G" resname="month(s)">
+        <source>month(s)</source>
+        <target>__month(s)</target>
+      </trans-unit>
+      <trans-unit id="iX1h7EO" resname="resume subscription">
+        <source>resume subscription</source>
+        <target>__resume subscription</target>
+      </trans-unit>
+      <trans-unit id="PjzA92G" resname="notice period">
+        <source>notice period</source>
+        <target>__notice period</target>
+      </trans-unit>
+      <trans-unit id="WDkyFgM" resname="join">
+        <source>join</source>
+        <target>meedoen</target>
+      </trans-unit>
+      <trans-unit id="knfe9sL" resname="account name">
+        <source>account name</source>
+        <target>tenaamstelling</target>
       </trans-unit>
     </body>
   </file>
