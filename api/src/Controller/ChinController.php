@@ -352,7 +352,7 @@ class ChinController extends AbstractController
 
                 $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
                 $message['status'] = 'queued';
-                $message['data'] = ['resource' => 'test', 'sender'=> 'no-reply@conduction.nl'];
+                $message['data'] = ['resource' => $link, 'sender'=> 'no-reply@conduction.nl'];
                 $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'60314e20-3760-4c17-9b18-3a99a11cbc5f']);
                 $message['reciever'] = $user['username'];
                 $message['sender'] = 'no-reply@conduction.nl';
