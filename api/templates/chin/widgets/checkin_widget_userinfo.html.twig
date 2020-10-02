@@ -1,6 +1,7 @@
 {% if app.user.person is defined and app.user.person is not empty %}
 {% set person = commonground_resource(app.user.person) %}
 {% endif %}
+<span style="color: black">Uw accountgegevens:</span>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Naam"
            class="noFocus input__control input__control--text" required
@@ -44,7 +45,7 @@
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     <div class="input__group input__group--checkbox" style="margin-bottom: 5px;">
         <input name="hobbies[]" type="checkbox" id="chkbx1"
-               class="input__control input__control--m input__control--checkbox" checked=""
+               class="input__control input__control--m input__control--checkbox"
                required="">
         <label style="line-height: 14px" class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a
                 href="#"
