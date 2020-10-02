@@ -212,12 +212,28 @@ class ChinController extends AbstractController
             $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
             //$person = $commonGroundService->updateResource($person);
 
+            // Lets see if there if there is an active checking
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null) {
+                $hourDiff = round((strtotime('now') - strtotime($checkIns[0]['dateCreated'])) / 3600);
+                // edit this number to determine how many hours before you are not seens as checked in anymore
+                $hoursForCheckout = 4;
+                if ($hourDiff < $hoursForCheckout) {
+                    return $this->redirect($this->generateUrl('app_chin_checkout', ['code'=>$code]));
+                }
+            }
+
             // Create check-in
             $checkIn = [];
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['userUrl'] = $user['@id'];
-            $checkIn['provider'] = $session->get('checkingProvider');
+            if ($session->get('checkingProvider')) {
+                $checkIn['provider'] = $session->get('checkingProvider');
+            } else {
+                $checkIn['provider'] = 'session';
+            }
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
@@ -289,7 +305,24 @@ class ChinController extends AbstractController
             $variables['node'] = $nodes[0];
         }
 
-        if ($request->isMethod('POST')) {
+        if ($request->isMethod('POST') && $request->get('password')) {
+            $user = $commonGroundService->getResource($request->get('user'));
+            $password = $request->get('password');
+
+            $user['password'] = $password;
+
+            $commonGroundService->updateResource($user);
+
+            $variables['reset'] = true;
+        } elseif ($request->isMethod('POST') && $token != null) {
+            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
+            $tokens = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'tokens'], ['token' => $token, 'provider.name' => $providers[0]['name']])['hydra:member'];
+            if (count($tokens) > 0) {
+                $variables['token'] = $tokens[0];
+                $userUlr = $commonGroundService->cleanUrl(['component'=>'uc', 'type'=>'users', 'id'=>$tokens[0]['user']['id']]);
+                $variables['user'] = $commonGroundService->getResource($userUlr);
+            }
+        } elseif ($request->isMethod('POST')) {
             $variables['message'] = true;
             $username = $request->get('email');
             $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $username], true, false, true, false, false);
@@ -319,7 +352,7 @@ class ChinController extends AbstractController
 
                 $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
                 $message['status'] = 'queued';
-                $message['data'] = ['resource' => 'test', 'sender'=> 'no-reply@conduction.nl'];
+                $message['data'] = ['resource' => $link, 'sender'=> 'no-reply@conduction.nl'];
                 $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'60314e20-3760-4c17-9b18-3a99a11cbc5f']);
                 $message['reciever'] = $user['username'];
                 $message['sender'] = 'no-reply@conduction.nl';
@@ -635,6 +668,18 @@ class ChinController extends AbstractController
                 $this->container->get('session')->set('_security_main', serialize($token));
             }
 
+            // Lets see if there if there is an active checking
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+            if ((count($checkIns) > 1) && $checkIns[0]['dateCheckedOut'] == null) {
+                $hourDiff = round((strtotime('now') - strtotime($checkIns[0]['dateCreated'])) / 3600);
+                // edit this number to determine how many hours before you are not seens as checked in anymore
+                $hoursForCheckout = 4;
+                if ($hourDiff < $hoursForCheckout) {
+                    return $this->redirect($this->generateUrl('app_chin_checkout', ['code'=>$code]));
+                }
+            }
+
             $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
             $checkIn['person'] = $person['@id'];
             $checkIn['provider'] = 'email';
@@ -842,6 +887,19 @@ class ChinController extends AbstractController
         }
 
         $variables['code'] = $code;
+
+        if ($request->isMethod('POST') && $request->get('confirmation')) {
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $checkIns = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'checkins'], ['person' => $person['@id'], 'node' => 'nodes/'.$variables['resource']['id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+            $checkIn = $checkIns[0];
+            $date = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+            $checkIn['dateCheckedOut'] = $date->format('Y-m-d H:i:s');
+            $checkIn['node'] = 'nodes/'.$checkIn['node']['id'];
+            $commonGroundService->updateResource($checkIn);
+
+            $variables['checkout'] = true;
+        }
 
         return $variables;
     }

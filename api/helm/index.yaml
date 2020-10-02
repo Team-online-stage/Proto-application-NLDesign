@@ -3,14 +3,14 @@ entries:
   pan:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2020-09-30T11:11:04.762275224Z"
+    created: "2020-10-01T13:42:46.1389924Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
-    digest: 86aa56ee6bbb7c415366148a6d7b4926904cad057462c7d20f7de9947ebfc1d8
+    digest: e16dfe0795762dfce079b7448431ab2cb5805b75ebf819cbaefb04daf934763a
     home: www.zuid-drecht.nl
     icon: www.zuid-drecht.nl
     name: pan
     urls:
     - pan-0.1.0.tgz
     version: 0.1.0
-generated: "2020-09-30T11:11:04.554783223Z"
+generated: "2020-10-01T13:42:46.1353412Z"
