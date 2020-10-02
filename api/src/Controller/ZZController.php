@@ -33,7 +33,7 @@ class ZZController extends AbstractController
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $content = false;
-        $variables = $applicationService->getVariables();
+        //$variables = $applicationService->getVariables();
 
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
@@ -66,19 +66,20 @@ class ZZController extends AbstractController
         if ($content) {
             $twigTemplate = $this->get('twig')->createTemplate($content);
             $twigTemplate = $twigTemplate->render($variables);
-            /*
+        /*
         } elseif(array_key_exists('content', $template)) {
-            $content = "The template ".$template['id']." dosn't seem to contain a content";
+        $content = "The template ".$template['id']." dosn't seem to contain a content";
 
-            $twigTemplate = $this->get('twig')->createTemplate($content);
-            $twigTemplate = $twigTemplate->render($variables);
+        $twigTemplate = $this->get('twig')->createTemplate($content);
+        $twigTemplate = $twigTemplate->render($variables);
 
-            $twigTemplate = $this->render('404.html.twig', $variables);
-            return $twigTemplate; */
+        $twigTemplate = $this->render('404.html.twig', $variables);
+        return $twigTemplate; */
         } else {
             var_dump($template);
-            die;
+            exit;
             $twigTemplate = $this->render('404.html.twig', $variables);
+
             return $twigTemplate;
         }
 

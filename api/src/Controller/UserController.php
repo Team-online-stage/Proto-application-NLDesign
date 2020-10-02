@@ -96,7 +96,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/idinLogin")
+     * @Route("/auth/idin/login")
      * @Template
      */
     public function IdinLoginAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -104,12 +104,28 @@ class UserController extends AbstractController
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $redirect = str_replace('http:', 'https:', $request->getUri());
+        if (strpos($redirect, '?') == true) {
+            $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        }
 
-        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'idinLogin&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'idin', 'application' => $params->get('app_id')])['hydra:member'];
+        $provider = $provider[0];
+
+        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret']) && isset($provider['configuration']['endpoint'])) {
+            $clientId = $provider['configuration']['app_id'];
+
+            if ($params->get('app_env') == 'prod') {
+                return $this->redirect('https://eu01.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+            } else {
+                return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-login&state=123');
+            }
+        } else {
+            return $this->render('500.html.twig');
+        }
     }
 
     /**
-     * @Route("/idin")
+     * @Route("/auth/idin/ident")
      * @Template
      */
     public function IdinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -117,12 +133,36 @@ class UserController extends AbstractController
         $session->set('backUrl', $request->query->get('backUrl'));
 
         $redirect = str_replace('http:', 'https:', $request->getUri());
+        if (strpos($redirect, '?') == true) {
+            $redirect = substr($redirect, 0, strpos($redirect, '?'));
+        }
 
-        return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id=demo-preprod-basic&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+        $provider = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'idin', 'application' => $params->get('app_id')])['hydra:member'];
+        $provider = $provider[0];
+
+        if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret']) && isset($provider['configuration']['endpoint'])) {
+            $clientId = $provider['configuration']['app_id'];
+
+            if ($params->get('app_env') == 'prod') {
+                return $this->redirect('https://eu01.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+            } else {
+                return $this->redirect('https://eu01.preprod.signicat.com/oidc/authorize?response_type=code&scope=openid+signicat.idin&client_id='.$clientId.'&redirect_uri='.$redirect.'&acr_values=urn:signicat:oidc:method:idin-ident&state=123');
+            }
+        } else {
+            return $this->render('500.html.twig');
+        }
     }
 
     /**
-     * @Route("/facebook")
+     * @Route("/auth/irma")
+     * @Template
+     */
+    public function IrmaAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+    }
+
+    /**
+     * @Route("/auth/facebook")
      * @Template
      */
     public function FacebookAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -138,14 +178,14 @@ class UserController extends AbstractController
         }
 
         if (isset($provider['configuration']['app_id']) && isset($provider['configuration']['secret'])) {
-            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.str_replace("\"","",$provider['configuration']['app_id']).'&scope=email&redirect_uri='.$redirect.'&state={st=state123abc,ds=123456789}');
+            return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id='.str_replace('"', '', $provider['configuration']['app_id']).'&scope=email&redirect_uri='.$redirect.'&state={st=state123abc,ds=123456789}');
         } else {
             return $this->render('500.html.twig');
         }
     }
 
     /**
-     * @Route("/github")
+     * @Route("/auth/github")
      * @Template
      */
     public function githubAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -159,7 +199,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/gmail")
+     * @Route("/auth/gmail")
      * @Template
      */
     public function gmailAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
