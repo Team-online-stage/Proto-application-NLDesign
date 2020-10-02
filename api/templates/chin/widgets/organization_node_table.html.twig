@@ -13,7 +13,7 @@
                 <thead>
                 <tr>
                     <th scope="col">{{ 'name'|trans|capitalize }}</th>
-                    <th scope="col">{{ 'place'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'accommodation'|trans|capitalize }}</th>
                     <th scope="col">{{ 'code'|trans|capitalize }}</th>
                     <th scope="col">{{ 'qr'|trans|capitalize }}</th>
                     <th scope="col"></th>
@@ -23,7 +23,11 @@
                 {% for node in nodes %}
                     <tr>
                         <td>{{ node.name }}</td>
-                        <td>{{ commonground_resource(node.place).name }}</td>
+                        <td>
+                            {% if node.accommodation is defined and node.accommodation is not empty and commonground_is_resource(node.accommodation) %}
+                                {{ commonground_resource(node.accommodation).name }}
+                            {% endif %}
+                        </td>
                         <td>{{ node.reference }}</td>
                         <td><img src="{{ qr_code_data_uri( absolute_url(path('app_chin_checkin',{"code":node.reference})) , { writer: 'svg', size: 150 }) }}" /></td>
                         <td><a data-toggle="modal" data-target="#node-{{ node.id }}" onclick="openModal{{ node.id|replace({'-': ''}) }}()">{{ 'edit'|trans|capitalize }}</a></td>
