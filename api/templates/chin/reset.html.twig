@@ -54,7 +54,7 @@
                                             <input style="height: 35px" type="password" id="password" name="password" placeholder="{{ 'new password'|trans|capitalize }}"
                                                    class="noFocus input__control input__control--text" required>
                                             <i style="position:absolute; right: 15px; top: 8px" class="fas fa-eye-slash" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" role="presentation"></i>
-                                            <input type="hidden" {% if user is defined and user is not empty %}value="{{ user['@id'] }}"{% endif %}>
+                                            <input type="hidden" name="selectedUser" {% if selectedUser is defined and selectedUser is not empty %}value="{{ selectedUser }}"{% endif %}>
                                         </div>
                                         <div style="margin-top: 10px; margin-bottom: 10px; padding: 0 10px;">
                                             <button style="padding:0; border: none; background-color: #01689B; color: white; border-radius: 20px;" class="btn btn--block"><h2 style="margin-top: 4px;">{{ 'submit'|trans|capitalize }}</h2></button>
