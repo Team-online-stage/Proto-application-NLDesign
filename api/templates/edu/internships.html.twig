@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block container %}
     <section class="row">
         <div class="col-sm-8">
             <div class="content">
@@ -65,7 +65,7 @@
                                                     {% if internship.jobStartDate is defined and internship.jobStartDate is not empty %}
                                                         <p style="margin: 0;">startdatum: {{ internship.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
                                                     {% endif %}
-                                                    <a href="{{ path('app_education_internship', {id: internship.id}) }}">lees meer</a>
+                                                    <a href="{{ path('app_edu_internship', {id: internship.id}) }}">lees meer</a>
                                                 </div>
                                             </div>
                                         </div>

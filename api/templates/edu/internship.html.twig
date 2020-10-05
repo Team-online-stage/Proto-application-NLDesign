@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block container %}
     <header class="content__header">
-        <a class="backlink" href="/education/internships">Stages</a>
+        <a class="backlink" href="/edu/internships">Stages</a>
     </header>
     <div class="row">
         <div class="col-sm-12 col-lg-8">
             <div class="content-background">
-                <div class="content ">
+                <div class="content">
                     <div class="row">
                         <div class="col-md-6">
                             {% if internship.title is defined and internship.title is not empty %}
