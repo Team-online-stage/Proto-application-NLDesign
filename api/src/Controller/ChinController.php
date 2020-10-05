@@ -296,9 +296,16 @@ class ChinController extends AbstractController
         $variables['code'] = $session->get('code');
         $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
 
-        if ($token !== null) {
+        if ($token) {
             $application = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id' => $params->get('app_id')]);
             $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
+            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
+            $tokens = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'tokens'], ['token' => $token, 'provider.name' => $providers[0]['name']])['hydra:member'];
+            if (count($tokens) > 0) {
+                $variables['token'] = $tokens[0];
+                $userUlr = $commonGroundService->cleanUrl(['component'=>'uc', 'type'=>'users', 'id'=>$tokens[0]['user']['id']]);
+                $variables['selectedUser'] = $userUlr;
+            }
         }
 
         if (count($nodes) > 0) {
@@ -306,7 +313,7 @@ class ChinController extends AbstractController
         }
 
         if ($request->isMethod('POST') && $request->get('password')) {
-            $user = $commonGroundService->getResource($request->get('user'));
+            $user = $commonGroundService->getResource($request->get('selectedUser'));
             $password = $request->get('password');
 
             $user['password'] = $password;
@@ -314,14 +321,6 @@ class ChinController extends AbstractController
             $commonGroundService->updateResource($user);
 
             $variables['reset'] = true;
-        } elseif ($request->isMethod('POST') && $token != null) {
-            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
-            $tokens = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'tokens'], ['token' => $token, 'provider.name' => $providers[0]['name']])['hydra:member'];
-            if (count($tokens) > 0) {
-                $variables['token'] = $tokens[0];
-                $userUlr = $commonGroundService->cleanUrl(['component'=>'uc', 'type'=>'users', 'id'=>$tokens[0]['user']['id']]);
-                $variables['user'] = $commonGroundService->getResource($userUlr);
-            }
         } elseif ($request->isMethod('POST')) {
             $variables['message'] = true;
             $username = $request->get('email');
