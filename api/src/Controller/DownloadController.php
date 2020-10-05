@@ -10,7 +10,6 @@ use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
 use PhpOffice\PhpWord\Settings;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,11 +27,10 @@ class DownloadController extends AbstractController
 {
     /**
      * @Route("/order/{id}")
-     * @Template
      */
     public function orderAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
         $order = $commonGroundService->getResource(['component' => 'orc', 'type' => 'orders', 'id' => $id]);
         $orderTemplate = $commonGroundService->getResource($application['defaultConfiguration']['configuration']['orderTemplate']);
         $query = ['resource' => $order['@id']];
@@ -61,11 +59,10 @@ class DownloadController extends AbstractController
 
     /**
      * @Route("/invoice/{id}")
-     * @Template
      */
     public function invoiceAction($id, Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
-        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
         $order = $commonGroundService->getResource(['component' => 'bc', 'type' => 'invoices', 'id' => $id]);
         $orderTemplate = $commonGroundService->getResource($application['defaultConfiguration']['configuration']['invoiceTemplate']);
         $query = ['resource' => $order['@id']];

@@ -55,4 +55,16 @@ class LcController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/places")
+     * @Template
+     */
+    public function placesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc', 'type'=>'places'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
+
+        return $variables;
+    }
 }

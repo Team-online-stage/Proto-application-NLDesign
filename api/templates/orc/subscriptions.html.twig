@@ -1,0 +1,224 @@
+{% extends 'content.html.twig' %}
+
+{% block content %}
+
+
+    {#    {% if app.user is null %}#}
+
+    {#        <div class="notification notification--error">#}
+    {#            <div class="notification__content">#}
+    {#                <div class="notification__type">ERROR</div>#}
+    {#                <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>#}
+    {#            </div>#}
+    {#        </div>#}
+
+    {#    {% else %}#}
+
+    <div class="content-background">
+        <div class="content">
+            <div class="row">
+
+                {#                {% if subscription is defined and is subscription not empty %}#}
+
+                {#                    <h4>{{ 'u have succesfully applied yourself for subscription '|capitalize~subscription.name }}</h4>#}
+
+                {#                {% endif %}#}
+
+                <div id="subs">
+
+                    <div id="subsText">
+                        <h1 style="display: inline-block">{{ 'current subscriptions'|trans|capitalize }}</h1>
+                        <button id="newSubButton" style="float: right"
+                                class="btn btn-primary">{{ 'new'|trans|capitalize~' '~'subscription'|trans }}</button>
+                    </div>
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'price'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'start date'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'end date'|trans|capitalize }}</th>
+                            <th scope="col">{{ 'next invoice'|trans|capitalize }}</th>
+                            <th scope="col"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if currentSubscriptions is not empty and currentSubscriptions is not empty %}
+                            {% for sub in currentSubscriptions %}
+                                <tr>
+                                    <td>{{ sub.name }}</td>
+                                    <td>&euro; {{ sub.price }},-</td>
+                                    {% if sub.dateStart is defined and sub.dateStart is not empty %}
+                                        <td>{{ sub.dateStart|date('Y-m-d') }}</td>
+                                    {% else %}
+                                        <td style="color: lightgrey">No end date</td>
+                                    {% endif %}
+                                    {% if sub.dateEnd is defined and sub.dateEnd is not empty %}
+                                        <td>{{ sub.dateEnd|date('Y-m-d') }}</td>
+                                    {% else %}
+                                        <td style="color: lightgrey">No end date</td>
+                                    {% endif %}
+                                    {% if sub.recurrence is defined and sub.recurrence is not empty %}
+                                        <td>{{ add_date_interval(sub.dateStart, sub.recurrence)|date('Y-m-d') }}</td>
+                                    {% else %}
+                                        <td style="color: lightgrey">No end date</td>
+                                    {% endif %}
+                                    <td><a href="{{ path('app_orc_subscription', {id: sub.id}) }}"><b>VIEW</b></a></td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td style="color: lightgrey">{{ 'u have no active subscriptions'|trans|capitalize }}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div id="newSubForm">
+
+                    <div id="newSubText">
+                        <h1 style="display: inline-block">{{ 'new'|trans|capitalize~' '~'subscription'|trans }}</h1>
+                        <button id="showSubsButton" style="float: right"
+                                class="btn btn-primary">{{ 'show current subscriptions'|trans|capitalize }}</button>
+                    </div>
+
+                    <form action="{{ path('app_orc_order') }}" method="post">
+
+                        {% if availableSubscriptions|length <= 6 %}
+
+                            <fieldset class="input">
+                                <legend class="input__legend">{{ 'subscriptions'|trans|capitalize }}</legend>
+                                {% for sub in availableSubscriptions %}
+                                    <div class="input__group input__group--radio">
+                                        <input type="radio" name="offer" id="{{ sub['@id'] }}"
+                                               value="{{ sub['@id'] }}"
+                                               class="input__control input__control--radio" required
+                                               onchange="showSelectedSub(this)">
+                                        <label class="input__label input__label--radio"
+                                               for="{{ sub['@id'] }}">{{ sub['name'] }}</label>
+                                    </div>
+                                {% endfor %}
+                            </fieldset>
+
+                        {% else %}
+
+                            <div class="input">
+                                <label class="input__label"
+                                       for="subscription">{{ 'subscriptions'|trans|capitalize }}</label>
+                                <select onchange="showSelectedSub(this)" id="subscription" name="offers[]"
+                                        class="input__control input__control--l input__control--select" required>
+                                    <option hidden="" value=''></option>
+                                    {% for sub in availableSubscriptions %}
+                                        <option value="{{ sub['@id'] }}">{{ sub['name'] }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                        {% endif %}
+
+                        <div id="subDiv" style="display: none">
+                            <ul class="definition-list">
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">{{ 'description'|trans|capitalize }}</div>
+                                    <div class="definition-list__description">
+                                        <p id="subDes"></p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">{{ 'price'|trans|capitalize }}</div>
+                                    <div class="definition-list__description">
+                                        <p id="subPrice"></p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">{{ 'recurrence'|trans|capitalize }}</div>
+                                    <div class="definition-list__description">
+                                        <p id="subRecurrence"></p>
+                                    </div>
+                                </li>
+                                <li class="definition-list__item definition-list__item--horizontal">
+                                    <div class="definition-list__title">{{ 'notice period'|trans|capitalize }}</div>
+                                    <div class="definition-list__description">
+                                        <p id="subNotice"></p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="input">
+                            <button type="submit" class="btn btn-block">{{ 'view order'|trans|capitalize }}</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                {#                {% endif %}#}
+
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var newSubButton = document.getElementById('newSubButton');
+        var showSubsButton = document.getElementById('showSubsButton');
+        var newSubForm = document.getElementById('newSubForm');
+        var subs = document.getElementById('subs');
+        var subsText = document.getElementById('subs');
+        var newSubText = document.getElementById('subs');
+
+        newSubButton.style.display = "inline-block";
+        showSubsButton.style.display = "none";
+        newSubForm.style.display = "none";
+        subs.style.display = "block";
+
+        newSubButton.onclick = function () {
+            newSubButton.style.display = "none";
+            showSubsButton.style.display = "inline-block";
+            newSubForm.style.display = "block";
+            subs.style.display = "none";
+        };
+
+        showSubsButton.onclick = function () {
+            newSubButton.style.display = "inline-block";
+            showSubsButton.style.display = "none";
+            newSubForm.style.display = "none";
+            subs.style.display = "block";
+        };
+
+        function showSelectedSub(sub) {
+            document.getElementById('subDiv').style.display = "block";
+
+            {% for sub in availableSubscriptions %}
+            if ('{{ sub['@id'] }}' === sub.value) {
+                {#var subName = '{{ sub.name }}';#}
+                var subDes = '{{ sub.description }}';
+                var subPrice = '\u20AC {{ sub.price }},-';
+                var subRecurrence = '{{ 'every '|trans|capitalize~date_interval(sub.recurrence, '%m')~' month(s)'|trans }}';
+                var subNotice = '{{ date_interval(sub.recurrence, '%m')~' month(s)'|trans }}';
+            }
+
+            // document.getElementById('subName').innerText = subName;
+            if (subDes) {
+                document.getElementById('subDes').innerText = subDes;
+            } else {
+                document.getElementById('subDes').style.color = "lightgray";
+                document.getElementById('subDes').innerText = "Dit product heeft geen beschrijving"
+            }
+            document.getElementById('subPrice').innerText = subPrice;
+            document.getElementById('subRecurrence').innerText = subRecurrence;
+            document.getElementById('subNotice').innerText = subNotice;
+            {% endfor %}
+        }
+
+    </script>
+
+    {#    {% endif %}#}
+
+{% endblock %}
