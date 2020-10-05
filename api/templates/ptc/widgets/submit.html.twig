@@ -55,10 +55,10 @@
                                         {% if property.value is iterable %}
                                         {% for key, value in property.value %}
                                         {% if value is iterable %}
-                                    <ul style="text-align: center;border: 2px solid #19c3e6; list-style: none; padding: 10px; width: 100%; margin-left: 0px;">
+                                    <ul style="list-style: none; width: 100%; margin-left: 0px;">
                                         {% for item in value %}
                                             {% if item is iterable %}
-                                                {% for subItem in item %}
+                                                {% for subKey, subItem in item %}
                                                     {% if 'http' in subItem and commonground_is_resource(subItem) %}
                                                         <li>{{ commonground_resource(subItem).name|capitalize }}</li>
                                                     {% else %}
@@ -68,7 +68,16 @@
                                                                     <li>{{ item|capitalize }}</li>
                                                                 {% endfor %}
                                                             {% else %}
-                                                                <li>{{ subItem|capitalize }}</li>
+                                                                <li style="margin-bottom: 0">
+                                                                    <div class="row">
+                                                                        <div class="col-xs-12 col-md-6">
+                                                                            <strong>{{ subKey|trans|capitalize }}:</strong>
+                                                                        </div>
+                                                                        <div class="col-xs-12 col-md-6">
+                                                                            {{ subItem|capitalize }}
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
                                                             {% endif %}
                                                         {% endif %}
                                                     {% endif %}
@@ -93,7 +102,14 @@
                                                 {{ commonground_resource(value).name }}<br>
                                             {% endif %}
                                         {% else %}
-                                            {{ value|capitalize }}<br>
+                                            <div class="row">
+                                                <div class="col-xs-12 col-md-6">
+                                                    <strong>{{ key|trans|capitalize }}:</strong>
+                                                </div>
+                                                <div class="col-xs-12 col-md-6">
+                                                    {{ value|capitalize }}
+                                                </div>
+                                            </div>
                                         {% endif %}
                                     {% endif %}
                                     {% endfor %}
