@@ -444,7 +444,7 @@ class ChinController extends AbstractController
             $reservation['numberOfParticipants'] = intval($amount);
             $reservation['provider'] = $variables['resource']['organization'];
             //reservation event part
-            $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').);
+            $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
             $reservation['event']['name'] = $name;
             $reservation['event']['startDate'] = '';
             $reservation['event']['endDate'] = '';
