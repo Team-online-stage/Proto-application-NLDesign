@@ -301,8 +301,7 @@ class ChinController extends AbstractController
 
         if ($token) {
             $application = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id' => $params->get('app_id')]);
-            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
-            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
+            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'token', 'application' => $params->get('app_id')])['hydra:member'];
             $tokens = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'tokens'], ['token' => $token, 'provider.name' => $providers[0]['name']])['hydra:member'];
             if (count($tokens) > 0) {
                 $variables['token'] = $tokens[0];
@@ -332,7 +331,7 @@ class ChinController extends AbstractController
 
             $application = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id' => $params->get('app_id')]);
             $organization = $application['organization']['@id'];
-            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
+            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'token', 'application' => $params->get('app_id')])['hydra:member'];
 
             if (count($users) > 0) {
                 $user = $users[0];
@@ -409,17 +408,17 @@ class ChinController extends AbstractController
         }
 
         // We want this resource to be a checkin
-        if ($variables['resource']['type'] != 'reservation') {
-            switch ($variables['resource']['type']) {
-                case 'checkin':
-                    return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
-                    break;
-                default:
-                    $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
-
-                    return $this->redirect($this->generateUrl('app_default_index'));
-            }
-        }
+//        if ($variables['resource']['type'] != 'reservation') {
+//            switch ($variables['resource']['type']) {
+//                case 'checkin':
+//                    return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
+//                    break;
+//                default:
+//                    $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
+//
+//                    return $this->redirect($this->generateUrl('app_default_index'));
+//            }
+//        }
 
         $variables['code'] = $code;
         $variables['organization'] = $commonGroundService->getResource($variables['resource']['organization']);
