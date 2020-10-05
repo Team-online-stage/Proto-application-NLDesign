@@ -90,6 +90,14 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
+            if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
+                if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
+                    $accommodation['maximumAttendeeCapacity'] = (integer) $resource['maximumAttendeeCapacity'];
+                    $commonGroundService->updateResource($accommodation, $resource['accommodation']);
+                }
+                unset($resource['maximumAttendeeCapacity']);
+            }
+
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
             return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
