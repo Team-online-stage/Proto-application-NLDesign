@@ -42,8 +42,8 @@
                 </li>
             {% endif %}
             {% if commonground_component_health("irc") and 'scope.irc.assents.read' in app.user.roles %}
-                <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_irc_user' %}sidenav__item--active{% endif %}">
-                    <a href="{{ path('app_irc_user') }}">{{ 'assents'|trans|capitalize }}</a>
+                <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_irc_assents' %}sidenav__item--active{% endif %}">
+                    <a href="{{ path('app_irc_assents') }}">{{ 'assents'|trans|capitalize }}</a>
                 </li>
             {% endif %}
             {% if commonground_component_health("arc") and 'scope.arc.events.read' in app.user.roles %}
