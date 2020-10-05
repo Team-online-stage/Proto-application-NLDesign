@@ -4,46 +4,106 @@
 
 namespace App\Controller;
 
-use Conduction\CommonGroundBundle\Service\ApplicationService;
-//use App\Service\RequestService;
+use App\Command\PubliccodeCommand;
+use App\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 /**
- * The Request test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
- *
- * Class RequestController
- *
+ * Class DeveloperController
+ * @package App\Controller
  * @Route("/irc")
  */
 class IrcController extends AbstractController
 {
+
+//	/**
+//	 * @Route("/")
+//	 * @Template
+//	 */
+//	public function indexAction(CommonGroundService $commonGroundService, ApplicationService $applicationService)
+//	{
+//	    $variables = $applicationService->getVariables();
+//		// Moeten we ophalen uit de ingelogde sessie
+//		$person = $variables['user']['burgerservicenummer'];
+//		$defaultIrc = "https://irc.huwelijksplanner.online/assents/";
+//
+//		$variables['assents'] = $commonGroundService->getResourceList($defaultIrc, ['person'=>$person])['hydra:member'];
+//
+//		return $variables;
+//	}
+
     /**
-     * @Route("/user")
+     * @Route("assents/{id}")
      * @Template
      */
-    public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function assentAction($id, CommonGroundService $commonGroundService, ApplicationService $applicationService, Request $request)
     {
-        $variables = [];
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'irc', 'type'=>'assents'], ['submitters.brp'=>$this->getUser()->getPerson()])['hydra:member'];
+        $variables = $applicationService->getVariables();
+
+        // We need need to get the assssent from a differend than standard location
+
+        $defaultIrc = "https://irc.huwelijksplanner.online/assents/";
+        $variables['assent'] = $commonGroundService->getResource($defaultIrc . $id);
+        $variables['requester'] = $commonGroundService->getResource(['component' => 'vrc', 'type' => 'requests', 'id' => $variables['assent']['request']])['submitters'][0]['person'];
+        $update = false;
+        if (!key_exists('person', $variables['assent']) || $variables['assent']['person'] == null) {
+            $variables['assent']['person'] = $variables['user']['burgerservicenummer'];
+            $update = true;
+        }
+        if ($request->isMethod('POST') && $request->request->has('status')) {
+            $variables['assent']['status'] = $request->request->get('status');
+
+            $update = true;
+//            $this->addFlash('success', "assent has been updated with status {$variables["assent"]["status"]}");
+        }
+        if ($update) {
+            $variables['assent'] = $commonGroundService->saveResource($variables['assent']);
+        }
 
         return $variables;
     }
 
     /**
-     * @Route("/organisation")
+     * @Route("/assents")
      * @Template
      */
-    public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function assentsAction($id, CommonGroundService $commonGroundService, ApplicationService $applicationService, Request $request)
     {
-        $variables = [];
-        $variables['resources'] = $commonGroundService->getResourceList(['component'=>'brc', 'type'=>'invoices'], ['submitters.brp'=>$this->getUser()->getOrganization()])['hydra:member'];
-
+        $variables = $applicationService->getVariables();
+//
+//		// We need need to get the assssent from a differend than standard location
+//
+//		$defaultIrc = "https://irc.huwelijksplanner.online/assents/";
+//        $variables['assent'] = $commonGroundService->getResource($defaultIrc . $id);
+//        $variables['requester'] = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests','id'=>$variables['assent']['request']])['submitters'][0]['person'];
+//        $update = false;
+//        if(!key_exists('person', $variables['assent']) || $variables['assent']['person'] == null){
+//            $variables['assent']['person'] = $variables['user']['burgerservicenummer'];
+//            $update = true;
+//        }
+//        if($request->isMethod('POST') && $request->request->has('status')){
+//            $variables['assent']['status'] = $request->request->get('status');
+//
+//            $update = true;
+////            $this->addFlash('success', "assent has been updated with status {$variables["assent"]["status"]}");
+//        }
+//        if($update){
+//            $variables['assent'] = $commonGroundService->saveResource($variables['assent']);
+//
+//
+//        }
         return $variables;
     }
 }
+
+
+
+
+
+
