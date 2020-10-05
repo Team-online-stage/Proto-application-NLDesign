@@ -3,7 +3,7 @@ entries:
   pan:
   - apiVersion: v1
     appVersion: V1.0
-    created: "2020-10-02T11:47:07.4899591Z"
+    created: "2020-10-05T08:18:04.0604394Z"
     description: Naast deze JSON rest API is er ook een [graphql](/graphql) interface
       beschikbaar.
     digest: 284aa48452e67dd62446a43aacb45ab6d49b4aa7d2ad41ca9478f0b1e9115e4d
@@ -13,4 +13,4 @@ entries:
     urls:
     - pan-0.1.0.tgz
     version: 0.1.0
-generated: "2020-10-02T11:47:07.4847952Z"
+generated: "2020-10-05T08:18:04.0557252Z"
