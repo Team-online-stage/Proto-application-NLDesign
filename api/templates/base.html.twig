@@ -19,6 +19,13 @@
             gtag('config', '{{ application['defaultConfiguration']['configuration']['googleTagId'] }}');
         </script>
     {% endif %}
+    {% if app.user is defined and app.user is not empty %}
+        <script>
+            setTimeout(function(){
+                window.location.href = '/login';
+            }, 910000);
+        </script>
+    {% endif %}
 
     <meta name="generator" content="Hexo 3.9.0">
     <meta charset="utf-8">
@@ -463,6 +470,28 @@
 
         .btn--eidas:before {
             background-image: url("../images/eidas.svg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            content: "";
+            height: 40px;
+            height: 4rem;
+            position: absolute;
+            right: -50px;
+            right: -5rem;
+            top: 4px;
+            top: .4rem;
+            width: 40px;
+            idth: 4rem
+        }
+
+        .btn--facebook {
+            margin-right: 50px;
+            margin-right: 5rem;
+            position: relative
+        }
+
+        .btn--facebook:before {
+            background-image: url("../images/facebook.svg");
             background-repeat: no-repeat;
             background-size: 100% 100%;
             content: "";

@@ -84,6 +84,26 @@ class UserController extends AbstractController
     }
 
     /**
+     * @Route("/facebook")
+     * @Template
+     */
+    public function FacebookAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        return $this->redirect('https://www.facebook.com/v8.0/dialog/oauth?client_id=2712725532283785&redirect_uri='.$request->getUri().'&state={st=state123abc,ds=123456789}');
+    }
+
+    /**
+     * @Route("/github")
+     * @Template
+     */
+    public function githubAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
+    {
+        $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => getenv('APP_ID')]);
+
+        return $this->redirect('https://github.com/login/oauth/authorize?state='.getenv('APP_ID').'&redirect_uri=https://checkin.dev.zuid-drecht.nl/github&client_id=0106127e5103f0e5af24');
+    }
+
+    /**
      * @Route("/logout")
      * @Template
      */

@@ -11,7 +11,9 @@
 
 {% endif %}
 
+{% if request.organization is not defined or request.organization is empty %}
 <input type="hidden" name="request[organization]" value="{% if application is not empty %}{{  application.organization['@id'] }}{% else %}{{ process.sourceOrganization }}{% endif %}">
+{% endif %}
 <input type="hidden" name="request[processType]" value="{{ process['@id'] }}">
 
 {% if stage.next is defined and stage.next is not empty %}
