@@ -23,6 +23,7 @@ parameters:
     env(NOTIFICATION_ENABLED): false
     env(HEALTH_ENABLED): true
     env(APP_VERSION): "1.0.0"
+    env(APP_MAJOR_VERSION): "v1"
     env(APP_NAME): "Proto Component"
     env(APP_ID): ""
     env(APP_DESCRIPTION): "A commonground component"
@@ -30,12 +31,14 @@ parameters:
     env(APP_TITLE): "Proto Component"
     env(APP_LOGO): "zaakonline.nl"
     env(APP_HOME): "zaakonline.nl"
-    env(APP_SUBDOMAIN): "pc"
+    env(APP_SUBDOMAIN): false
     env(APP_SUBPATH): false
+    env(APP_SUBPATH_ROUTING): false
     env(APP_DEMO): "pc.zaakonline.nl"
     env(APP_WEB): false
     env(APP_INTERNAL): false
     env(APP_BUILD_ALL_FIXTURES): false
+    env(APP_SESSION_DURATION): 900
 
     env(APP_CONTAINER): ""
     env(APP_REPRO): ""
@@ -48,6 +51,7 @@ parameters:
     app_notification: "%env(NOTIFICATION_ENABLED)%"
     app_health: "%env(HEALTH_ENABLED)%"
     app_version: "%env(APP_VERSION)%"
+    app_major_version: "%env(APP_MAJOR_VERSION)%"
     app_name: "%env(APP_NAME)%"
     app_id: "%env(APP_ID)%"
     app_description: "%env(APP_DESCRIPTION)%"
@@ -58,12 +62,14 @@ parameters:
     app_home: "%env(APP_HOME)%"
     app_subdomain: "%env(APP_SUBDOMAIN)%"
     app_subpath: "%env(APP_SUBPATH)%"
+    app_subpath_routing: "%env(APP_SUBPATH_ROUTING)%"
     app_demo: "%env(APP_DEMO)%"
     app_container: "%env(APP_CONTAINER)%"
     app_repro: "%env(APP_REPRO)%"
     app_web: "%env(APP_WEB)%"
     app_internal: "%env(APP_INTERNAL)%"
-    app_build_al_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+    app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+    app_session_duration: "%env(APP_SESSION_DURATION)%"
 
     # Organisatie details
     env(GOOGLE_TAG_MANAGER_ID): ""
@@ -155,10 +161,10 @@ parameters:
     env(APP_COMMONGROUND_BAG_LOCATION): "https://bag.basisregistraties.overheid.nl/api/v1/"
     env(APP_COMMONGROUND_BAG_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
     # KamerVanKoophandel
-#    env(APP_COMMONGROUND_KVK_LOCATION): "https://kvk.%env(APP_DOMAIN)%"
-#    env(APP_COMMONGROUND_KVK_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-#    common_ground.kvk.location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
-#    common_ground.kvk.apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
+    env(APP_COMMONGROUND_KVK_LOCATION): "https://kvk.%env(APP_DOMAIN)%"
+    env(APP_COMMONGROUND_KVK_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+    common_ground.kvk.location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
+    common_ground.kvk.apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
     # DienstWegverkeer
     env(APP_COMMONGROUND_RDW_LOCATION): "https://rdw.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_RDW_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
@@ -171,12 +177,12 @@ parameters:
     # nlx-out
     env(APP_COMMONGROUND_NLX_OUT_LOCATION): "https://nlx-out.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_NLX_OUT_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+    # ProcesTypeCatalogus
+    env(APP_COMMONGROUND_PTC_LOCATION): "https://ptc.%env(APP_ENV)%"
+    env(APP_COMMONGROUND_PTC_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
     # StufService
     env(APP_COMMONGROUND_STUF_LOCATION): "https://stuf.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_STUF_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-    
-    #DigiSpoof
-    env(APP_COMMONGROUND_DS_LOCATION): "https://ds.%env(APP_DOMAIN)%"
 
     # Test for commonground component by array
     common_ground.components:
@@ -197,14 +203,14 @@ parameters:
         ac:
             location: "%env(APP_COMMONGROUND_AC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
+            id: "%env(APP_COMMONGROUND_AC_ID)%"
             secret: "%env(APP_COMMONGROUND_AC_SECRET)%"
             accept: "application/json"
             autowire: false
         nrc:
             location: "%env(APP_COMMONGROUND_NRC_LOCATION)%"
             auth: "jwt"
-            id: "huwelijksplanner-Wex83XXe"
+            id: "%env(APP_COMMONGROUND_NRC_ID)%"
             secret: "%env(APP_COMMONGROUND_NRC_SECRET)%"
             accept: "application/json"
             autowire: false
@@ -238,14 +244,12 @@ parameters:
         bag:
             location: "%env(APP_COMMONGROUND_BAG_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_BAG_APIKEY)%"
-#        kvk:
-#            location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
-#            apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
+        kvk:
+            location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
+            apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
         rdw:
             location: "%env(APP_COMMONGROUND_RDW_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_RDW_APIKEY)%"
-        ds:
-            location: "%env(APP_COMMONGROUND_DS_LOCATION)%"
 
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
@@ -293,6 +297,7 @@ twig:
         app_notification: "%env(NOTIFICATION_ENABLED)%"
         app_health: "%env(HEALTH_ENABLED)%"
         app_version: "%env(APP_VERSION)%"
+        app_major_version: "%env(APP_MAJOR_VERSION)%"
         app_name: "%env(APP_NAME)%"
         app_id: "%env(APP_ID)%"
         app_description: "%env(APP_DESCRIPTION)%"
@@ -302,12 +307,15 @@ twig:
         app_logo: "%env(APP_LOGO)%"
         app_home: "%env(APP_HOME)%"
         app_subdomain: "%env(APP_SUBDOMAIN)%"
+        app_subpath: "%env(APP_SUBPATH)%"
+        app_subpath_routing: "%env(APP_SUBPATH_ROUTING)%"
         app_demo: "%env(APP_DEMO)%"
         app_container: "%env(APP_CONTAINER)%"
         app_repro: "%env(APP_REPRO)%"
         app_web: "%env(APP_WEB)%"
         app_internal: "%env(APP_INTERNAL)%"
         app_build_all_fixtures: "%env(APP_BUILD_ALL_FIXTURES)%"
+        app_session_duration: "%env(APP_SESSION_DURATION)%"
 
         # Security Details
         app_commonground_id: "%env(APP_COMMONGROUND_ID)%"

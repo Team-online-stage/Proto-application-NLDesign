@@ -104,8 +104,6 @@ class PtcController extends AbstractController
 
         $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
 
-        //var_dump($variables['process']);
-
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
             (array_key_exists('processType', $variables['request']) && $variables['request']['processType'] != $variables['process']['@id'])
@@ -124,21 +122,6 @@ class PtcController extends AbstractController
         if ($stage && $stage != 'start') {
             $variables['request']['currentStage'] = $stage;
         }
-
-        // Lets make sure that we always have a stage
-        if (!array_key_exists('stage', $variables) && $stage) {
-            /* @todo dit is lelijk */
-            foreach ($variables['process']['stages'] as $tempStage) {
-                if ($tempStage['slug'] == $stage) {
-                    $variables['stage'] = $tempStage;
-                }
-            }
-        }
-
-        if (!array_key_exists('stage', $variables)) {
-            $variables['stage'] = ['next' => $variables['process']['stages'][0]];
-        }
-
         // Aditionally some one might have tried to pre-fill the form, wich we will then use overwrite the data
         $variables['request'] = array_merge($variables['request'], $request->query->all());
 
@@ -196,7 +179,7 @@ class PtcController extends AbstractController
             }
 
             // We only support the posting and saving of
-            if ($this->getUser()) {
+            if ($this->getUser() || in_array($request['status'], ['submitted'])) {
                 $request = $commonGroundService->saveResource($request, ['component' => 'vrc', 'type' => 'requests']);
             }
 
@@ -207,6 +190,24 @@ class PtcController extends AbstractController
 
         // Let load the request on the procces and validate it
         $variables['process'] = $ptcService->extendProcess($variables['process'], $variables['request']);
+
+        // Lets make sure that we always have a stage
+        if (!array_key_exists('stage', $variables) && $stage) {
+            /* @todo dit is lelijk */
+            foreach ($variables['process']['stages'] as $tempStage) {
+                if ($tempStage['slug'] == $stage) {
+                    $variables['stage'] = $tempStage;
+                }
+            }
+        }
+
+        if (!array_key_exists('stage', $variables)) {
+            $variables['stage'] = ['next' => $variables['process']['stages'][0]];
+        }
+
+        if (key_exists('show', $variables['stage']) && !$variables['stage']['show']) {
+            return $this->redirect($this->generateUrl('app_ptc_process_stage', ['id' => $id, 'stage'=>$variables['stage']['next']['slug']]));
+        }
 
         /* lagacy */
         $variables['resource'] = $variables['request'];

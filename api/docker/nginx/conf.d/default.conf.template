@@ -2,28 +2,30 @@ server {
     root /srv/api/public;
 
     location / {
-
-        # Set the proxy buffer size
-	    proxy_buffer_size          128k;
-	    proxy_buffers              4 256k;
-	    proxy_busy_buffers_size    256k;
-
         # try to serve file directly, fallback to index.php
         try_files $uri /index.php$is_args$args;
+
+        # Set the proxy buffer size
+	    proxy_buffer_size          256k;
+	    proxy_buffers              4 256k;
+	    proxy_busy_buffers_size    512k;
     }
 
     location ~ ^/index\.php(/|$) {
 
         # Set the proxy buffer size
-	    proxy_buffer_size          128k;
+	    proxy_buffer_size          256k;
 	    proxy_buffers              4 256k;
-	    proxy_busy_buffers_size    256k;
+	    proxy_busy_buffers_size    512k;
 
         # Comment the next line and uncomment the next to enable dynamic resolution (incompatible with Kubernetes)
         fastcgi_pass $ENV{"NGINX_HOST"}:9000;
         #resolver 127.0.0.11;
         #set $upstream_host commonground-php;
         #fastcgi_pass $upstream_host:9000;
+
+        fastcgi_buffer_size          256k;
+        fastcgi_buffers              4 256k;
 
         fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
@@ -40,8 +42,6 @@ server {
         # http://domain.tld/index.php/some-path
         # Remove the internal directive to allow URIs like this
         internal;
-
-        client_max_body_size 10M;
     }
 
     # return 404 for all other php files not matching the front controller

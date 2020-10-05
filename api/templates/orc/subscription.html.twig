@@ -1,0 +1,144 @@
+{% extends 'content.html.twig' %}
+
+{% block content %}
+
+    {# orc/subscriptions.html #}
+
+
+    {#    {% if app.user is null %}#}
+
+    {#        <div class="notification notification--error">#}
+    {#            <div class="notification__content">#}
+    {#                <div class="notification__type">ERROR</div>#}
+    {#                <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>#}
+    {#            </div>#}
+    {#        </div>#}
+
+    {#    {% else %}#}
+
+    <a style="color: white" href="{{ path('app_orc_subscriptions') }}" class="backlink">Subscriptions</a>
+
+    <div class="content-background">
+        <div class="content">
+            <div class="row">
+                <div id="subs">
+
+                    <form action="{{ path('app_orc_subscription', {id: resource.id}) }}" method="post">
+                        <div id="subsText">
+                            <h1 style="display: inline-block">{{ resource.name }}</h1>
+                            {% if resource.dateEnd is defined and resource.dateEnd is not empty %}
+                                <button id="resumeSubButton" style="float: right;"
+                                        name="resumeSubButton"
+                                        class="btn btn-danger"
+                                        type="submit"
+                                        value="true"
+                                >{{ 'resume subscription'|trans|capitalize }}</button>
+                            {% else %}
+                                <button id="cancelSubButton" style="float: right;"
+                                        name="cancelSub"
+                                        class="btn btn-danger"
+                                        type="submit"
+                                        value="true"
+                                >{{ 'cancel subscription'|trans|capitalize }}</button>
+                            {% endif %}
+                        </div>
+                    </form>
+
+                    {% if resource.description is defined and resource.description is not empty %}
+                        <p>{{ resource.description }}</p>
+                    {% else %}
+                        <p style="color: lightgrey">This subscription has no description.</p>
+                    {% endif %}
+
+                    {% if resource.notice is defined and resource.notice is not empty %}
+                        <p></p>
+                    {% endif %}
+
+                    {% if resource.price is defined and resource.price is not empty %}
+                        <p>This subscription costs &euro; {{ resource.price }},-
+                            every {{ date_interval(resource.recurrence, '%m '~'month'|trans) }}.</p>
+                        <p>Next invoice will be send
+                            at {{ add_date_interval(resource.dateStart, resource.recurrence)|date('Y-m-d') }}.</p>
+                    {% else %}
+                        <p style="color: lightgrey">This subscription has no description</p>
+                    {% endif %}
+
+                    {% if resource.dateStart is defined and resource.dateStart is not empty %}
+                        <p>Started at {{ resource.dateStart|date('Y-m-d') }}.</p>
+                    {% else %}
+                        <p style="color: lightgrey">This subscription hasn't started yet.</p>
+                    {% endif %}
+
+                    {% if resource.dateEnd is defined and resource.dateEnd is not empty %}
+                        <p>Active till {{ resource.dateEnd|date('Y-m-d') }}.</p>
+                    {% else %}
+                        <p style="color: lightgrey">This subscription has no end date.</p>
+                    {% endif %}
+
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                        </tr>
+                        </thead>
+                        <tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {#    <script type="text/javascript">#}
+    {#        var newSubButton = document.getElementById('newSubButton');#}
+    {#        var showSubsButton = document.getElementById('showSubsButton');#}
+    {#        var newSubForm = document.getElementById('newSubForm');#}
+    {#        var subs = document.getElementById('subs');#}
+    {#        var subsText = document.getElementById('subs');#}
+    {#        var newSubText = document.getElementById('subs');#}
+
+    {#        newSubButton.style.display = "inline-block";#}
+    {#        showSubsButton.style.display = "none";#}
+    {#        newSubForm.style.display = "none";#}
+    {#        subs.style.display = "block";#}
+
+    {#        newSubButton.onclick = function () {#}
+    {#            newSubButton.style.display = "none";#}
+    {#            showSubsButton.style.display = "inline-block";#}
+    {#            newSubForm.style.display = "block";#}
+    {#            subs.style.display = "none";#}
+    {#        };#}
+
+    {#        showSubsButton.onclick = function () {#}
+    {#            newSubButton.style.display = "inline-block";#}
+    {#            showSubsButton.style.display = "none";#}
+    {#            newSubForm.style.display = "none";#}
+    {#            subs.style.display = "block";#}
+    {#        };#}
+
+    {#        function showSelectedSub(sub) {#}
+    {#            document.getElementById('subDiv').style.display = "block";#}
+
+    {#            {% for sub in availableSubscriptions %}#}
+    {#            if ('{{ sub['@id'] }}' === sub.value) {#}
+    {#                #}{#var subName = '{{ sub.name }}';#}
+    {#                var subDes = '{{ sub.description }}';#}
+    {#                var subPrice = '{{ sub.price }},-';#}
+    {#            }#}
+
+    {#            // document.getElementById('subName').innerText = subName;#}
+    {#            if (subDes) {#}
+    {#                document.getElementById('subDes').innerText = subDes;#}
+    {#            } else {#}
+    {#                document.getElementById('subDes').style.color = "lightgray";#}
+    {#                document.getElementById('subDes').innerText = "Dit product heeft geen beschrijving"#}
+    {#            }#}
+    {#            document.getElementById('subPrice').innerText = subPrice;#}
+    {#            {% endfor %}#}
+    {#        }#}
+
+    {#    </script>#}
+
+    {#    {% endif %}#}
+
+{% endblock %}

@@ -1,22 +1,26 @@
 {# templates/home/index.html.twig #}
 
-{% extends 'content.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block content %}
+{% block container %}
 
-    <section class="row">
-        <div class="col-xl-9 col-lg-8 col-md-9">
 
+<div class="row">
+    <div class="container background--grijs-2">
+        <div class="col-md-12">
             <div class="content">
+                <a class="backlink" href="/">{{ 'back'|trans|capitalize }}</a>
                 <header class="content__header">
                     <h1 class="content__header-title">{{ 'login'|trans|capitalize }}</h1>
                 </header>
-            </div>
+            </div><!-- ./content -->
+        </div><!-- ./col -->
+    </div><!-- .container -->
+</div><!-- .row -->
 
-        </div>
-    </section>
 
-    <div class="row">
+<div class="row">
+    <div class="container background--grijs-2">
         <div class="col-xl-9 col-lg-8 col-md-9">
             <div class="content-background">
                 <div class="skiplink-target content" id="main-content">
@@ -60,8 +64,19 @@
                                         style="color: red">*</span></label>
                                 <input required="" type="password" id="password" name="password"
                                        class="input__control input__control--l input__control--text">
+                                <i class="fas fa-eye-slash" onmouseover="mouseoverPass()" onmouseout="mouseoutPass()" role="presentation"></i>
                             </div>
 
+                            <script>
+                                function mouseoverPass(obj) {
+                                    var obj = document.getElementById('password');
+                                    obj.type = "text";
+                                }
+                                function mouseoutPass(obj) {
+                                    var obj = document.getElementById('password');
+                                    obj.type = "password";
+                                }
+                            </script>
 
                             <div class="input">
                                 <button type="submit" id="registreren" class="btn">{{ 'login'|trans|capitalize }} <i
@@ -76,5 +91,6 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div><!-- .container -->
+</div><!-- .row -->
 {% endblock %}
