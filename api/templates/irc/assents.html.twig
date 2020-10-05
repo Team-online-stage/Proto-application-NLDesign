@@ -2,11 +2,21 @@
 
 {% block content %}
 
+    {% if app.user is null %}
+
+    <div class="notification notification--error">
+        <div class="notification__content">
+            <div class="notification__type">ERROR</div>
+            <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>
+        </div>
+    </div>
+
+    {% else %}
 
     <div class="row">
         <div class="col-md-8">
 
-            <div class="content-background" >
+            <div class="content-background">
                 <div class="content">
                     <table class="table table-hover">
                         <thead>
@@ -19,17 +29,28 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for resource in assents %}
-
+                        {% if assents is defined and assents is not empty and assents|length != 0 %}
+                            {% for resource in assents %}
+                                <tr>
+                                    <td>{{ resource.name }}</td>
+                                    <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>
+                                    <td>{% if resource.dateModified is defined and resource.dateModified is not null %}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>
+                                    <td>{{ resource.status|trans|capitalize }}</td>
+                                    <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px"
+                                           href="{{ path('app_irc_assent', {id: resource.id}) }}"><b>{{ 'view'|trans|capitalize }}</b></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
                             <tr>
-                                <td>{{ resource.name }}</td>
-                                <td>{% if resource.dateCreated is defined and resource.dateCreated is not null %}{{ resource.dateCreated|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>
-                                <td>{% if resource.dateModified is defined and resource.dateModified is not null %}{{ resource.dateModified|date("d-m-Y H:i:s", "Europe/Paris") }}{% endif %}</td>
-                                <td>{{ resource.status|trans|capitalize }}</td>
-                                <td><a style="background: #cfebfd; padding: 6px; border-radius: 6px" href="{{ path('app_assent_view', {id: resource.id}) }}"><b>{{ 'view'|trans|capitalize }}</b></a></td>
-
+                                <td style="color: lightgrey">{{ 'no requests for consent have been found'|trans|capitalize }}.
+                                </td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                        {% endfor %}
+                        {% endif %}
                         </tbody>
                     </table>
                 </div><!-- /.content -->
@@ -37,7 +58,7 @@
         </div><!-- /.col -->
 
         <div class="col-md-4">
-            {% if user is not empty%}
+            {% if user is defined and user is not empty %}
                 <div class="content-background">
 
                     <div class="content">
@@ -59,7 +80,7 @@
                                     <p>{{ user.naam.geslachtsnaam }}</p>
                                 </div>
                             </li>
-                            {% if user.naam.voorvoegsel is not empty%}
+                            {% if user.naam.voorvoegsel is not empty %}
                                 <li class="definition-list__item definition-list__item--horizontal">
                                     <div class="definition-list__title">
                                         Voorvoegsel
@@ -91,7 +112,8 @@
                                 </div>
                                 <div class="definition-list__description">
                                     <p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
-                                        <br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}</p>
+                                        <br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}
+                                    </p>
                                 </div>
                             </li>
                         </ul>
@@ -170,5 +192,7 @@
         });
 
     </script>
+
+    {% endif %}
 
 {% endblock %}
