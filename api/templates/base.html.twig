@@ -764,13 +764,13 @@
             src="//js.hs-scripts.com/{{ application['defaultConfiguration']['configuration']['hubspotId'] }}.js"></script>
     <!-- End of HubSpot Embed Code -->
 
-{% elseif application['defaultConfiguration']['configuration']['gemid'] is defined and application['defaultConfiguration']['configuration']['gemid'] is not empty %}
+{% elseif application['defaultConfiguration']['configuration']['gemId'] is defined and application['defaultConfiguration']['configuration']['gemId'] is not empty %}
     <!-- GEM  -->
     <div id="webchat"></div>
     <!-- Basis script voor het widget -->
     <script src="https://virtuele-gemeente-assistent.nl/static/js/webchat-v0.11.7.js"></script>
     <!--- Custom widget script -->
-    <script id="widget-script" src="https://virtuele-gemeente-assistent.nl/static/js/widget-v0.11.7.js" data-municipality="{{ application['defaultConfiguration']['configuration']['gemid'] }}"></script>
+    <script id="widget-script" src="https://virtuele-gemeente-assistent.nl/static/js/widget-v0.11.7.js" data-municipality="{{ application['defaultConfiguration']['configuration']['gemId'] }}"></script>
 {% endif %}
 
 </body>
