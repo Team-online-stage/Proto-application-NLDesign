@@ -16,8 +16,6 @@
             {% if app.user.organization is defined and app.user.organization is not empty %}
                 {% if commonground_is_resource(app.user.organization) %}
                     {% set organization = commonground_resource(app.user.organization) %}
-                {% else %}
-                    {% set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) %}
                 {% endif %}
                 {% if organization.name is defined and organization.name is not empty %}
                     <li class="sidenav__item">
@@ -25,12 +23,12 @@
                     </li>
                 {% else %}
                     <li class="sidenav__item">
-                        <a href="#">{{ organization.name }}{{ 'personal'|trans|capitalize }}</a>
+                        <a href="#">{{ 'personal'|trans|capitalize }}</a>
                     </li>
                 {% endif %}
             {% else %}
                 <li class="sidenav__item">
-                <<a href="#">{{ organization.name }}{{ 'personal'|trans|capitalize }}</a>
+                <<a href="#">{{ 'personal'|trans|capitalize }}</a>
                 </li>
             {% endif %}
 

@@ -1,12 +1,6 @@
 <div class="content-background" >
     <div class="content">
 
-        {% if app.user.person is defined and app.user.person is not empty %}
-            {% set checkins =  commonground_resource_list({'component': 'chin', 'type': 'checkins'},{'user':app.user.person,'limit':1,'order[dateCreated]':'desc'})['hydra:member'] %}
-        {% elseif session.person is defined and session.person is not empty %}
-            {% set checkins =  commonground_resource_list({'component': 'chin', 'type': 'checkins'},{'person':session.person['@id'],'limit':1,'order[dateCreated]':'desc'})['hydra:member'] %}
-        {% endif %}
-
         {% if app.user.organization is defined and app.user.organization is not empty %}
         {% if commonground_is_resource(app.user.organization) %}
             {% set organization = commonground_resource(app.user.organization) %}
@@ -15,7 +9,8 @@
         {% endif %}
         {% endif %}
 
-        <h2>{{ 'check-ins'|capitalize }}</h2>
+        {% if reservations is defined and reservations is not empty %}
+        <h2>{{ 'reservations'|capitalize }}</h2>
 
 
         <table class="table table-hover">
@@ -48,11 +43,10 @@
             {% set myValbefore = myValbefore + 1 %}
             {% set after = 'now' | date_modify('-'~myValafter~' days') %}
             {% set before = 'now' | date_modify('-'~myValbefore~' days') %}
-            {% set checkinslastday = commonground_resource({'component': 'chin', 'type': 'checkins'},{'organization':organization, 'dateCreated[after]':after, 'dateCreated[before]':before})['hydra:member']|length %}
 
-            <tr>
+                    <tr>
                 <td>{{ x|date('d/m/Y') }}</td>
-                <td>{{ checkinslastday }}</td>
+                <td>WIP</td>
                 <td>WIP</td>
                 <td>WIP</td>
                 <td>WIP</td>
@@ -67,7 +61,11 @@
             {% endfor %}
             </tbody>
         </table>
-
+        {% else %}
+            <aside class="hint">
+                <h2 class="hint__title">{{ 'no reservations available'|trans|capitalize }}</h2>
+            </aside>
+        {% endif %}
 
     </div><!-- /.content -->
 </div><!-- /.content-background -->
