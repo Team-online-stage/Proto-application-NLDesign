@@ -574,6 +574,20 @@
             font-weight: bold;
         }
 
+
+        {% if application['defaultConfiguration']['configuration']['gemId'] is defined and application['defaultConfiguration']['configuration']['gemId'] is not empty %}
+
+        /* GEM WEBCHAT */
+
+         #webchat .rw-launcher, #webchat .rw-header, #webchat .rw-close-button, #webchat .rw-client {
+             background-color:  var(--secondary) !important;
+         }
+
+        #webchat .rw-avatar {
+            background-color:  var(--primary) !important;
+        }
+
+    {% endif %}
     </style>
 
     {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
@@ -619,23 +633,6 @@
             /*.sticky-nav + .content {*/
             /*    padding-top: 102px;*/
             /*}*/
-
-        </style>
-
-    {% endif %}
-
-    {% if application['defaultConfiguration']['configuration']['gemId'] is defined and application['defaultConfiguration']['configuration']['gemId'] is not empty %}
-        <style>
-
-            #webchat .rw-launcher, #webchat .rw-header {
-                background-color:  var(--primary) !important;
-            }
-
-
-            #webchat .rw-close-button, #webchat .rw-client, #webchat .rw-avatar {
-                background-color:  var(--secondary) !important;
-            }
-
 
         </style>
 
