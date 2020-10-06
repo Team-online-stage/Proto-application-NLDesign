@@ -901,6 +901,10 @@
         <source>passthrough Url</source>
         <target>doorverwijspagina</target>
       </trans-unit>
+      <trans-unit id="a98Db97" resname="maximum number of people">
+        <source>maximum number of people</source>
+        <target>maximum aantal mensen</target>
+      </trans-unit>
       <trans-unit id="PiQMJnl" resname="login methodes">
         <source>login methodes</source>
         <target>inlog methodes</target>
