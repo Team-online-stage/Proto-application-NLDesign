@@ -627,10 +627,13 @@
     {% if application['defaultConfiguration']['configuration']['gemId'] is defined and application['defaultConfiguration']['configuration']['gemId'] is not empty %}
         <style>
 
-            #webchat .rw-launcher, #webchat .rw-header, #webchat .rw-close-button, #webchat .rw-client, #webchat .rw-avatar {
-                background-color:  var(--background) !important;
+            #webchat .rw-launcher, #webchat .rw-header, #webchat .rw-close-button, #webchat .rw-client {
+                background-color:  var(--secondary) !important;
             }
 
+            #webchat .rw-avatar {
+                background-color:  var(--primary) !important;
+            }
         </style>
 
     {% endif %}
