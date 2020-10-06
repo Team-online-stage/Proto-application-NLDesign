@@ -15,10 +15,10 @@ settings:
   repro: https://github.com/ConductionNL/pan
   demo: www.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: zuid-drecht.nl
+  domain: westfriesland.commonground.nu
   subdomain: false
-  subpath: false
-  subpathRouting: true
+  subpath: 
+  subpathRouting: 
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
