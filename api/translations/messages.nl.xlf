@@ -1257,6 +1257,22 @@
         <source>you have been checked out</source>
         <target>u bent uitgechecked</target>
       </trans-unit>
+      <trans-unit id="OwnBWW2" resname="no requests for consent have been found">
+        <source>no requests for consent have been found</source>
+        <target>er zijn geen instemmingsverzoeken gevonden</target>
+      </trans-unit>
+      <trans-unit id="74Hb3g1" resname="you can not give your consent when not logged in">
+        <source>you can not give your consent when not logged in</source>
+        <target>u kunt uw instemming niet geven als u niet bent ingelogd</target>
+      </trans-unit>
+      <trans-unit id="F213Asw" resname="for information">
+        <source>for information</source>
+        <target>ter informatie</target>
+      </trans-unit>
+      <trans-unit id="082HWb2" resname="pending">
+        <source>pending</source>
+        <target>in afwachting</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
