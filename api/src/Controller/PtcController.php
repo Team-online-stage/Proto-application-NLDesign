@@ -103,7 +103,10 @@ class PtcController extends AbstractController
             $session->remove('request');
         }
 
-        $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
+        //if(!array_key_exists('request', $variables)){
+            $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
+
+        //}
 
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
@@ -117,6 +120,8 @@ class PtcController extends AbstractController
             $variables['request']['properties'] = [];
             $variables['request']['requestType'] = $variables['process']['requestType'];
             $session->set('request', $variables['request']);
+
+            var_dump('procces leeggegoid');
         }
 
         // lets handle a current stage
