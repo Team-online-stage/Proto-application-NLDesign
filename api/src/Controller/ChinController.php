@@ -316,7 +316,6 @@ class ChinController extends AbstractController
      */
     public function resetAction(Session $session, Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, $token = null)
     {
-
         $variables['code'] = $session->get('code');
         $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
         if ($token) {
@@ -440,13 +439,12 @@ class ChinController extends AbstractController
             }
         }
 
-
         $variables['code'] = $code;
         $variables['organization'] = $commonGroundService->getResource($variables['resource']['organization']);
 
         $calendars = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'calendars'], ['resource' => $variables['resource']['accommodation']])['hydra:member'];
 
-        if(count($calendars) > 0){
+        if (count($calendars) > 0) {
             $variables['calendar'] = $calendars[0];
         } else {
             $variables['error'] = 'Something went wrong';
