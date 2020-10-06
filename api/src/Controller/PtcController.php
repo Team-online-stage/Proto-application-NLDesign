@@ -88,7 +88,8 @@ class PtcController extends AbstractController
 
         // Lets load a request
         if ($loadrequest = $request->query->get('request')) {
-            $variables['request'] = $commonGroundService->getResource($loadrequest);
+            $requestUUID = $commonGroundService->getUuidFromUrl($loadrequest);
+            $variables['request'] = $commonGroundService->getResource(['component'=>'vrc','type'=>'requests','id'=>$requestUUID]);
             $session->set('request', $variables['request']);
         }
 
