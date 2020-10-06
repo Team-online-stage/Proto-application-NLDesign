@@ -149,3 +149,9 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+commonground:
+    eherkenning:
+        location: https://zuid-drecht.nl/eherkenning
+    digispoof:
+        location: https://zuid-drecht.nl/digispoof
