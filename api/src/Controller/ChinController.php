@@ -104,7 +104,7 @@ class ChinController extends AbstractController
 
             if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
                 if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
-                    $accommodation['maximumAttendeeCapacity'] = (integer) $resource['maximumAttendeeCapacity'];
+                    $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
                     $commonGroundService->updateResource($accommodation, $resource['accommodation']);
                 }
                 unset($resource['maximumAttendeeCapacity']);
