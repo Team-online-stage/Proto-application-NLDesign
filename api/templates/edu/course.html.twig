@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block content %}
+{% block container %}
 
     {% if app.user is defined and app.user is not null %}
         {% if user is defined and user is not null %}
@@ -77,13 +77,13 @@
                     <nav class="sidenav">
                         <ul>
                             <li class="sidenav__item">
-                                <a href="{{ path('app_education_courses') }}">
+                                <a href="{{ path('app_edu_courses') }}">
                                     Over Tutorials
                                 </a>
                             </li>
                             {% for course in resources %}
                             <li class="sidenav__item {% if id is defined and id == course.id %}sidenav__item--active{% endif %}">
-                                <a href="{{ path('app_education_course', {id: course.id}) }}">
+                                <a href="{{ path('app_edu_course', {id: course.id}) }}">
                                     {{ course.name|capitalize }}
                                 </a>
                             </li>
@@ -150,7 +150,7 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Tutorial: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                        Tutorial: <a href="{{ path('app_edu_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% elseif prerequisite['@type'] == 'Program' %}
                                                         {% if participant.programs is defined and participant.programs is not null %}
                                                             {% for program in participant.programs %}
@@ -159,7 +159,7 @@
                                                                 {% endif %}
                                                             {% endfor %}
                                                         {% endif %}
-                                                        Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                        Programma: <a href="{{ path('app_edu_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                     {% else %}
                                                         {{ prerequisite.name }}
                                                     {% endif %}
@@ -220,7 +220,7 @@
                             <ul class="list list--links list--chevrons columns">
                                 {% for program in course.programs %}
                                     <li>
-                                        <a href="{{ path('app_education_program', {id: program.id}) }}">
+                                        <a href="{{ path('app_edu_program', {id: program.id}) }}">
                                             {{ program.name|capitalize }}
                                         </a>
                                     </li>
@@ -244,7 +244,7 @@
                                                 {% endif %}
                                             {% endfor %}
                                         {% endif %}
-                                        <a href="{{ path('app_education_activity', {id: activity.id}) }}" class="list__link">
+                                        <a href="{{ path('app_edu_activity', {id: activity.id}) }}" class="list__link">
                                             {{ activity.name|capitalize }}
                                         </a>
                                         {% if activity.description is defined and activity.description is not empty %}
@@ -269,7 +269,7 @@
                             {% if app.user is defined and app.user is not null %}
                                 {% if registered == false %}
                                     {% if meetsPrerequisites == true %}
-                                        <form method="post" action="{{ path('app_education_course', {id: course.id}) }}">
+                                        <form method="post" action="{{ path('app_edu_course', {id: course.id}) }}">
                                             <div class="input">
                                                 <button type="submit" class="btn">inschrijven <i class="icon icon-arr-forward"></i></button>
                                             </div>
@@ -291,7 +291,7 @@
                                                             {% endfor %}
                                                         {% endif %}
                                                         {% if meetsPrerequisite == false %}
-                                                            Tutorial: <a href="{{ path('app_education_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                            Tutorial: <a href="{{ path('app_edu_course', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                         {% endif %}
                                                     {% elseif prerequisite['@type'] == 'Program' %}
                                                         {% if participant.programs is defined and participant.programs is not null %}
@@ -302,7 +302,7 @@
                                                             {% endfor %}
                                                         {% endif %}
                                                         {% if meetsPrerequisite == false %}
-                                                            Programma: <a href="{{ path('app_education_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
+                                                            Programma: <a href="{{ path('app_edu_program', {id: prerequisite.id}) }}">{{ prerequisite.name }}</a>
                                                         {% endif %}
                                                     {% else %}
                                                         {{ prerequisite.name }}
