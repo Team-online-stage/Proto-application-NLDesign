@@ -88,8 +88,11 @@ class PtcController extends AbstractController
 
         // Lets load a request
         if ($loadrequest = $request->query->get('request')) {
-            $variables['request'] = $commonGroundService->getResource($loadrequest);
+            $requestUUID = $commonGroundService->getUuidFromUrl($loadrequest);
+            $variables['request'] = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$requestUUID]);
+            $variables['submit'] = 'true';
             $session->set('request', $variables['request']);
+
         }
 
         $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
@@ -104,9 +107,10 @@ class PtcController extends AbstractController
 
         $variables['request'] = $session->get('request', ['requestType'=>$variables['process']['requestType'], 'properties'=>[]]);
 
+
         // What if the request in session is defrend then the procces type that we are currently running? Or if we dont have a process_type at all? Then we create a base request
         if (
-            (array_key_exists('processType', $variables['request']) && $variables['request']['processType'] != $variables['process']['@id'])
+            (array_key_exists('processType', $variables['request']) && $commonGroundService->getUuidFromUrl($variables['request']['processType']) != $variables['process']['id'])
             ||
             !array_key_exists('processType', $variables['request'])
         ) {
@@ -116,6 +120,7 @@ class PtcController extends AbstractController
             $variables['request']['properties'] = [];
             $variables['request']['requestType'] = $variables['process']['requestType'];
             $session->set('request', $variables['request']);
+
         }
 
         // lets handle a current stage
@@ -185,6 +190,7 @@ class PtcController extends AbstractController
 
             // stores an attribute in the session for later reuse
             $variables['request'] = $request;
+
             $session->set('request', $request);
         }
 
