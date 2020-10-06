@@ -65,6 +65,18 @@ class ChinController extends AbstractController
     }
 
     /**
+     * @Route("/checkin/reservations")
+     * @Template
+     */
+    public function checkinReservationsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        //$variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/nodes/user")
      * @Template
      */
@@ -89,6 +101,14 @@ class ChinController extends AbstractController
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
+
+            if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
+                if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
+                    $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
+                    $commonGroundService->updateResource($accommodation, $resource['accommodation']);
+                }
+                unset($resource['maximumAttendeeCapacity']);
+            }
 
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
