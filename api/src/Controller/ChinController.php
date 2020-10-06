@@ -423,7 +423,8 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
         $variables['organization'] = $commonGroundService->getResource($variables['resource']['organization']);
-        $calendars = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'calendars'], ['resource' => $variables['resource']['@id']])['hydra:member'];
+
+        $calendars = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'calendars'], ['resource' => $variables['resource']['accommodation']])['hydra:member'];
 
         if(count($calendars) > 0){
             $variables['calendar'] = $calendars[0];
