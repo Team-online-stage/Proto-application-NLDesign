@@ -91,6 +91,8 @@ class PtcController extends AbstractController
             $requestUUID = $commonGroundService->getUuidFromUrl($loadrequest);
             $variables['request'] = $commonGroundService->getResource(['component'=>'vrc', 'type'=>'requests', 'id'=>$requestUUID]);
             $session->set('request', $variables['request']);
+
+            var_dump($variables['request']);
         }
 
         $variables['process'] = $commonGroundService->getResource(['component' => 'ptc', 'type' => 'process_types', 'id' => $id]);
@@ -191,6 +193,9 @@ class PtcController extends AbstractController
 
             // stores an attribute in the session for later reuse
             $variables['request'] = $request;
+
+            var_dump($variables['request']);
+            
             $session->set('request', $request);
         }
 
