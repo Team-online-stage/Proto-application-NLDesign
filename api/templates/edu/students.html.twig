@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block container %}
     <section class="row">
         <div class="col-sm-8">
             <div class="content">
@@ -38,7 +38,6 @@
 
     <div class="row">
         <div class="col-sm-8">
-            {% if app.user is defined and app.user is not null %}
                 {% if resources is not empty %}
                     <ul class="list list--card list--card-small">
                     {% for student in resources %}
@@ -63,7 +62,7 @@
                                             <div class="col-sm-4">
                                                 <div style="float: right;">
                                                     <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                        <a href="{{ path('app_education_student', {id: student.id}) }}">lees meer</a>
+                                                        <a href="{{ path('app_edu_student', {id: student.id}) }}">lees meer</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -90,10 +89,6 @@
                     <p>Er zijn op dit moment geen studenten.</p>
                 {% endif %}
                 </ul>
-            {% else %}
-                <h2>U moet eerst inloggen voordat u deze pagina kunt bekijken!</h2>
-                Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.
-            {% endif %}
         </div>
     </div>
 {% endblock %}
