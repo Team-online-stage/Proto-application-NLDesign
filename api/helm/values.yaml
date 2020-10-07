@@ -10,14 +10,14 @@ settings:
   version: V1.0
   majorVersion: v1
   id: 1ef30b69-6b28-4fbd-a0cd-83d6ff3c505e
-  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
+  description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&quot;'
   type: application
   repro: https://github.com/ConductionNL/pan
   demo: www.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: zuid-drecht.nl
   subdomain: false
-  subpath: false
+  subpath: 
   subpathRouting: true
   organisationName: Conduction
   email: info@conduction.nl
@@ -149,3 +149,9 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+commonground:
+    eherkenning:
+        location: https://zuid-drecht.nl/eherkenning
+    digispoof:
+        location: https://zuid-drecht.nl/digispoof
