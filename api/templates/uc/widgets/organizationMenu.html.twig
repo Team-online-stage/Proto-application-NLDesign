@@ -89,6 +89,11 @@
                 <a href="{{ path('app_chin_checkinstatistics') }}">{{ 'statistics'|trans|capitalize }}</a>
             </li>
         {% endif %}
+        {% if commonground_component_health("chin") and 'scope.chin.checkinreservations.write' in app.user.roles %}
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_checkinreservations' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_checkinreservations') }}">{{ 'reservations'|trans|capitalize }}</a>
+            </li>
+        {% endif %}
         {% if commonground_component_health("chin") and 'scope.wrc.organization.write' in app.user.roles %}
             <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_wrc_organization' %}sidenav__item--active{% endif %}">
                 <a href="{{ path('app_wrc_organization') }}">{{ 'organization'|trans|capitalize }}</a>
@@ -113,6 +118,11 @@
             <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_ptc_process' %}sidenav__item--active{% endif %}">
                 <a href="{{ path('app_ptc_process') }}">{{ 'data request'|trans|capitalize }}</a>
                 //Leid nog niet naar het goede process hier gaf deze een error maar wordt op moment ook nog niet getoond door te weinig rechten(geen roles aan de user)
+            </li>
+        {% endif %}
+        {% if commonground_component_health("chin") and 'scope.chin.checkinreservations.write' in app.user.roles %}
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_checkinreservations' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_checkinreservations') }}">{{ 'account settings'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") %}

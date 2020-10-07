@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
+
     <style>
         .row{
             padding-left: 25%;
@@ -22,6 +23,7 @@
         }
 
     </style>
+    
     <section class="row">
         <div class="col-sm-8">
             <div class="content">
@@ -59,7 +61,6 @@
 
     <div class="row">
         <div class="col-sm-8">
-            {% if app.user is defined and app.user is not null %}
                 {% if resources is not empty %}
                     <ul class="list list--card list--card-small">
                     {% for student in resources %}
@@ -111,15 +112,7 @@
                     <p>Er zijn op dit moment geen studenten.</p>
                 {% endif %}
                 </ul>
-            {% else %}
-                <div class="row notification notification--warning">
-                    <div class="notification__content">
-                        <h2 class="notification__title">U bent niet ingelogd</h2>
-                        <span>U dient ingelogd te zijn om uw overzicht te kunnen bekijken.</span><br>
-                        <span>Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</span>
-                    </div>
-                </div>
-            {% endif %}
+
         </div>
     </div>
     </div>

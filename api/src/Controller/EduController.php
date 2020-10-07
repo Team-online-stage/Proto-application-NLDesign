@@ -334,6 +334,86 @@ class EduController extends AbstractController
     }
 
     /**
+     * @Route("/internships")
+     * @Template
+     */
+    public function internshipsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/internships/{id}")
+     * @Template
+     */
+    public function internshipAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['id'] = $id;
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['jobposting'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id], $variables['query']);
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/challenges")
+     * @Template
+     */
+    public function challengesAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders'], $variables['query'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/challenges/{id}")
+     * @Template
+     */
+    public function challengeAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['id'] = $id;
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['jobposting'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders', 'id' => $id], $variables['query']);
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders'], $variables['query'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/overview")
      * @Template
      */

@@ -6,13 +6,15 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-//use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+//use App\Service\RequestService;
+use Endroid\QrCode\Factory\QrCodeFactoryInterface;
 use function GuzzleHttp\Promise\all;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
@@ -65,6 +67,18 @@ class ChinController extends AbstractController
     }
 
     /**
+     * @Route("/checkin/reservations")
+     * @Template
+     */
+    public function checkinReservationsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    {
+        $variables = [];
+        //$variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
      * @Route("/nodes/user")
      * @Template
      */
@@ -90,6 +104,14 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
+            if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
+                if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
+                    $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
+                    $commonGroundService->updateResource($accommodation, $resource['accommodation']);
+                }
+                unset($resource['maximumAttendeeCapacity']);
+            }
+
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
             return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
@@ -110,6 +132,45 @@ class ChinController extends AbstractController
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $this->getUser()->getPerson()])['hydra:member'];
 
         return $variables;
+    }
+
+    /**
+     * This function will render a qr code.
+     *
+     * It provides the following optional query parameters
+     * size: the size of the image renderd, default  300
+     * margin: the maring on the image in pixels, default 10
+     * file: the file type renderd, default png
+     * encoding: the encoding used for the file, default: UTF-8
+     *
+     * @Route("/render/{id}")
+     */
+    public function renderAction(Session $session, $id, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
+    {
+        $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id'=>$id]);
+
+        $url = $this->generateUrl('app_chin_checkin', ['code'=>$node['reference']], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $configuration = $node['qrConfig'];
+        if ($request->query->get('size')) {
+            $configuration['size'] = $request->query->get('size', 300);
+        }
+        if ($request->query->get('margin')) {
+            $configuration['margin'] = $request->query->get('margin', 10);
+        }
+
+        $qrCode = $qrCodeFactory->create($url, $configuration);
+
+        // Set advanced options
+        $qrCode->setWriterByName($request->query->get('file', 'png'));
+        $qrCode->setEncoding($request->query->get('encoding', 'UTF-8'));
+        //$qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
+
+        $response = new Response($qrCode->writeString());
+        $response->headers->set('Content-Type', $qrCode->getContentType());
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+        return $response;
     }
 
     /**
@@ -159,6 +220,9 @@ class ChinController extends AbstractController
             switch ($variables['resource']['type']) {
                 case 'reservation':
                     return $this->redirect($this->generateUrl('app_chin_reservation', ['code'=>$code]));
+                    break;
+                case 'clockin':
+                    return $this->redirect($this->generateUrl('app_chin_clockin', ['code'=>$code]));
                     break;
                 default:
                     $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
@@ -295,11 +359,9 @@ class ChinController extends AbstractController
     {
         $variables['code'] = $session->get('code');
         $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['code']])['hydra:member'];
-
         if ($token) {
             $application = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id' => $params->get('app_id')]);
-            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
-            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
+            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'token', 'application' => $params->get('app_id')])['hydra:member'];
             $tokens = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'tokens'], ['token' => $token, 'provider.name' => $providers[0]['name']])['hydra:member'];
             if (count($tokens) > 0) {
                 $variables['token'] = $tokens[0];
@@ -329,7 +391,7 @@ class ChinController extends AbstractController
 
             $application = $commonGroundService->getResource(['component'=>'wrc', 'type'=>'applications', 'id' => $params->get('app_id')]);
             $organization = $application['organization']['@id'];
-            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'reset', 'application' => $params->get('app_id')])['hydra:member'];
+            $providers = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'providers'], ['type' => 'token', 'application' => $params->get('app_id')])['hydra:member'];
 
             if (count($users) > 0) {
                 $user = $users[0];
@@ -420,58 +482,34 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
         $variables['organization'] = $commonGroundService->getResource($variables['resource']['organization']);
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' =>$variables['organization']['id']])['hydra:member'];
 
-        if ($request->isMethod('POST') && $request->request->get('method') == 'checkin') {
+        $calendars = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'calendars'], ['resource' => $variables['resource']['accommodation']])['hydra:member'];
 
-            //update person
-            $name = $request->request->get('name');
-            $email = $request->request->get('email');
-            $tel = $request->request->get('telephone');
+        if (count($calendars) > 0) {
+            $variables['calendar'] = $calendars[0];
+        } else {
+            $variables['error'] = 'Something went wrong';
+        }
 
-            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+        if ($request->isMethod('POST')) {
+            $validChars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $name = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 5);
 
-            // Wat doet dit?
-            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
-            $user = $user[0];
+            $amount = $request->get('amount');
 
-            if (isset($person['emails'][0])) {
-                //$emailResource = $person['emails'][0];
-                //$emailResource['email'] = $email;
-                // @Hotfix
-                //$emailResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'emails', 'id'=>$emailResource['id']]);
-                //$emailResource = $commonGroundService->updateResource($emailResource);
-                //$person['emails'][0] = 'emails/'.$emailResource['id'];
-            } else {
-                $emailObject['email'] = $email;
-                $emailObject = $commonGroundService->createResource($emailObject, ['component' => 'cc', 'type' => 'emails']);
-                $person['emails'][0] = 'emails/'.$emailObject['id'];
-            }
-
-            if (isset($person['telephones'][0])) {
-                //$telephoneResource = $person['telephones'][0];
-                //$telephoneResource['telephone'] = $tel;
-                // @Hotfix
-                //$telephoneResource['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'telephones', 'id'=>$telephoneResource['id']]);
-                //$telephoneObject = $commonGroundService->updateResource($telephoneResource);
-                //$person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
-            } elseif ($tel) {
-                $telephoneObject['telephone'] = $tel;
-                $telephoneObject = $commonGroundService->createResource($telephoneObject, ['component' => 'cc', 'type' => 'telephones']);
-                $person['telephones'][0] = 'telephones/'.$telephoneObject['id'];
-            }
-
-            // @Hotfix
-            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
-            //$person = $commonGroundService->updateResource($person);
-
-            // Create check-in
+            // Create reservation
             $reservation = [];
-            $reservation['node'] = 'nodes/'.$variables['resource']['id'];
-            $reservation['person'] = $person['@id'];
-            $reservation['userUrl'] = $user['@id'];
-
-            $checkIn = $commonGroundService->createResource($reservation, ['component' => 'chin', 'type' => 'reservations']);
+            $reservation['name'] = $name;
+            $reservation['underName'] = $commonGroundService->getResource($this->getUser()->getPerson())['name'];
+            $reservation['numberOfParticipants'] = intval($amount);
+            $reservation['provider'] = $variables['resource']['organization'];
+            //reservation event part
+            $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
+            $reservation['event']['name'] = $name;
+            $reservation['event']['startDate'] = '';
+            $reservation['event']['endDate'] = '';
+            $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
+            $checkIn = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
             return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
         }
@@ -913,5 +951,54 @@ class ChinController extends AbstractController
         $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
         return $variables;
+    }
+
+    /**
+     * @Route("/clockin/{code}")
+     * @Template
+     */
+    public function clockinAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
+    {
+
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables['code'] = $code;
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/organization")
+     * @Template
+     */
+    public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
+    {
     }
 }
