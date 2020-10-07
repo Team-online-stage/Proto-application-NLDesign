@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
+use Endroid\QrCode\Factory\QrCodeFactoryInterface;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use function GuzzleHttp\Promise\all;
@@ -13,6 +14,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
@@ -130,6 +132,42 @@ class ChinController extends AbstractController
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'cmc', 'type' => 'contact_moments'], ['receiver' => $this->getUser()->getPerson()])['hydra:member'];
 
         return $variables;
+    }
+
+    /**
+     * This function will render a qr code
+     *
+     * It provides the following optional query parameters
+     * size: the size of the image renderd, default  300
+     * margin: the maring on the image in pixels, default 10
+     * file: the file type renderd, default png
+     * encoding: the encoding used for the file, default: UTF-8
+     *
+     * @Route("/render/{id}")
+     */
+    public function renderAction(Session $session, $id, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface  $qrCodeFactory)
+    {
+        $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes','id'=>$id]);
+
+        $url = $this->generateUrl('app_chin_checkin', ['code'=>$node['reference']], UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $configuration = $node['qrConfig'];
+        if($request->query->get('size')) $configuration['size'] = $request->query->get('size', 300);
+        if($request->query->get('margin')) $configuration['margin'] = $request->query->get('margin',10);
+
+
+        $qrCode = $qrCodeFactory->create($url, $configuration);
+
+        // Set advanced options
+        $qrCode->setWriterByName($request->query->get('file', 'png'));
+        $qrCode->setEncoding($request->query->get('encoding', 'UTF-8'));
+        //$qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
+
+        $response = new Response($qrCode->writeString());
+        $response->headers->set('Content-Type', $qrCode->getContentType());
+        $response->setStatusCode(Response::HTTP_NOT_FOUND);
+
+        return $response;
     }
 
     /**
