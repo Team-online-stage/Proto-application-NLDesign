@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block container %}
+    <header class="content__header">
+        <a class="backlink" href="/edu/internships">Stages</a>
+    </header>
+
+    <div class="row">
+        <div class="col-sm-12 col-lg-8">
+            <div class="content-background">
+                <div class="content ">
+                    <div class="row">
+                        <div class="col-md-6">
+                            {% for tender in resources %}
+                            {% if tender.name is defined and tender.name is not empty %}
+                                <h1>{{ tender.name|capitalize }}</h1>
+                            {% endif %}
+                            {% if tender.description is defined and tender.description is not empty %}
+                                <p>{{ tender.description }}</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/350/250" alt="tender" width="100%">
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="edit-section">
+                        <h2>Algemene informatie</h2>
+                    </div>
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Naam
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ tender.name }}</p>
+                            </div>
+                        </li>
+                        {% if tender.closeDate is defined and tender.closeDate is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Einddatum
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ tender.closeDate|date("d-m-Y", "Europe/Paris") }}</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
