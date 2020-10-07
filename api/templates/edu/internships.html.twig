@@ -1,21 +1,57 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
-    <section class="row">
-        <div class="col-sm-8">
-            <div class="content">
-                <header class="content__header">
-                    <h1>Stages</h1>
-                </header>
-            </div>
-        </div>
-    </section>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+
+    <style>
+        .row{
+            background-color: white;
+            padding-left: 35%;
+        }
+        .content1{
+            color: black;
+            text-align: justify;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .blauwebox{
+            margin-left: 60px;
+            float: left;
+            background-color: #263846;
+            width: 270px;
+            height: 420px;
+            margin-top: 40px;
+        }
+        .grijzevlakjes{
+            background-color: lightgray;
+            height: 115px;
+            padding-left: 75%;
+            box-sizing: border-box;
+            width: 50%;
+            border: 5px solid #406377;
+        }
+        .labelnaam{
+            font-family: 'Lobster', cursive;
+            font-size: 30px;
+            padding-left: 36%;
+        }
+        .backgroundgrijs{
+            background-color: white;
+        }
+
+
+
+    </style>
+
+    <div class="blauwebox"></div>
 
     <article>
+
         <div class="row">
             <div class="col-sm-8">
+
                 <div class="content-background">
-                    <div class="content">
+                    <div class="content1">
                         <h2>Over Stages</h2>
                         <p>Hier komt een introductie over de stages.</p>
 
@@ -35,50 +71,32 @@
             </div>
         </div>
     </article>
-
-    <div class="row">
-        <div class="col-sm-8">
-            {% if resources is not empty %}
-                <ul class="list list--card list--card-small">
-                    {% for jobposting in resources %}
-                        <li class="card card--small">
-                            <div class="card__content">
-                                <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>
-                                <div class="card__body">
-                                    <div class="row" style=" height: 100%; width: 100%;">
-                                        <div class="col-sm-8" style="padding-right: 0px;">
-                                            {% if jobposting.title is defined and jobposting.title is not empty %}
-                                                <span class="card__title">{{ jobposting.title }}</span><br>
-                                            {% else %}
-                                                <span class="card__title">{{ jobposting.name }}</span><br>
-                                            {% endif %}
-                                            {% if jobposting.description is defined and jobposting.description is not empty %}
-                                                <span>{{ jobposting.description }}</span>
-                                            {% endif %}
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <div style="float: right;">
-                                                <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                    {% if jobposting.employmentType is defined and jobposting.employmentType is not empty %}
-                                                        <p style="margin: 0;">dienstverband: {{ jobposting.employmentType }}</p>
-                                                    {% endif %}
-                                                    {% if jobposting.jobStartDate is defined and jobposting.jobStartDate is not empty %}
-                                                        <p style="margin: 0;">startdatum: {{ jobposting.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
-                                                    {% endif %}
-                                                    <a href="{{ path('app_edu_internship', {id: jobposting.id}) }}">lees meer</a>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                    {% endfor %}
-                </ul>
-            {% else %}
-                <p>Er zijn op dit moment geen stages</p>
-            {% endif %}
+<div class="backgroundgrijs">
+    <div class="labelnaam">Stageplekken</div>
+    <br><br>
+        <div class="grijzevlakjes">
+            <div class="row">
+                <div class="col-md-12 col-lg-4"></div>
+                <div class="col-md-12 col-lg-8"></div>
+            </div>
         </div>
-    </div>
+        <br><br>
+        <div class="grijzevlakjes">
+            <div class="row">
+                <div class="col-md-12 col-lg-4"></div>
+                <div class="col-md-12 col-lg-8"></div>
+            </div>
+        </div>
+        <br><br>
+        <div class="grijzevlakjes">
+            <div class="row">
+                <div class="col-md-12 col-lg-4"></div>
+                <div class="col-md-12 col-lg-8"></div>
+            </div>
+        </div>
+       <br><br>
+</div>
+
+
+
 {% endblock %}
