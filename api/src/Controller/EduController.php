@@ -370,10 +370,8 @@ class EduController extends AbstractController
         $variables['jobposting'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
 
-
         return $variables;
     }
-
 
     /**
      * @Route("/challenges")
@@ -412,10 +410,8 @@ class EduController extends AbstractController
         $variables['jobposting'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders'], $variables['query'])['hydra:member'];
 
-
         return $variables;
     }
-
 
     /**
      * @Route("/overview")
