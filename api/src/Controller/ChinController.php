@@ -6,9 +6,9 @@ namespace App\Controller;
 
 use Conduction\CommonGroundBundle\Security\User\CommongroundUser;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
-use Endroid\QrCode\Factory\QrCodeFactoryInterface;
-//use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+//use App\Service\RequestService;
+use Endroid\QrCode\Factory\QrCodeFactoryInterface;
 use function GuzzleHttp\Promise\all;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -135,7 +135,7 @@ class ChinController extends AbstractController
     }
 
     /**
-     * This function will render a qr code
+     * This function will render a qr code.
      *
      * It provides the following optional query parameters
      * size: the size of the image renderd, default  300
@@ -145,16 +145,19 @@ class ChinController extends AbstractController
      *
      * @Route("/render/{id}")
      */
-    public function renderAction(Session $session, $id, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface  $qrCodeFactory)
+    public function renderAction(Session $session, $id, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
     {
-        $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes','id'=>$id]);
+        $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id'=>$id]);
 
         $url = $this->generateUrl('app_chin_checkin', ['code'=>$node['reference']], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $configuration = $node['qrConfig'];
-        if($request->query->get('size')) $configuration['size'] = $request->query->get('size', 300);
-        if($request->query->get('margin')) $configuration['margin'] = $request->query->get('margin',10);
-
+        if ($request->query->get('size')) {
+            $configuration['size'] = $request->query->get('size', 300);
+        }
+        if ($request->query->get('margin')) {
+            $configuration['margin'] = $request->query->get('margin', 10);
+        }
 
         $qrCode = $qrCodeFactory->create($url, $configuration);
 
@@ -997,6 +1000,5 @@ class ChinController extends AbstractController
      */
     public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
     {
-
     }
 }
