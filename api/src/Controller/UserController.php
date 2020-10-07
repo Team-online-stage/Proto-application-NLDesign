@@ -74,7 +74,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/digispoof")
+     * @Route("/auth/digispoof")
      * @Template
      */
     public function DigispoofAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)
@@ -85,7 +85,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/eherkenning")
+     * @Route("/auth/eherkenning")
      * @Template
      */
     public function EherkenningAction(Request $request, CommonGroundService $commonGroundService, ParameterBagInterface $params, EventDispatcherInterface $dispatcher)

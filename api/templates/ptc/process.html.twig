@@ -117,7 +117,7 @@
                 {% if process.stages is defined and process.stages|length > 1 %}
                     <div class="col-md-4  col-sm-12">
                         {% if request.currentStage is not defined or request.currentStage is empty %}
-                            {% if app.user is not empty and process.requireLogin == 'true' %}
+                            {% if app.user is not empty %} {# and process.requireLogin in 'true'  why?#}
                                 {% include 'ptc/widgets/requests.html.twig' %}
                             {% endif %}
                         {% else %}
