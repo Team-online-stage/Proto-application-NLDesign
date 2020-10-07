@@ -412,7 +412,7 @@ class ChinController extends AbstractController
                 $message['status'] = 'queued';
                 $message['data'] = ['resource' => $link, 'sender'=> 'no-reply@conduction.nl'];
                 $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'60314e20-3760-4c17-9b18-3a99a11cbc5f']);
-                $message['reciever'] = 'rubenvdlinde@gmail.com'; //$user['username'];
+                $message['reciever'] = $user['username'];
                 $message['sender'] = 'no-reply@conduction.nl';
 
                 $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
@@ -989,5 +989,14 @@ class ChinController extends AbstractController
         $variables['code'] = $code;
 
         return $variables;
+    }
+
+    /**
+     * @Route("/organization")
+     * @Template
+     */
+    public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
+    {
+
     }
 }
