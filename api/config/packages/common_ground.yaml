@@ -160,11 +160,6 @@ parameters:
     # BasisAdressenGemeenten
     env(APP_COMMONGROUND_BAG_LOCATION): "https://bag.basisregistraties.overheid.nl/api/v1/"
     env(APP_COMMONGROUND_BAG_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-    # KamerVanKoophandel
-    env(APP_COMMONGROUND_KVK_LOCATION): "https://kvk.%env(APP_DOMAIN)%"
-    env(APP_COMMONGROUND_KVK_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
-    common_ground.kvk.location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
-    common_ground.kvk.apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
     # DienstWegverkeer
     env(APP_COMMONGROUND_RDW_LOCATION): "https://rdw.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_RDW_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
@@ -183,6 +178,9 @@ parameters:
     # StufService
     env(APP_COMMONGROUND_STUF_LOCATION): "https://stuf.%env(APP_DOMAIN)%"
     env(APP_COMMONGROUND_STUF_APIKEY): "%env(APP_COMMONGROUND_KEY)%"
+    
+    env(APP_DIGISPOOF_LOCATION): "https://ds.zuid-drecht.nl"
+    env(APP_EHERKENNING_LOCATION): "https://eh.zuid-drecht.nl"
 
     # Test for commonground component by array
     common_ground.components:
@@ -244,12 +242,13 @@ parameters:
         bag:
             location: "%env(APP_COMMONGROUND_BAG_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_BAG_APIKEY)%"
-        kvk:
-            location: "%env(APP_COMMONGROUND_KVK_LOCATION)%"
-            apikey: "%env(APP_COMMONGROUND_KVK_APIKEY)%"
         rdw:
             location: "%env(APP_COMMONGROUND_RDW_LOCATION)%"
             apikey: "%env(APP_COMMONGROUND_RDW_APIKEY)%"
+        ds:
+            location: "%env(APP_DIGISPOOF_LOCATION)%"
+        eh:
+            location: "%env(APP_EHERKENNING_LOCATION)%"
 
     common_ground.oas.type: service
     common_ground.oas.host: irc.zaakonline.nl
