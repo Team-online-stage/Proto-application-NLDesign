@@ -2,7 +2,7 @@
 
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block container %}
     <header class="content__header">
         <h1 class="content__header-title">Mijn Overzicht</h1>
     </header>
@@ -42,7 +42,7 @@
                                                         <div class="col-sm-4">
                                                             <div style="float: right;">
                                                                 <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                                    <a href="{{ path('app_education_program', {id: program.id}) }}"
+                                                                    <a href="{{ path('app_edu_program', {id: program.id}) }}"
                                                                        rel="noopener" class="btn btn--primary"
                                                                        target="_blank">
                                                                         Lees meer
@@ -103,7 +103,7 @@
                                                         <div class="col-sm-4">
                                                             <div style="float: right;">
                                                                 <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                                    <a href="{{ path('app_education_course', {id: course.id}) }}"
+                                                                    <a href="{{ path('app_edu_course', {id: course.id}) }}"
                                                                        rel="noopener" class="btn btn--primary"
                                                                        target="_blank">
                                                                         Lees meer

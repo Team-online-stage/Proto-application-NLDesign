@@ -33,6 +33,12 @@
                 </div>
                 <div class="input input--horizontal">
                     <div>
+                        <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of people'|trans|capitalize }}</label>
+                    </div>
+                    <input id="maximumAttendeeCapacity" type="number" name="maximumAttendeeCapacity" aria-describedby="hint_name" class="input__control input__control--text input__control--xl">
+                </div>
+                <div class="input input--horizontal">
+                    <div>
                         <label class="input__label" for="accommodation">{{ 'accommodation'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
                     <select id="accommodation" name="accommodation" class="input__control input__control--xl input__control--select">

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block container %}
     <header class="content__header">
         <a class="backlink" href="/education/teams">Teams</a>
     </header>
@@ -53,7 +53,7 @@
                                                 <div class="col-sm-6">
                                                     <div style="float: right;">
                                                         <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                            <a href="{{ path('app_education_team', {id: parent.id}) }}">Lees meer over {{ parent.name }}</a>
+                                                            <a href="{{ path('app_edu_team', {id: parent.id}) }}">Lees meer over {{ parent.name }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -98,7 +98,7 @@
                                                                     </div>
                                                                     <div class="col-sm-4">
                                                                         <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                                            <a href="{{ path('app_education_team', {id: subTeam.id}) }}"
+                                                                            <a href="{{ path('app_edu_team', {id: subTeam.id}) }}"
                                                                                rel="noopener" class="btn btn--primary"
                                                                                target="_blank">
                                                                                 Bekijk dit team
@@ -151,7 +151,7 @@
                                                                             </div>
                                                                             <div class="col-sm-5">
                                                                                 <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                                                    <a href="{{ path('app_education_student', {id: participant.id}) }}"
+                                                                                    <a href="{{ path('app_edu_student', {id: participant.id}) }}"
                                                                                        rel="noopener" class="btn btn--primary"
                                                                                        target="_blank">
                                                                                         Bekijk deze student

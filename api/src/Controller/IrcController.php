@@ -7,21 +7,18 @@ namespace App\Controller;
 //use App\Command\PubliccodeCommand;
 use App\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
-use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-
 /**
- * Class IrcController
- * @package App\Controller
+ * Class IrcController.
+ *
  * @Route("/irc")
  */
 class IrcController extends AbstractController
 {
-
 //    /**
 //     * @Route("/")
 //     * @Template
@@ -30,12 +27,12 @@ class IrcController extends AbstractController
 //    {
 //        $variables = [];
 //
-//	    $variables = $applicationService->getVariables();
-//		// Moeten we ophalen uit de ingelogde sessie
-//		$person = $variables['user']['burgerservicenummer'];
-//		$defaultIrc = "https://irc.huwelijksplanner.online/assents/";
+    //	    $variables = $applicationService->getVariables();
+    //		// Moeten we ophalen uit de ingelogde sessie
+    //		$person = $variables['user']['burgerservicenummer'];
+    //		$defaultIrc = "https://irc.huwelijksplanner.online/assents/";
 //
-//		$variables['assents'] = $commonGroundService->getResourceList($defaultIrc, ['person'=>$person])['hydra:member'];
+    //		$variables['assents'] = $commonGroundService->getResourceList($defaultIrc, ['person'=>$person])['hydra:member'];
 //
 //        return $variables;
 //    }
@@ -51,7 +48,7 @@ class IrcController extends AbstractController
         
         // We need need to get the assent from a different than standard location
         if (!empty($this->getUser())) {
-            $defaultIrc = "https://irc.huwelijksplanner.online/assents/";
+            $defaultIrc = 'https://irc.huwelijksplanner.online/assents/';
             $variables['user'] = $commonGroundService->getResource($this->getUser()->getPerson());
             if(!empty($variables['assent']['requester'])) {
                 $variables['requester'] = $commonGroundService->getResource($variables['assent']['requester']);
@@ -65,7 +62,7 @@ class IrcController extends AbstractController
                 $variables['assent']['status'] = $request->request->get('status');
 
                 $update = true;
-                $this->addFlash('success', "assent has been updated with status {$variables["assent"]["status"]}");
+                $this->addFlash('success', "assent has been updated with status {$variables['assent']['status']}");
             }
             if ($update) {
                 $variables['assent'] = $commonGroundService->saveResource($variables['assent'], ['component' => 'irc', 'type' => 'assents']);
@@ -86,16 +83,9 @@ class IrcController extends AbstractController
         if (!empty($this->getUser())) {
             $variables['user'] = $commonGroundService->getResource($this->getUser()->getPerson());
             $user['person@id'] = $this->getUser()->getPerson();
-            $variables['assents'] = $commonGroundService->getResourceList(['component' => 'irc', 'type' => 'assents'], ['person' => $variables['user']['burgerservicenummer'],])['hydra:member'];
-
+            $variables['assents'] = $commonGroundService->getResourceList(['component' => 'irc', 'type' => 'assents'], ['person' => $variables['user']['burgerservicenummer']])['hydra:member'];
         }
 
         return $variables;
     }
 }
-
-
-
-
-
-

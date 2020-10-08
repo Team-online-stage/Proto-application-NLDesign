@@ -19,7 +19,6 @@
 {% else %}
     <input type="hidden" name="request[currentStage]" value="submit">
 {% endif %}
-
 {% if request['@id'] is defined and request['@id'] is not null %}
     <input type="hidden" name="request[@id]" value="{{ request['@id'] }}">
 {% endif %}
