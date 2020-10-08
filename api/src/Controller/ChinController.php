@@ -1009,18 +1009,18 @@ class ChinController extends AbstractController
         if ($this->getUser()) {
             $variables['wrc'] = $commonGroundService->getResource($this->getUser()->getOrganization());
 
-            if (isset($variables['wrc']['contact'])){
+            if (isset($variables['wrc']['contact'])) {
                 $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
             }
         }
 
-        if ($request->isMethod('POST') && $request->get('social')){
+        if ($request->isMethod('POST') && $request->get('social')) {
             $resource = $request->request->all();
             $organization = [];
             $organization['@id'] = $variables['organization']['@id'];
             $organization['id'] = $variables['organization']['id'];
 
-            if(!isset($variables['organization']['socials'][0])){
+            if (!isset($variables['organization']['socials'][0])) {
                 $organization['socials'][0]['name'] = $variables['organization']['name'];
                 $organization['socials'][0]['description'] = $variables['organization']['name'];
             }
@@ -1043,8 +1043,7 @@ class ChinController extends AbstractController
 
             $this->addFlash('success', 'Uw socials zijn bijgewerkt');
             $variables['organization'] = $commonGroundService->updateResource($organization);
-
-        } elseif ($request->isMethod('POST') && $request->get('info')){
+        } elseif ($request->isMethod('POST') && $request->get('info')) {
             $resource = $request->request->all();
             $organization = [];
             $organization['@id'] = $variables['organization']['@id'];
