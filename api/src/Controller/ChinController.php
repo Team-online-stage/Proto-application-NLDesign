@@ -97,13 +97,12 @@ class ChinController extends AbstractController
     public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['organizations'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+        $variables['organization'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+        $organizationUrl = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>$variables['organization']['id']]);
         var_dump('ORGANIZATIONS_ID: ');
-        var_dump($variables['organizations']['@id']);
-        var_dump('ORGANIZATIONS: ');
-        var_dump($variables['organizations']);
-        $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organizations']['@id']])['hydra:member'];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organizations']['@id']])['hydra:member'];
+        var_dump($organizationUrl);
+        $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $organizationUrl])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $organizationUrl])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
