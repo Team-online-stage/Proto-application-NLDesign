@@ -45,12 +45,12 @@ class IrcController extends AbstractController
     {
         $variables = [];
         $variables['assent'] = $commonGroundService->getResource(['component' => 'irc', 'type' => 'assents', 'id' => $id]);
-        
+
         // We need need to get the assent from a different than standard location
         if (!empty($this->getUser())) {
             $defaultIrc = 'https://irc.huwelijksplanner.online/assents/';
             $variables['user'] = $commonGroundService->getResource($this->getUser()->getPerson());
-            if(!empty($variables['assent']['requester'])) {
+            if (!empty($variables['assent']['requester'])) {
                 $variables['requester'] = $commonGroundService->getResource($variables['assent']['requester']);
             }
             $update = false;
