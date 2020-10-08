@@ -5,7 +5,7 @@
         <div class="col-sm-8">
             <div class="content">
                 <header class="content__header">
-                    <h1>Stages</h1>
+                    <h1>Challenges</h1>
                 </header>
             </div>
         </div>
@@ -16,8 +16,8 @@
             <div class="col-sm-8">
                 <div class="content-background">
                     <div class="content">
-                        <h2>Over Stages</h2>
-                        <p>Hier komt een introductie over de stages.</p>
+                        <h2>Over Challenges</h2>
+                        <p>Hier komt een introductie over de Challenges.</p>
 
                         <p>
                             Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
@@ -40,33 +40,30 @@
         <div class="col-sm-8">
             {% if resources is not empty %}
                 <ul class="list list--card list--card-small">
-                    {% for jobposting in resources %}
+                    {% for tender in resources %}
                         <li class="card card--small">
                             <div class="card__content">
                                 <div class="card__thumb" style="background-image: url('https://picsum.photos/200')"></div>
                                 <div class="card__body">
                                     <div class="row" style=" height: 100%; width: 100%;">
                                         <div class="col-sm-8" style="padding-right: 0px;">
-                                            {% if jobposting.title is defined and jobposting.title is not empty %}
-                                                <span class="card__title">{{ jobposting.title }}</span><br>
-                                            {% else %}
-                                                <span class="card__title">{{ jobposting.name }}</span><br>
+
+                                                <span class="card__title">{{ tender.name }}</span><br>
                                             {% endif %}
-                                            {% if jobposting.description is defined and jobposting.description is not empty %}
-                                                <span>{{ jobposting.description }}</span>
+                                            {% if tender.description is defined and tender.description is not empty %}
+                                                <span>{{ tender.description }}</span>
                                             {% endif %}
                                         </div>
                                         <div class="col-sm-4">
                                             <div style="float: right;">
                                                 <div style="display: flex; flex-direction: column; justify-items: center;">
-                                                    {% if jobposting.employmentType is defined and jobposting.employmentType is not empty %}
-                                                        <p style="margin: 0;">dienstverband: {{ jobposting.employmentType }}</p>
+                                                    {% if tender.catchPhrase is defined and tender.catchPhrase is not empty %}
+                                                        <p style="margin: 0;">Catch Phrease: {{ tender.catchPhrase }}</p>
                                                     {% endif %}
-                                                    {% if jobposting.jobStartDate is defined and jobposting.jobStartDate is not empty %}
-                                                        <p style="margin: 0;">startdatum: {{ jobposting.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
+                                                    {% if tender.dateClose is defined and tender.dateClose is not empty %}
+                                                        <p style="margin: 0;">einddatum: {{ tender.dateClose|date("d-m-Y", "Europe/Paris") }}</p>
                                                     {% endif %}
-                                                    <a href="{{ path('app_edu_internship', {id: internship.id}) }}">lees meer</a>
-                                                   
+                                                    <a href="{{ path('app_edu_challenge', {id: tender.id}) }}">lees meer</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -77,7 +74,7 @@
                     {% endfor %}
                 </ul>
             {% else %}
-                <p>Er zijn op dit moment geen stages</p>
+                <p>Er zijn op dit moment geen challenges</p>
             {% endif %}
         </div>
     </div>

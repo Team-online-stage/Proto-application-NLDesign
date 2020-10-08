@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block content %}
+{% block container %}
 
     {% if app.user is defined and app.user is not null %}
         {% if user is defined and user is not null %}
@@ -41,7 +41,7 @@
         <section class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="content">
-                    <a class="backlink" href="{{ path('app_education_course', {id: activity.course.id}) }}">{{ activity.course.name|capitalize }}</a>
+                    <a class="backlink" href="{{ path('app_edu_course', {id: activity.course.id}) }}">{{ activity.course.name|capitalize }}</a>
                     <header class="content__header">
                         <h1 class="content__header-title">{{ activity.name|capitalize }}</h1>
                     </header>
@@ -110,7 +110,7 @@
                                 <ul class="list list--subjects columns">
                                     {% for test in activity.tests %}
                                         <li>
-                                            <a href="{{ path('app_education_test', {id: test.id}) }}" class="list__link">
+                                            <a href="{{ path('app_edu_test', {id: test.id}) }}" class="list__link">
                                                 {{ test.name|capitalize }}
                                             </a>
                                             {% if test.description is defined and test.description is not empty %}
@@ -138,7 +138,7 @@
                                     {% if resultSubmitted == false %}
                                         <h2>Uw resultaat</h2>
 
-                                        <form method="post" action="{{ path('app_education_activity', {id: activity.id}) }}">
+                                        <form method="post" action="{{ path('app_edu_activity', {id: activity.id}) }}">
                                             <div class="input">
                                                 <label class="input__label" for="description">Toelichting</label>
                                                 <textarea class="input__control input__control--text" id="description" name="description"></textarea>
@@ -162,7 +162,7 @@
                                 {% else %}
                                     <aside class="hint">
                                         <span class="hint__title">Tutorial</span>
-                                        <p>U bent nog niet ingeschreven voor <a href="{{ path('app_education_course', {id: activity.course.id}) }}">de tutorial van deze activiteit</a>.</p>
+                                        <p>U bent nog niet ingeschreven voor <a href="{{ path('app_edu_course', {id: activity.course.id}) }}">de tutorial van deze activiteit</a>.</p>
                                     </aside>
                                 {% endif %}
                             {% else%}

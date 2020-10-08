@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block content %}
+{% block container %}
 
     <!-- the alert box -->
 
@@ -19,13 +19,13 @@
                     <nav class="sidenav">
                         <ul>
                             <li class="sidenav__item sidenav__item--active">
-                                <a href="{{ path('app_education_courses') }}">
+                                <a href="{{ path('app_edu_courses') }}">
                                     Over Tutorials
                                 </a>
                             </li>
                             {% for course in resources %}
                             <li class="sidenav__item ">
-                                <a href="{{ path('app_education_course', {id: course.id}) }}">
+                                <a href="{{ path('app_edu_course', {id: course.id}) }}">
                                     {{ course.name|capitalize }}
                                 </a>
                             </li>
