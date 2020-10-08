@@ -670,18 +670,20 @@ class ChinController extends AbstractController
                 $email = [];
                 $email['name'] = 'Email';
                 $email['email'] = $username;
-                //$email = $this->commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+                //$email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
 
                 $telephone = [];
                 $telephone['name'] = 'Phone';
                 $telephone['telephone'] = $tel;
-                //$email = $this->commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
+                //$telephone = $commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
 
                 //create person
                 $names = explode(' ', $name);
                 $person = [];
                 $person['givenName'] = $names[0];
-                $person['familyName'] = end($names);
+                if ($names[0] != end($names)) {
+                    $person['familyName'] = end($names);
+                }
                 $person['emails'] = [$email];
                 if ($tel) {
                     $person['telephones'] = [$telephone];
