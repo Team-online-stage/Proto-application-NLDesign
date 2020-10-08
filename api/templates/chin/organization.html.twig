@@ -40,9 +40,9 @@
                     <div class="tab__content tab__content--inline">
 
                         <section style="padding-top: 10px" class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
-                            <form action="{{ path('app_cc_organization') }}">
+                            <form action="{{ path('app_chin_organization') }}">
                                 <div class="row">
-                                    <div class="col-ms-12 col-md-6">
+                                    <div class="col-sm-12 col-md-6">
                                         <div class="input input--horizontal">
                                             <div>
                                                 <label class="input__label" for="name">{{ 'name'|trans|capitalize }}</label>
@@ -51,7 +51,9 @@
                                                    {% if organization.name is defined and organization.name is not empty %}value="{{ organization.name }}" {% endif %}>
                                         </div>
                                     </div>
-                                    <div class="col-ms-12 col-md-6">
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
                                         <div class="input input--horizontal">
                                             <div>
                                                 <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}</label>
@@ -60,9 +62,7 @@
                                                    {% if organization.telephones.0.telephone is defined and organization.telephones.0.telephone is not empty %}value="{{ organization.telephones.0.telephone }}" {% endif %}>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-ms-12 col-md-6">
+                                    <div class="col-sm-12 col-md-6">
                                         <div class="input input--horizontal">
                                             <div>
                                                 <label class="input__label" for="email">{{ 'email'|trans|capitalize }}</label>
@@ -72,17 +72,75 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <button name="info" value="true" class="btn btn-block">{{ 'edit'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
                             </form>
                         </section>
 
                         <section style="padding-top: 10px" class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
-                            <form action="{{ path('app_cc_organization') }}">
-                                <p>socials</p>
+                            <form action="{{ path('app_chin_organization') }}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="website">{{ 'website'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="website" name="website" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.website is defined and organization.socials.0.website is not empty %}value="{{ organization.social.0.website }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="twitter">{{ 'twitter'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="twitter" name="twitter" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.twitter is defined and organization.socials.0.twitter is not empty %}value="{{ organization.social.0.twitter }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="facebook">{{ 'facebook'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="facebook" name="facebook" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.facebook is defined and organization.socials.0.facebook is not empty %}value="{{ organization.social.0.facebook }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="instagram">{{ 'instagram'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="instagram" name="instagram" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.instagram is defined and organization.socials.0.instagram is not empty %}value="{{ organization.social.0.instagram }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="linkedin">{{ 'linkedin'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="linkedin" name="linkedin" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.socials.0.linkedin is defined and organization.socials.0.linkedin is not empty %}value="{{ organization.social.0.linkedin }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                </div>
                             </form>
                         </section>
 
                         <section style="padding-top: 10px" class="tab__pane" id="panel2-3" role="tabpanel" aria-labelledby="tab2-3">
-                            <form action="{{ path('app_wrc_organization') }}">
+                            <form action="{{ path('app_chin_organization') }}">
                                 <p>styling</p>
                             </form>
                         </section>
