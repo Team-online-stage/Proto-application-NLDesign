@@ -1009,12 +1009,12 @@ class ChinController extends AbstractController
         if ($this->getUser()) {
             $variables['wrc'] = $commonGroundService->getResource($this->getUser()->getOrganization());
 
-            if (isset($variables['wrc']['contact'])){
+            if (isset($variables['wrc']['contact'])) {
                 $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
             }
         }
 
-        if ($request->isMethod('POST') && $request->get('social')){
+        if ($request->isMethod('POST') && $request->get('social')) {
             $resource = $request->request->all();
             $organization = [];
             $organization['@id'] = $variables['organization']['@id'];
