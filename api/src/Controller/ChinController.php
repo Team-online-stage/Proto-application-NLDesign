@@ -1021,11 +1021,8 @@ class ChinController extends AbstractController
             $organization = [];
             $organization['@id'] = $variables['organization']['@id'];
             $organization['id'] = $variables['organization']['id'];
-
-            if (!isset($variables['organization']['socials'][0])) {
-                $organization['socials'][0]['name'] = $variables['organization']['name'];
-                $organization['socials'][0]['description'] = $variables['organization']['name'];
-            }
+            $organization['socials'][0]['name'] = $variables['organization']['name'];
+            $organization['socials'][0]['description'] = $variables['organization']['name'];
 
             if (isset($resource['website'])) {
                 $organization['socials'][0]['website'] = $resource['website'];
@@ -1043,8 +1040,7 @@ class ChinController extends AbstractController
                 $organization['socials'][0]['linkedin'] = $resource['linkedin'];
             }
 
-            $this->addFlash('success', 'Uw socials zijn bijgewerkt');
-            $variables['organization'] = $commonGroundService->updateResource($organization);
+            $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
         } elseif ($request->isMethod('POST') && $request->get('info')) {
             $resource = $request->request->all();
             $organization = [];
@@ -1076,8 +1072,7 @@ class ChinController extends AbstractController
                 $organization['adresses'][0]['locality'] = $resource['locality'];
             }
 
-            $this->addFlash('success', 'Uw gegevens zijn bijgewerkt');
-            $variables['organization'] = $commonGroundService->updateResource($organization);
+            $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
         }
 
         return $variables;
