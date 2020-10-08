@@ -53,8 +53,8 @@
                     <div>
                         <label class="input__label" for="organization">{{ 'organization'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                         <input disabled required="" type="text" id="organization" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
-                        value="{{ organizations.name }}">
-                        <input type="hidden" name="organization" value="{{ organizations['@id'] }}">
+                        value="{{ organization.name }}">
+                        <input type="hidden" name="organization" value="{{ organization['@id'] }}">
                     </div>
                 </div>
                 <div class="input input--horizontal">
