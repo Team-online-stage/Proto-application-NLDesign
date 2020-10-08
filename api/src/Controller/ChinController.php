@@ -98,6 +98,10 @@ class ChinController extends AbstractController
     {
         $variables = [];
         $variables['organizations'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+        var_dump('ORGANIZATIONS_ID: ');
+        var_dump($variables['organizations']['@id']);
+        var_dump('ORGANIZATIONS: ');
+        var_dump($variables['organizations']);
         $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organizations']['@id']])['hydra:member'];
         $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organizations']['@id']])['hydra:member'];
 
