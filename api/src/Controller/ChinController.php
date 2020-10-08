@@ -98,13 +98,8 @@ class ChinController extends AbstractController
     {
         $variables = [];
         $variables['organization'] = $commonGroundService->getResource($this->getUser()->getOrganization());
-        if ($params->get('app_env') == 'prod') {
-            $organizationUrl = 'https://zuid-drecht.nl/api/v1/wrc/organizations/'.$variables['organization']['id'];
-        } else {
-            $organizationUrl = 'https://dev.zuid-drecht.nl/api/v1/wrc/organizations/'.$variables['organization']['id'];
-        }
-        $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $organizationUrl])['hydra:member'];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $organizationUrl])['hydra:member'];
+        $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organization']['id']])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organization']['id']])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
