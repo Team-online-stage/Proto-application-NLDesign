@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block content %}
+{% block container %}
     <section class="row">
         <div class="col-sm-8">
             <div class="content">
@@ -57,7 +57,7 @@
                                                 <div style="float: right;">
                                                     <div style="display: flex; flex-direction: column; justify-items: center;">
                                                         <p style="margin: 0;">Groep soort: {{ team.type }}</p>
-                                                        <a href="{{ path('app_education_team', {id: team.id}) }}">lees meer</a>
+                                                        <a href="{{ path('app_edu_team', {id: team.id}) }}">lees meer</a>
                                                     </div>
                                                 </div>
                                             </div>

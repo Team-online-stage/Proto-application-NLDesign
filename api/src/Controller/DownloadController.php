@@ -33,7 +33,7 @@ class DownloadController extends AbstractController
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
         $order = $commonGroundService->getResource(['component' => 'orc', 'type' => 'orders', 'id' => $id]);
         $orderTemplate = $commonGroundService->getResource($application['defaultConfiguration']['configuration']['orderTemplate']);
-        $query = ['resource' => $order['@id']];
+        $query = ['variables'=>['resource' => $order['@id']]];
         $render = $commonGroundService->createResource($query, $orderTemplate['@id'].'/render');
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
@@ -65,7 +65,7 @@ class DownloadController extends AbstractController
         $application = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id')]);
         $order = $commonGroundService->getResource(['component' => 'bc', 'type' => 'invoices', 'id' => $id]);
         $orderTemplate = $commonGroundService->getResource($application['defaultConfiguration']['configuration']['invoiceTemplate']);
-        $query = ['resource' => $order['@id']];
+        $query = ['variables'=>['resource' => $order['@id']]];
         $render = $commonGroundService->createResource($query, $orderTemplate['@id'].'/render');
         $phpWord = new PhpWord();
         $section = $phpWord->addSection();
