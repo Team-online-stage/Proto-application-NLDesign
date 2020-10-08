@@ -1021,7 +1021,7 @@ class ChinController extends AbstractController
             $organization['id'] = $variables['organization']['id'];
             $organization['socials'][0]['name'] = $variables['organization']['name'];
             $organization['socials'][0]['description'] = $variables['organization']['name'];
-            
+
             if (isset($resource['website'])) {
                 $organization['socials'][0]['website'] = $resource['website'];
             }
@@ -1039,8 +1039,7 @@ class ChinController extends AbstractController
             }
 
             $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
-
-        } elseif ($request->isMethod('POST') && $request->get('info')){
+        } elseif ($request->isMethod('POST') && $request->get('info')) {
             $resource = $request->request->all();
             $organization = [];
             $organization['@id'] = $variables['organization']['@id'];
