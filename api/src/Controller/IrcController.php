@@ -50,7 +50,9 @@ class IrcController extends AbstractController
         if (!empty($this->getUser())) {
             $defaultIrc = 'https://irc.huwelijksplanner.online/assents/';
             $variables['user'] = $commonGroundService->getResource($this->getUser()->getPerson());
-            $variables['requester'] = $commonGroundService->getResource($variables['assent']['request']);
+            if (!empty($variables['assent']['requester'])) {
+                $variables['requester'] = $commonGroundService->getResource($variables['assent']['requester']);
+            }
             $update = false;
             if (!key_exists('person', $variables['assent']) || $variables['assent']['person'] == null) {
                 $variables['assent']['person'] = $variables['user']['burgerservicenummer'];

@@ -1,72 +1,33 @@
 {% extends "base.html.twig" %}
 
 {% block container %}
+    <style>
+        main {
+            background-color: white;
+        }
 
-    {% if app.user is defined and app.user is not null %}
-        {% if user is defined and user is not null %}
-            {% set userContact = user['@id'] %}
-        {% elseif app.user.username is defined and app.user.username is not null %}
-            {% set users = commonground_resource_list({'component': 'uc', 'type': 'users'},{'username' : app.user.username})['hydra:member'] %}
-            {% if users|length > 0 %}
-                {% set userContact = users[0].person %}
-            {% endif %}
-        {% endif %}
-        {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : userContact})['hydra:member'] %}
-        {% if participants|length > 0 %}
-            {% set participant = participants[0] %}
-        {% endif %}
-    {% endif %}
+        .sidenav__item a {
+            background: #263846;
+            color: white;
+        }
 
-    {% set meetsPrerequisites = true %}
-    {% if course.coursePrerequisites is defined and course.coursePrerequisites is not empty %}
-        {% if participant is not defined or participant is null %}
-            {% set meetsPrerequisites = false %}
-        {% else %}
-            {% for prerequisiteUrl in course.coursePrerequisites %}
-                {% set prerequisite = commonground_resource(prerequisiteUrl) %}
-                {% set meetsPrerequisite = false %}
-                {% if prerequisite['@type'] == 'Course' %}
-                    {% if participant.courses is defined and participant.courses is not null %}
-                        {% for participantCourse in participant.courses %}
-                            {% if participantCourse.id == prerequisite.id %}
-                                {% set meetsPrerequisite = true %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% elseif prerequisite['@type'] == 'Program' %}
-                    {% if participant.programs is defined and participant.programs is not null %}
-                        {% for program in participant.programs %}
-                            {% if program.id == prerequisite.id %}
-                                {% set meetsPrerequisite = true %}
-                            {% endif %}
-                        {% endfor %}
-                    {% endif %}
-                {% endif %}
-                {% if meetsPrerequisite == false %}
-                    {% set meetsPrerequisites = false %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endif %}
+        .sidenav__item--active {
+            border-bottom: 2px solid #406377;
+            border-top: 2px solid #406377;
+        }
 
-    {% set registered = false %}
-    {% if participant is defined and participant is not null %}
-        {% if participant.courses is defined and participant.courses is not null %}
-            {% for participantCourse in participant.courses %}
-                {% if participantCourse.id == course.id %}
-                    {% set registered = true %}
-                {% endif %}
-            {% endfor %}
-        {% endif %}
-    {% endif %}
+        .content-background, .collapse {
+            background-color: lightgrey;
+        }
+    </style>
 
     <!-- the alert box -->
 
     <div class="container">
         <section class="row">
-            <div class="col-xl-9 col-xl-offset-3 col-lg-8 col-lg-offset-4 col-md-9 col-md-offset-3 col-xs-12">
+            <div class="col-sm-8">
                 <header class="content__header">
-                    <h1 class="content__header-title">{{ course.name|capitalize }}</h1>
+                    <h1 style="font-family: 'Lobster', cursive">{{ course.name|capitalize }}</h1>
                 </header>
             </div>
         </section>
@@ -214,7 +175,7 @@
 
                     <div style="height:20px;"></div>
 
-                    <div class="content-background background--hemelblauw">
+                    <div class="content-background background--hemelblauw" style="background-color: #2271B3">
                         <div class="content">
                             <h2>{{ 'programma\'s'|capitalize }}</h2>
                             <ul class="list list--links list--chevrons columns">
@@ -233,7 +194,8 @@
 
                     <div class="content-background">
                         <div class="content">
-                            <h2>{{ 'activiteiten'|capitalize }}</h2>
+                            <h2>{{ 'activiteiten/afsluitende test'|capitalize }}</h2>
+                            <p>Hier de afsluitende test van de tutorial</p>
                             <ul class="list list--subjects columns">
                                 {% for activity in course.activities %}
                                     <li>

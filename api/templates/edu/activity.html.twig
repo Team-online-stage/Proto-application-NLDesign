@@ -55,7 +55,7 @@
         <section class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="content">
-                    <a class="backlink" href="{{ path('app_edu_activities') }}">Naar overzicht</a>
+                    <a class="backlink" href="{{ path('app_edu_course', {id: activity.course.id}) }}">{{ activity.course.name|capitalize }}</a>
                     <header class="content__header">
                         <h1 class="content__header-title" style="font-family: 'Lobster', cursive">{{ activity.name|capitalize }}</h1>
                     </header>
