@@ -92,20 +92,33 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
-            // Check if maximumAttendeeCapacity is set and if so, unset it in the resource for creating a node later
             if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
                 if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
                     // Update de accommodation for this node if this node already has an accommodation
                     $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
                     $commonGroundService->updateResource($accommodation, $resource['accommodation']);
                 } else {
+                    // Create a new place
+                    $place['name'] = $resource['name'];
+                    $place['description'] = $resource['description'];
+                    $place['publicAccess'] = true;
+                    $place['smokingAllowed'] = false;
+                    $place['openingTime'] = '09:00';
+                    $place['closingTime'] = '22:00';
+                    $place['organization'] = $variables['organization'];
+                    $place = $commonGroundService->saveResource($place, (['component' => 'lc', 'type' => 'accommodations']));
+
                     // Create a new accommodation for this node if this is a new node
-//                    $accommodation['name'] = $resource['name'];
-//                    $accommodation['description'] = $resource['description'];
-//                    $accommodation['place'] = '';
-//                    $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
-//                    $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
+                    $accommodation['name'] = $resource['name'];
+                    $accommodation['description'] = $resource['description'];
+                    $accommodation['place'] = '';
+                    $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
+                    $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
                 }
+            }
+
+            // Check if maximumAttendeeCapacity is set and if so, unset it in the resource for creating a node
+            if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
                 unset($resource['maximumAttendeeCapacity']);
             }
 
