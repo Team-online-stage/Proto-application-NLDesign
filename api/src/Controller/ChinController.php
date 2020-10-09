@@ -97,9 +97,9 @@ class ChinController extends AbstractController
     public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['organizations'] = $commonGroundService->getResource($this->getUser()->getOrganization());
-        $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organizations']['@id']])['hydra:member'];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organizations']['@id']])['hydra:member'];
+        $variables['organization'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+        $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organization']['id']])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organization']['id']])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
@@ -670,18 +670,20 @@ class ChinController extends AbstractController
                 $email = [];
                 $email['name'] = 'Email';
                 $email['email'] = $username;
-                //$email = $this->commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
+                //$email = $commonGroundService->createResource($email, ['component' => 'cc', 'type' => 'emails']);
 
                 $telephone = [];
                 $telephone['name'] = 'Phone';
                 $telephone['telephone'] = $tel;
-                //$email = $this->commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
+                //$telephone = $commonGroundService->createResource($telephone, ['component' => 'cc', 'type' => 'telephones']);
 
                 //create person
                 $names = explode(' ', $name);
                 $person = [];
                 $person['givenName'] = $names[0];
-                $person['familyName'] = end($names);
+                if ($names[0] != end($names)) {
+                    $person['familyName'] = end($names);
+                }
                 $person['emails'] = [$email];
                 if ($tel) {
                     $person['telephones'] = [$telephone];
@@ -1000,5 +1002,74 @@ class ChinController extends AbstractController
      */
     public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
     {
+        $variables = [];
+        if ($this->getUser()) {
+            $variables['wrc'] = $commonGroundService->getResource($this->getUser()->getOrganization());
+
+            if (isset($variables['wrc']['contact'])) {
+                $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
+            }
+        }
+
+        if ($request->isMethod('POST') && $request->get('social')) {
+            $resource = $request->request->all();
+            $organization = [];
+            $organization['@id'] = $variables['organization']['@id'];
+            $organization['id'] = $variables['organization']['id'];
+            $organization['socials'][0]['name'] = $variables['organization']['name'];
+            $organization['socials'][0]['description'] = $variables['organization']['name'];
+
+            if (isset($resource['website'])) {
+                $organization['socials'][0]['website'] = $resource['website'];
+            }
+            if (isset($resource['twitter'])) {
+                $organization['socials'][0]['twitter'] = $resource['twitter'];
+            }
+            if (isset($resource['facebook'])) {
+                $organization['socials'][0]['facebook'] = $resource['facebook'];
+            }
+            if (isset($resource['instagram'])) {
+                $organization['socials'][0]['instagram'] = $resource['instagram'];
+            }
+            if (isset($resource['linkedin'])) {
+                $organization['socials'][0]['linkedin'] = $resource['linkedin'];
+            }
+
+            $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
+        } elseif ($request->isMethod('POST') && $request->get('info')) {
+            $resource = $request->request->all();
+            $organization = [];
+            $organization['@id'] = $variables['organization']['@id'];
+            $organization['id'] = $variables['organization']['id'];
+
+            if (isset($resource['name'])) {
+                $organization['name'] = $resource['name'];
+            }
+            if (isset($resource['email'])) {
+                $organization['emails'][0]['email'] = $resource['email'];
+            }
+            if (isset($resource['telephone'])) {
+                $organization['telephones'][0]['telephone'] = $resource['telephone'];
+            }
+            if (isset($resource['street'])) {
+                $organization['adresses'][0]['street'] = $resource['street'];
+            }
+            if (isset($resource['houseNumber'])) {
+                $organization['adresses'][0]['houseNumber'] = $resource['houseNumber'];
+            }
+            if (isset($resource['houseNumberSuffix'])) {
+                $organization['adresses'][0]['houseNumberSuffix'] = $resource['houseNumberSuffix'];
+            }
+            if (isset($resource['postalCode'])) {
+                $organization['adresses'][0]['postalCode'] = $resource['postalCode'];
+            }
+            if (isset($resource['locality'])) {
+                $organization['adresses'][0]['locality'] = $resource['locality'];
+            }
+
+            $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
+        }
+
+        return $variables;
     }
 }
