@@ -102,7 +102,7 @@ class ChinController extends AbstractController
 
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
-            return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
+            return $this->redirect($this->generateUrl('app_chin_nodes'));
         }
 
         return $variables;
