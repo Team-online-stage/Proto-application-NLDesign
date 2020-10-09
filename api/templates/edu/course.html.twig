@@ -1,14 +1,33 @@
 {% extends "base.html.twig" %}
 
 {% block container %}
-    
+    <style>
+        main {
+            background-color: white;
+        }
+
+        .sidenav__item a {
+            background: #263846;
+            color: white;
+        }
+
+        .sidenav__item--active {
+            border-bottom: 2px solid #406377;
+            border-top: 2px solid #406377;
+        }
+
+        .content-background, .collapse {
+            background-color: lightgrey;
+        }
+    </style>
+
     <!-- the alert box -->
 
     <div class="container">
         <section class="row">
-            <div class="col-xl-9 col-xl-offset-3 col-lg-8 col-lg-offset-4 col-md-9 col-md-offset-3 col-xs-12">
+            <div class="col-sm-8">
                 <header class="content__header">
-                    <h1 class="content__header-title">{{ course.name|capitalize }}</h1>
+                    <h1 style="font-family: 'Lobster', cursive">{{ course.name|capitalize }}</h1>
                 </header>
             </div>
         </section>
@@ -156,7 +175,7 @@
 
                     <div style="height:20px;"></div>
 
-                    <div class="content-background background--hemelblauw">
+                    <div class="content-background background--hemelblauw" style="background-color: #2271B3">
                         <div class="content">
                             <h2>{{ 'programma\'s'|capitalize }}</h2>
                             <ul class="list list--links list--chevrons columns">
@@ -175,7 +194,8 @@
 
                     <div class="content-background">
                         <div class="content">
-                            <h2>{{ 'activiteiten'|capitalize }}</h2>
+                            <h2>{{ 'activiteiten/afsluitende test'|capitalize }}</h2>
+                            <p>Hier de afsluitende test van de tutorial</p>
                             <ul class="list list--subjects columns">
                                 {% for activity in course.activities %}
                                     <li>
