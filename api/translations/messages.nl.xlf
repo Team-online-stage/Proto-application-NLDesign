@@ -113,6 +113,14 @@
         <source>place of birth</source>
         <target>geboorteplaats</target>
       </trans-unit>
+      <trans-unit id="SH_Drn9" resname="account settings">
+        <source>account settings</source>
+        <target>account gegevens</target>
+      </trans-unit>
+      <trans-unit id="LZRrwur" resname="internships">
+        <source>internships</source>
+        <target>stages</target>
+      </trans-unit>
       <trans-unit id="qDoxMg2" resname="resume">
         <source>resume</source>
         <target>hervat</target>
@@ -901,7 +909,7 @@
         <source>passthrough Url</source>
         <target>doorverwijspagina</target>
       </trans-unit>
-      <trans-unit id="a98Db97" resname="maximum number of people">
+      <trans-unit id="9wqYEej" resname="maximum number of people">
         <source>maximum number of people</source>
         <target>maximum aantal mensen</target>
       </trans-unit>
@@ -1261,21 +1269,41 @@
         <source>you have been checked out</source>
         <target>u bent uitgechecked</target>
       </trans-unit>
-      <trans-unit id="OwnBWW2" resname="no requests for consent have been found">
+      <trans-unit id="xhWWjpx" resname="no requests for consent have been found">
         <source>no requests for consent have been found</source>
         <target>er zijn geen instemmingsverzoeken gevonden</target>
       </trans-unit>
-      <trans-unit id="74Hb3g1" resname="you can not give your consent when not logged in">
+      <trans-unit id="AZtTP.B" resname="you can not give your consent when not logged in">
         <source>you can not give your consent when not logged in</source>
         <target>u kunt uw instemming niet geven als u niet bent ingelogd</target>
       </trans-unit>
-      <trans-unit id="F213Asw" resname="for information">
+      <trans-unit id="8P4wJMp" resname="for information">
         <source>for information</source>
         <target>ter informatie</target>
       </trans-unit>
-      <trans-unit id="082HWb2" resname="pending">
+      <trans-unit id="YqL_09b" resname="pending">
         <source>pending</source>
         <target>in afwachting</target>
+      </trans-unit>
+      <trans-unit id="YbxzJW0" resname="socials">
+        <source>socials</source>
+        <target>socials</target>
+      </trans-unit>
+      <trans-unit id="4rH7ZhE" resname="styling">
+        <source>styling</source>
+        <target>styling</target>
+      </trans-unit>
+      <trans-unit id="O6Z.pUc" resname="no reservations available">
+        <source>no reservations available</source>
+        <target>__no reservations available</target>
+      </trans-unit>
+      <trans-unit id="TQFh4Ih" resname="reservations">
+        <source>reservations</source>
+        <target>reserveringen</target>
+      </trans-unit>
+      <trans-unit id="9_6kadS" resname="my info">
+        <source>my info</source>
+        <target>mijn gegevens</target>
       </trans-unit>
     </body>
   </file>
