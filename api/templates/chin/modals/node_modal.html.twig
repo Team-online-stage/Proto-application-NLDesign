@@ -39,30 +39,17 @@
                 {% endif %}
                 <div class="input input--horizontal">
                     <div>
-                        <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of people'|trans|capitalize }}</label>
+                        <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }}</label>
                     </div>
                     <input id="maximumAttendeeCapacity" type="number" name="maximumAttendeeCapacity" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
-                        {% if accommodations is defined and accommodations is not empty and nodeAccommodation is defined %}
+                        {% if nodeAccommodation is defined and accommodations is defined and accommodations is not empty %}
                         {% for accommodation in accommodations %}
                             {% if nodeAccommodation['id'] == accommodation['id']%} value="{{ accommodation['maximumAttendeeCapacity'] }}" {% endif %}
                         {% endfor %}
                         {% endif %}>
                 </div>
-                <div class="input input--horizontal">
-                    <div>
-                        <label class="input__label" for="accommodation">{{ 'accommodation'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
-                    </div>
-                    <select {% if item is defined %} disabled {% else %} name="accommodation" {% endif %} id="accommodation" class="input__control input__control--xl input__control--select">
-                        {% if accommodations is defined and accommodations is not empty %}
-                            {% for accommodation in accommodations %}
-                                <option {% if nodeAccommodation is defined and nodeAccommodation['id'] == accommodation['id']%} selected {% endif %} value="{{ commonground_cleanurl({'component':'lc', 'type':'accommodations', 'id': accommodation['id']}) }}">{{ accommodation.name }}</option>
-                            {% endfor %}
-                        {% endif %}
-                    </select>
-                </div>
-                {# because disabled^ selects do not work when passing it's value to the controller: #}
 
-                {% if accommodations is defined and accommodations is not empty and nodeAccommodation is defined %}
+                {% if nodeAccommodation is defined and accommodations is defined and accommodations is not empty %}
                     {% set break = false %}
                     {% for accommodation in accommodations if not break %}
                         {% if nodeAccommodation['id'] == accommodation['id']%}
@@ -72,14 +59,10 @@
                     {% endfor %}
                 {% endif %}
 
-                <div class="input input--horizontal">
-                    <div>
-                        <label class="input__label" for="organization">{{ 'organization'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
-                        <input disabled required="" type="text" id="organization" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
-                               value="{{ organization.name }}">
-                        <input type="hidden" name="organization" value="{{ commonground_cleanurl({'component':'wrc', 'type':'organizations', 'id': organization['id']}) }}">
-                    </div>
-                </div>
+                {% if organization is defined and organization is not empty %}
+                    <input type="hidden" name="organization" value="{{ commonground_cleanurl({'component':'wrc', 'type':'organizations', 'id': organization['id']}) }}">
+                {% endif %}
+
                 {% set nodeID = '' %}
                 {% if item is defined %}
                     {% set nodeID = item.id|replace({'-': ''}) %}
