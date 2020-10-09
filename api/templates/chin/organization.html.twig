@@ -1,0 +1,125 @@
+
+{% extends 'base.html.twig' %}
+
+{% block container %}
+
+
+<div class="row">
+    <div class="container background--grijs-2">
+        <div class="col-md-12">
+            <div class="content">
+                <header class="content__header">
+                    <a class="backlink" href="
+                {% if application.defaultConfiguration.configuration.userPage is defined %}/{{ application.defaultConfiguration.configuration.userPage }}{% else %}/{% endif %}">{{ 'back'|trans|capitalize }}</a>
+                    <header class="content__header">
+                        <h1 class="content__header-title">{{ 'personal'|trans|capitalize }}</h1>
+                    </header>
+                </header>
+            </div><!-- ./content -->
+        </div><!-- ./col -->
+    </div><!-- .container -->
+</div><!-- .row -->
+
+    <div class="row">
+        <div class="container background--grijs-2">
+            {% set organization = commonground_resource(commonground_resource(app.user.organization).contact) %}
+            {% if 1 < 4 %}
+                <aside class="col-md-4 col-sm-modal">
+                    <nav class="sidenav">
+                        {% include 'uc/widgets/menu.html.twig' %}
+                    </nav>
+                </aside>
+
+                <div class="col-md-8">
+                    <ul class="tab tab--inline" role="tablist">
+                        <li class="tab__tab tab__tab--active" role="tab" aria-controls="panel2-1" id="tab2-1"><a href="#panel2-1">{{ 'my info' }}</a></li>
+                        <li class="tab__tab" role="tab" aria-controls="panel2-2" id="tab2-2"><a href="#panel2-2">{{ 'socials'|trans|capitalize }}</a></li>
+                        <li class="tab__tab" role="tab" aria-controls="panel2-3" id="tab2-3"><a href="#panel2-3">{{ 'styling'|trans|capitalize }}</a></li>
+                    </ul>
+
+                    <div class="tab__content tab__content--inline">
+
+                        <section style="padding-top: 10px" class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
+                            <form action="{{ path('app_cc_organization') }}">
+                                <div class="row">
+                                    <div class="col-ms-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="name">{{ 'name'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="name" name="name" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.name is defined and organization.name is not empty %}value="{{ organization.name }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-ms-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="telephone" name="telephone" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.telephones.0.telephone is defined and organization.telephones.0.telephone is not empty %}value="{{ organization.telephones.0.telephone }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-ms-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="email">{{ 'email'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="email" name="email" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if organization.emails.0.email is defined and organization.emails.0.email is not empty %}value="{{ organization.emails.0.email }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+
+                        <section style="padding-top: 10px" class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
+                            <form action="{{ path('app_cc_organization') }}">
+                                <p>socials</p>
+                            </form>
+                        </section>
+
+                        <section style="padding-top: 10px" class="tab__pane" id="panel2-3" role="tabpanel" aria-labelledby="tab2-3">
+                            <form action="{{ path('app_wrc_organization') }}">
+                                <p>styling</p>
+                            </form>
+                        </section>
+
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="content-background" >
+                        <div class="content">
+                            <aside class="hint">
+                                <h2 class="hint__title">{{ 'login required'|trans|capitalize}}</h2>
+                                {{ 'you need to login before you can view this page'|trans|capitalize}}
+                            </aside>
+                            <a data-toggle="modal" data-target="#myModal" onclick="openModal()" class="btn btn--icon">
+                                <i style="margin-right: 10px"  class="icon fas fa-lock"></i>
+                                <span>{{ 'login'|trans|capitalize }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div><!-- .container -->
+    </div><!-- .row -->
+
+
+
+
+    <script>
+        /* Load tab component */
+        System.import('/uno/components/tabs/tabs.js').then(function (module) {
+            /* Select all .tab elements on the page */
+            var tabs = document.querySelectorAll('.tab');
+            /* Initialize all tabs */
+            for (var i = 0; i < tabs.length; i++) {
+                new module.Tabs(tabs.item(i));
+            }
+        });
+    </script>
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 
-{% block content %}
+{% block container %}
 
     {% if app.user is defined and app.user is not null %}
         {% if user is defined and user is not null %}
@@ -24,7 +24,7 @@
             <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="content">
                     {% if test.activity is defined and test.activity is not empty %}
-                        <a class="backlink" href="{{ path('app_education_activity', {id: test.activity.id}) }}">{{ test.activity.name|capitalize }}</a>
+                        <a class="backlink" href="{{ path('app_edu_activity', {id: test.activity.id}) }}">{{ test.activity.name|capitalize }}</a>
                     {% endif %}
                 </div>
             </div>
@@ -68,7 +68,7 @@
                                         {% if test.stages is defined and test.stages is not empty %}
                                             <div style="height:20px;"></div>
 
-                                            <form method="post" action="{{ path('app_education_test', {id: test.id}) }}">
+                                            <form method="post" action="{{ path('app_edu_test', {id: test.id}) }}">
                                                 {% for stage in test.stages %}
 
                                                     <div class="collapse" role="status">
@@ -126,7 +126,7 @@
                                                 <h2 class="notification__title">Niet ingeschreven</h2>
                                                 <span>U bent nog niet ingeschreven voor de tutorial die hoort bij de activiteit van deze test.</span><br>
                                                 <span>Klik <a
-                                                        href="{{ path('app_education_course', {id: test.activity.course.id}) }}">hier</a> om deze tutorial te bekijken.</span>
+                                                        href="{{ path('app_edu_course', {id: test.activity.course.id}) }}">hier</a> om deze tutorial te bekijken.</span>
                                             </div>
                                         </div>
                                     {% endif %}
