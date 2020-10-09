@@ -30,9 +30,7 @@
                         name="description"
                         aria-describedby="hint_name"
                         class="input__control input__control--text input__control--xl">
-                        {% if item.description is defined and item.description is not empty %}
-                            {{ item.description }}
-                        {% endif %}
+                        {% if item.description is defined and item.description is not empty %}{{ item.description }}{% endif %}
                     </textarea>
                 </div>
                 <div class="input input--horizontal">
@@ -44,34 +42,29 @@
                 </div>
 
                 {% if item.accommodation is defined and commonground_is_resource(item.accommodation) %}
-                    {% set nodeAccommodation = commonground_resource(item.accommodation) %}
+                    {% set itemAccommodation = commonground_resource(item.accommodation) %}
                 {% endif %}
                 <div class="input input--horizontal">
                     <div>
                         <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }}</label>
                     </div>
                     <input
+                        required=""
                         id="maximumAttendeeCapacity"
                         type="number"
                         name="maximumAttendeeCapacity"
                         aria-describedby="hint_name"
                         class="input__control input__control--text input__control--xl"
-                        {% if nodeAccommodation is defined and accommodations is defined and accommodations is not empty %}
-                            {% set break = false %}
-                            {% for accommodation in accommodations if not break %}
-                                {% if nodeAccommodation['id'] == accommodation['id']%}
-                                    value="{{ accommodation['maximumAttendeeCapacity'] }}"
-                                    {% set break = true %}
-                                {% endif %}
-                            {% endfor %}
+                        {% if itemAccommodation is defined and itemAccommodation is not empty and itemAccommodation['maximumAttendeeCapacity'] is defined %}
+                            value="{{ itemAccommodation['maximumAttendeeCapacity'] }}"
                         {% endif %}
                     >
                 </div>
 
-                {% if nodeAccommodation is defined and accommodations is defined and accommodations is not empty %}
+                {% if itemAccommodation is defined and accommodations is defined and accommodations is not empty %}
                     {% set break = false %}
                     {% for accommodation in accommodations if not break %}
-                        {% if nodeAccommodation['id'] == accommodation['id']%}
+                        {% if itemAccommodation['id'] == accommodation['id']%}
                             <input type="hidden" name="accommodation" value="{{ commonground_cleanurl({'component':'lc', 'type':'accommodations', 'id': accommodation['id']}) }}">
                             {% set break = true %}
                         {% endif %}

@@ -92,14 +92,24 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
+            // Check if maximumAttendeeCapacity is set and if so, unset it in the resource for creating a node later
             if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
                 if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
+                    // Update de accommodation for this node if this node already has an accommodation
                     $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
                     $commonGroundService->updateResource($accommodation, $resource['accommodation']);
+                } else {
+                    // Create a new accommodation for this node if this is a new node
+//                    $accommodation['name'] = $resource['name'];
+//                    $accommodation['description'] = $resource['description'];
+//                    $accommodation['place'] = '';
+//                    $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
+//                    $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
                 }
                 unset($resource['maximumAttendeeCapacity']);
             }
 
+            // Save the (new or already existing) node
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
             return $this->redirect($this->generateUrl('app_chin_nodes'));

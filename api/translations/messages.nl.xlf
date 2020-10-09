@@ -801,6 +801,14 @@
         <source>qr</source>
         <target>qr</target>
       </trans-unit>
+      <trans-unit id="a97jB9R" resname="download qr-code">
+        <source>download qr-code</source>
+        <target>download qr-code</target>
+      </trans-unit>
+      <trans-unit id="B80p75B" resname="max. visitors">
+        <source>max. visitors</source>
+        <target>max. bezoekers</target>
+      </trans-unit>
       <trans-unit id="uUBgdEu" resname="no nodes">
         <source>no nodes</source>
         <target>geen codes beschikbaar</target>
