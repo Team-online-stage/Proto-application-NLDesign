@@ -158,6 +158,68 @@ class EduController extends AbstractController
         // Get resource
         $variables['course'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses'], $variables['query'])['hydra:member'];
+        $participants = [];
+
+        //business logic in controller
+        if (!empty($this->getUser())) {
+            $userContact = $commonGroundService->getResource($this->getUser()->getPerson());
+            $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $variables['user']['@id']])['hydra:member'];
+
+            if (count($users) > 0) {
+                $userContact = $users[0]['person'];
+            }
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person'  => $userContact['id']])['hydra:member'];
+
+            if (count($participants) > 0) {
+                $participants = $participants[0];
+            }
+        }
+
+        $meetsPrerequisites = true;
+        if (!empty($variables['course']['coursePrerequisites'])) {
+            if (!empty($participants)) {
+                $meetsPrerequisites = false;
+            } else {
+                foreach ($variables['course']['coursePrerequisites'] as $prerequisiteUrl) {
+                    $prerequisite = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses', 'coursePrerequisites' => $prerequisiteUrl], $variables['query']);
+                    $meetsPrerequisites = false;
+                    if ($prerequisite['@type'] !== 'Course') {
+                        if (!empty($participants['courses'])) {
+                            foreach ($participants['courses'] as $course) {
+                                if ($course['id'] !== $prerequisite['id']) {
+                                    $meetsPrerequisites = true;
+                                }
+                            }
+                        } elseif ($prerequisite['@type'] !== 'Program') {
+                            if (!empty($participants['programs'])) {
+                                foreach ($participants['programs'] as $program) {
+                                    if ($program['id'] !== $prerequisite['id']) {
+                                        $meetsPrerequisites = true;
+                                    }
+                                }
+                            }
+                        }
+                        if ($meetsPrerequisites !== false) {
+                            $meetsPrerequisites = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        $variables['registered'] = false;
+        if (!empty($participants)) {
+            if (!empty($participants['courses'])) {
+                foreach ($participants['courses'] as $course) {
+                    if ($course['id'] !== $variables['course']['id']) {
+                        $variables['registered'] = true;
+                    }
+                }
+            }
+        }
+
+        $variables['participants'] = $participants;
+        $variables['meetsPrerequisites'] = $meetsPrerequisites;
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -407,8 +469,7 @@ class EduController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $variables['jobposting'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders', 'id' => $id], $variables['query']);
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders'], $variables['query'])['hydra:member'];
+        $variables['tender'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders', 'id' => $id], $variables['query']);
 
         return $variables;
     }
