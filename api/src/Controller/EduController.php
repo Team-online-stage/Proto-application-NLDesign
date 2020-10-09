@@ -158,8 +158,7 @@ class EduController extends AbstractController
         // Get resource
         $variables['course'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses'], $variables['query'])['hydra:member'];
-        $participants =[];
-
+        $participants = [];
 
         //business logic in controller
         if (!empty($this->getUser())) {
@@ -191,8 +190,7 @@ class EduController extends AbstractController
                                     $meetsPrerequisites = true;
                                 }
                             }
-                        }
-                        elseif($prerequisite['@type'] !== 'Program'){
+                        } elseif ($prerequisite['@type'] !== 'Program') {
                             if (!empty($participants['programs'])) {
                                 foreach ($participants['programs'] as $program) {
                                     if ($program['id'] !== $prerequisite['id']) {
@@ -201,7 +199,7 @@ class EduController extends AbstractController
                                 }
                             }
                         }
-                        if ($meetsPrerequisites !== false){
+                        if ($meetsPrerequisites !== false) {
                             $meetsPrerequisites = false;
                         }
                     }
@@ -220,9 +218,8 @@ class EduController extends AbstractController
             }
         }
 
-        $variables['participants']= $participants;
+        $variables['participants'] = $participants;
         $variables['meetsPrerequisites'] = $meetsPrerequisites;
-
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
