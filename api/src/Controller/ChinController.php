@@ -79,22 +79,10 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/nodes/user")
+     * @Route("/nodes")
      * @Template
      */
-    public function nodesUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/nodes/organization")
-     * @Template
-     */
-    public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
         $variables['organizations'] = $commonGroundService->getResource($this->getUser()->getOrganization());
@@ -934,18 +922,6 @@ class ChinController extends AbstractController
 
             $variables['checkout'] = true;
         }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/nodes")
-     * @Template
-     */
-    public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
         return $variables;
     }
