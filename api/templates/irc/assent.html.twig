@@ -44,7 +44,6 @@
 
             <!-- Page Break -->
             <div style="height: 20px"></div>
-            {% set requester = commonground_resource(requester['@id']) %}
             <h2>Gegevens van dit verzoek:</h2>
             <div class="content-background">
                 <div class="content">
@@ -76,8 +75,7 @@
                                 Naam aanvrager
                             </div>
                             <div class="definition-list__description">
-                                {% if assent.requester is defined and 'http' in assent.requester %}
-                                    {% set requester = commonground_resource(assent.requester) %}
+                                {% if requester is defined and requester is not empty %}
                                     <p>{{ requester.name }}</p>
                                 {% endif %}
                             </div>
