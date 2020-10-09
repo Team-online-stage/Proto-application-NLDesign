@@ -24,7 +24,16 @@
                     <div>
                         <label class="input__label" for="description">{{ 'description'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <textarea required="" id="description" name="description" aria-describedby="hint_name" class="input__control input__control--text input__control--xl">{% if item.description is defined and item.description is not empty %}{{ item.description }}{% endif %}</textarea>
+                    <textarea
+                        required=""
+                        id="description"
+                        name="description"
+                        aria-describedby="hint_name"
+                        class="input__control input__control--text input__control--xl">
+                        {% if item.description is defined and item.description is not empty %}
+                            {{ item.description }}
+                        {% endif %}
+                    </textarea>
                 </div>
                 <div class="input input--horizontal">
                     <div>
@@ -41,12 +50,22 @@
                     <div>
                         <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of simultaneous visitors'|trans|capitalize }}</label>
                     </div>
-                    <input id="maximumAttendeeCapacity" type="number" name="maximumAttendeeCapacity" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
+                    <input
+                        id="maximumAttendeeCapacity"
+                        type="number"
+                        name="maximumAttendeeCapacity"
+                        aria-describedby="hint_name"
+                        class="input__control input__control--text input__control--xl"
                         {% if nodeAccommodation is defined and accommodations is defined and accommodations is not empty %}
-                        {% for accommodation in accommodations %}
-                            {% if nodeAccommodation['id'] == accommodation['id']%} value="{{ accommodation['maximumAttendeeCapacity'] }}" {% endif %}
-                        {% endfor %}
-                        {% endif %}>
+                            {% set break = false %}
+                            {% for accommodation in accommodations if not break %}
+                                {% if nodeAccommodation['id'] == accommodation['id']%}
+                                    value="{{ accommodation['maximumAttendeeCapacity'] }}"
+                                    {% set break = true %}
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    >
                 </div>
 
                 {% if nodeAccommodation is defined and accommodations is defined and accommodations is not empty %}
@@ -68,6 +87,7 @@
                     {% set nodeID = item.id|replace({'-': ''}) %}
                 {% endif %}
                 <div class="input input--horizontal">
+
                     <legend class="input__legend">{{ 'login methodes'|trans|capitalize }}:</legend>
                     <div class="input__group input__group--checkbox">
                         <input name="methods[idin]" value="true" type="checkbox" id="idin{{ nodeID }}" class="input__control input__control--l input__control--checkbox"
