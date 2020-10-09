@@ -407,8 +407,7 @@ class EduController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $variables['jobposting'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders', 'id' => $id], $variables['query']);
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders'], $variables['query'])['hydra:member'];
+        $variables['tender'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders', 'id' => $id], $variables['query']);
 
         return $variables;
     }

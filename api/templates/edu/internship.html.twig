@@ -1,6 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
+
+
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&amp;display=swap" rel="stylesheet">
+    <style>
+        main {
+            background-color: white;
+        }
+        .row{
+            background-color: white;
+        }
+        .backlink{
+            font-size: 30px;
+            font-family: 'Lobster', cursive;
+        }
+        .content{
+            background-color: white;
+            color: black;
+            margin-left: 100px;
+        }
+        .definition-list__title{
+            font-size: 20px;
+            color: white;
+        }
+        .definition-list{
+                     background-color: #406377;
+                     color: white;
+                     border-style: solid;
+                     border-color: #263846;
+                 }
+        .col-md-6{
+            background-color: #D3D3D3;
+            padding: 5%;
+            width: 100%;
+        }
+    </style>
+
     <header class="content__header">
         <a class="backlink" href="/edu/internships">Stages</a>
     </header>
@@ -20,15 +56,13 @@
                             {% if jobposting.description is defined and jobposting.description is not empty %}
                                 <p>{{ jobposting.description }}</p>
                             {% endif %}
-                        </div>
-                        <div class="col-md-6">
                             <img src="https://picsum.photos/350/250" alt="tender" width="100%">
                         </div>
                     </div>
 
-                    <br>
+                    <div class="content1">
                     <div class="edit-section">
-                        <h2>Algemene informatie</h2>
+                        <h2><br>Algemene informatie</h2>
                     </div>
                     <ul class="definition-list">
                         <li class="definition-list__item definition-list__item--horizontal">
@@ -98,5 +132,6 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 {% endblock %}

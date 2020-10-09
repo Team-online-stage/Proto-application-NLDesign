@@ -1,18 +1,33 @@
 {% extends "base.html.twig" %}
 
 {% block container %}
+<style>
+    main {
+        background-color: white;
+    }
 
+    .sidenav__item a {
+        background: #263846;
+        color: white;
+    }
+
+    .sidenav__item--active {
+        border-bottom: 2px solid #406377;
+    }
+
+    .content-background {
+        background-color: lightgrey;
+    }
+</style>
     <!-- the alert box -->
-
-    <div class="container">
-        <section class="row">
-            <div class="col-xl-9 col-xl-offset-3 col-lg-8 col-lg-offset-4 col-md-9 col-md-offset-3 col-xs-12">
-                <header class="content__header">
-                    <h1 class="content__header-title">{{ 'Tutorials'|capitalize }}</h1>
-                </header>
-            </div>
-        </section>
-
+        <div class="container">
+            <section class="row">
+                <div class="col-sm-8">
+                    <header class="content__header">
+                        <h1 style="font-family: 'Lobster', cursive">{{ 'Tutorials'|capitalize }}</h1>
+                    </header>
+                </div>
+            </section>
         <article>
             <div class="row">
                 <aside class="col-xl-3 col-lg-4 col-md-3 col-sm-modal">
