@@ -6,10 +6,11 @@
             {% set adres = commonground_resource({'component':'as', 'type': 'adressen', 'id': place.bagId}) %}
         {% endif %}
         <p style="margin-bottom: 0;"><h2 style="color: black; margin-top: 0;">- {{ place.name }} -</h2></p>
-        <p style="color: #000000; margin-bottom: 30px;">
-            {% if adres is defined and adres is not empty %}
+        {% if adres is defined and adres is not empty %}
+            <p style="color: #000000; margin-bottom: 30px;">
                 <i style="margin-right: 10px;" class="fas fa-map-marker-alt"></i>{{ adres.straat }} {{ adres.huisnummer }}, {{ adres.postcode }} <br>
                 {{ adres.woonplaats }}
-            {% endif %}</p>
+            </p>
+        {% endif %}
     {% endif %}
 </div>
