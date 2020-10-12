@@ -129,11 +129,19 @@
     let test = new Date();
     test.setDate(test.getDate() + 2);
 
+
+
+    let startTimeInMs = 0;
+    console.log('----- Defined log');
+    console.log(startTimeInMs);
+    console.log('----- ');
     let today = new Date();
     let currentYear = today.getFullYear();
     let currentWeek = today.getWeek();
     let select = document.getElementById('weekSelect');
-    for (let i = currentWeek; i <= currentWeek + 52; i++) {
+    // Max weeks should be configurable through the current property
+    {% set maxWeeks = 3 %}
+    for (let i = currentWeek; i <= currentWeek + {{ maxWeeks }}; i++) {
         if (i > 52) {
             let counter = i - 52;
             let nextYear = currentYear + 1;
@@ -175,15 +183,23 @@
     }
 
     function weekSelector(week) {
+        // Remove all active buttons
+        var elems = document.querySelectorAll(".activeBtn");
+        [].forEach.call(elems, function (el) {
+            el.classList.remove("activeBtn");
+        });
+
+
         const months = ['Jan', 'Feb', 'Maart', 'April', 'Mei', 'Juni', 'Juli', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         var currentDateInMs = new Date().getTime();
-
         var currentDay = new Date().getDay();
         var currentWeek = new Date().getWeek();
         var currentYear = new Date().getFullYear();
 
-        var startHour = 9;
+        // Starting hour should be configurable through the current property
+        {% set startHour = 9 %}
+        var startHour = {{ startHour }};
 
         let arr = week.value.split('-');
 
@@ -226,6 +242,14 @@
                 let eventEndDate = 0;
                 let pickedEventStartDate = 0;
                 let pickedEventEndDate = 0;
+                console.log('----- if check log');
+                console.log(startTimeInMs);
+                console.log('----- option value log');
+                console.log(optionStartDateMs);
+                console.log('-----');
+                if (startTimeInMs >= optionStartDateMs && startTimeInMs < optionEndDateMs) {
+                    selectDate(buttons[j].value, buttons[j].name, buttons[j]);
+                }
                 {% for calendar in calendars %}
                 {% for event in calendar.events %}
                 eventStartDate = {{ event.startDate|date("U", false) }};
@@ -237,6 +261,7 @@
                 pickedEventStartDate = pickedEventStartDate * 1000;
                 if (pickedEventStartDate === optionStartDateMs) {
                     selectDate(buttons[j].value, buttons[j].name, buttons[j]);
+                    button[j].style.background = "limegreen";
                 }
                 {% endif %}
                 // console.log("----- Knop " + j + " Dag " + i);
@@ -316,6 +341,14 @@
             let hiddenInput = document.getElementById('calendarValue');
 
             hiddenInput.value = startDate;
+
+            let startDateAsDate = new Date(startDate).addHours(2);
+            startTimeInMs = startDateAsDate.getTime();
+
+            console.log('----- Set log');
+            console.log(startTimeInMs);
+            console.log('-----');
+
         }
     }
 
