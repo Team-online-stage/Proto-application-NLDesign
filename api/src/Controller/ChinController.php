@@ -411,7 +411,11 @@ class ChinController extends AbstractController
 
                 $message = [];
 
-                $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+                if ($params->get('app_env') == 'prod') {
+                    $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
+                } else {
+                    $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+                }
                 $message['status'] = 'queued';
                 $message['data'] = ['resource' => $link, 'sender'=> 'no-reply@conduction.nl'];
                 $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'60314e20-3760-4c17-9b18-3a99a11cbc5f']);
