@@ -1,6 +1,27 @@
 {% extends "base.html.twig" %}
 
 {% block container %}
+    <style>
+
+        main{
+            background-color: white;
+        }
+        div .content-background{
+            background-color: #D3D3D3;
+        }
+        div .collapse{
+            background-color: #D3D3D3;
+        }
+        .sidenav__item a {
+            background: #263846;
+            color: white;
+        }
+        .sidenav__item--active {
+            border-bottom: 2px solid #406377;
+            border-top: 2px solid #406377;
+
+        }
+    </style>
 
     {% if app.user is defined and app.user is not null %}
         {% if user is defined and user is not null %}
@@ -316,12 +337,12 @@
                     <div style="height:20px;"></div>
 
                     <div class="content-background background--hemelblauw">
-                        <div class="content">
-                            <h2>{{ 'tutorials'|capitalize }}</h2>
+                        <div class="content" style="background-color:  #2271B3">
+                            <h2 style="color: white;">{{ 'tutorials'|capitalize }}</h2>
                             <ul class="list list--links list--chevrons columns">
                                 {% for course in program.courses %}
                                     <li>
-                                        <a href="{{ path('app_edu_course', {id: course.id}) }}">
+                                        <a style="color: white" href="{{ path('app_edu_course', {id: course.id}) }}">
                                             {{ course.name|capitalize }}
                                         </a>
                                     </li>
@@ -399,7 +420,7 @@
                                             </aside>
                                         {% endif %}
                                     {% else %}
-                                        <aside class="hint">
+                                        <aside style="background-color: white" class="hint">
                                             <span class="hint__title">Inloggen</span>
                                             <p>U dient eerst in te loggen voordat u zich voor dit programma kunt inschrijven.<br>
                                                 Klik <a href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a> om te kunnen inloggen.</p>
