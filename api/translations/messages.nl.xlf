@@ -805,6 +805,10 @@
         <source>download qr-code</source>
         <target>download qr-code</target>
       </trans-unit>
+      <trans-unit id="T6IwPJt" resname="no address found">
+        <source>no address found</source>
+        <target>geen adres gevonden</target>
+      </trans-unit>
       <trans-unit id="B80p75B" resname="max. visitors">
         <source>max. visitors</source>
         <target>max. bezoekers</target>

@@ -29,9 +29,8 @@
                         id="description"
                         name="description"
                         aria-describedby="hint_name"
-                        class="input__control input__control--text input__control--xl">
-                        {% if item.description is defined and item.description is not empty %}{{ item.description }}{% endif %}
-                    </textarea>
+                        class="input__control input__control--text input__control--xl"
+                    >{% if item.description is defined and item.description is not empty %}{{ item.description }}{% endif %}</textarea>
                 </div>
                 <div class="input input--horizontal">
                     <div>
