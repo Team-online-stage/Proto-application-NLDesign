@@ -36,6 +36,7 @@
     }
 </style>
 <table class="table table--small-font">
+    {{ dump(request.properties[property.name]) }}
     <thead>
     <tr>
         <th><select id="weekSelect" onchange="weekSelector(this)" class="calendarSelect">
@@ -56,31 +57,31 @@
             <p style="font-weight: 100" class="day"></p></th>
     </tr>
     </thead>
-    <tbody>
-    <tr style="height: 60px;" class="days">
-        <th>09:00 - 10:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>10:00 - 11:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>11:00 - 12:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>12:00 - 13:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>13:00 - 14:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>14:00 - 15:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>15:00 - 16:00</th>
-    </tr>
-    <tr style="height: 60px;" class="days">
-        <th>16:00 - 17:00</th>
-    </tr>
+    <tbody id="calendarBody">
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>09:00 - 10:00</th>#}
+    {#    </tr>#}
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>10:00 - 11:00</th>#}
+    {#    </tr>#}
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>11:00 - 12:00</th>#}
+    {#    </tr>#}
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>12:00 - 13:00</th>#}
+    {#    </tr>#}
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>13:00 - 14:00</th>#}
+    {#    </tr>#}
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>14:00 - 15:00</th>#}
+    {#    </tr>#}
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>15:00 - 16:00</th>#}
+    {#    </tr>#}
+    {#    <tr style="height: 60px;" class="days">#}
+    {#        <th>16:00 - 17:00</th>#}
+    {#    </tr>#}
     </tbody>
 </table>
 
@@ -93,6 +94,32 @@
        value="">
 
 <script>
+    var calendarTBody = document.getElementById('calendarBody');
+
+    var startHour = 900;
+    var endHour = 1700;
+    var numberOfTableRows = (endHour - startHour) / 100;
+
+    // Duration of an selectable option as an th element in hours
+    var optionDuration = 2;
+    var optionsPerDay = numberOfTableRows / optionDuration;
+
+    function buildTableRows() {
+        for (let i = 0; i < optionsPerDay; i++) {
+            let tr = document.createElement('tr');
+            tr.style.height = '60px';
+            tr.classList.add('days');
+
+            calendarTBody.append(tr);
+
+            let th = document.createElement('th');
+            th.innerText = startHour / 100 + (i * optionDuration) + ':00 - ' + (startHour / 100 + ((i + 1) * optionDuration)) + ':00';
+
+            tr.append(th);
+        }
+    }
+
+    buildTableRows();
 
     Date.prototype.getWeek = function (dowOffset) {
 
@@ -128,7 +155,6 @@
     //test data
     let test = new Date();
     test.setDate(test.getDate() + 2);
-
 
 
     let startTimeInMs = 0;
@@ -242,11 +268,23 @@
                 let eventEndDate = 0;
                 let pickedEventStartDate = 0;
                 let pickedEventEndDate = 0;
-                console.log('----- if check log');
-                console.log(startTimeInMs);
-                console.log('----- option value log');
-                console.log(optionStartDateMs);
-                console.log('-----');
+
+                // console.log('----- Button');
+                // consoleStartDate.log(optionStartDate);
+                // console.log('----- selected time during if check');
+                // console.log(startTimeInMs);
+                // console.log('----- option value log');
+                // console.log(optionStartDateMs);
+                // console.log('-----');
+
+                // if (startTimeInMs != 0) {
+                //     startTimeInMs = new Date(startTimeInMs);
+                //     startTimeInMs.setHours(startTimeInMs.getHours() + 2);
+                //     startTimeInMs = startTimeInMs.getTime();
+                //     console.log('----- selected time -2 hours');
+                //     console.log(startTimeInMs);
+                //     console.log('-----');
+                // }
                 if (startTimeInMs >= optionStartDateMs && startTimeInMs < optionEndDateMs) {
                     selectDate(buttons[j].value, buttons[j].name, buttons[j]);
                 }
@@ -256,9 +294,10 @@
                 eventEndDate = {{ event.endDate|date("U", false) }};
                 eventStartDate = eventStartDate * 1000;
                 eventEndDate = eventEndDate * 1000;
-                {% if request.properties.datum is defined and request.properties.datum is not empty %}
+                {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
                 pickedEventStartDate = {{ request.properties.datum|date("U", false) }};
                 pickedEventStartDate = pickedEventStartDate * 1000;
+                // console.log(pickedEventStartDate);
                 if (pickedEventStartDate === optionStartDateMs) {
                     selectDate(buttons[j].value, buttons[j].name, buttons[j]);
                     button[j].style.background = "limegreen";
@@ -308,6 +347,7 @@
     function selectDate(timeFrame, date, button) {
         removeClass('activeBtn');
         button.classList.add('activeBtn');
+
         if (date !== '') {
             let testData = document.getElementById('testData');
             let time = timeFrame.split('-');
@@ -342,13 +382,19 @@
 
             hiddenInput.value = startDate;
 
-            let startDateAsDate = new Date(startDate).addHours(2);
+            let startDateAsDate = new Date();
+
             startTimeInMs = startDateAsDate.getTime();
+            // console.log('----- selected time after select before');
+            // console.log(startTimeInMs);
+            // console.log('-----');
 
-            console.log('----- Set log');
-            console.log(startTimeInMs);
-            console.log('-----');
-
+            startDateAsDate = new Date(startDate).addHours(2);
+            startTimeInMs = startDateAsDate.getTime();
+            //
+            // console.log('----- selected time after select after');
+            // console.log(startTimeInMs);
+            // console.log('-----');
         }
     }
 
