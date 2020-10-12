@@ -110,7 +110,7 @@ class ChinController extends AbstractController
             $place['openingTime'] = '09:00';
             $place['closingTime'] = '22:00';
             if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
-                $place['accommodations'] = ['/accommodations/'.$accommodation['id']];;
+                $place['accommodations'] = ['/accommodations/'.$accommodation['id']];
             }
             $place['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
             $place = $commonGroundService->saveResource($place, (['component' => 'lc', 'type' => 'places']));
