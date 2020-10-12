@@ -43,11 +43,28 @@
     </div><!-- /.content -->
 </div><!-- /.content-background -->
 
-
+{# modal for a nieuw node #}
 {% include 'chin/modals/node_modal.html.twig' %}
+<script>
+    let myModal;
+    // Load modal component
+    System.import('/uno/components/modal/modal.js').then(function (module) {
+        myModal = new module.Modal(document.getElementById('node'));
+    });
 
+    // Called when the user clicks the button
+    function openModal() {
+        myModal.open();
+    }
+    // Called when the user clicks the button
+    function closeModal() {
+        myModal.close();
+    }
+</script>
+
+{# modals for existing nodes #}
 {% for node in nodes %}
-    {% include 'chin/modals/node_modal_edit.html.twig' with { 'item':node } %}
+    {% include 'chin/modals/node_modal.html.twig' with { 'item':node } %}
     <script>
         let myModal{{ node.id|replace({'-': ''}) }};
         // Load modal component
