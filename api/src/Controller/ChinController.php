@@ -1008,8 +1008,6 @@ class ChinController extends AbstractController
 
             if (isset($variables['wrc']['contact'])) {
                 $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
-
-
             }
         }
 
