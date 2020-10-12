@@ -80,22 +80,10 @@ class ChinController extends AbstractController
     }
 
     /**
-     * @Route("/nodes/user")
+     * @Route("/nodes")
      * @Template
      */
-    public function nodesUserAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['person' => $this->getUser()->getPerson(), 'order[dateCreated]' => 'desc'])['hydra:member'];
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/nodes/organization")
-     * @Template
-     */
-    public function nodesOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
         $variables['organization'] = $commonGroundService->getResource($this->getUser()->getOrganization());
@@ -105,17 +93,44 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
-            if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
-                if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
-                    $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
-                    $commonGroundService->updateResource($accommodation, $resource['accommodation']);
+            // Check if the accommodation already exists
+            if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
+                $accommodation = $commonGroundService->getResource($resource['accommodation']);
+                // Check if the place already exists
+                if (key_exists('place', $accommodation) and !empty($accommodation['place'])) {
+                    $place = $commonGroundService->getResource($commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'places', 'id' => $accommodation['place']['id']]));
                 }
-                unset($resource['maximumAttendeeCapacity']);
             }
 
+            // Create a new place or update the existing one for this node
+            $place['name'] = $resource['name'];
+            $place['description'] = $resource['description'];
+            $place['publicAccess'] = true;
+            $place['smokingAllowed'] = false;
+            $place['openingTime'] = '09:00';
+            $place['closingTime'] = '22:00';
+            if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
+                $place['accommodations'] = ['/accommodations/'.$accommodation['id']];
+            }
+            $place['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
+            $place = $commonGroundService->saveResource($place, (['component' => 'lc', 'type' => 'places']));
+
+            // Create a new accommodation or update the existing one for this node
+            $accommodation['name'] = $resource['name'];
+            $accommodation['description'] = $resource['description'];
+            $accommodation['place'] = '/places/'.$place['id'];
+            if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
+                $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
+                // Check if maximumAttendeeCapacity is set and if so, unset it in the resource for creating a node
+                unset($resource['maximumAttendeeCapacity']);
+            }
+            $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
+
+            // Save the (new or already existing) node
+            $resource['accommodation'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
-            return $this->redirect($this->generateUrl('app_chin_nodesorganization'));
+            return $this->redirect($this->generateUrl('app_chin_nodes'));
         }
 
         return $variables;
@@ -986,18 +1001,6 @@ class ChinController extends AbstractController
 
             $variables['checkout'] = true;
         }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/nodes")
-     * @Template
-     */
-    public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-        $variables['nodes'] = $commonGroundService->getResourceList(['component'=>'chin', 'type'=>'nodes'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
         return $variables;
     }
