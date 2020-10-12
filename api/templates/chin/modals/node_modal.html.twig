@@ -1,4 +1,4 @@
-<div class="modal modal--backdrop noFocus" role="dialog" id="myModal" tabindex="0" aria-describedby="modal-description3">
+<div class="modal modal--backdrop noFocus" role="dialog" id="node{% if item is defined %}-{{ item.id }}{% endif %}" tabindex="0" aria-describedby="modal-description3">
     <section class="modal__content" role="document">
         <form action="{{ path('app_chin_nodesorganization') }}" method="post">
             <div class="modal__body noFocus" tabindex="0" lang="en-US">
@@ -17,64 +17,104 @@
                     <div>
                         <label class="input__label" for="name">{{ 'name'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <input required="" type="text" id="name" name="name" aria-describedby="hint_name" class="input__control input__control--text input__control--xl">
+                    <input required="" type="text" id="name" name="name" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
+                           {% if item.name is defined and item.name is not empty %}value="{{ item.name }}"{% endif %}>
                 </div>
                 <div class="input input--horizontal">
                     <div>
                         <label class="input__label" for="description">{{ 'description'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <textarea required="" id="description" name="description" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"></textarea>
+                    <textarea required="" id="description" name="description" aria-describedby="hint_name" class="input__control input__control--text input__control--xl">{% if item.description is defined and item.description is not empty %}{{ item.description }}{% endif %}</textarea>
                 </div>
                 <div class="input input--horizontal">
                     <div>
                         <label class="input__label" for="passthroughUrl">{{ 'passthrough Url'|trans|capitalize }}</label>
                     </div>
-                    <input id="passthroughUrl" type="text" name="passthroughUrl" aria-describedby="hint_name" class="input__control input__control--text input__control--xl">
+                    <input id="passthroughUrl" type="text" name="passthroughUrl" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
+                           {% if item.passthroughUrl is defined and item.passthroughUrl is not empty %}value="{{ item.passthroughUrl }}"{% endif %}>
                 </div>
+
+                {% if item.accommodation is defined and commonground_is_resource(item.accommodation) %}
+                    {% set nodeAccommodation = commonground_resource(item.accommodation) %}
+                {% endif %}
                 <div class="input input--horizontal">
                     <div>
                         <label class="input__label" for="maximumAttendeeCapacity">{{ 'maximum number of people'|trans|capitalize }}</label>
                     </div>
-                    <input id="maximumAttendeeCapacity" type="number" name="maximumAttendeeCapacity" aria-describedby="hint_name" class="input__control input__control--text input__control--xl">
+                    <input id="maximumAttendeeCapacity" type="number" name="maximumAttendeeCapacity" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
+                        {% if accommodations is defined and accommodations is not empty and nodeAccommodation is defined %}
+                        {% for accommodation in accommodations %}
+                            {% if nodeAccommodation['id'] == accommodation['id']%} value="{{ accommodation['maximumAttendeeCapacity'] }}" {% endif %}
+                        {% endfor %}
+                        {% endif %}>
                 </div>
                 <div class="input input--horizontal">
                     <div>
                         <label class="input__label" for="accommodation">{{ 'accommodation'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                     </div>
-                    <select id="accommodation" name="accommodation" class="input__control input__control--xl input__control--select">
+                    <select {% if item is defined %} disabled {% else %} name="accommodation" {% endif %} id="accommodation" class="input__control input__control--xl input__control--select">
                         {% if accommodations is defined and accommodations is not empty %}
                             {% for accommodation in accommodations %}
-                                <option value="{{ accommodation['@id'] }}">{{ accommodation.name }}</option>
+                                <option {% if nodeAccommodation is defined and nodeAccommodation['id'] == accommodation['id']%} selected {% endif %} value="{{ commonground_cleanurl({'component':'lc', 'type':'accommodations', 'id': accommodation['id']}) }}">{{ accommodation.name }}</option>
                             {% endfor %}
                         {% endif %}
                     </select>
                 </div>
+                {# because disabled^ selects do not work when passing it's value to the controller: #}
+
+                {% if accommodations is defined and accommodations is not empty and nodeAccommodation is defined %}
+                    {% set break = false %}
+                    {% for accommodation in accommodations if not break %}
+                        {% if nodeAccommodation['id'] == accommodation['id']%}
+                            <input type="hidden" name="accommodation" value="{{ commonground_cleanurl({'component':'lc', 'type':'accommodations', 'id': accommodation['id']}) }}">
+                            {% set break = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+
                 <div class="input input--horizontal">
                     <div>
                         <label class="input__label" for="organization">{{ 'organization'|trans|capitalize }} <span style="color: red;"><strong>*</strong></span></label>
                         <input disabled required="" type="text" id="organization" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
-                        value="{{ organizations.name }}">
-                        <input type="hidden" name="organization" value="{{ organizations['@id'] }}">
+                               value="{{ organization.name }}">
+                        <input type="hidden" name="organization" value="{{ commonground_cleanurl({'component':'wrc', 'type':'organizations', 'id': organization['id']}) }}">
                     </div>
                 </div>
+                {% set nodeID = '' %}
+                {% if item is defined %}
+                    {% set nodeID = item.id|replace({'-': ''}) %}
+                {% endif %}
                 <div class="input input--horizontal">
                     <legend class="input__legend">{{ 'login methodes'|trans|capitalize }}:</legend>
                     <div class="input__group input__group--checkbox">
-                        <input name="methods[idin]" value="true" type="checkbox" id="idin" class="input__control input__control--l input__control--checkbox">
-                        <label class="input__label input__label--checkbox" for="idin">Idin</label>
+                        <input name="methods[idin]" value="true" type="checkbox" id="idin{{ nodeID }}" class="input__control input__control--l input__control--checkbox"
+                               {% if item.methods is defined and 'idin' in item.methods|keys %}checked{% endif %}>
+                        <label class="input__label input__label--checkbox" for="idin{{ nodeID }}">Idin</label>
                     </div>
                     <div class="input__group input__group--checkbox">
-                        <input name="methods[facebook]" value="true" type="checkbox" id="facebook" class="input__control input__control--l input__control--checkbox">
-                        <label class="input__label input__label--checkbox" for="facebook">facebook</label>
+                        <input name="methods[facebook]" value="true" type="checkbox" id="facebook{{ nodeID }}" class="input__control input__control--l input__control--checkbox"
+                               {% if item.methods is defined and 'facebook' in item.methods|keys %}checked{% endif %}>
+                        <label class="input__label input__label--checkbox" for="facebook{{ nodeID }}">facebook</label>
                     </div>
                     <div class="input__group input__group--checkbox">
-                        <input name="methods[gmail]" value="true" type="checkbox" id="gmail" class="input__control input__control--l input__control--checkbox">
-                        <label class="input__label input__label--checkbox" for="gmail">gmail</label>
+                        <input name="methods[gmail]" value="true" type="checkbox" id="gmail{{ nodeID }}" class="input__control input__control--l input__control--checkbox"
+                               {% if item.methods is defined and 'gmail' in item.methods|keys %}checked{% endif %}>
+                        <label class="input__label input__label--checkbox" for="gmail{{ nodeID }}">gmail</label>
                     </div>
+                    {% if item['id'] is defined %}
+                        <input type="hidden" id="id" name ="id" value="{{ item['id'] }}">
+                    {% endif %}
+                    {% if item['@id'] is defined %}
+                        <input type="hidden" id="@id" name ="@id" value="{{ item['@id'] }}">
+                    {% endif %}
                 </div>
             </div>
-                <footer class="modal__footer" lang="en-US">
-                <button class="btn btn--primary">{{ 'create'|trans|capitalize }}</button>
+            <footer class="modal__footer" lang="en-US">
+                {% if item is defined %}
+                    <button class="btn btn--primary">{{ 'edit'|trans|capitalize }}</button>
+                {% else %}
+                    <button class="btn btn--primary">{{ 'create'|trans|capitalize }}</button>
+                {% endif %}
             </footer>
         </form>
     </section>
