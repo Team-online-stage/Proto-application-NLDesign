@@ -301,7 +301,7 @@ class ChinController extends AbstractController
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
-            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
         }
 
         return $variables;
@@ -411,7 +411,11 @@ class ChinController extends AbstractController
 
                 $message = [];
 
-                $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+                if ($params->get('app_env') == 'prod') {
+                    $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
+                } else {
+                    $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+                }
                 $message['status'] = 'queued';
                 $message['data'] = ['resource' => $link, 'sender'=> 'no-reply@conduction.nl'];
                 $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'60314e20-3760-4c17-9b18-3a99a11cbc5f']);
@@ -511,7 +515,7 @@ class ChinController extends AbstractController
             $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
             $checkIn = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
-            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
         }
 
         return $variables;
@@ -726,7 +730,7 @@ class ChinController extends AbstractController
 
             $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
 
-            return $this->redirect($this->generateUrl('app_chin_confirmation', ['code'=>$code]));
+            return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
         }
 
         return $variables;
@@ -735,36 +739,33 @@ class ChinController extends AbstractController
     /**
      * This function shows all available locations.
      *
-     * @Route("/confirmation/{code}")
+     * @Route("/confirmation/{id}")
      * @Template
      */
-    public function confirmationAction(Session $session, $code = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
+    public function confirmationAction(Session $session, $id = null, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
     {
         // Fallback options of establishing
-        if (!$code) {
-            $code = $request->query->get('code');
+        if (!$id) {
+            $id = $request->query->get('id');
         }
-        if (!$code) {
-            $code = $request->request->get('code');
+        if (!$id) {
+            $id = $request->request->get('id');
         }
-        if (!$code) {
-            $code = $session->get('code');
-        }
-        if (!$code) {
-            $this->addFlash('warning', 'No node reference suplied');
+        if (!$id) {
+            $this->addFlash('warning', 'No checking id supplied');
 
             return $this->redirect($this->generateUrl('app_default_index'));
         }
 
         $variables = [];
 
-        $session->set('code', $code);
-        $variables['code'] = $code;
-        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        $variables['checkin'] = $commonGroundService->getResource(['component' => 'chin', 'type' => 'checkins', 'id' => $id]);
+
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $variables['checkin']['node']['reference']])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
         } else {
-            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$variables['checkin']['node']['reference']);
 
             return $this->redirect($this->generateUrl('app_default_index'));
         }
@@ -772,8 +773,6 @@ class ChinController extends AbstractController
         // Lets handle a post
         if ($request->isMethod('POST')) {
         }
-
-        $variables['code'] = $code;
 
         return $variables;
     }
