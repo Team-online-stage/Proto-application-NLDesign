@@ -1002,6 +1002,7 @@ class ChinController extends AbstractController
     public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null)
     {
         $variables = [];
+
         if ($this->getUser()) {
             $variables['wrc'] = $commonGroundService->getResource($this->getUser()->getOrganization());
 
@@ -1013,7 +1014,7 @@ class ChinController extends AbstractController
         if ($request->isMethod('POST') && $request->get('social')) {
             $resource = $request->request->all();
             $organization = [];
-            $organization['@id'] = $variables['organization']['@id'];
+            $organization['@id'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
             $organization['id'] = $variables['organization']['id'];
             $organization['socials'][0]['name'] = $variables['organization']['name'];
             $organization['socials'][0]['description'] = $variables['organization']['name'];
@@ -1038,7 +1039,7 @@ class ChinController extends AbstractController
         } elseif ($request->isMethod('POST') && $request->get('info')) {
             $resource = $request->request->all();
             $organization = [];
-            $organization['@id'] = $variables['organization']['@id'];
+            $organization['@id'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
             $organization['id'] = $variables['organization']['id'];
 
             if (isset($resource['name'])) {
@@ -1067,6 +1068,33 @@ class ChinController extends AbstractController
             }
 
             $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
+        } elseif ($request->isMethod('POST') && $request->get('style')) {
+            $resource = $request->request->all();
+            $wrc = [];
+            $wrc['@id'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['wrc']['id']]);
+            $wrc['id'] = $variables['wrc']['id'];
+
+            $wrc['style']['name'] = $variables['wrc']['name'];
+            $wrc['style']['description'] = $variables['wrc']['name'];
+            $wrc['style']['favicon']['name'] = $variables['wrc']['name'];
+            $wrc['style']['favicon']['description'] = $variables['wrc']['name'];
+
+            if (!isset($wrc['chamberOfComerce'])) {
+                $wrc['chamberOfComerce'] = '0000000';
+            }
+
+            if (!isset($wrc['rsin'])) {
+                $wrc['rsin'] = '0000000';
+            }
+
+            if (isset($_FILES['base64'])) {
+                $path = $_FILES['base64']['tmp_name'];
+                $type = filetype($_FILES['base64']['tmp_name']);
+                $data = file_get_contents($path);
+                $wrc['style']['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+            }
+
+            $variables['wrc'] = $commonGroundService->saveResource($wrc, ['component' => 'wrc', 'type' => 'organizations']);
         }
 
         return $variables;
