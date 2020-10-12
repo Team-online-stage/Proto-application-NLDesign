@@ -96,7 +96,7 @@ class ChinController extends AbstractController
             if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
                 $accommodation = $commonGroundService->getResource($resource['accommodation']);
                 // Check if the place already exists
-                if (key_exists('place', $accommodation)) {
+                if (key_exists('place', $accommodation) and !empty($accommodation['place'])) {
                     $place = $commonGroundService->getResource($commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'places', 'id' => $accommodation['place']['id']]));
                 }
             }
@@ -108,8 +108,11 @@ class ChinController extends AbstractController
             $place['smokingAllowed'] = false;
             $place['openingTime'] = '09:00';
             $place['closingTime'] = '22:00';
-            $place['organization'] = $variables['organization'];
-            $place = $commonGroundService->saveResource($place, (['component' => 'lc', 'type' => 'accommodations']));
+            if (key_exists('accommodation', $resource) and !empty($resource['accommodation'])) {
+                $place['accommodations'] = ['/accommodations/'.$accommodation['id']];;
+            }
+            $place['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
+            $place = $commonGroundService->saveResource($place, (['component' => 'lc', 'type' => 'places']));
 
             // Create a new accommodation or update the existing one for this node
             $accommodation['name'] = $resource['name'];
@@ -120,9 +123,10 @@ class ChinController extends AbstractController
                 // Check if maximumAttendeeCapacity is set and if so, unset it in the resource for creating a node
                 unset($resource['maximumAttendeeCapacity']);
             }
-            $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
+            $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
 
             // Save the (new or already existing) node
+            $resource['accommodation'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
             $commonGroundService->saveResource($resource, (['component' => 'chin', 'type' => 'nodes']));
 
             return $this->redirect($this->generateUrl('app_chin_nodes'));
