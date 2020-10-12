@@ -24,7 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LcController extends AbstractController
 {
-
     /**
      * @Route("/places")
      * @Security("is_granted('ROLE_scope.lc.place.write')")
