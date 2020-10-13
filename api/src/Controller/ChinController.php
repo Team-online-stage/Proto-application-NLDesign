@@ -206,10 +206,14 @@ class ChinController extends AbstractController
      * file: the file type renderd, default png
      * encoding: the encoding used for the file, default: UTF-8
      *
-     * @Route("/download/{id}/{type}")
+     * @Route("/download/{id}")
      */
     public function downloadAction(Session $session, $id, $type = 'png', Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
     {
+
+        $splits = explode('.', $id);
+        $id = $splits[0];
+        $extention = $splits[1];
         $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id'=>$id]);
 
         $url = $this->generateUrl('app_chin_checkin', ['code'=>$node['reference']], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -225,11 +229,11 @@ class ChinController extends AbstractController
         $qrCode = $qrCodeFactory->create($url, $configuration);
 
         // Set advanced options
-        $qrCode->setWriterByName($request->query->get('file', $type));
+        $qrCode->setWriterByName($request->query->get('file', $extention));
         $qrCode->setEncoding($request->query->get('encoding', 'UTF-8'));
         //$qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
 
-        $filename = 'qr-code.'.$type;
+        $filename = 'qr-code.'.$extention;
 
         $response = new Response($qrCode->writeString());
         // Create the disposition of the file
@@ -1065,6 +1069,10 @@ class ChinController extends AbstractController
         if ($this->getUser()) {
             $variables['wrc'] = $commonGroundService->getResource($this->getUser()->getOrganization());
 
+            $variables['style'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'styles', 'id' => $variables['wrc']['style']['id']]);
+            $variables['favicon'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'images', 'id' => $variables['wrc']['style']['favicon']['id']]);
+
+
             if (isset($variables['wrc']['contact'])) {
                 $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
             }
@@ -1129,31 +1137,23 @@ class ChinController extends AbstractController
             $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
         } elseif ($request->isMethod('POST') && $request->get('style')) {
             $resource = $request->request->all();
-            $wrc = [];
-            $wrc['@id'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['wrc']['id']]);
-            $wrc['id'] = $variables['wrc']['id'];
+            $style = $variables['style'];
+            $style['organizations'] = ['/organizations/'.$variables['wrc']['id']];
+            $style['favicon'] = '/images/'.$variables['favicon']['id'];
 
-            $wrc['style']['name'] = $variables['wrc']['name'];
-            $wrc['style']['description'] = $variables['wrc']['name'];
-            $wrc['style']['favicon']['name'] = $variables['wrc']['name'];
-            $wrc['style']['favicon']['description'] = $variables['wrc']['name'];
+            $favicon = $variables['favicon'];
+            $favicon['organization'] = '/organizations/'.$variables['wrc']['id'];
+            $favicon['style'] = '/styles/'.$variables['style']['id'];
 
-            if (!isset($wrc['chamberOfComerce'])) {
-                $wrc['chamberOfComerce'] = '0000000';
-            }
-
-            if (!isset($wrc['rsin'])) {
-                $wrc['rsin'] = '0000000';
-            }
-
-            if (isset($_FILES['base64'])) {
+            if (isset($_FILES['base64']) && $_FILES['base64']['error'] !== 4 ) {
                 $path = $_FILES['base64']['tmp_name'];
                 $type = filetype($_FILES['base64']['tmp_name']);
                 $data = file_get_contents($path);
-                $wrc['style']['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+                $favicon['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+                $variables['favicon'] = $commonGroundService->saveResource($favicon, ['component' => 'wrc', 'type' => 'images']);
             }
 
-            $variables['wrc'] = $commonGroundService->saveResource($wrc, ['component' => 'wrc', 'type' => 'organizations']);
+            $variables['style'] = $commonGroundService->saveResource($style, ['component' => 'wrc', 'type' => 'styles']);
         }
 
         return $variables;
