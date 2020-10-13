@@ -805,6 +805,18 @@
         <source>download qr-code</source>
         <target>download qr-code</target>
       </trans-unit>
+      <trans-unit id="MjGQqVe" resname="QR-Code foreground color">
+        <source>QR-Code foreground color</source>
+        <target>QR-Code voorgrondkleur</target>
+      </trans-unit>
+      <trans-unit id="wdbxVEh" resname="QR-Code background color">
+        <source>QR-Code background color</source>
+        <target>QR-Code achtergrondkleur</target>
+      </trans-unit>
+      <trans-unit id="D94efOO" resname="www.horeca-name.nl">
+        <source>www.horeca-name.nl</source>
+        <target>www.horeca-naam.nl</target>
+      </trans-unit>
       <trans-unit id="uO9MRuW" resname="This is the webpage that customers will be redirected to after a successful check-in.">
         <source>This is the webpage that customers will be redirected to after a successful check-in.</source>
         <target>Dit is de webpagina waar klanten naar doorverwezen worden na een succesvolle checkin.</target>

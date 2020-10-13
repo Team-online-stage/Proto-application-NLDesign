@@ -86,6 +86,33 @@
                     >
                 </div>
 
+                {# Show the qr-code, is going to need some javascript to update when qrConfig inputs changes? #}
+                {% if item is defined %}
+                    <img style="width: 150px;" src="{{ absolute_url(path('app_chin_render',{"id":item.id})) }}" />
+                {% endif %}
+
+                {# Personalize your qr-code #}
+                <div class="row" style="margin-bottom: 5px">
+                    <div class="col-md-6">
+                        <label class="input__label" for="foregroundColor">{{ 'QR-Code foreground color'|trans|capitalize }}</label>
+                        <input id="foregroundColor" type="color" name="qrConfig[foreground_color]"
+                            {% if item.qrConfig['foreground_color'] is defined %}
+                                value="#000000" {# item.qrConfig['foreground_color'] is an array with r,g,b and needs to be converted to hex #}
+                            {% else %}
+                                value="#000000"
+                            {% endif %}>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="input__label" for="foregroundColor">{{ 'QR-Code background color'|trans|capitalize }}</label>
+                        <input id="foregroundColor" type="color" name="qrConfig[background_color]"
+                            {% if item.qrConfig['background_color'] is defined %}
+                                value="#ffffff" {# item.qrConfig['background_color'] is an array with r,g,b and needs to be converted to hex #}
+                            {% else %}
+                                value="#ffffff"
+                            {% endif %}>
+                    </div>
+                </div>
+
                 <div class="input input--horizontal">
                     <div>
                         <label
@@ -95,7 +122,7 @@
                         </label>
                     </div>
                     <input id="passthroughUrl" type="text" name="passthroughUrl" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
-                           {% if item.passthroughUrl is defined and item.passthroughUrl is not empty %}value="{{ item.passthroughUrl }}"{% endif %}>
+                           {% if item.passthroughUrl is defined and item.passthroughUrl is not empty %}value="{{ item.passthroughUrl }}"{% else %}placeholder="{{ 'www.horeca-name.nl'|trans }}"{% endif %}>
                 </div>
 
                 {% if itemAccommodation is defined and accommodations is defined and accommodations is not empty %}
