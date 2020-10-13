@@ -88,7 +88,11 @@
 
                 <div class="input input--horizontal">
                     <div>
-                        <label class="input__label" for="passthroughUrl">{{ 'passthrough Url'|trans|capitalize }}</label>
+                        <label
+                            class="input__label"
+                            for="passthroughUrl">{{ 'passthrough Url'|trans|capitalize }}
+                            <button x-uno-tooltip="" class="tooltip__icon" title="{{ 'This is the webpage that customers will be redirected to after a successful check-in.'|trans|capitalize }}"></button>
+                        </label>
                     </div>
                     <input id="passthroughUrl" type="text" name="passthroughUrl" aria-describedby="hint_name" class="input__control input__control--text input__control--xl"
                            {% if item.passthroughUrl is defined and item.passthroughUrl is not empty %}value="{{ item.passthroughUrl }}"{% endif %}>

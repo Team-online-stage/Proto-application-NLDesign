@@ -805,6 +805,10 @@
         <source>download qr-code</source>
         <target>download qr-code</target>
       </trans-unit>
+      <trans-unit id="uO9MRuW" resname="This is the webpage that customers will be redirected to after a successful check-in.">
+        <source>This is the webpage that customers will be redirected to after a successful check-in.</source>
+        <target>Dit is de webpagina waar klanten naar doorverwezen worden na een succesvolle checkin.</target>
+      </trans-unit>
       <trans-unit id="SuATECt" resname="no address found">
         <source>no address found</source>
         <target>geen adres gevonden</target>
