@@ -601,7 +601,7 @@ class ChinController extends AbstractController
             // Create reservation
             $reservation = [];
             $reservation['name'] = $name;
-            $reservation['underName'] = $person['@id'];
+            $reservation['underName'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
             $reservation['numberOfParticipants'] = intval($amount);
             $reservation['comment'] = $request->get('comment');
             $reservation['provider'] = $variables['resource']['organization'];
