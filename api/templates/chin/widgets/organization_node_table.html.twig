@@ -29,7 +29,17 @@
                         <td>
                             {% if nodeAccommodation['place'] is defined %}
                                 {% if nodeAccommodation['place']['address'] is defined and nodeAccommodation['place']['address'] is not empty %}
-                                    {{ nodeAccommodation['place']['address'] }}
+                                    {% if nodeAccommodation['place']['address']['street'] is defined and nodeAccommodation['place']['address']['street'] is not empty %}
+                                        {{ nodeAccommodation['place']['address']['street'] }} {{ nodeAccommodation['place']['address']['houseNumber'] }}
+                                        {% if nodeAccommodation['place']['address']['houseNumberSuffix'] is defined and nodeAccommodation['place']['address']['houseNumberSuffix'] is not empty %}
+                                            {{ nodeAccommodation['place']['address']['houseNumberSuffix'] }}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ nodeAccommodation['place']['address']['postalCode'] }}
+                                    {% endif %}
+                                    {% if nodeAccommodation['place']['address']['locality'] is defined and nodeAccommodation['place']['address']['locality'] is not empty %}
+                                        <br>{{ nodeAccommodation['place']['address']['locality'] }}
+                                    {% endif %}
                                 {% else %}
                                     {{ 'no address found'|trans|capitalize }}
                                 {% endif %}
