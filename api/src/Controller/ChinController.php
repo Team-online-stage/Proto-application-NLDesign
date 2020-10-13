@@ -81,10 +81,12 @@ class ChinController extends AbstractController
         $variables = [];
         if (in_array('group.admin', $this->getUser()->getRoles())) {
             $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
-            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['provider' => $organization['@id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
+            $organization = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['provider' => $organization, 'order[dateCreated]' => 'desc'])['hydra:member'];
         } else {
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
-            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['underName' => $person['@id']])['hydra:member'];
+            $person = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
+            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['underName' => $person, 'order[dateCreated]' => 'desc'])['hydra:member'];
         }
 
         return $variables;
