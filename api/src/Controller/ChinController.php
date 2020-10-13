@@ -215,7 +215,6 @@ class ChinController extends AbstractController
      */
     public function downloadAction(Session $session, $id, $type = 'png', Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
     {
-
         $splits = explode('.', $id);
         $id = $splits[0];
         $extention = $splits[1];
@@ -1081,7 +1080,6 @@ class ChinController extends AbstractController
             $variables['style'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'styles', 'id' => $variables['wrc']['style']['id']]);
             $variables['favicon'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'images', 'id' => $variables['wrc']['style']['favicon']['id']]);
 
-
             if (isset($variables['wrc']['contact'])) {
                 $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
             }
@@ -1154,7 +1152,7 @@ class ChinController extends AbstractController
             $favicon['organization'] = '/organizations/'.$variables['wrc']['id'];
             $favicon['style'] = '/styles/'.$variables['style']['id'];
 
-            if (isset($_FILES['base64']) && $_FILES['base64']['error'] !== 4 ) {
+            if (isset($_FILES['base64']) && $_FILES['base64']['error'] !== 4) {
                 $path = $_FILES['base64']['tmp_name'];
                 $type = filetype($_FILES['base64']['tmp_name']);
                 $data = file_get_contents($path);
