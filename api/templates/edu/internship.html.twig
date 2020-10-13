@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block container %}
-
-
     <link href="https://fonts.googleapis.com/css2?family=Lobster&amp;display=swap" rel="stylesheet">
     <style>
         main {
@@ -16,18 +14,14 @@
             background-color: lightgrey;
         }
         .row{
-            width: 120%;
-            padding-left: 10px;
-            padding-right: 90px;
+            width: 170%;
+            padding-left: 2%;
+            padding-right: 25%;
             height: 50px;
         }
-        .col-sm-12{
-            border: 5px solid #406377;
-            background-color: #D3D3D3;
-        }
         .algemeen{
-                 padding-left: 40px;
-             }
+            padding-left: 40px;
+        }
         .content{
             padding-right: 20px;
         }
@@ -42,8 +36,12 @@
             position: relative;
             width: 40%;
         }
-
-
+        div .content-background {
+            background-color: lightgrey;
+        }
+        div .hint{
+            background-color: white;
+        }
     </style>
     <header class="content__header">
         <a class="backlink" href="/edu/internships">Naar stages</a>
@@ -54,22 +52,22 @@
             <div class="content-background">
                 <div class="content">
 
-                        <div class="col-xs-12 col-lg-4">
-                            {% for jobposting in resources %}
-                            {% if jobposting.title is defined and jobposting.title is not empty %}
-                                <h1>{{ jobposting.title|capitalize }}</h1>
-                            {% else %}
-                                <h1>{{ jobposting.name|capitalize }}</h1>
-                            {% endif %}
-                            {% if jobposting.description is defined and jobposting.description is not empty %}
-                                <p>{{ jobposting.description }}</p>
-                            {% endif %}
-                            <img class="imgs" src="https://picsum.photos/350/250" alt="tender">
+                    <div class="col-xs-12 col-lg-4">
+                        {% for jobposting in resources %}
+                        {% if jobposting.title is defined and jobposting.title is not empty %}
+                            <h1>{{ jobposting.title|capitalize }}</h1>
+                        {% else %}
+                            <h1>{{ jobposting.name|capitalize }}</h1>
+                        {% endif %}
+                        {% if jobposting.description is defined and jobposting.description is not empty %}
+                            <p>{{ jobposting.description }}</p>
+                        {% endif %}
+                        <img class="imgs" src="https://picsum.photos/350/250" alt="tender">
 
-                        </div>
                     </div>
+                </div>
 
-                    <div class="content1">
+                <div class="content1">
                     <div class="">
                         <h2 class="algemeen"> Algemene informatie</h2>
                     </div>
@@ -143,4 +141,78 @@
         </div>
     </div>
 
+    <div style="height:50px;"></div>
+
+    <div class="collapse" role="status">
+        <div x-uno-collapse="" class="collapse__header">
+            <i class="collapse__indicator">
+                                <span class="screenreader-only" data-contracted-i18n="ingeklapt"
+                                      data-expanded-i18n="uitgeklapt"></span>
+            </i>
+            <span class="collapse__title">Inschrijven</span>
+        </div>
+        <div class="collapse__details collapse__details--open" style="background-color: #D3D3D3">
+            {% if app.user is defined and app.user is not null %}
+                {% if registeredForCourse == true %}
+                    {% if resultSubmitted == false %}
+                        <h2>Uw resultaat</h2>
+
+                        <form method="post" action="{{ path('app_edu_internship', {id: internship.id}) }}">
+                            <div class="input">
+                                <label class="input__label" for="description">Toelichting</label>
+                                <textarea class="input__control input__control--text" id="description"
+                                          name="description"></textarea>
+                            </div>
+
+                            <div class="input">
+                                <label class="input__label" for="file">Voeg hier uw resultaat
+                                    toe:</label>
+                                <input type="file"
+                                       class="input__control input__control--m input__control--file"
+                                       id="file" name="file">
+                            </div>
+
+                            <div class="input">
+                                <button type="submit" class="btn">Verzenden <i
+                                        class="icon icon-arr-forward"></i></button>
+                            </div>
+                        </form>
+                    {% else %}
+                        <aside class="hint">
+                            <span class="hint__title">Ingedient</span>
+                            <p>U heeft zich al ingescheven voor deze stage.</p>
+                        </aside>
+                    {% endif %}
+                {% else %}
+                    <aside class="hint">
+                        <span class="hint__title">Tutorial</span>
+                        <p>U bent nog niet ingeschreven voor <a
+                                href="{{ path('app_edu_internship', {id: activity.internship.id}) }}">de
+                                stage</a>.</p>
+                    </aside>
+                {% endif %}
+            {% else %}
+                <aside class="hint">
+                    <span class="hint__title">Inloggen</span>
+                    <p>U dient eerst in te loggen voordat u zich kan inschrijven.<br>
+                        Klik <a
+                            href="{{ commonground_cleanurl({"component":"ds"}) }}?responceUrl={{ absolute_url(path('app_default_index')) }}digispoof&backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}">hier</a>
+                        om te kunnen inloggen.</p>
+                </aside>
+            {% endif %}
+        </div>
+    </div>
+
+
+    <script>
+        // Load collapse component
+        System.import('/uno/components/collapse/collapse.js').then(function (module) {
+            // Select all collapsible elements on the page
+            var collapses = document.querySelectorAll('[x-uno-collapse]');
+            // Initialize all collapses
+            for (var i = 0; i < collapses.length; i++) {
+                new module.Collapse(collapses.item(i));
+            }
+        });
+    </script>
 {% endblock %}
