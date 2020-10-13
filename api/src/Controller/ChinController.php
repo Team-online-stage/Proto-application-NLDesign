@@ -81,7 +81,7 @@ class ChinController extends AbstractController
         $variables = [];
         if (in_array('group.admin', $this->getUser()->getRoles())) {
             $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
-            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['provider' => $organization['@id'] , 'order[dateCreated]' => 'desc'])['hydra:member'];
+            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['provider' => $organization['@id'], 'order[dateCreated]' => 'desc'])['hydra:member'];
         } else {
             $person = $commonGroundService->getResource($this->getUser()->getPerson());
             $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['underName' => $person['@id']])['hydra:member'];
@@ -565,7 +565,7 @@ class ChinController extends AbstractController
 
             return $this->redirect($this->generateUrl('app_default_index'));
         }
-        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'],['organization' => $variables['resource']['organization'], 'type' => 'reservation'])['hydra:member'];
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['resource']['organization'], 'type' => 'reservation'])['hydra:member'];
 
         // We want this resource to be a checkin
         if ($variables['resource']['type'] != 'reservation') {
