@@ -20,12 +20,20 @@
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
         <aside class="col-md-4 col-sm-modal">
             <nav class="sidenav">
-                {% include 'uc/widgets/menu.html.twig' %}
+                {% if 'group.admin' in app.user.roles %}
+                    {% include 'uc/widgets/organizationMenu.html.twig' %}
+                {% else %}
+                    {% include 'uc/widgets/menu.html.twig' %}
+                {% endif %}
             </nav>
         </aside>
 
         <div class="col-md-8">
-            {% include 'chin/widgets/checkin_table_reservations.html.twig' %}
+            {% if 'group.admin' in app.user.roles %}
+                {% include 'chin/widgets/checkin_table_reservations_organization.html.twig' %}
+            {% else %}
+                {% include 'chin/widgets/checkin_table_reservations.html.twig' %}
+            {% endif %}
         </div>
         {% else %}
             <div class="col-md-12">

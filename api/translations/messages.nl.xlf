@@ -1307,7 +1307,7 @@
       </trans-unit>
       <trans-unit id="O6Z.pUc" resname="no reservations available">
         <source>no reservations available</source>
-        <target>__no reservations available</target>
+        <target>geen reserveringen beschikbaar</target>
       </trans-unit>
       <trans-unit id="TQFh4Ih" resname="reservations">
         <source>reservations</source>
@@ -1328,6 +1328,26 @@
       <trans-unit id="P3yznl3" resname="current Logo">
         <source>current Logo</source>
         <target>uw huidige logo</target>
+      </trans-unit>
+      <trans-unit id="QRhmZFC" resname="number of people">
+        <source>number of people</source>
+        <target>aantal personen</target>
+      </trans-unit>
+      <trans-unit id="LjIA3oS" resname="until">
+        <source>until</source>
+        <target>tot</target>
+      </trans-unit>
+      <trans-unit id="k_ElEOO" resname="no reservations">
+        <source>no reservations</source>
+        <target>geen reserveringen</target>
+      </trans-unit>
+      <trans-unit id="FUbpSY3" resname="under name">
+        <source>under name</source>
+        <target>op naam</target>
+      </trans-unit>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
+        <target>opmerking</target>
       </trans-unit>
     </body>
   </file>
