@@ -87,7 +87,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/nodes")
-     * @Security("is_granted('ROLE_scope.chin.nodes.write')")
+     * @Security("is_granted('ROLE_scope.chin.node.write')")
      * @Template
      */
     public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
