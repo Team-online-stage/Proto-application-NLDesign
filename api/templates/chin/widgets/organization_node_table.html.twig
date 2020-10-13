@@ -51,7 +51,7 @@
                             {% endif %}
                         </td>
                         <td>{{ node.reference }}</td>
-                        <td><img src="{{ qr_code_data_uri( absolute_url(path('app_chin_checkin',{"code":node.reference})) , { writer: 'svg', size: 150 }) }}" /></td>
+                        <td><img style="width: 150px;" src="{{ absolute_url(path('app_chin_render',{"id":node.id})) }}" /></td>
                         <td>
                             <a href="https://dev.checking.nu/chin/download/{{ node.id }}.png">Download PNG</a><br><br>
                             <a href="https://dev.checking.nu/chin/download/{{ node.id }}.svg">Download SVG</a>
