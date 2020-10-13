@@ -206,9 +206,9 @@ class ChinController extends AbstractController
      * file: the file type renderd, default png
      * encoding: the encoding used for the file, default: UTF-8
      *
-     * @Route("/download/{id}")
+     * @Route("/download/{id}/{type}")
      */
-    public function downloadAction(Session $session, $id, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
+    public function downloadAction(Session $session, $id, $type = 'png', Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
     {
         $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id'=>$id]);
 
@@ -225,11 +225,11 @@ class ChinController extends AbstractController
         $qrCode = $qrCodeFactory->create($url, $configuration);
 
         // Set advanced options
-        $qrCode->setWriterByName($request->query->get('file', 'png'));
+        $qrCode->setWriterByName($request->query->get('file', $type));
         $qrCode->setEncoding($request->query->get('encoding', 'UTF-8'));
         //$qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
 
-        $filename = 'qr-code.png';
+        $filename = 'qr-code.'.$type;
 
         $response = new Response($qrCode->writeString());
         // Create the disposition of the file
