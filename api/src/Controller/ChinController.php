@@ -9,7 +9,9 @@ use Conduction\CommonGroundBundle\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 //use App\Service\RequestService;
 use Endroid\QrCode\Factory\QrCodeFactoryInterface;
+//use App\Service\RequestService;
 use function GuzzleHttp\Promise\all;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -45,6 +47,8 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/organisation")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
+     *
      * @Template
      */
     public function checkinOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -57,6 +61,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/statistics")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function checkinStatisticsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -69,6 +74,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/reservations")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function checkinReservationsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -81,6 +87,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/nodes")
+     * @Security("is_granted('ROLE_scope.chin.nodes.write')")
      * @Template
      */
     public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -140,6 +147,7 @@ class ChinController extends AbstractController
      * This function shows all available locations.
      *
      * @Route("/")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
@@ -198,9 +206,9 @@ class ChinController extends AbstractController
      * file: the file type renderd, default png
      * encoding: the encoding used for the file, default: UTF-8
      *
-     * @Route("/download/{id}")
+     * @Route("/download/{id}/{type}")
      */
-    public function downloadAction(Session $session, $id, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
+    public function downloadAction(Session $session, $id, $type = 'png', Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
     {
         $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id'=>$id]);
 
@@ -217,11 +225,11 @@ class ChinController extends AbstractController
         $qrCode = $qrCodeFactory->create($url, $configuration);
 
         // Set advanced options
-        $qrCode->setWriterByName($request->query->get('file', 'png'));
+        $qrCode->setWriterByName($request->query->get('file', $type));
         $qrCode->setEncoding($request->query->get('encoding', 'UTF-8'));
         //$qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
 
-        $filename = 'qr-code.png';
+        $filename = 'qr-code.'.$type;
 
         $response = new Response($qrCode->writeString());
         // Create the disposition of the file
