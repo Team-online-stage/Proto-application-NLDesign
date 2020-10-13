@@ -7,6 +7,7 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -24,14 +25,14 @@ use Symfony\Component\Routing\Annotation\Route;
 class LcController extends AbstractController
 {
     /**
-     * @Route("/organization")
+     * @Route("/places")
+     * @Security("is_granted('ROLE_scope.lc.place.write')")
      * @Template
      */
-    public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
+    public function placesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc', 'type'=>'places'])['hydra:member'];
-        $variables['organizations'] = $commonGroundService->getResourceList(['component' => 'wrc', 'type' => 'organizations'])['hydra:member'];
+        $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc', 'type'=>'places'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
@@ -50,20 +51,8 @@ class LcController extends AbstractController
 
             $commonGroundService->saveResource($resource, (['component'=>'lc', 'type'=>'places']));
 
-            return $this->redirect($this->generateUrl('app_lc_organization'));
+            return $this->redirect($this->generateUrl('app_lc_places'));
         }
-
-        return $variables;
-    }
-
-    /**
-     * @Route("/places")
-     * @Template
-     */
-    public function placesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
-    {
-        $variables = [];
-        $variables['places'] = $commonGroundService->getResourceList(['component'=>'lc', 'type'=>'places'], ['organization'=>$this->getUser()->getOrganization()])['hydra:member'];
 
         return $variables;
     }

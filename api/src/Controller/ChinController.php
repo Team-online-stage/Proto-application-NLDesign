@@ -9,7 +9,9 @@ use Conduction\CommonGroundBundle\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 //use App\Service\RequestService;
 use Endroid\QrCode\Factory\QrCodeFactoryInterface;
+//use App\Service\RequestService;
 use function GuzzleHttp\Promise\all;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -45,6 +47,8 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/organisation")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
+     *
      * @Template
      */
     public function checkinOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -57,6 +61,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/statistics")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function checkinStatisticsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -69,6 +74,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/reservations")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function checkinReservationsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -81,6 +87,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/nodes")
+     * @Security("is_granted('ROLE_scope.chin.nodes.write')")
      * @Template
      */
     public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -140,6 +147,7 @@ class ChinController extends AbstractController
      * This function shows all available locations.
      *
      * @Route("/")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
