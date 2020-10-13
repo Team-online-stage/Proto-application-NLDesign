@@ -74,13 +74,18 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/reservations")
-     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function checkinReservationsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        //$variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+        if (in_array('group.admin', $this->getUser()->getRoles())) {
+            $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
+            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['provider' => $organization['@id'] , 'order[dateCreated]' => 'desc'])['hydra:member'];
+        } else {
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['underName' => $person['@id']])['hydra:member'];
+        }
 
         return $variables;
     }
@@ -536,7 +541,6 @@ class ChinController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
         }
-
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
@@ -545,6 +549,7 @@ class ChinController extends AbstractController
 
             return $this->redirect($this->generateUrl('app_default_index'));
         }
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'],['organization' => $variables['resource']['organization'], 'type' => 'reservation'])['hydra:member'];
 
         // We want this resource to be a checkin
         if ($variables['resource']['type'] != 'reservation') {
@@ -575,22 +580,26 @@ class ChinController extends AbstractController
             $name = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 5);
 
             $amount = $request->get('amount');
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
 
             // Create reservation
             $reservation = [];
             $reservation['name'] = $name;
-            $reservation['underName'] = $commonGroundService->getResource($this->getUser()->getPerson())['name'];
+            $reservation['underName'] = $person['@id'];
             $reservation['numberOfParticipants'] = intval($amount);
+            $reservation['comment'] = $request->get('comment');
             $reservation['provider'] = $variables['resource']['organization'];
             //reservation event part
-            $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
-            $reservation['event']['name'] = $name;
-            $reservation['event']['startDate'] = '';
-            $reservation['event']['endDate'] = '';
-            $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
-            $checkIn = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
-            return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
+            $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
+
+            $reservation['event']['name'] = $name;
+            $reservation['event']['startDate'] = $date->format('Y-m-d H:i');
+            $reservation['event']['endDate'] = $date->format('Y-m-d H:i');
+            $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
+            $reservation = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
+
+            return $this->redirect($this->generateUrl('app_chin_checkinreservations'));
         }
 
         return $variables;
