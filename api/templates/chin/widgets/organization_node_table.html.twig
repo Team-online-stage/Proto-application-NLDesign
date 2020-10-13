@@ -29,7 +29,17 @@
                         <td>
                             {% if nodeAccommodation['place'] is defined %}
                                 {% if nodeAccommodation['place']['address'] is defined and nodeAccommodation['place']['address'] is not empty %}
-                                    {{ nodeAccommodation['place']['address'] }}
+                                    {% if nodeAccommodation['place']['address']['street'] is defined and nodeAccommodation['place']['address']['street'] is not empty %}
+                                        {{ nodeAccommodation['place']['address']['street'] }} {{ nodeAccommodation['place']['address']['houseNumber'] }}
+                                        {% if nodeAccommodation['place']['address']['houseNumberSuffix'] is defined and nodeAccommodation['place']['address']['houseNumberSuffix'] is not empty %}
+                                            {{ nodeAccommodation['place']['address']['houseNumberSuffix'] }}
+                                        {% endif %}
+                                    {% else %}
+                                        {{ nodeAccommodation['place']['address']['postalCode'] }}
+                                    {% endif %}
+                                    {% if nodeAccommodation['place']['address']['locality'] is defined and nodeAccommodation['place']['address']['locality'] is not empty %}
+                                        <br>{{ nodeAccommodation['place']['address']['locality'] }}
+                                    {% endif %}
                                 {% else %}
                                     {{ 'no address found'|trans|capitalize }}
                                 {% endif %}
@@ -42,7 +52,10 @@
                         </td>
                         <td>{{ node.reference }}</td>
                         <td><img src="{{ qr_code_data_uri( absolute_url(path('app_chin_checkin',{"code":node.reference})) , { writer: 'svg', size: 150 }) }}" /></td>
-                        <td><a href="https://dev.checking.nu/chin/download/{{ node.id }}">Download</a></td>
+                        <td>
+                            <a href="https://dev.checking.nu/chin/download/{{ node.id }}.png">Download PNG</a><br><br>
+                            <a href="https://dev.checking.nu/chin/download/{{ node.id }}.svg">Download SVG</a>
+                        </td>
                         <td><a data-toggle="modal" data-target="#node-{{ node.id }}" onclick="openModal{{ node.id|replace({'-': ''}) }}()">{{ 'edit'|trans|capitalize }}</a></td>
                     </tr>
                 {% endfor %}

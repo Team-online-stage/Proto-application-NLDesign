@@ -106,8 +106,24 @@ class ChinController extends AbstractController
                 // Check if the place already exists
                 if (key_exists('place', $accommodation) and !empty($accommodation['place'])) {
                     $place = $commonGroundService->getResource($commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'places', 'id' => $accommodation['place']['id']]));
+                    if (key_exists('address', $place) and !empty($place['address'])) {
+                        $address = $commonGroundService->getResource($commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'addresses', 'id' => $place['address']['id']]));
+                    }
                 }
             }
+
+            // Create a new address or update the existing one for the place of this node
+            $address['name'] = $resource['name'];
+            if (key_exists('address', $resource)) {
+                $address['street'] = $resource['address']['street'];
+                $address['houseNumber'] = $resource['address']['houseNumber'];
+                $address['houseNumberSuffix'] = $resource['address']['houseNumberSuffix'];
+                $address['postalCode'] = $resource['address']['postalCode'];
+                $address['locality'] = $resource['address']['locality'];
+                // Check if address is set and if so, unset it in the resource used for creating a node
+                unset($resource['address']);
+            }
+            $address = $commonGroundService->saveResource($address, (['component' => 'lc', 'type' => 'addresses']));
 
             // Create a new place or update the existing one for this node
             $place['name'] = $resource['name'];
@@ -120,6 +136,7 @@ class ChinController extends AbstractController
                 $place['accommodations'] = ['/accommodations/'.$accommodation['id']];
             }
             $place['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
+            $place['address'] = '/addresses/'.$address['id'];
             $place = $commonGroundService->saveResource($place, (['component' => 'lc', 'type' => 'places']));
 
             // Create a new accommodation or update the existing one for this node
@@ -128,7 +145,7 @@ class ChinController extends AbstractController
             $accommodation['place'] = '/places/'.$place['id'];
             if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
                 $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
-                // Check if maximumAttendeeCapacity is set and if so, unset it in the resource for creating a node
+                // Check if maximumAttendeeCapacity is set and if so, unset it in the resource used for creating a node
                 unset($resource['maximumAttendeeCapacity']);
             }
             $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
