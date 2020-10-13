@@ -606,7 +606,9 @@ class ChinController extends AbstractController
             $reservation['underName'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
             $reservation['numberOfParticipants'] = intval($amount);
             $reservation['comment'] = $request->get('comment');
-            $reservation['provider'] = $variables['resource']['organization'];
+            $organization = $commonGroundService->getResource($variables['resource']['organization']);
+            $organization = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+            $reservation['provider'] = $organization;
             //reservation event part
 
             $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
