@@ -10,7 +10,7 @@ settings:
   version: V1.0
   majorVersion: v1
   id: 31a2ad29-ee03-4aa9-be81-abf1fda7bbcc
-  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
+  description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&quot;'
   type: application
   repro: https://github.com/ConductionNL/pan
   demo: www.zuid-drecht.nl
