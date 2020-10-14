@@ -7,6 +7,7 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +23,8 @@ class DrcController extends AbstractController
 {
     /**
      * @Route("/download/{resource}")
+     *
+     * @Security("is_granted('ROLE_user')")
      * @Template
      */
     public function downloadAction(Request $request, EntityManagerInterface $em, CommonGroundService $commonGroundService, $resource)

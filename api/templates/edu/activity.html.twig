@@ -16,39 +16,6 @@
             background-color: white;
         }
     </style>
-    {% if app.user is defined and app.user is not null %}
-        {% if user is defined and user is not null %}
-            {% set userContact = user['@id'] %}
-        {% elseif app.user.username is defined and app.user.username is not null %}
-            {% set users = commonground_resource_list({'component': 'uc', 'type': 'users'},{'username' : app.user.username})['hydra:member'] %}
-            {% if users|length > 0 %}
-                {% set userContact = users[0].person %}
-            {% endif %}
-        {% endif %}
-        {% set participants = commonground_resource_list({'component': 'edu', 'type': 'participants'},{'person' : userContact})['hydra:member'] %}
-        {% if participants|length > 0 %}
-            {% set participant = participants[0] %}
-        {% endif %}
-    {% endif %}
-
-    {% set registeredForCourse = false %}
-    {% if participant.courses is defined and participant.courses is not null %}
-        {% for course in participant.courses %}
-            {% if course.id == activity.course.id %}
-                {% set registeredForCourse = true %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-
-    {% set resultSubmitted = false %}
-    {% if participant.results is defined and participant.results is not null %}
-        {% for result in participant.results %}
-            {% if result.activity.id == activity.id %}
-                {% set resultSubmitted = true %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-
     <!-- the alert box -->
 
     <div class="container">
@@ -68,20 +35,21 @@
                 <div class="col-xl-12 col-lg-12 col-md-12">
 
                     {% if app.user is defined and app.user is not null%}
-                        {% if registeredForCourse == false %}
+                        {% if participants is not defined or participants is null %}
                             <div class="notification notification--warning">
                                 <div class="notification__content">
                                     <div class="notification__type">LET OP</div>
                                     <h2 class="notification__title">U bent nog niet ingeschreven voor de tutorial van deze activiteit</h2>
                                 </div>
                             </div>
-                        {% elseif resultSubmitted == false %}
+                            {% if results is not defined or results is null %}
                             <div class="notification notification--warning">
                                 <div class="notification__content">
                                     <div class="notification__type">LET OP</div>
                                     <h2 class="notification__title">U moet voor deze activiteit nog een resultaat indienen</h2>
                                 </div>
                             </div>
+                            {% endif %}
                         {% endif %}
                     {% endif %}
 
@@ -160,7 +128,7 @@
                         </div>
                         <div class="collapse__details collapse__details--open">
                             {% if app.user is defined and app.user is not null %}
-                                {% if registeredForCourse == true %}
+                                {% if participants is defined and participants is not null %}
                                     {% if resultSubmitted == false %}
                                         <h2>Uw resultaat</h2>
 
