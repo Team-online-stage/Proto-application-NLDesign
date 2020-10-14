@@ -424,6 +424,21 @@ class UserController extends AbstractController
                 $this->addFlash('success', 'wachtwoord aangepast');
                 $commonGroundService->updateResource($user);
 
+                $message = [];
+
+                if ($params->get('app_env') == 'prod') {
+                    $message['service'] = '/services/eb7ffa01-4803-44ce-91dc-d4e3da7917da';
+                } else {
+                    $message['service'] = '/services/1541d15b-7de3-4a1a-a437-80079e4a14e0';
+                }
+                $message['status'] = 'queued';
+                $message['data'] = ['receiver' => $variables['person']['name']];
+                $message['content'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'templates', 'id'=>'4125221c-74e0-46f9-97c9-3825a2011012']);
+                $message['reciever'] = $user['username'];
+                $message['sender'] = 'no-reply@conduction.nl';
+
+                $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
+
             }
         }
 
