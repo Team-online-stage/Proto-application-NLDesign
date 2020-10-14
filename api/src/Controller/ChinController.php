@@ -24,7 +24,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
-
 /**
  * The Procces test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
  *
@@ -90,7 +89,7 @@ class ChinController extends AbstractController
             $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['underName' => $person, 'order[dateCreated]' => 'desc'])['hydra:member'];
 
             foreach ($variables['reservations'] as &$reservation) {
-                $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'],['accommodation' => $reservation['event']['calendar']['resource']])['hydra:member'];
+                $nodes = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['accommodation' => $reservation['event']['calendar']['resource']])['hydra:member'];
                 if (count($nodes) > 0) {
                     $reservation['node'] = $nodes[0];
                 }
@@ -99,14 +98,11 @@ class ChinController extends AbstractController
                     $hourDiff = round((strtotime('now') - strtotime($reservation['event']['startDate'])) / 3600);
                     $dayDiff = round((strtotime($reservation['event']['startDate']) - strtotime('now')) / (60 * 60 * 24));
 
-
-                    if ($hourDiff < (float)$nodes[0]['configuration']['cancelable'] && $dayDiff == 0 ) {
+                    if ($hourDiff < (float) $nodes[0]['configuration']['cancelable'] && $dayDiff == 0) {
                         $reservation['cantCancel'] = true;
                     }
                 }
-
             }
-
         }
 
         return $variables;
@@ -127,17 +123,14 @@ class ChinController extends AbstractController
         //set rgb values to hex and place them in temp property
         foreach ($variables['nodes'] as &$node) {
             if (isset($node['qrConfig'])) {
-
                 if (isset($node['qrConfig']['foreground_color'])) {
                     $colors = $node['qrConfig']['foreground_color'];
-                    $node['foregroundColor'] = sprintf("#%02x%02x%02x", $colors['r'], $colors['g'], $colors['b']);
-
+                    $node['foregroundColor'] = sprintf('#%02x%02x%02x', $colors['r'], $colors['g'], $colors['b']);
                 }
 
                 if (isset($node['qrConfig']['background_color'])) {
                     $colors = $node['qrConfig']['background_color'];
-                    $node['backgroundColor'] = sprintf("#%02x%02x%02x", $colors['r'], $colors['g'], $colors['b']);
-
+                    $node['backgroundColor'] = sprintf('#%02x%02x%02x', $colors['r'], $colors['g'], $colors['b']);
                 }
             }
         }
@@ -1286,5 +1279,4 @@ class ChinController extends AbstractController
 
         return $variables;
     }
-
 }
