@@ -284,7 +284,8 @@ class EduController extends AbstractController
         Request $request,
         CommonGroundService $commonGroundService,
         ParameterBagInterface $params,
-        $id)
+        $id
+    )
     {
         $variables = [];
 
@@ -297,11 +298,11 @@ class EduController extends AbstractController
         $variables['activity'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'activities', 'id' => $id], $variables['query']);
 
         $user = $this->getUser();
-        if($user && $person = $user->getPerson()){
-            $variables['participants'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], ['person'=> $person, "courses.id" => $variables['activity']['cource']['id']])['hydra:member'];
+        if ($user && $person = $user->getPerson()) {
+            $variables['participants'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], ['person'=> $person, 'courses.id' => $variables['activity']['course']['id']])['hydra:member'];
             // Dit is hacky
-            $variables['participant'] =  $variables['participants'][0];
-            $variables['results'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'results'], ['participant.id'=> $variables['participant']['id'], "activity.id" => $id])['hydra:member'];
+            $variables['participant'] = $variables['participants'][0];
+            $variables['results'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'results'], ['participant.id'=> $variables['participant']['id'], 'activity.id' => $id])['hydra:member'];
         }
 
         // Lets see if there is a post to procces
