@@ -801,15 +801,31 @@
         <source>qr</source>
         <target>qr</target>
       </trans-unit>
-      <trans-unit id="a97jB9R" resname="download qr-code">
+      <trans-unit id="y_eUcrQ" resname="download qr-code">
         <source>download qr-code</source>
         <target>download qr-code</target>
       </trans-unit>
-      <trans-unit id="T6IwPJt" resname="no address found">
+      <trans-unit id="MjGQqVe" resname="QR-Code foreground color">
+        <source>QR-Code foreground color</source>
+        <target>QR-Code voorgrondkleur</target>
+      </trans-unit>
+      <trans-unit id="wdbxVEh" resname="QR-Code background color">
+        <source>QR-Code background color</source>
+        <target>QR-Code achtergrondkleur</target>
+      </trans-unit>
+      <trans-unit id="D94efOO" resname="www.horeca-name.nl">
+        <source>www.horeca-name.nl</source>
+        <target>www.horeca-naam.nl</target>
+      </trans-unit>
+      <trans-unit id="uO9MRuW" resname="This is the webpage that customers will be redirected to after a successful check-in.">
+        <source>This is the webpage that customers will be redirected to after a successful check-in.</source>
+        <target>Dit is de webpagina waar klanten naar doorverwezen worden na een succesvolle checkin.</target>
+      </trans-unit>
+      <trans-unit id="SuATECt" resname="no address found">
         <source>no address found</source>
         <target>geen adres gevonden</target>
       </trans-unit>
-      <trans-unit id="B80p75B" resname="max. visitors">
+      <trans-unit id="m.2tRBE" resname="max. visitors">
         <source>max. visitors</source>
         <target>max. bezoekers</target>
       </trans-unit>
@@ -921,7 +937,7 @@
         <source>passthrough Url</source>
         <target>doorverwijspagina</target>
       </trans-unit>
-      <trans-unit id="9wqYEej" resname="maximum number of simultaneous visitors">
+      <trans-unit id="roVDuIw" resname="maximum number of simultaneous visitors">
         <source>maximum number of simultaneous visitors</source>
         <target>maximum aantal gelijktijdige bezoekers</target>
       </trans-unit>
@@ -1307,7 +1323,7 @@
       </trans-unit>
       <trans-unit id="O6Z.pUc" resname="no reservations available">
         <source>no reservations available</source>
-        <target>__no reservations available</target>
+        <target>geen reserveringen beschikbaar</target>
       </trans-unit>
       <trans-unit id="TQFh4Ih" resname="reservations">
         <source>reservations</source>
@@ -1316,6 +1332,38 @@
       <trans-unit id="9_6kadS" resname="my info">
         <source>my info</source>
         <target>mijn gegevens</target>
+      </trans-unit>
+      <trans-unit id="9wqYEej" resname="maximum number of people">
+        <source>maximum number of people</source>
+        <target>__maximum number of people</target>
+      </trans-unit>
+      <trans-unit id="NZjOb5Z" resname="logo">
+        <source>logo</source>
+        <target>logo</target>
+      </trans-unit>
+      <trans-unit id="P3yznl3" resname="current Logo">
+        <source>current Logo</source>
+        <target>uw huidige logo</target>
+      </trans-unit>
+      <trans-unit id="QRhmZFC" resname="number of people">
+        <source>number of people</source>
+        <target>aantal personen</target>
+      </trans-unit>
+      <trans-unit id="LjIA3oS" resname="until">
+        <source>until</source>
+        <target>tot</target>
+      </trans-unit>
+      <trans-unit id="k_ElEOO" resname="no reservations">
+        <source>no reservations</source>
+        <target>geen reserveringen</target>
+      </trans-unit>
+      <trans-unit id="FUbpSY3" resname="under name">
+        <source>under name</source>
+        <target>op naam</target>
+      </trans-unit>
+      <trans-unit id="xEuy.VF" resname="comment">
+        <source>comment</source>
+        <target>opmerking</target>
       </trans-unit>
     </body>
   </file>

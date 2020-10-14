@@ -201,19 +201,19 @@
                                             <input style="border-radius: 1px" type="file" class="form-control-file"
                                                    id="base64"
                                                    name="base64"
-                                                {% if wrc.style.favicon.base64 is defined %}
-                                                    value="{{ wrc.style.favicon.base64 }}"
+                                                {% if favicon.base64 is defined %}
+                                                    value="{{ favicon.base64 }}"
                                                 {% endif %}
                                             >
                                         </div>
                                     </div>
-                                    {% if wrc.style.favicon.base64 is defined and wrc.style.favicon.base64 is not empty %}
-                                        <div class="col-sm-12 col-md-6">
+                                    {% if favicon.base64 is defined and favicon.base64 is not empty %}
+                                        <div class="col-sm-12 col-md-6" style="text-align: center">
 
                                             <label
                                                 for="huidigeBase64">{{ 'current Logo'|trans|capitalize }}</label>
                                             <br>
-                                            <img id="huidigeBase64" src="{{ wrc.style.favicon.base64 }}"
+                                            <img style="width: 100px" id="huidigeBase64" src="{{ favicon.base64 }}"
                                                  alt="Image"/>
                                         </div>  <!-- /.col -->
                                     {% endif %}

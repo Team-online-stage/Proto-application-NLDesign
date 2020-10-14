@@ -112,12 +112,12 @@
     <div class="col-md-6 col-sm-12">
         <div class="content background--primary" style="padding-top: 20px;">
             <div class="row">
-                <div style="margin-top: 10px;" class="col-md-6 col-sm-12">
+                {% if app.user.organization is not defined or app.user.organization is empty %}<div style="margin-top: 10px;" class="col-md-6 col-sm-12">
                     <a href="/ondernemers" style="width: 100%;" class="btn btn-block">{{ 'join as organisation'|trans|capitalize }}</a>
                 </div>
                 <div style="margin-top: 10px;" class="col-md-6 col-sm-12">
                     <a href="/horeca" style="width: 100%;" class="btn btn-block">{{ 'join as horeca owner'|trans|capitalize }}</a>
-                </div>
+                </div>{% endif %}
             </div>
         </div>
     </div>

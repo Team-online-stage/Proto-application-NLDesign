@@ -9,7 +9,9 @@ use Conduction\CommonGroundBundle\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 //use App\Service\RequestService;
 use Endroid\QrCode\Factory\QrCodeFactoryInterface;
+//use App\Service\RequestService;
 use function GuzzleHttp\Promise\all;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -45,6 +47,8 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/organisation")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
+     *
      * @Template
      */
     public function checkinOrganizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -57,6 +61,7 @@ class ChinController extends AbstractController
 
     /**
      * @Route("/checkin/statistics")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function checkinStatisticsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -74,13 +79,22 @@ class ChinController extends AbstractController
     public function checkinReservationsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
     {
         $variables = [];
-        //$variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['person' => $this->getUser()->getOrganization(), 'order[dateCreated]' => 'desc'])['hydra:member'];
+        if (in_array('group.admin', $this->getUser()->getRoles())) {
+            $organization = $commonGroundService->getResource($this->getUser()->getOrganization());
+            $organization = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['provider' => $organization, 'order[dateCreated]' => 'desc'])['hydra:member'];
+        } else {
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $person = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
+            $variables['reservations'] = $commonGroundService->getResourceList(['component' => 'arc', 'type' => 'reservations'], ['underName' => $person, 'order[dateCreated]' => 'desc'])['hydra:member'];
+        }
 
         return $variables;
     }
 
     /**
      * @Route("/nodes")
+     * @Security("is_granted('ROLE_scope.chin.node.write')")
      * @Template
      */
     public function nodesAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -99,8 +113,24 @@ class ChinController extends AbstractController
                 // Check if the place already exists
                 if (key_exists('place', $accommodation) and !empty($accommodation['place'])) {
                     $place = $commonGroundService->getResource($commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'places', 'id' => $accommodation['place']['id']]));
+                    if (key_exists('address', $place) and !empty($place['address'])) {
+                        $address = $commonGroundService->getResource($commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'addresses', 'id' => $place['address']['id']]));
+                    }
                 }
             }
+
+            // Create a new address or update the existing one for the place of this node
+            $address['name'] = $resource['name'];
+            if (key_exists('address', $resource)) {
+                $address['street'] = $resource['address']['street'];
+                $address['houseNumber'] = $resource['address']['houseNumber'];
+                $address['houseNumberSuffix'] = $resource['address']['houseNumberSuffix'];
+                $address['postalCode'] = $resource['address']['postalCode'];
+                $address['locality'] = $resource['address']['locality'];
+                // Check if address is set and if so, unset it in the resource used for creating a node
+                unset($resource['address']);
+            }
+            $address = $commonGroundService->saveResource($address, (['component' => 'lc', 'type' => 'addresses']));
 
             // Create a new place or update the existing one for this node
             $place['name'] = $resource['name'];
@@ -113,6 +143,7 @@ class ChinController extends AbstractController
                 $place['accommodations'] = ['/accommodations/'.$accommodation['id']];
             }
             $place['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['organization']['id']]);
+            $place['address'] = '/addresses/'.$address['id'];
             $place = $commonGroundService->saveResource($place, (['component' => 'lc', 'type' => 'places']));
 
             // Create a new accommodation or update the existing one for this node
@@ -121,10 +152,19 @@ class ChinController extends AbstractController
             $accommodation['place'] = '/places/'.$place['id'];
             if (key_exists('maximumAttendeeCapacity', $resource) and !empty($resource['maximumAttendeeCapacity'])) {
                 $accommodation['maximumAttendeeCapacity'] = (int) $resource['maximumAttendeeCapacity'];
-                // Check if maximumAttendeeCapacity is set and if so, unset it in the resource for creating a node
+                // Check if maximumAttendeeCapacity is set and if so, unset it in the resource used for creating a node
                 unset($resource['maximumAttendeeCapacity']);
             }
             $accommodation = $commonGroundService->saveResource($accommodation, (['component' => 'lc', 'type' => 'accommodations']));
+
+            // Node configuration/personalization
+            if (key_exists('qrConfig', $resource)) {
+                // Convert hex color to rgb
+                list($r, $g, $b) = sscanf($resource['qrConfig']['foreground_color'], '#%02x%02x%02x');
+                $resource['qrConfig']['foreground_color'] = ['r'=>$r, 'g'=>$g, 'b'=>$b];
+                list($r, $g, $b) = sscanf($resource['qrConfig']['background_color'], '#%02x%02x%02x');
+                $resource['qrConfig']['background_color'] = ['r'=>$r, 'g'=>$g, 'b'=>$b];
+            }
 
             // Save the (new or already existing) node
             $resource['accommodation'] = $commonGroundService->cleanUrl(['component' => 'lc', 'type' => 'accommodations', 'id' => $accommodation['id']]);
@@ -140,6 +180,7 @@ class ChinController extends AbstractController
      * This function shows all available locations.
      *
      * @Route("/")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params)
@@ -200,8 +241,11 @@ class ChinController extends AbstractController
      *
      * @Route("/download/{id}")
      */
-    public function downloadAction(Session $session, $id, Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
+    public function downloadAction(Session $session, $id, $type = 'png', Request $request, FlashBagInterface $flash, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, QrCodeFactoryInterface $qrCodeFactory)
     {
+        $splits = explode('.', $id);
+        $id = $splits[0];
+        $extention = $splits[1];
         $node = $commonGroundService->getResource(['component' => 'chin', 'type' => 'nodes', 'id'=>$id]);
 
         $url = $this->generateUrl('app_chin_checkin', ['code'=>$node['reference']], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -217,11 +261,11 @@ class ChinController extends AbstractController
         $qrCode = $qrCodeFactory->create($url, $configuration);
 
         // Set advanced options
-        $qrCode->setWriterByName($request->query->get('file', 'png'));
+        $qrCode->setWriterByName($request->query->get('file', $extention));
         $qrCode->setEncoding($request->query->get('encoding', 'UTF-8'));
         //$qrCode->setErrorCorrectionLevel(ErrorCorrectionLevel::HIGH());
 
-        $filename = 'qr-code.png';
+        $filename = 'qr-code.'.$extention;
 
         $response = new Response($qrCode->writeString());
         // Create the disposition of the file
@@ -524,7 +568,6 @@ class ChinController extends AbstractController
         if (!$this->getUser()) {
             return $this->redirect($this->generateUrl('app_chin_login', ['code'=>$code]));
         }
-
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
         if (count($variables['resources']) > 0) {
             $variables['resource'] = $variables['resources'][0];
@@ -533,6 +576,7 @@ class ChinController extends AbstractController
 
             return $this->redirect($this->generateUrl('app_default_index'));
         }
+        $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['resource']['organization'], 'type' => 'reservation'])['hydra:member'];
 
         // We want this resource to be a checkin
         if ($variables['resource']['type'] != 'reservation') {
@@ -563,22 +607,28 @@ class ChinController extends AbstractController
             $name = substr(str_shuffle(str_repeat($validChars, ceil(3 / strlen($validChars)))), 1, 5);
 
             $amount = $request->get('amount');
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
 
             // Create reservation
             $reservation = [];
             $reservation['name'] = $name;
-            $reservation['underName'] = $commonGroundService->getResource($this->getUser()->getPerson())['name'];
+            $reservation['underName'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $person['id']]);
             $reservation['numberOfParticipants'] = intval($amount);
-            $reservation['provider'] = $variables['resource']['organization'];
+            $reservation['comment'] = $request->get('comment');
+            $organization = $commonGroundService->getResource($variables['resource']['organization']);
+            $organization = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $organization['id']]);
+            $reservation['provider'] = $organization;
             //reservation event part
-            $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
-            $reservation['event']['name'] = $name;
-            $reservation['event']['startDate'] = '';
-            $reservation['event']['endDate'] = '';
-            $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
-            $checkIn = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
 
-            return $this->redirect($this->generateUrl('app_chin_confirmation', ['id'=>$checkIn['id']]));
+            $date = \DateTime::createFromFormat('Y-m-d H:i', $request->get('date').$request->get('time'));
+
+            $reservation['event']['name'] = $name;
+            $reservation['event']['startDate'] = $date->format('Y-m-d H:i');
+            $reservation['event']['endDate'] = $date->format('Y-m-d H:i');
+            $reservation['event']['calendar'] = '/calendars/'.$variables['calendar']['id'];
+            $reservation = $commonGroundService->createResource($reservation, ['component' => 'arc', 'type' => 'reservations']);
+
+            return $this->redirect($this->generateUrl('app_chin_checkinreservations'));
         }
 
         return $variables;
@@ -1057,6 +1107,9 @@ class ChinController extends AbstractController
         if ($this->getUser()) {
             $variables['wrc'] = $commonGroundService->getResource($this->getUser()->getOrganization());
 
+            $variables['style'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'styles', 'id' => $variables['wrc']['style']['id']]);
+            $variables['favicon'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'images', 'id' => $variables['wrc']['style']['favicon']['id']]);
+
             if (isset($variables['wrc']['contact'])) {
                 $variables['organization'] = $commonGroundService->getResource($variables['wrc']['contact']);
             }
@@ -1121,31 +1174,23 @@ class ChinController extends AbstractController
             $variables['organization'] = $commonGroundService->saveResource($organization, ['component' => 'cc', 'type' => 'organizations']);
         } elseif ($request->isMethod('POST') && $request->get('style')) {
             $resource = $request->request->all();
-            $wrc = [];
-            $wrc['@id'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => $variables['wrc']['id']]);
-            $wrc['id'] = $variables['wrc']['id'];
+            $style = $variables['style'];
+            $style['organizations'] = ['/organizations/'.$variables['wrc']['id']];
+            $style['favicon'] = '/images/'.$variables['favicon']['id'];
 
-            $wrc['style']['name'] = $variables['wrc']['name'];
-            $wrc['style']['description'] = $variables['wrc']['name'];
-            $wrc['style']['favicon']['name'] = $variables['wrc']['name'];
-            $wrc['style']['favicon']['description'] = $variables['wrc']['name'];
+            $favicon = $variables['favicon'];
+            $favicon['organization'] = '/organizations/'.$variables['wrc']['id'];
+            $favicon['style'] = '/styles/'.$variables['style']['id'];
 
-            if (!isset($wrc['chamberOfComerce'])) {
-                $wrc['chamberOfComerce'] = '0000000';
-            }
-
-            if (!isset($wrc['rsin'])) {
-                $wrc['rsin'] = '0000000';
-            }
-
-            if (isset($_FILES['base64'])) {
+            if (isset($_FILES['base64']) && $_FILES['base64']['error'] !== 4) {
                 $path = $_FILES['base64']['tmp_name'];
                 $type = filetype($_FILES['base64']['tmp_name']);
                 $data = file_get_contents($path);
-                $wrc['style']['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+                $favicon['base64'] = 'data:image/'.$type.';base64,'.base64_encode($data);
+                $variables['favicon'] = $commonGroundService->saveResource($favicon, ['component' => 'wrc', 'type' => 'images']);
             }
 
-            $variables['wrc'] = $commonGroundService->saveResource($wrc, ['component' => 'wrc', 'type' => 'organizations']);
+            $variables['style'] = $commonGroundService->saveResource($style, ['component' => 'wrc', 'type' => 'styles']);
         }
 
         return $variables;
