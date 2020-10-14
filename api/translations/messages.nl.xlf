@@ -805,19 +805,19 @@
         <source>download qr-code</source>
         <target>download qr-code</target>
       </trans-unit>
-      <trans-unit id="MjGQqVe" resname="QR-Code foreground color">
+      <trans-unit id="QC1rQP_" resname="QR-Code foreground color">
         <source>QR-Code foreground color</source>
         <target>QR-Code voorgrondkleur</target>
       </trans-unit>
-      <trans-unit id="wdbxVEh" resname="QR-Code background color">
+      <trans-unit id="GgFouVu" resname="QR-Code background color">
         <source>QR-Code background color</source>
         <target>QR-Code achtergrondkleur</target>
       </trans-unit>
-      <trans-unit id="D94efOO" resname="www.horeca-name.nl">
+      <trans-unit id="NFa6QMk" resname="www.horeca-name.nl">
         <source>www.horeca-name.nl</source>
         <target>www.horeca-naam.nl</target>
       </trans-unit>
-      <trans-unit id="uO9MRuW" resname="This is the webpage that customers will be redirected to after a successful check-in.">
+      <trans-unit id="QZbttrP" resname="This is the webpage that customers will be redirected to after a successful check-in.">
         <source>This is the webpage that customers will be redirected to after a successful check-in.</source>
         <target>Dit is de webpagina waar klanten naar doorverwezen worden na een succesvolle checkin.</target>
       </trans-unit>
@@ -931,7 +931,7 @@
       </trans-unit>
       <trans-unit id="lzgBh6h" resname="tip">
         <source>tip</source>
-        <target>__tip</target>
+        <target>tip</target>
       </trans-unit>
       <trans-unit id="zk32HMI" resname="passthrough Url">
         <source>passthrough Url</source>
@@ -1335,7 +1335,7 @@
       </trans-unit>
       <trans-unit id="9wqYEej" resname="maximum number of people">
         <source>maximum number of people</source>
-        <target>__maximum number of people</target>
+        <target>maximaal aantal personen</target>
       </trans-unit>
       <trans-unit id="NZjOb5Z" resname="logo">
         <source>logo</source>
@@ -1364,6 +1364,34 @@
       <trans-unit id="xEuy.VF" resname="comment">
         <source>comment</source>
         <target>opmerking</target>
+      </trans-unit>
+      <trans-unit id="BCLULGi" resname="birthday">
+        <source>birthday</source>
+        <target>geboortedatum</target>
+      </trans-unit>
+      <trans-unit id="lenVeO8" resname="current password">
+        <source>current password</source>
+        <target>huidig wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="4FJQr4X" resname="repeat password">
+        <source>repeat password</source>
+        <target>herhaal wachtwoord</target>
+      </trans-unit>
+      <trans-unit id="rmgdyVm" resname="passwords dont match">
+        <source>passwords dont match</source>
+        <target>wachtwoorden komen niet overeen</target>
+      </trans-unit>
+      <trans-unit id="MX_4Wjg" resname="wrong password entered">
+        <source>wrong password entered</source>
+        <target>verkeerd wachtwoord ingevoerd</target>
+      </trans-unit>
+      <trans-unit id="9TIr25h" resname="wrong password entered, click &lt;a href=&quot;/chin/reset&quot;&gt;here&lt;/a&gt; to reset your password">
+        <source>wrong password entered, click &lt;a href="/chin/reset"&gt;here&lt;/a&gt; to reset your password</source>
+        <target><![CDATA[verkeerd wachtwoord ingevoerd, klik <a href="/chin/reset">hier</a> om uw wachtwoord te resetten]]></target>
+      </trans-unit>
+      <trans-unit id="ed6iu.Z" resname="personal info">
+        <source>personal info</source>
+        <target>mijn gegevens</target>
       </trans-unit>
     </body>
   </file>
