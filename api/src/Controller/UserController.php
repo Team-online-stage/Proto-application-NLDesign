@@ -346,4 +346,87 @@ class UserController extends AbstractController
 
         return $variables;
     }
+
+    /**
+     * @Route("/userinfo")
+     * @Template
+     */
+    public function userInfoAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $variables = [];
+
+        $variables['person'] = $commonGroundService->getResource($this->getUser()->getPerson());
+
+        if ($request->isMethod('POST') && $request->get('info')) {
+            $resource = $request->request->all();
+            $person = [];
+            $person['@id'] = $commonGroundService->cleanUrl(['component' => 'cc', 'type' => 'people', 'id' => $variables['person']['id']]);
+            $person['id'] = $variables['person']['id'];
+
+            if (isset($resource['firstName'])) {
+                $person['givenName'] = $resource['firstName'];
+            }
+            if (isset($resource['lastName'])) {
+                $person['familyName'] = $resource['lastName'];
+            }
+            if (isset($resource['birthday']) && $resource['birthday'] !== "") {
+                $person['birthday'] = $resource['birthday'];
+            }
+            if (isset($resource['email'])) {
+                $person['emails'][0]['email'] = $resource['email'];
+            }
+            if (isset($resource['telephone'])) {
+                $person['telephones'][0]['telephone'] = $resource['telephone'];
+            }
+            if (isset($resource['street'])) {
+                $person['adresses'][0]['street'] = $resource['street'];
+            }
+            if (isset($resource['houseNumber'])) {
+                $person['adresses'][0]['houseNumber'] = $resource['houseNumber'];
+            }
+            if (isset($resource['houseNumberSuffix'])) {
+                $person['adresses'][0]['houseNumberSuffix'] = $resource['houseNumberSuffix'];
+            }
+            if (isset($resource['postalCode'])) {
+                $person['adresses'][0]['postalCode'] = $resource['postalCode'];
+            }
+            if (isset($resource['locality'])) {
+                $person['adresses'][0]['locality'] = $resource['locality'];
+            }
+
+            $variables['person'] = $commonGroundService->saveResource($person, ['component' => 'cc', 'type' => 'people']);
+        } elseif ($request->isMethod('POST') && $request->get('password')) {
+            $newPassword = $request->get('newPassword');
+            $repeatPassword = $request->get('repeatPassword');
+
+            if ($newPassword !== $repeatPassword) {
+                $variables['error'] = true;
+                return $variables;
+            } else {
+                $credentials = [
+                    'username'   => $this->getUser()->getUsername(),
+                    'password'   => $request->request->get('currentPassword'),
+                    'csrf_token' => $request->request->get('_csrf_token'),
+                ];
+
+                $user = $commonGroundService->createResource($credentials, ['component'=>'uc', 'type'=>'login'], false, true, false, false);
+
+                if (!$user) {
+                    $variables['wrongPassword'] = true;
+                    return $variables;
+                }
+
+                $users = $commonGroundService->getResourceList(['component'=>'uc', 'type'=>'users'], ['username'=> $this->getUser()->getUsername()], true, false, true, false, false)['hydra:member'];
+                $user = $users[0];
+
+                $user['password'] = $newPassword;
+
+                $this->addFlash('success', 'wachtwoord aangepast');
+                $commonGroundService->updateResource($user);
+
+            }
+        }
+
+        return $variables;
+    }
 }
