@@ -11,6 +11,7 @@
 		"endroid/qr-code-bundle": "^3.4",
 		"phpdocumentor/reflection-docblock": "^4.3",
 		"phpoffice/phpword": "^0.17.0",
+		"sabberworm/php-css-parser": "^8.3",
 		"sensio/framework-extra-bundle": "^5.5",
 		"sensiolabs/security-checker": "^6.0",
 		"symfony/console": "4.3.*",
