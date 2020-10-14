@@ -71,25 +71,25 @@
     var calendarTBody = document.getElementById('calendarBody');
 
     var startHour = 0;
-    {% if property.configuration.startingHour is defined and property.configuration.startingHour is not empty %}
-    startHour = {{ property.configuration.startingHour }};
-    {% else %}
+{#    {% if property.configuration.startingHour is defined and property.configuration.startingHour is not empty %}#}
+{#    startHour = {{ date_interval(property.configuration.startingHour, '%h') }};#}
+{#    {% else %}#}
     startHour = 9;
-    {% endif %}
+{#    {% endif %}#}
 
     var endHour = 0;
-    {% if property.configuration.endingHour is defined and property.configuration.startingHour is not empty %}
-    endHour = {{ property.configuration.endingHour }};
-    {% else %}
+{#    {% if property.configuration.endingHour is defined and property.configuration.startingHour is not empty %}#}
+{#    endHour = {{ date_interval(property.configuration.endingHour, '%h') }};#}
+{#    {% else %}#}
     endHour = 17;
-    {% endif %}
+{#    {% endif %}#}
 
     var optionDuration = 0;
-    {% if property.configuration.optionDuration is defined and property.configuration.optionDuration is not empty %}
-    optionDuration = {{ property.configuration.optionDuration }};
-    {% else %}
+{#    {% if property.configuration.optionDuration is defined and property.configuration.optionDuration is not empty %}#}
+{#    optionDuration = {{ date_interval(property.configuration.optionDuration, '%h') }};#}
+{#    {% else %}#}
     optionDuration = 2;
-    {% endif %}
+{#    {% endif %}#}
 
 
 
