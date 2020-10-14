@@ -24,6 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 
+
 /**
  * The Procces test handles any calls that have not been picked up by another test, and wel try to handle the slug based against the wrc.
  *
@@ -103,6 +104,24 @@ class ChinController extends AbstractController
         $variables['organization'] = $commonGroundService->getResource($this->getUser()->getOrganization());
         $variables['accommodations'] = $commonGroundService->getResourceList(['component' => 'lc', 'type' => 'accommodations'], ['place.organization' => $variables['organization']['id']])['hydra:member'];
         $variables['nodes'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['organization' => $variables['organization']['id']])['hydra:member'];
+
+        //set rgb values to hex and place them in temp property
+        foreach ($variables['nodes'] as &$node) {
+            if (isset($node['qrConfig'])) {
+
+                if (isset($node['qrConfig']['foreground_color'])) {
+                    $colors = $node['qrConfig']['foreground_color'];
+                    $node['foregroundColor'] = sprintf("#%02x%02x%02x", $colors['r'], $colors['g'], $colors['b']);
+
+                }
+
+                if (isset($node['qrConfig']['background_color'])) {
+                    $colors = $node['qrConfig']['background_color'];
+                    $node['backgroundColor'] = sprintf("#%02x%02x%02x", $colors['r'], $colors['g'], $colors['b']);
+
+                }
+            }
+        }
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
