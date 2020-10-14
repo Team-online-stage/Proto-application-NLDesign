@@ -75,13 +75,13 @@
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.chin.node.write' in app.user.roles %}
-            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_nodesorganization' %}sidenav__item--active{% endif %}">
-                <a href="{{ path('app_chin_nodesorganization') }}">{{ 'codes'|trans|capitalize }}</a>
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_nodes' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_nodes') }}">{{ 'codes'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.lc.place.write' in app.user.roles %}
-            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_lc_organization' %}sidenav__item--active{% endif %}">
-                <a href="{{ path('app_lc_organization') }}">{{ 'places'|trans|capitalize }}</a>
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_lc_places' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_lc_places') }}">{{ 'places'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.chin.checkinstatistics.write' in app.user.roles %}
@@ -95,8 +95,8 @@
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.wrc.organization.write' in app.user.roles %}
-            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_wrc_organization' %}sidenav__item--active{% endif %}">
-                <a href="{{ path('app_wrc_organization') }}">{{ 'organization'|trans|capitalize }}</a>
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_checkinorganization' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_checkinorganization') }}">{{ 'organization'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.wrc.organization.write' in app.user.roles %}

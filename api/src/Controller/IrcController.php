@@ -7,6 +7,7 @@ namespace App\Controller;
 //use App\Command\PubliccodeCommand;
 use App\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,6 +75,7 @@ class IrcController extends AbstractController
 
     /**
      * @Route("/assents")
+     * @Security("is_granted('ROLE_scope.irc.assent.write')")
      * @Template
      */
     public function assentsAction(CommonGroundService $commonGroundService, ApplicationService $applicationService, Request $request)
