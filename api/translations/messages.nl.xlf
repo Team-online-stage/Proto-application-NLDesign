@@ -1393,6 +1393,14 @@
         <source>personal info</source>
         <target>mijn gegevens</target>
       </trans-unit>
+      <trans-unit id="nvoHfwR" resname="reservation">
+        <source>reservation</source>
+        <target>reservering</target>
+      </trans-unit>
+      <trans-unit id="_aGS1MV" resname="your reservation has been cancelled">
+        <source>your reservation has been cancelled</source>
+        <target>uw reservering is geannuleerd</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

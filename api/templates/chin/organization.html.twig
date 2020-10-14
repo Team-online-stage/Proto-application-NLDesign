@@ -213,8 +213,11 @@
                                             <label
                                                 for="huidigeBase64">{{ 'current Logo'|trans|capitalize }}</label>
                                             <br>
-                                            <img style="width: 100px" id="huidigeBase64" src="{{ favicon.base64 }}"
-                                                 alt="Image"/>
+                                            <div style="padding: 20px; background-color: lightgrey">
+                                                <img style="width: 150px" id="huidigeBase64" src="{{ favicon.base64 }}"
+                                                     alt="Image"/>
+                                            </div>
+
                                         </div>  <!-- /.col -->
                                     {% endif %}
                                 </div> <!-- /.row -->
