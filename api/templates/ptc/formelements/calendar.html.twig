@@ -36,7 +36,6 @@
     }
 </style>
 <table class="table table--small-font">
-    {{ dump(request.properties[property.name]) }}
     <thead>
     <tr>
         <th><select id="weekSelect" onchange="weekSelector(this)" class="calendarSelect">
@@ -58,30 +57,6 @@
     </tr>
     </thead>
     <tbody id="calendarBody">
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>09:00 - 10:00</th>#}
-    {#    </tr>#}
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>10:00 - 11:00</th>#}
-    {#    </tr>#}
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>11:00 - 12:00</th>#}
-    {#    </tr>#}
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>12:00 - 13:00</th>#}
-    {#    </tr>#}
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>13:00 - 14:00</th>#}
-    {#    </tr>#}
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>14:00 - 15:00</th>#}
-    {#    </tr>#}
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>15:00 - 16:00</th>#}
-    {#    </tr>#}
-    {#    <tr style="height: 60px;" class="days">#}
-    {#        <th>16:00 - 17:00</th>#}
-    {#    </tr>#}
     </tbody>
 </table>
 
@@ -158,9 +133,12 @@
 
 
     let startTimeInMs = 0;
+    var optionAlreadySelected = false;
+
     console.log('----- Defined log');
     console.log(startTimeInMs);
     console.log('----- ');
+
     let today = new Date();
     let currentYear = today.getFullYear();
     let currentWeek = today.getWeek();
@@ -248,10 +226,10 @@
             var abc = new Date(timeOfThisDay);
             var abc2 = new Date(timeOfThisDay);
             for (let j = 0; j < buttons.length; j++) {
-                var optionStartDate = new Date(abc).addHours(j + 2);
+                var optionStartDate = new Date(abc).addHours(j * optionDuration);
                 var optionYear = new Date(optionStartDate);
                 optionYear = optionYear.getFullYear();
-                var optionEndDate = new Date(abc2).addHours(j + 1 + 2);
+                var optionEndDate = new Date(abc2).addHours(j * optionDuration + optionDuration);
                 var optionStartDateMs = optionStartDate.getTime();
                 var optionEndDateMs = optionEndDate.getTime();
                 buttons[j].name = date.getDate() + ' ' + months[date.getMonth()] + ' ' + optionYear;
@@ -270,7 +248,7 @@
                 let pickedEventEndDate = 0;
 
                 // console.log('----- Button');
-                // consoleStartDate.log(optionStartDate);
+                // console.log(optionStartDate);
                 // console.log('----- selected time during if check');
                 // console.log(startTimeInMs);
                 // console.log('----- option value log');
@@ -285,22 +263,25 @@
                 //     console.log(startTimeInMs);
                 //     console.log('-----');
                 // }
+
                 if (startTimeInMs >= optionStartDateMs && startTimeInMs < optionEndDateMs) {
                     selectDate(buttons[j].value, buttons[j].name, buttons[j]);
                 }
+
                 {% for calendar in calendars %}
                 {% for event in calendar.events %}
-                eventStartDate = {{ event.startDate|date("U", false) }};
-                eventEndDate = {{ event.endDate|date("U", false) }};
+                eventStartDate = {{ event.startDate|date("U", "Europe/Paris") }};
+                eventEndDate = {{ event.endDate|date("U", "Europe/Paris") }};
                 eventStartDate = eventStartDate * 1000;
                 eventEndDate = eventEndDate * 1000;
                 {% if request.properties[property.name] is defined and request.properties[property.name] is not empty %}
-                pickedEventStartDate = {{ request.properties.datum|date("U", false) }};
+                pickedEventStartDate = {{ request.properties.datum|date("U", "Europe/Paris") }};
                 pickedEventStartDate = pickedEventStartDate * 1000;
-                // console.log(pickedEventStartDate);
+                console.log('------ Gekozen tijdstip vanuit verzoek');
+                console.log(pickedEventStartDate);
+                console.log('------');
                 if (pickedEventStartDate === optionStartDateMs) {
                     selectDate(buttons[j].value, buttons[j].name, buttons[j]);
-                    button[j].style.background = "limegreen";
                 }
                 {% endif %}
                 // console.log("----- Knop " + j + " Dag " + i);
@@ -376,25 +357,31 @@
                 date2[0] = date2[0].toString();
             }
 
-            let startDate = date2[2] + '-' + month + '-' + date2[0] + ' ' + time[0] + ':00';
+            let startDate = date2[2] + '-' + month + '-' + date2[0] + ' ' + time[0] + ':00 ';
 
             let hiddenInput = document.getElementById('calendarValue');
 
-            hiddenInput.value = startDate;
+            hiddenInput.value = startDate + 'Europe/Amsterdam';
+
+            // console.log(startDate);
 
             let startDateAsDate = new Date();
 
-            startTimeInMs = startDateAsDate.getTime();
             // console.log('----- selected time after select before');
             // console.log(startTimeInMs);
             // console.log('-----');
 
-            startDateAsDate = new Date(startDate).addHours(2);
+            startDateAsDate = new Date(startDate);
+            // console.log('----- startdateasdate after selecting');
+            // console.log(startDateAsDate);
+            // console.log('-----');
+
             startTimeInMs = startDateAsDate.getTime();
             //
             // console.log('----- selected time after select after');
             // console.log(startTimeInMs);
             // console.log('-----');
+            optionAlreadySelected = true;
         }
     }
 
