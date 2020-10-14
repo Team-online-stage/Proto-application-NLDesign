@@ -369,7 +369,7 @@ class UserController extends AbstractController
             if (isset($resource['lastName'])) {
                 $person['familyName'] = $resource['lastName'];
             }
-            if (isset($resource['birthday']) && $resource['birthday'] !== "") {
+            if (isset($resource['birthday']) && $resource['birthday'] !== '') {
                 $person['birthday'] = $resource['birthday'];
             }
             if (isset($resource['email'])) {
@@ -401,6 +401,7 @@ class UserController extends AbstractController
 
             if ($newPassword !== $repeatPassword) {
                 $variables['error'] = true;
+
                 return $variables;
             } else {
                 $credentials = [
@@ -413,6 +414,7 @@ class UserController extends AbstractController
 
                 if (!$user) {
                     $variables['wrongPassword'] = true;
+
                     return $variables;
                 }
 
@@ -438,7 +440,6 @@ class UserController extends AbstractController
                 $message['sender'] = 'no-reply@conduction.nl';
 
                 $commonGroundService->createResource($message, ['component'=>'bs', 'type'=>'messages']);
-
             }
         }
 
