@@ -293,7 +293,6 @@ class ChrcController extends AbstractController
         // Lets find an appoptiate slug
         $variables['resource'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'proposals', 'id' => $id]);
 
-
         // Lets see if there is a post to procces
         /*
         if ($request->isMethod('POST')) {
@@ -305,7 +304,7 @@ class ChrcController extends AbstractController
         }
         */
 
-       return $variables;
+        return $variables;
     }
 
     /**
