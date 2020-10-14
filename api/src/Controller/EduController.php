@@ -298,7 +298,7 @@ class EduController extends AbstractController
 
         $user = $this->getUser();
         if($user && $person = $user->getPerson()){
-            $variables['participants'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], ['person'=> $person, "courses.id" => $variables['activity']['cource']['id']])['hydra:member'];
+            $variables['participants'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], ['person'=> $person, "courses.id" => $variables['activity']['course']['id']])['hydra:member'];
             // Dit is hacky
             $variables['participant'] =  $variables['participants'][0];
             $variables['results'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'results'], ['participant.id'=> $variables['participant']['id'], "activity.id" => $id])['hydra:member'];
