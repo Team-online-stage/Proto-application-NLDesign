@@ -1328,7 +1328,6 @@ class ChinController extends AbstractController
         $variables['code'] = $code;
 
         if ($request->isMethod('POST')) {
-
             $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
             $user = $user[0];
 
@@ -1349,7 +1348,6 @@ class ChinController extends AbstractController
 
             $variables['subscribed'] = true;
         }
-
 
         return $variables;
     }
