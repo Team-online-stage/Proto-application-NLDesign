@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block container %}
+
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+    <style>
+        .backlink{
+            background-color: #263846;
+            color: white;
+        }
+        .backlink:hover{
+            opacity: 9;
+            color: white;
+        }
+        .title{
+            color: black;
+            font-size: 30px;
+            font-family: 'Lobster', cursive;
+        }
+        .textcontent{
+            color: black;
+        }
+        .content__header{
+            background-color: #263846;
+            color: white;
+        }
+
+        .content{
+            background-color: white;
+        }
+
+        .row{
+            background-color: white;
+        }
+        .col-md-6{
+            background-color: white;
+        }
+    </style>
+
+    <header class="content__header">
+        <a class="backlink" href="/edu/organizations">Organisaties</a>
+    </header>
+    <div class="row">
+        <div class="col-sm-12 col-lg-8">
+            <div class="content-background">
+                <div class="content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="title">Over organisaties</div>
+                            <p><div class="textcontent"> {{ resource.description|capitalize }}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="https://picsum.photos/350/250" alt="tender" width="100%">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

@@ -9,6 +9,8 @@ use Conduction\CommonGroundBundle\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\Settings;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -27,6 +29,7 @@ class VrcController extends AbstractController
 {
     /**
      * @Route("/user")
+     * @Security("is_granted(ROLE_user)")
      * @Template
      */
     public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -39,6 +42,7 @@ class VrcController extends AbstractController
 
     /**
      * @Route("/organisation")
+     * @Security("is_granted('ROLE_group.admin') or is_granted('ROLE_group.organization_admin')")
      * @Template
      */
     public function organisationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -51,6 +55,7 @@ class VrcController extends AbstractController
 
     /**
      * @Route("/")
+     * @Security("is_granted(ROLE_user)")
      * @Template
      */
     public function indexAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -65,7 +70,7 @@ class VrcController extends AbstractController
 
     /**
      * @Route("/download/{id}/{requestId}")
-     * @Template
+     * @Security("is_granted('ROLE_user')")
      */
     public function DownloadAction(Request $request, CommonGroundService $commonGroundService, $id, $requestId)
     {
@@ -87,6 +92,27 @@ class VrcController extends AbstractController
                 flush();
                 readfile($filename);
                 unlink($filename); // deletes the temporary file
+                exit;
+            case 'pdf':
+                $phpWord = new PhpWord();
+                $section = $phpWord->addSection();
+                \PhpOffice\PhpWord\Shared\Html::addHtml($section, $render['content']);
+                $objWriter = IOFactory::createWriter($phpWord, 'Word2007');
+                $filenameDocx = dirname(__FILE__, 3)."/var/{$document['name']}.docx";
+                $objWriter->save($filenameDocx);
+                $phpWord = \PhpOffice\PhpWord\IOFactory::load($filenameDocx);
+                $rendererName = Settings::PDF_RENDERER_DOMPDF;
+                $rendererLibraryPath = realpath('../vendor/dompdf/dompdf');
+                Settings::setPdfRenderer($rendererName, $rendererLibraryPath);
+                $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'PDF');
+                $filename = dirname(__FILE__, 3)."/var/{$document['name']}.pdf";
+                $xmlWriter->save($filename);
+                header('Content-Disposition: attachment; filename='.$document['name'].'.pdf');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                flush();
+                readfile($filename);
+                unlink($filename); // deletes the temporary file
+                unlink($filenameDocx); // deletes the temporary file
                 exit;
         }
     }

@@ -1,0 +1,141 @@
+{% extends 'content.html.twig' %}
+
+{% block content %}
+
+
+    {#    {% if app.user is null %}#}
+
+    {#    <div class="notification notification--error">#}
+    {#        <div class="notification__content">#}
+    {#            <div class="notification__type">ERROR</div>#}
+    {#            <h2 class="notification__title">{{ 'u must be logged in to visit this page'|trans|capitalize }}</h2>#}
+    {#        </div>#}
+    {#    </div>#}
+
+    {#{% else %}#}
+
+    <style>
+        .custom-ul {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .custom-li {
+            min-height: 50px;
+            border: 1px solid lightgrey;
+            padding: 15px;
+        }
+
+        .custom-li-name {
+            font-size: 30px;
+            font-weight: bold;
+            display: block;
+        }
+
+        .custom-li-head {
+            width: 48%;
+            display: inline-block;
+        }
+
+        .custom-li-price {
+            text-align: center;
+            display: inline-block;
+            width: 25%;
+        }
+
+        .quantity-buttons {
+            display: inline-block;
+            text-align: right;
+            float: right;
+            width: 25%;
+        }
+    </style>
+
+    <div class="content-background">
+        <div class="content">
+
+            <div>
+                <h1 style="display: inline-block">{{ 'your order'|trans|capitalize }}</h1>
+            </div>
+
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th scope="col">{{ 'name'|trans|capitalize }}</th>
+                    <th style="text-align: center;" scope="col">{{ 'price'|trans|capitalize }}</th>
+                    <th style="text-align: center;" scope="col">{{ 'quantity'|trans|capitalize }}</th>
+                    <th scope="col"></th>
+                    <th scope="col"></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if order is defined and order is not empty
+                    and orderItems is defined and orderItems is not empty %}
+                {% for item in orderItems %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td style="text-align: center;" >&euro; {{ item.price }},-</td>
+                        <td style="text-align: center;" >{{ item.quantity }}</td>
+                        <td><a href="{{ path('app_orc_subscription', {id: item.offer|split('/')|last}) }}"><b>VIEW</b></a></td>
+                        <td>
+                            <button style="background: none;border: none" value="deleteItem"><i style="color: red" class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <form action="{{ path('app_orc_order') }}" method="post">
+                {% set i = 0 %}
+                {% for item in orderItems %}
+                    {% set i = i + 1 %}
+                    <input type="hidden" id="item{{ i }}" name="items[{{ i }}][quantity]" value="">
+                {% endfor %}
+
+                <button type="submit" class="btn btn-block" name="make-order"
+                        value="true">{{ 'pay'|trans|capitalize }}</button>
+            </form>
+
+
+            {% else %}
+
+                <h3>Something went wrong</h3>
+
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+
+        {% set i = 0 %}
+        {% for item in orderItems %}
+        {% set i = i + 1 %}
+        document.getElementById('decQuan{{ i }}').onclick = function () {
+            var quan = parseInt(document.getElementById('quan{{ i }}').innerText, 10);
+            quan = isNaN(quan) ? 0 : quan;
+            if (quan <= 0) {
+                quan = 0;
+            } else {
+                quan--;
+            }
+            document.getElementById('quan{{ i }}').innerText = quan;
+            document.getElementById('item{{ i }}').value = quan;
+        }
+        document.getElementById('incQuan{{ i }}').onclick = function () {
+            var quan = parseInt(document.getElementById('quan{{ i }}').innerText, 10);
+            if (quan >= 99) {
+                quan = 99;
+            } else {
+                quan++;
+            }
+            document.getElementById('quan{{ i }}').innerText = quan;
+            document.getElementById('item{{ i }}').value = quan;
+        }
+        {% endfor %}
+
+    </script>
+
+    {#{% endif %}#}
+
+{% endblock %}

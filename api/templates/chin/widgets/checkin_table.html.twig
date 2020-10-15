@@ -1,3 +1,14 @@
+<style>
+    .checkinFont {
+        color: #01689b;
+    }
+
+    .background {
+        background-color: white;
+        background-image: none;
+    }
+</style>
+
 <div class="content-background" >
     <div class="content">
         <h2>{{ 'check-ins'|capitalize }}</h2>
@@ -5,22 +16,19 @@
         <table class="table table-hover">
             <thead>
             <tr>
-                <th scope="col">{{ 'organization'|trans|capitalize }}</th>
-                <th scope="col">{{ 'place'|trans|capitalize }}</th>
+                <th scope="col">{{ 'location'|trans|capitalize }}</th>
+                <th scope="col">{{ 'accommodation'|trans|capitalize }}</th>
                 <th scope="col">{{ 'check-in date'|trans|capitalize }}</th>
                 <th scope="col">{{ 'deletion date'|trans|capitalize }}</th>
-
-                <th scope="col"></th>
             </tr>
             </thead>
             <tbody>
             {% for checkin in checkins %}
             <tr>
                 <td>{{ commonground_resource(checkin.node.organization).name|capitalize }}</td>
-                <td>{{ commonground_resource(checkin.node.place).name|capitalize }}</td>
+                <td>{{ commonground_resource(checkin.node.accommodation).name|capitalize }}</td>
                 <td>{{ checkin.dateCreated|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
                 <td>{{ checkin.dateToDestroy|date("H:i d-m-Y", "Europe/Amsterdam") }}</td>
-                <td> <a data-toggle="modal" data-target="#checkin-{{ checkin.id }}" onclick="openModal{{ checkin.id|replace({'-': ''}) }}()">{{ 'view'|trans|capitalize }}</a></td>
             </tr>
             {% endfor %}
             </tbody>

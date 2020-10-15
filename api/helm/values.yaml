@@ -4,29 +4,33 @@
 
 settings:
   registryBase: docker.io/conduction
-  projectName: db
-  name: db
-  title: CommonGround DashBoard
-  version: V.0.1
-  id: 1ef30b69-6b28-4fbd-a0cd-83d6ff3c505e
-  description: '&quot;Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.&quot;'
+  projectName: pan
+  name: pan
+  title: Proto Applicatie NL Design
+  version: V1.0
+  majorVersion: v1
+  id: 5265828b-85fb-4ad5-acd5-ade4da3fc593
+  description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: application
-  repro: https://github.com/ConductionNL/Commonground-dashboard
-  demo: https://db.huwelijksplanner.online
+  repro: https://github.com/ConductionNL/pan
+  demo: www.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
   domain: zuid-drecht.nl
-  subdomain: db
+  subdomain: false
+  subpath: 
+  subpathRouting: true
   organisationName: Conduction
-  email: info@westfriesland.commonground.nu
+  email: info@conduction.nl
   country: Netherlands
   state: Noord-Holland
   locality: Amsterdam
   unit: Common-Ground
   env: dev
-  web: 
-  internal: 
+  web: false
+  internal: false
   debug: 1
   cache: 1
+  sessionDuration: 900
   replicaCount: 1
   corsAllowOrigin: ['*']
   trustedHosts: '^.+$'
@@ -48,12 +52,12 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "31a2ad29-ee03-4aa9-be81-abf1fda7bbcc"
+  commongroundId: "5265828b-85fb-4ad5-acd5-ade4da3fc593"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.huwelijksplanner.online
-  authorisationProviderApplication: https://uc.huwelijksplanner.online
+  authorisationProviderUser: https://uc.zuid-drecht.nl
+  authorisationProviderApplication: https://openzaak.dev.zuid-drecht.nl/authorizaties/api/v1
 
 
 php:
@@ -145,3 +149,9 @@ resources: {}
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+commonground:
+    eherkenning:
+        location: https://zuid-drecht.nl/eherkenning
+    digispoof:
+        location: https://zuid-drecht.nl/digispoof

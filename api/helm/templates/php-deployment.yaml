@@ -185,6 +185,16 @@ spec:
                     configMapKeyRef:
                         name: {{ template "fullname" . }}
                         key: app-internal
+            -   name: APP_SESSION_DURATION
+                valueFrom:
+                    configMapKeyRef:
+                        name: {{ template "fullname" . }}
+                        key: app-session-duration
+            - name: APP_SUBPATH_ROUTING
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ template "fullname" . }}
+                  key: app-subpath-routing
             
             # bla bla      
             - name: CORS_ALLOW_ORIGIN
@@ -251,6 +261,18 @@ spec:
                 configMapKeyRef:
                   name: {{ template "fullname" . }}
                   key: redis-port
+                  
+          #URLs
+            - name: APP_DIGISPOOF_LOCATION
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: digispoof-location
+            - name: APP_EHERKENNING_LOCATION
+              valueFrom:
+                  configMapKeyRef:
+                      name: {{ template "fullname" . }}
+                      key: eherkenning-location
           resources:
 {{ toYaml .Values.resources | indent 12 }}
     {{- if .Values.nodeSelector }}

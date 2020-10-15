@@ -1,0 +1,198 @@
+{% extends "content.html.twig" %}
+
+{% block content %}
+
+    <section class="row">
+        <div class="col-md-12">
+            <div class="content">
+                <header class="content__header">
+                    <a class="backlink" href="{{ path('app_irc_assents') }}">Instemmingen</a>
+                    <header class="content__header">
+                        <h1 class="content__header-title">{{ assent.name }}</h1>
+                    </header>
+                </header>
+            </div><!-- ./content -->
+        </div><!-- ./col -->
+    </section>
+
+    {% if app.user is null %}
+
+        <div class="notification notification--info">
+            <div class="notification__content">
+                <div class="notification__type">{{ 'for information'|trans|capitalize }}</div>
+                <h2 class="notification__title">{{ "you can not give your consent when not logged in"|trans|capitalize }}.</h2>
+            </div>
+        </div>
+
+    {% endif %}
+
+    <div class="row" style="margin-bottom: 20px">
+        <div class="col-md-8">
+
+            <div class="content-background">
+                <div class="content">
+                    <p>{{ assent.description }}</p>
+                    <p>Als u dit verzoek wilt accepteren, klik dan op de groene knop 'Instemmen' onderaan dit
+                        formulier. Als u het om wat voor reden dan ook dit verzoek niet wilt accepteren, klik dan op
+                        'Afwijzen'.</p>
+                    <p>Nadat u uw keuze heeft gemaakt kunt u dit venster sluiten.</p>
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+
+
+            {% if app.user is not null and assent.status is empty or app.user is not null and assent.person == user.burgerservicenummer %}
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+            <h2>Gegevens van dit verzoek:</h2>
+            <div class="content-background">
+                <div class="content">
+
+
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Status
+                            </div>
+                            <div class="definition-list__description">
+                                {% if status is defined and status is not empty %}
+                                    <p>{{ assent.status|trans|capitalize }}</p>
+                                {% else %}
+                                    <p>{{ 'pending'|trans|capitalize }}</p>
+                                {% endif %}
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                BSN Nummer
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ assent.person }}</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Naam aanvrager
+                            </div>
+                            <div class="definition-list__description">
+                                {% if requester is defined and requester is not empty %}
+                                    <p>{{ requester.name }}</p>
+                                {% endif %}
+                            </div>
+                        </li>
+                    </ul>
+                </div><!-- /.content -->
+            </div><!-- /.content-background -->
+
+            <!-- Page Break -->
+            <div style="height: 20px"></div>
+
+            {% if user is defined and user is not null %}
+                {% if assent.status == 'declined' %}
+                    U kunt dit verzoek niet meer accepteren of afwijzen omdat u het verzoek reeds afgewezen hebt
+
+                {% elseif assent.status == 'cancelled' %}
+                    U kunt dit verzoek niet meer accepteren of wijzigen omdat de aanvrager het verzoek heeft geannuleerd.
+                {% elseif assent.status == 'granted' %}
+                    <div class="row">
+                        <form method="post" action="#">
+                            <div class="col-md-6">
+                                <button class="btn btn--primary btn--block" name="status" value="declined">
+                                    Instemming intrekken
+                                </button>
+                            </div><!-- /.col -->
+                        </form>
+                    </div><!-- /.row -->
+                {% else %}
+                    <div class="row">
+                        <form method="post" action="#">
+                            <div class="col-md-6">
+                                <button class="btn btn--block" name="status" value="granted">Instemmen</button>
+                            </div><!-- /.col -->
+
+                            <div class="col-md-6">
+                                <button class="btn btn--primary btn--block" name="status" value="declined">
+                                    Afwijzen
+                                </button>
+                            </div><!-- /.col -->
+                        </form>
+                    </div><!-- /.row -->
+                {% endif %}
+            {% else %}
+                U kunt niet instemmen of afwijzen omdat u nog niet bent ingelogd
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="https://ds.huwelijksplanner.online/?responceUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}"
+                           class="btn btn--block">Log in</a>
+                    </div><!-- /.col -->
+                </div>
+            {% endif %}
+        </div><!-- /.col -->
+
+        <div class="col-md-4">
+            <div class="content-background">
+
+                <div class="content">
+                    <h2>Uw gegevens</h2>
+                    <ul class="definition-list">
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Voornamen
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ user.naam.voornamen }}</p>
+                            </div>
+                        </li>
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Achternaam
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ user.naam.geslachtsnaam }}</p>
+                            </div>
+                        </li>
+                        {% if user.naam.voorvoegsel is not empty %}
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Voorvoegsel
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.naam.voorvoegsel }}</p>
+                                </div>
+                            </li>
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Leeftijd
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.leeftijd }}</p>
+                                </div>
+                            </li>
+                            <li class="definition-list__item definition-list__item--horizontal">
+                                <div class="definition-list__title">
+                                    Geslacht
+                                </div>
+                                <div class="definition-list__description">
+                                    <p>{{ user.geslachtsaanduiding }}</p>
+                                </div>
+                            </li>
+                        {% endif %}
+                        <li class="definition-list__item definition-list__item--horizontal">
+                            <div class="definition-list__title">
+                                Adres
+                            </div>
+                            <div class="definition-list__description">
+                                <p>{{ user.verblijfplaats.straatnaam }} {{ user.verblijfplaats.huisnummer }}{{ user.verblijfplaats.huisletter }}{{ user.verblijfplaats.huisnummertoevoeging }}
+                                    <br>{{ user.verblijfplaats.postcode }} {{ user.verblijfplaats.woonplaatsnaam }}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div><!-- /.col -->
+        {% endif %}
+    </div><!-- /.col -->
+
+{% endblock %}

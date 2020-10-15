@@ -8,6 +8,7 @@
 		"api-platform/api-pack": "^1.1",
 		"conduction/commongroundbundle": "dev-master",
 		"dompdf/dompdf": "^0.8.5",
+		"endroid/qr-code-bundle": "^3.4",
 		"phpdocumentor/reflection-docblock": "^4.3",
 		"phpoffice/phpword": "^0.17.0",
 		"sensio/framework-extra-bundle": "^5.5",
@@ -20,6 +21,7 @@
 		"symfony/property-access": "4.4.*",
 		"symfony/yaml": "4.3.*",
 		"tbbc/money-bundle": "^3.1",
+		"web-token/jwt-framework": "^2.2",
 		"webonyx/graphql-php": "^0.13.8"
 	},
 	"require-dev" : {

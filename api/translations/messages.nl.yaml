@@ -19,3 +19,12 @@ calendar: agenda
 orderitem: product bij bestelling
 givenname: voornaam
 value is empty: nog geen waarde opgegeven
+given names: voornamen
+family name: geslachtsnaam
+social service number: burgerservicenummer
+placename: woonplaats
+location: locatie
+date of birth: geboortedatum
+place of birth: geboorteplaats
+account settings: account gegevens
+internships: stages

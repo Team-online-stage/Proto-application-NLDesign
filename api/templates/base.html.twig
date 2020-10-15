@@ -19,11 +19,11 @@
             gtag('config', '{{ application['defaultConfiguration']['configuration']['googleTagId'] }}');
         </script>
     {% endif %}
-    {% if app.user is defined and app.user is not empty %}
+    {% if app.user is defined and app.user is not empty and app_session_duration is defined and app_session_duration is not empty %}
         <script>
-            setTimeout(function(){
-                window.location.href = '/login';
-            }, 910000);
+            setTimeout(function () {
+                window.location.href = '/login/loggedOut';
+            }, {{ (app_session_duration * 1000) + 5000 }});
         </script>
     {% endif %}
 
@@ -36,7 +36,7 @@
             {% endif %}
             {{ application['name'] }}{% else %} Applicatie{% endif %}</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     {% if application['style']['favicon']['base64'] is defined and application['style']['favicon']['base64'] is not empty %}
         <link rel="icon" href="{{ application['style']['favicon']['base64']|raw }}">
@@ -61,7 +61,7 @@
     <link rel="stylesheet" href="/uno/components/navigation/navigation.css">
     <link rel="stylesheet" href="/uno/components/donut-chart/donut-chart.css">
     <link rel="stylesheet" href="/uno/components/spinner/spinner.css">
-    <link rel="stylesheet" href="/uno/components/memo/memo.css">
+    <!--<link rel="stylesheet" href="/uno/components/memo/memo.css">-->
     <link rel="stylesheet" href="/uno/components/modal/modal.css">
     <link rel="stylesheet" href="/uno/components/tooltip/tooltip.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -100,9 +100,12 @@
     <link rel="stylesheet" href="/uno/components/table/table.css">
 
     {#  Image Slider  #}
-    <link rel="stylesheet" type="text/css" href="slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
     {# Add the new slick-theme.css if you want the default styling #}
-    <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="/slick/slick-theme.css"/>
+
+    <!-- Default GEM widget styling -->
+    <link rel="stylesheet" href="https://www.develop.virtuele-gemeente-assistent.nl/static/css/widget-v0.11.7.css" type="text/css">
 
     <script src="/uno/vendor/js/Promise.min.js"></script>
     <script src="/uno/vendor/js/system.js"></script>
@@ -115,19 +118,15 @@
         crossorigin="anonymous"></script>
 
     <script src="https://kit.fontawesome.com/be1c31fb58.js" crossorigin="anonymous"></script>
-    <script src="/uno/components/memo/memo.js"></script>
+    <!--<script src="/uno/components/memo/memo.js"></script>-->
     <script src="/uno/components/tooltip/tooltip.js"></script>
-
-
-    {#  QR scanner      #}
-    <script src="/html5-qrcode/minified/html5-qrcode.min.js"></script>
-    <script src="https://raw.githubusercontent.com/mebjas/html5-qrcode/master/minified/html5-qrcode.min.js"></script>
 
     {#  Google fonts     #}
     <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 
+
     {#  Slick image slider  #}
-    <script type="text/javascript" src="slick/slick.min.js"></script>
+    <script type="text/javascript" src="/slick/slick.min.js"></script>
 
     <script>
         System.config({
@@ -139,6 +138,8 @@
         });
     </script>
 
+    {#  QR Code  #}
+    <script src="/js/html5-qrcode.min.js"></script>
 
     <style>
         /* deafult values for root variables */
@@ -160,23 +161,6 @@
 
         /* general overwrites and addons to nl-design system */
 
-        .nav--left {
-            margin-left: 0px;
-        }
-
-        .btn--block {
-            width: 100%;
-        }
-
-        .nav__item {
-            display: inline;
-            float: left;
-        }
-
-        .nav--right {
-            float: right;
-        }
-
         .nav--input {
             margin-top: 10px;
             margin-bottom: 10px !important;
@@ -185,6 +169,32 @@
         .nav--input__control-group {
             width: 200px;
         }
+
+        {# Navigation position control #}
+        .nav-position {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            order: 2;
+        }
+
+        .nav-image {
+            order: 1;
+        }
+
+        @media only screen and (max-width: 550px) {
+            .nav-position {
+                width: fit-content;
+                display: flex;
+                justify-content: flex-start;
+                order: 1;
+            }
+
+            .nav-image {
+                order: 2;
+            }
+        }
+
 
         .header-logo a:before {
             background: url("data:image/svg+xml;base64,PHN2ZyBpZD0iw5HDq8Ouw6lfMSIgZGF0YS1uYW1lPSLDkcOrw67DqSAxIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5MzkuNTcgMTA5OC44OSI+PGRlZnM+PHN0eWxlPi5jbHMtMXtmaWxsOiNjMDA7fS5jbHMtMntmaWxsOiMzNjY5YTU7fTwvc3R5bGU+PC9kZWZzPjx0aXRsZT56dWlkIERyZWNodCBOb3BheW9mZjwvdGl0bGU+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTc2LDk2Ny4xMWMtNTYsNDEuMzktMTAxLjQzLDY2LjA1LTExMSw3MS4xMWE0LDQsMCwwLDEtMy43MiwwYy0yNS41Ny0xMy41LTMwNy40OC0xNjctMzYxLjM3LTQwNmE0LDQsMCwwLDEsNy4zOC0yLjgxYzM4LjU0LDY4LjkzLDEyNS4zNywxMTkuMjYsMTg3LjUxLDE1Mi42OSw1Mi41LDI4LjIzLDExMy42Miw1MC4yMSwxNjguMzQsODAuMzZDNTA4LjIyLDg4Ny4yOSw1NDksOTE3LjY5LDU3Nyw5NjEuNzVBNCw0LDAsMCwxLDU3Niw5NjcuMTFaIi8+PHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODM0LjcxLDIxNS44NFYxMDEuNjVhOC45LDguOSwwLDAsMC04LjktOC45MWgtMjczQTE0LjU5LDE0LjU5LDAsMCwwLDUzOS40MywxMDNsLTE5LDcwLjI4YTE0LjU4LDE0LjU4LDAsMCwxLTEzLjM1LDEwLjIxSDM4M1YxNDcuMTJjMzYuODQtMS4zNCw2Mi40Mi03LjQ1LDgwLjE2LTE1LjEsMjkuNDktMTIuNzQsMzcuMzUtMjkuNzgsMzkuMzYtMzYuNDRhMi4yMiwyLjIyLDAsMCwwLTIuMTMtMi44NEgzMzQuNjFjLTMzLjg4LDAtNjcuOTEsOS4yLTg2LjA4LDQwLjEtMTkuMzgsMzIuOTQtMTguMjQsNzguMDctMTYuNDksMTE0Ljg5LDAsMC01MC02Ni4yMi00MC43Ni0xNDguODdhNS41MSw1LjUxLDAsMCwwLTUuNDgtNi4xMkgxMDAuMzJhOC43OSw4Ljc5LDAsMCwwLTguNzgsOC43OVYxMjRjNC44Niw3OS4yNiw0OS4xNCwyODguNTcsMzcxLjU4LDM4NS40QzczNSw1OTEuMDYsNzc1LjQyLDcxNi4zLDc4My4zMiw3MzguMjRhMS4zOCwxLjM4LDAsMCwwLDIuNTMuMTdjNzUuMy0xNDMuOS04MS40OS0yNDcuNTItODEuNDktMjQ3LjUyLDMxLjMzLDAsNzkuMjMsMTcuOTQsMTE4LDM5Ljc5YTguMjgsOC4yOCwwLDAsMCwxMi4zNy03LjIxVjM2My44M2ExNC42LDE0LjYsMCwwLDAtMTguMTUtMTQuMTdjLTEzLjUsMy4zOS0zMCw2LjY4LTMyLjg3LDcuMjMtMzkuNDYsNy43Ny04NC43NSwxMS4xNS0xMjItOC43M3MtNDcuMjYtNjYuMjctMTguMzMtOTguMjNjMjUuMy0yOCw2NS41My0zNy41LDEwMi4yOS0zNSwyMy41NiwxLjYyLDU1LjE4LDcuNTksNzMuNzEsMTIuNjNBMTIuMTYsMTIuMTYsMCwwLDAsODM0LjcxLDIxNS44NFoiLz48cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik02NTQuODcsOTAxLjVhNCw0LDAsMCwxLTYtLjExYy0xMy41Ni0xNi4yNS03NS40Ni04Ni0xODUuNzMtMTQ2LjQyQTc1Ni40NCw3NTYuNDQsMCwwLDAsMzgzLDcxN2MtMTczLjUzLTcwLjE3LTI4Mi42OS0xNDMuMy0yOTEuNDItMzM4LjF2LTYuMjJhNCw0LDAsMCwxLDcuMjEtMi4zNGM2My42MSw4NywxNDQuNjksMTM3LjksMjQzLjE2LDE4Ni43Nyw0MC4yOCwyMCw4MS4xNywzNi4zMiwxMjEuMjEsNTMuMjUsNjYuMTUsMjgsMTMwLDU3LjU0LDE4NC43MywxMDcuOCwxNi4xOCwxNC44NSwyOS4wOSwyOS4xNSwzNi44MSw1MEM2OTUuNzUsNzk4LjEzLDcwMi41NSw4NDkuMTcsNjU0Ljg3LDkwMS41WiIvPjwvc3ZnPg==") no-repeat bottom;
@@ -209,6 +219,15 @@
 
         {% if application is not empty and application['style']['css'] is defined %}
         {{ application['style']['css']|raw }}
+
+        html {
+            background-color: var(--footer) !important;
+        }
+
+        .sf-toolbar-clearer {
+            background-color: var(--footer) !important;
+        }
+
         {% endif %}
 
         .header {
@@ -406,25 +425,35 @@
             text-decoration: none;
         }
 
-        .mobile-nav-collapse {
-            background: var(--menu);
+        .noFocus:focus {
+            outline: none !important;
         }
 
-        .mobile-nav ul li {
-            color: var(--menu-color);
-        }
+
+            /*
+            .mobile-nav-collapse {
+                background: var(--menu);
+            }
+
+            .mobile-nav ul li {
+                color: var(--menu-color);
+            }
+            */
 
 
         /* new button icons */
+        .btn--block {
+            width: 100%;
+        }
 
         .btn--eherkenning {
-            margin-right: 50px;
-            margin-right: 5rem;
+            margin-right: 50px !important;
+            margin-right: 5rem !important;
             position: relative
         }
 
         .btn--eherkenning:before {
-            background-image: url("../images/eherkenning.svg");
+            background-image: url("/images/eherkenning.svg");
             background-repeat: no-repeat;
             background-size: 100% 100%;
             content: "";
@@ -440,8 +469,8 @@
         }
 
         .btn--idin {
-            margin-right: 50px;
-            margin-right: 5rem;
+            margin-right: 50px !important;
+            margin-right: 5rem !important;
             position: relative
         }
 
@@ -458,13 +487,36 @@
             top: 4px;
             top: .4rem;
             width: 40px;
-            width: 4rem
+            width: 4rem;
+
+        }
+
+        .btn--gmail {
+            margin-right: 50px !important;
+            margin-right: 5rem !important;
+            position: relative
+        }
+
+        .btn--gmail:before {
+            background-image: url("../images/gmail.png");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            content: "";
+            height: 40px;
+            height: 4rem;
+            position: absolute;
+            right: -50px;
+            right: -5rem;
+            top: 4px;
+            top: .4rem;
+            width: 40px;
+            width: 4rem;
 
         }
 
         .btn--eidas {
-            margin-right: 50px;
-            margin-right: 5rem;
+            margin-right: 50px !important;
+            margin-right: 5rem !important;
             position: relative
         }
 
@@ -485,8 +537,8 @@
         }
 
         .btn--facebook {
-            margin-right: 50px;
-            margin-right: 5rem;
+            margin-right: 50px !important;
+            margin-right: 5rem !important;
             position: relative
         }
 
@@ -505,6 +557,41 @@
             width: 40px;
             idth: 4rem
         }
+
+        /* user circle on mobile */
+        .user--circle {
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            padding: 8px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+
+            background: var(--primary-color);
+            color: var(--background);
+            text-align: center;
+            font-style: normal;
+            font-weight: bold;
+        }
+
+
+        {% if application['defaultConfiguration']['configuration']['gemId'] is defined and application['defaultConfiguration']['configuration']['gemId'] is not empty %}
+
+        /* GEM WEBCHAT */
+
+         #webchat .rw-launcher, #webchat .rw-header, #webchat .rw-close-button, #webchat .rw-client {
+             background-color:  var(--secondary) !important;
+         }
+
+        #webchat .rw-avatar {
+            background-color:  var(--primary) !important;
+        }
+
+        #webchat .rw-header .rw-avatar {
+            background-color:  var(--secondary) !important;
+        }
+
+    {% endif %}
     </style>
 
     {% if application['defaultConfiguration']['configuration']['stickyMenu'] is defined and application['defaultConfiguration']['configuration']['stickyMenu'] == true %}
@@ -544,6 +631,8 @@
                 position: absolute;
             }
 
+
+
             /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
             /*.sticky-nav + .content {*/
             /*    padding-top: 102px;*/
@@ -552,6 +641,11 @@
         </style>
 
     {% endif %}
+
+
+
+
+    {% block style %}{% endblock %}
 
 </head>
 <body>
@@ -570,15 +664,19 @@
 
     <main class="skiplink-target main" id="content" tabindex="-1">
 
-        <div class="container">
+        <div class="container flash">
             <!-- the alert box -->
+            {% set flashes = [] %}
             {% for label, messages in app.flashes() %}
                 {% for message in messages %}
-                    <div class="notification notification--{{ label }}">
-                        <div class="notification__content">
-                            <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                    {% if message not in flashes %}
+                        {% set flashes = flashes|merge([message]) %}
+                        <div class="notification notification--{{ label }}">
+                            <div class="notification__content">
+                                <h2 class="notification__title">{{ message|trans|capitalize }}</h2>
+                            </div>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         </div>
@@ -604,14 +702,12 @@
 
             // Get the header
             var header = document.getElementById("docs-nav");
-            var stickyMobileNav = document.getElementById("stickyMobileNav");
+            // var stickyMobileNav = document.getElementById("stickyMobileNav");
 
             // Get the offset position of the navbar
             var sticky = header.offsetTop;
-            console.log(header.offsetTop);
 
-            var sticky = stickyMobileNav.offsetTop;
-            console.log(stickyMobileNav.offsetTop);
+            // var sticky = stickyMobileNav.offsetTop;
 
             // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
             function myFunction() {
@@ -619,14 +715,14 @@
                     header.classList.remove("sticky-transition");
                     header.classList.add("sticky-nav");
 
-                    stickyMobileNav.classList.remove("sticky-mobile-transition");
-                    stickyMobileNav.classList.add("sticky-mobile-nav");
+                    // stickyMobileNav.classList.remove("sticky-mobile-transition");
+                    // stickyMobileNav.classList.add("sticky-mobile-nav");
                 } else {
                     header.classList.add("sticky-transition");
                     header.classList.remove("sticky-nav");
 
-                    stickyMobileNav.classList.add("sticky-mobile-transition");
-                    stickyMobileNav.classList.remove("sticky-mobile-nav");
+                    // stickyMobileNav.classList.add("sticky-mobile-transition");
+                    // stickyMobileNav.classList.remove("sticky-mobile-nav");
                 }
             }
         </script>
@@ -665,6 +761,20 @@
         }
     </script>
 
+    <script>
+        // Load tooltip component
+        System.import('/uno/components/tooltip/tooltip.js').then(function (module) {
+            // Select all tooltip elements on the page
+            var tooltips = document.querySelectorAll('.example [x-uno-tooltip]');
+
+            // Initialize all tooltips
+            for (var i = 0; i < tooltips.length; i++) {
+                new module.Tooltip(tooltips.item(i));
+            }
+        });
+    </script>
+
+    {% block script %}{% endblock %}
 </div>
 
 {% if application['defaultConfiguration']['configuration']['hubspotId'] is defined and application['defaultConfiguration']['configuration']['hubspotId'] is not empty %}
@@ -672,6 +782,14 @@
     <script type="text/javascript" id="hs-script-loader" async defer
             src="//js.hs-scripts.com/{{ application['defaultConfiguration']['configuration']['hubspotId'] }}.js"></script>
     <!-- End of HubSpot Embed Code -->
+
+{% elseif application['defaultConfiguration']['configuration']['gemId'] is defined and application['defaultConfiguration']['configuration']['gemId'] is not empty %}
+    <!-- GEM  -->
+    <div id="webchat"></div>
+    <!-- Basis script voor het widget -->
+    <script src="https://www.develop.virtuele-gemeente-assistent.nl/static/js/webchat-v0.11.7.js"></script>
+    <!--- Custom widget script -->
+    <script id="widget-script" src="https://www.develop.virtuele-gemeente-assistent.nl/static/js/widget-v0.11.7.js" data-municipality="{{ application['defaultConfiguration']['configuration']['gemId'] }}"></script>
 {% endif %}
 
 </body>

@@ -35,7 +35,7 @@
     }
 </script>
 
-{% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'})['hydra:member'] %} {#,{'rsin': application['organization']['rsin']}#}
+{% set organizations = commonground_resource_list({'component':'wrc', 'type':'organizations'},{'limit':100})['hydra:member'] %} {#,{'rsin': application['organization']['rsin']}#}
 
 <div class="input combobox" id="{{property.name}}_combobox">
     <div class="input__hint">Selecteer een {{property.title}}</div>
@@ -44,7 +44,7 @@
         {% for organization in organizations %}
             {% if organization.contact is defined and organization.contact is not empty %}
                 {% set contact = commonground_resource(organization.contact) %}
-                {% if process.name == "Begraven" and contact.type != "Gemeente" %}
+                {% if process.id == "a8b8ce49-d5db-4270-9e42-4b47902fc817" and contact.type != "Gemeente" %}
                 {% else %}
                     <option value="{{ organization['@id'] }}">{{ organization['name'] }}</option>
                 {% endif %}

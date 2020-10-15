@@ -14,11 +14,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * The Education controller handles any calls for education.
+ * The Education controller handles any calls for edu.
  *
  * Class EducationController
  *
- * @Route("/education")
+ * @Route("/edu")
  */
 class EduController extends AbstractController
 {
@@ -158,6 +158,68 @@ class EduController extends AbstractController
         // Get resource
         $variables['course'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses'], $variables['query'])['hydra:member'];
+        $participants = [];
+
+        //business logic in controller
+        if (!empty($this->getUser())) {
+            $userContact = $commonGroundService->getResource($this->getUser()->getPerson());
+            $users = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['username' => $variables['user']['@id']])['hydra:member'];
+
+            if (count($users) > 0) {
+                $userContact = $users[0]['person'];
+            }
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person'  => $userContact['id']])['hydra:member'];
+
+            if (count($participants) > 0) {
+                $participants = $participants[0];
+            }
+        }
+
+        $meetsPrerequisites = true;
+        if (!empty($variables['course']['coursePrerequisites'])) {
+            if (!empty($participants)) {
+                $meetsPrerequisites = false;
+            } else {
+                foreach ($variables['course']['coursePrerequisites'] as $prerequisiteUrl) {
+                    $prerequisite = $commonGroundService->getResource(['component' => 'edu', 'type' => 'courses', 'coursePrerequisites' => $prerequisiteUrl], $variables['query']);
+                    $meetsPrerequisites = false;
+                    if ($prerequisite['@type'] !== 'Course') {
+                        if (!empty($participants['courses'])) {
+                            foreach ($participants['courses'] as $course) {
+                                if ($course['id'] !== $prerequisite['id']) {
+                                    $meetsPrerequisites = true;
+                                }
+                            }
+                        } elseif ($prerequisite['@type'] !== 'Program') {
+                            if (!empty($participants['programs'])) {
+                                foreach ($participants['programs'] as $program) {
+                                    if ($program['id'] !== $prerequisite['id']) {
+                                        $meetsPrerequisites = true;
+                                    }
+                                }
+                            }
+                        }
+                        if ($meetsPrerequisites !== false) {
+                            $meetsPrerequisites = false;
+                        }
+                    }
+                }
+            }
+        }
+
+        $variables['registered'] = false;
+        if (!empty($participants)) {
+            if (!empty($participants['courses'])) {
+                foreach ($participants['courses'] as $course) {
+                    if ($course['id'] !== $variables['course']['id']) {
+                        $variables['registered'] = true;
+                    }
+                }
+            }
+        }
+
+        $variables['participants'] = $participants;
+        $variables['meetsPrerequisites'] = $meetsPrerequisites;
 
         // Lets see if there is a post to procces
         if ($request->isMethod('POST')) {
@@ -217,10 +279,15 @@ class EduController extends AbstractController
      * @Route("/activities/{id}")
      * @Template
      */
-    public function activityAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    public function activityAction(
+        Session $session,
+        Request $request,
+        CommonGroundService $commonGroundService,
+        ParameterBagInterface $params,
+        $id
+    )
     {
-        $content = false;
-        $variables = $applicationService->getVariables();
+        $variables = [];
 
         // Lets provide this data to the template
         $variables['id'] = $id;
@@ -229,9 +296,17 @@ class EduController extends AbstractController
 
         // Get resource
         $variables['activity'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'activities', 'id' => $id], $variables['query']);
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'activities'], $variables['query'])['hydra:member'];
+
+        $user = $this->getUser();
+        if ($user && $person = $user->getPerson()) {
+            $variables['participants'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], ['person'=> $person, 'courses.id' => $variables['activity']['course']['id']])['hydra:member'];
+            // Dit is hacky
+            $variables['participant'] = $variables['participants'][0];
+            $variables['results'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'results'], ['participant.id'=> $variables['participant']['id'], 'activity.id' => $id])['hydra:member'];
+        }
 
         // Lets see if there is a post to procces
+        /*
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
 
@@ -253,6 +328,7 @@ class EduController extends AbstractController
 
             return $this->redirectToRoute('app_education_activity', ['id' => $variables['activity']['id']]);
         }
+        */
 
         return $variables;
     }
@@ -329,6 +405,46 @@ class EduController extends AbstractController
 
         // Get Resource
         $variables['resource'] = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'organizations', 'id' => $id]);
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/internships")
+     * @Template
+     */
+    public function internshipsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/internships/{id}")
+     * @Template
+     */
+    public function internshipAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['id'] = $id;
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['jobposting'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id], $variables['query']);
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
 
         return $variables;
     }
