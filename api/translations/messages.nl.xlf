@@ -1409,6 +1409,10 @@
         <source>do you wish to subscribe for this mailing list</source>
         <target>wilt u zich abonneren voor deze mailing lijst</target>
       </trans-unit>
+      <trans-unit id="6ZAKjEC" resname="you are now subscribed to the mailing list">
+        <source>you are now subscribed to the mailing list</source>
+        <target>u staat nu ingeschreven voor deze mail lijst</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
