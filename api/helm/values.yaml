@@ -30,6 +30,7 @@ settings:
   internal: false
   debug: 1
   cache: 1
+  url: http://localhost
   sessionDuration: 900
   replicaCount: 1
   corsAllowOrigin: ['*']
