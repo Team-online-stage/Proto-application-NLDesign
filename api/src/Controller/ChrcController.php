@@ -263,8 +263,8 @@ class ChrcController extends AbstractController
      */
     public function challengeAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
     {
-        $content = false;
-        $variables = $applicationService->getVariables();
+//        $content = false;
+        $variables = [];
 
         // Lets provide this data to the template
         $variables['id'] = $id;
@@ -273,6 +273,11 @@ class ChrcController extends AbstractController
 
         // Get resource
         $variables['tender'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders', 'id' => $id], $variables['query']);
+
+        $user = $this->getUser();
+        if ($user && $person = $user->getPerson()) {
+            $variables['participants'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], ['person'=> $person, 'challenge.id'])['hydra:member'];
+        }
 
         return $variables;
     }
