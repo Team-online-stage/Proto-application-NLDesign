@@ -1327,7 +1327,6 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
 
-
         return $variables;
     }
 }
