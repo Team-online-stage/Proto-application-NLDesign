@@ -1327,6 +1327,30 @@ class ChinController extends AbstractController
 
         $variables['code'] = $code;
 
+        if ($request->isMethod('POST')) {
+
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
+            $user = $user[0];
+
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
+
+            $checkIn = [];
+            $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
+            $checkIn['person'] = $person['@id'];
+            $checkIn['userUrl'] = $user['@id'];
+            if ($session->get('checkingProvider')) {
+                $checkIn['provider'] = $session->get('checkingProvider');
+            } else {
+                $checkIn['provider'] = 'session';
+            }
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
+            $variables['subscribed'] = true;
+        }
+
+
         return $variables;
     }
 }
