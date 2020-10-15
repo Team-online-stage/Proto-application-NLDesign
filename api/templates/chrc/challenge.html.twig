@@ -20,7 +20,7 @@
         <section class="row">
             <div class="col-xl-12 col-lg-12 col-md-12 col-xs-12">
                 <div class="content">
-                    <a class="backlink" href="{{ path('app_edu_challenges') }}">Naar challenges</a>
+                    <a class="backlink" href="{{ path('app_chrc_challenges') }}">Naar challenges</a>
                     <header class="content__header">
                         <h1 class="content__header-title"
                             style="font-family: 'Lobster', cursive">{{ tender.name|capitalize }}</h1>
@@ -100,7 +100,7 @@
                                     {% if resultSubmitted == false %}
                                         <h2>Uw resultaat</h2>
 
-                                        <form method="post" action="{{ path('app_edu_challenge', {id: challenge.id}) }}">
+                                        <form method="post" action="{{ path('app_chrc_challenge', {id: challenge.id}) }}">
                                             <div class="input">
                                                 <label class="input__label" for="description">Toelichting</label>
                                                 <textarea class="input__control input__control--text" id="description"
@@ -130,7 +130,7 @@
                                     <aside class="hint">
                                         <span class="hint__title">Tutorial</span>
                                         <p>U bent nog niet ingeschreven voor <a
-                                                href="{{ path('app_edu_challenge', {id: activity.challenge.id}) }}">de
+                                                href="{{ path('app_chrc_challenge', {id: activity.challenge.id}) }}">de
                                                 challenge</a>.</p>
                                     </aside>
                                 {% endif %}
