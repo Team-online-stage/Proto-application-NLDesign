@@ -48,7 +48,7 @@
                             <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4 " style="margin-bottom: 15px;">
                                 <div style="width: 100%; background-color: white; border-radius: 20px; padding-top: 20px; padding-bottom: 5px;">
                                     {% include 'chin/widgets/checkin_widget_nodeinfo.html.twig' %}
-                                    {% if subscriber is not defined %}
+                                    {% if subscribed is not defined %}
                                         <p style="padding: 0 5px 0 5px">{{ 'for this mail list the following information will be used'|trans|capitalize }}:</p>
                                         <div>
                                             <ul style="list-style: none; margin: 0;">
