@@ -338,7 +338,6 @@ class EduController extends AbstractController
      */
     public function studentsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
-
         $variables = [];
 
         // Lets provide this data to the template
@@ -347,7 +346,6 @@ class EduController extends AbstractController
 
         // Get resource
         $variables['resources'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants'], $variables['query'])['hydra:member'];
-
 
         return $variables;
     }
@@ -358,7 +356,6 @@ class EduController extends AbstractController
      */
     public function studentAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
     {
-
         $variables = [];
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
@@ -367,6 +364,7 @@ class EduController extends AbstractController
         // Get Resource
         $variables['resource'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants', 'id' => $id]);
         $variables['person'] = $commonGroundService->getResource($variables['resource']['person']);
+
         return $variables;
     }
 
