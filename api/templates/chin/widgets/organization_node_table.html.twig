@@ -13,6 +13,7 @@
                 <thead>
                 <tr>
                     <th scope="col">{{ 'address'|trans|capitalize }}</th>
+                    <th scope="col">{{ 'checkins'|trans|capitalize }}</th>
                     <th scope="col">{{ 'max. visitors'|trans|capitalize }}</th>
                     <th scope="col">{{ 'code'|trans|capitalize }}</th>
                     <th scope="col">{{ 'qr'|trans|capitalize }}</th>
@@ -43,6 +44,17 @@
                                 {% else %}
                                     {{ 'no address found'|trans|capitalize }}
                                 {% endif %}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if node.type == 'checkin' %}
+                                {% if nodeAccommodation is defined %}
+                                    {% set yesterday = 'now' | date_modify('-1 days') %}
+                                    {% set checkinslast24hours = commonground_resource_list({'component': 'chin', 'type': 'checkins'},{'type':'checkin','node.accommodation':nodeAccommodation['id'], 'dateCreated[after]':yesterday|date("Y-m-d H:i:s")})['hydra:member']|length %}
+                                    {{ checkinslast24hours }}
+                                {% endif %}
+                            {% else %}
+                                {{ 'It is not possible to check in on this QR code!'|trans|capitalize }}
                             {% endif %}
                         </td>
                         <td>

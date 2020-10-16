@@ -805,6 +805,10 @@
         <source>download qr-code</source>
         <target>download qr-code</target>
       </trans-unit>
+      <trans-unit id="nHZiZrP" resname="It is not possible to check in on this QR code!">
+        <source>It is not possible to check in on this QR code!</source>
+        <target>Op deze QR-code kan niet worden ingechecked!</target>
+      </trans-unit>
       <trans-unit id="QC1rQP_" resname="QR-Code foreground color">
         <source>QR-Code foreground color</source>
         <target>QR-Code voorgrondkleur</target>
