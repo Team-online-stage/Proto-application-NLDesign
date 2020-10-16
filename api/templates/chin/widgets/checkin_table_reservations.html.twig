@@ -18,11 +18,14 @@
                 </thead>
                 <tbody>
                 {% for reservation in reservations %}
-                    <tr>
+                    <tr {% if reservation.event.status == 'cancelled' %} style="text-decoration: line-through; color: grey;" {% endif %}>
                         <td>{{ reservation.event.startDate|date("H:i d-m-Y") }}</td>
                         <td>{{ commonground_resource(reservation.event.calendar.resource).name }}</td>
                         <td>{{ reservation.numberOfParticipants }}</td>
                         <td>{{ commonground_resource(reservation.underName).name }}</td>
+                        {% if reservation.cantCancel is not defined and reservation.event.status != 'cancelled'  %}
+                            <td><a href="{{ path('app_chin_cancel', {'code':reservation.node.reference, 'reservation':reservation['id']}) }}">{{ 'cancel'|trans|capitalize }}</a></td>
+                        {% endif %}
                     </tr>
                 {% endfor %}
                 </tbody>

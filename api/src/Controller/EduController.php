@@ -285,8 +285,7 @@ class EduController extends AbstractController
         CommonGroundService $commonGroundService,
         ParameterBagInterface $params,
         $id
-    )
-    {
+    ) {
         $variables = [];
 
         // Lets provide this data to the template
