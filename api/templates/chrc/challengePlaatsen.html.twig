@@ -16,18 +16,18 @@
             <div class="col-xl-12 col-lg-12 col-md-12">
                 <form method="post" action="{{ path('app_chrc_challenges') }}">
                     <div class="input">
-                        <label class="input__label" for="name">Naam challenge:</label>
+                        <label class="input__label" for="name">Challenge naam:</label>
                         <input type="text" class="input__control input__control--text" id="name" name="name">
                     </div>
 
                     <div class="input">
                         <label class="input__label" for="description">Wat houdt de challenge in:</label>
-                        <input type="text" class="input__control input__control--text" id="description"
-                               name="description">
+                        <textarea type="text" class="input__control input__control--text" id="description"
+                                  name="description"></textarea>
                     </div>
 
                     <div class="input">
-                        <label class="input__label" for="submitters">Aanbieder(s):</label>
+                        <label class="input__label" for="submitters">Aanbieder:</label>
                         <input type="text" class="input__control input__control--text" id="submitters"
                                name="submitters">
                     </div>
