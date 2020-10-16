@@ -2,11 +2,10 @@
 
 {% block container %}
     <header class="content__header">
-        <a class="backlink" href="/education/students">Studenten</a>
+        <a class="backlink" href="{{ path('app_edu_students') }}">Studentenoverzicht</a>
     </header>
     <div class="row">
         {% if app.user is defined and app.user is not null %}
-        {% set person = commonground_resource(resource.person) %}
         <div class="col-sm-12 col-lg-8">
             <div class="content-background">
                 <div class="content ">
@@ -70,7 +69,7 @@
                                             {% endfor %}
                                         </ul>
                                     {% else %}
-                                        <p style="color:lightgray">Deze student is niet ingeschreven voor een program.</p>
+                                        <p style="color:black">Deze student is niet ingeschreven voor een program.</p>
                                     {% endif %}
                                 </div>
                             </div>
@@ -119,7 +118,7 @@
                                             {% endfor %}
                                         </ul>
                                     {% else %}
-                                        <p style="color:lightgray">Deze student is niet ingeschreven voor een course.</p>
+                                        <p style="color:black">Deze student is niet ingeschreven voor een course.</p>
                                     {% endif %}
                                 </div>
                             </div>
