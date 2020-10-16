@@ -77,7 +77,7 @@
                 </div>
             </div>
         {% endif %}
-        {% if property.configuration.person is defined and property.configuration.person %}
+        {% if property.configuration.person is defined and property.configuration.person and app.user.username is not defined %}
             <h3>{{ 'contact'|trans|capitalize }}</h3>
             <div class="row" style="margin-bottom: 20px">
                     <div class="col-md-4">
@@ -97,22 +97,24 @@
                     </div>
             </div>
         {% endif %}
-        <!-- <h3>{{ 'other'|trans|capitalize }}</h3> hotfix -->
-        <div class="row">
-            {% if property.configuration.email is not defined or property.configuration.email %}
-                <div class="col-md-6">
-                    <label class="input__label" for="email">{{ 'eMail'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                    <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][0][email]"
-                        {% if organization.emails.0.email is defined %} value="{{ organization.emails.0.email }}"{% elseif request.properties[property.name]['emails'][0]['email'] is defined %} value="{{ request.properties[property.name]['emails'][0]['email'] }}" {% endif %} required="">
-                </div>
-            {% endif %}
-            {% if property.configuration.telephone is not defined or property.configuration.telephone %}
-                <div class="col-md-6">
-                    <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
-                    <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][0][telephone]"
-                        {% if organization.telephones.0.telephone is defined %} value="{{ organization.telephones.0.telephone }}"{% elseif request.properties[property.name]['telephones'][0]['telephone'] is defined %} value="{{ request.properties[property.name]['telephones'][0]['telephone'] }}" {% endif %} required="">
-                </div>
-            {% endif %}
-        </div>
+        {% if app.user.username is not defined %}
+            <!-- <h3>{{ 'other'|trans|capitalize }}</h3> hotfix -->
+            <div class="row">
+                {% if property.configuration.email is not defined or property.configuration.email %}
+                    <div class="col-md-6">
+                        <label class="input__label" for="email">{{ 'eMail'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
+                        <input class="input__control input__control--text" style="width: 100%" type="email" name="request[properties][{{ property.name }}][emails][0][email]"
+                            {% if organization.emails.0.email is defined %} value="{{ organization.emails.0.email }}"{% elseif request.properties[property.name]['emails'][0]['email'] is defined %} value="{{ request.properties[property.name]['emails'][0]['email'] }}" {% endif %} required="">
+                    </div>
+                {% endif %}
+                {% if property.configuration.telephone is not defined or property.configuration.telephone %}
+                    <div class="col-md-6">
+                        <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}<span style="color: red;"><strong>*</strong></span></label>
+                        <input class="input__control input__control--text" style="width: 100%" type="tel"  name="request[properties][{{ property.name }}][telephones][0][telephone]"
+                            {% if organization.telephones.0.telephone is defined %} value="{{ organization.telephones.0.telephone }}"{% elseif request.properties[property.name]['telephones'][0]['telephone'] is defined %} value="{{ request.properties[property.name]['telephones'][0]['telephone'] }}" {% endif %} required="">
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
     </div>
 </div>

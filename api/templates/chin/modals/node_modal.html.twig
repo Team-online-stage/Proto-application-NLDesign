@@ -96,8 +96,8 @@
                     <div class="col-md-6">
                         <label class="input__label" for="foregroundColor">{{ 'QR-Code foreground color'|trans|capitalize }}</label>
                         <input id="foregroundColor" type="color" name="qrConfig[foreground_color]"
-                            {% if item.qrConfig['foreground_color'] is defined %}
-                                value="#000000" {# item.qrConfig['foreground_color'] is an array with r,g,b and needs to be converted to hex #}
+                            {% if item.foregroundColor is defined %}
+                                value="{{ item.foregroundColor }}"
                             {% else %}
                                 value="#000000"
                             {% endif %}>
@@ -105,10 +105,10 @@
                     <div class="col-md-6">
                         <label class="input__label" for="foregroundColor">{{ 'QR-Code background color'|trans|capitalize }}</label>
                         <input id="foregroundColor" type="color" name="qrConfig[background_color]"
-                            {% if item.qrConfig['background_color'] is defined %}
-                                value="#ffffff" {# item.qrConfig['background_color'] is an array with r,g,b and needs to be converted to hex #}
-                            {% else %}
-                                value="#ffffff"
+                            {% if item.backgroundColor is defined %}
+                            value="{{ item.backgroundColor }}"
+                        {% else %}
+                            value="#ffffff"
                             {% endif %}>
                     </div>
                 </div>
