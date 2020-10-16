@@ -281,13 +281,13 @@ class ChrcController extends AbstractController
      * @Route("/challengePlaatsen")
      * @Template
      */
-    public function stageplaatsenAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    public function challengePlaatsenAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
         $variables = [];
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
-        
+
         return $variables;
     }
 
