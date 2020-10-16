@@ -1405,6 +1405,18 @@
         <source>your reservation has been cancelled</source>
         <target>uw reservering is geannuleerd</target>
       </trans-unit>
+      <trans-unit id="gd.rjiw" resname="for this mail list the following information will be used">
+        <source>for this mail list the following information will be used</source>
+        <target>voor deze mailing lijst worden de volgende gegevens van u gebruikt</target>
+      </trans-unit>
+      <trans-unit id="GqqHOWW" resname="do you wish to subscribe for this mailing list">
+        <source>do you wish to subscribe for this mailing list</source>
+        <target>wilt u zich abonneren voor deze mailing lijst</target>
+      </trans-unit>
+      <trans-unit id="6ZAKjEC" resname="you are now subscribed to the mailing list">
+        <source>you are now subscribed to the mailing list</source>
+        <target>u staat nu ingeschreven voor deze mail lijst</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

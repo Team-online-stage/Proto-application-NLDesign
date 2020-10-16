@@ -263,8 +263,8 @@ class ChrcController extends AbstractController
      */
     public function challengeAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
     {
-        $content = false;
-        $variables = $applicationService->getVariables();
+//        $content = false;
+        $variables = [];
 
         // Lets provide this data to the template
         $variables['id'] = $id;

@@ -362,6 +362,9 @@ class ChinController extends AbstractController
                 case 'clockin':
                     return $this->redirect($this->generateUrl('app_chin_clockin', ['code'=>$code]));
                     break;
+                case 'mailing':
+                    return $this->redirect($this->generateUrl('app_chin_mailing', ['code'=>$code]));
+                    break;
                 default:
                     $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
 
@@ -614,6 +617,12 @@ class ChinController extends AbstractController
             switch ($variables['resource']['type']) {
                 case 'checkin':
                     return $this->redirect($this->generateUrl('app_chin_checkin', ['code'=>$code]));
+                    break;
+                case 'mailing':
+                    return $this->redirect($this->generateUrl('app_chin_mailing', ['code'=>$code]));
+                    break;
+                case 'clockin':
+                    return $this->redirect($this->generateUrl('app_chin_clockin', ['code'=>$code]));
                     break;
                 default:
                     $this->addFlash('warning', 'Could not find a valid type for reference '.$code);
@@ -1275,6 +1284,69 @@ class ChinController extends AbstractController
 
             $commonGroundService->updateResource($event);
             $variables['cancelled'] = true;
+        }
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/mailing/{code}")
+     * @Template
+     */
+    public function mailingAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $code = null, $reservation = null)
+    {
+
+        // Fallback options of establishing
+        if (!$code) {
+            $code = $request->query->get('code');
+        }
+        if (!$code) {
+            $code = $request->request->get('code');
+        }
+        if (!$code) {
+            $code = $session->get('code');
+        }
+        if (!$code) {
+            $this->addFlash('warning', 'No node reference suplied');
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables = [];
+
+        $session->set('code', $code);
+        $variables['code'] = $code;
+        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chin', 'type' => 'nodes'], ['reference' => $code])['hydra:member'];
+        if (count($variables['resources']) > 0) {
+            $variables['resource'] = $variables['resources'][0];
+        } else {
+            $this->addFlash('warning', 'Could not find a valid node for reference '.$code);
+
+            return $this->redirect($this->generateUrl('app_default_index'));
+        }
+
+        $variables['code'] = $code;
+
+        if ($request->isMethod('POST')) {
+            $user = $commonGroundService->getResourceList(['component' => 'uc', 'type' => 'users'], ['person' => $this->getUser()->getPerson()])['hydra:member'];
+            $user = $user[0];
+
+            $person = $commonGroundService->getResource($this->getUser()->getPerson());
+            $person['@id'] = $commonGroundService->cleanUrl(['component'=>'cc', 'type'=>'people', 'id'=>$person['id']]);
+
+            $checkIn = [];
+            $checkIn['node'] = 'nodes/'.$variables['resource']['id'];
+            $checkIn['person'] = $person['@id'];
+            $checkIn['userUrl'] = $user['@id'];
+            if ($session->get('checkingProvider')) {
+                $checkIn['provider'] = $session->get('checkingProvider');
+            } else {
+                $checkIn['provider'] = 'session';
+            }
+
+            $checkIn = $commonGroundService->createResource($checkIn, ['component' => 'chin', 'type' => 'checkins']);
+
+            $variables['subscribed'] = true;
         }
 
         return $variables;
