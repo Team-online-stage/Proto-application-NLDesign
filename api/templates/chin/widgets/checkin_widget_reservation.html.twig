@@ -1,30 +1,30 @@
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
     {# hier kan door nodes worden geloopt als list waarbij de node van deze code als geselecteerd word weergegeven #}
-    <input style="height: 35px" type="text" id="additionalName" name="name" placeholder="Agenda"
+    <select class="noFocus input__control input__control--select" name="calendar" id="">
+        {% for node in nodes %}
+            <option value="{{ node['@id'] }}" {% if node.id == resource.id %} selected {% endif %}>{{ node.name }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
+    <input style="height: 35px" type="date" id="additionalName" name="date"
            class="noFocus input__control input__control--text" required>
 </div>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
-    <input style="height: 35px" type="text" id="additionalName" name="email" placeholder="Datum"
+    <input style="height: 35px" type="time" id="additionalName" name="time"
            class="noFocus input__control input__control--text" required>
 </div>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
-    <input style="height: 35px" type="text" id="additionalName" name="telephone" placeholder="Tijd"
+    <input style="height: 35px" type="number" id="additionalName" name="amount" placeholder="{{ 'number of people'|trans|capitalize }}"
            class="noFocus input__control input__control--text" required>
 </div>
 <div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
-    <input style="height: 35px" type="text" id="additionalName" name="telephone" placeholder="Aantal personen"
-           class="noFocus input__control input__control--text" required>
+    <textarea style="height: 35px" type="text" id="additionalName" name="comment" placeholder="{{ 'comment'|trans|capitalize }}"
+              class="noFocus input__control input__control--text"></textarea>
 </div>
-<div class="input" style="margin-top: 5px; margin-bottom: 5px; padding: 0 10px;">
-    <div class="input__group input__group--checkbox" style="margin-bottom: 5px;">
-        <input name="hobbies[]" type="checkbox" id="chkbx1"
-               class="input__control input__control--m input__control--checkbox" checked=""
-               required="">
-        <label style="line-height: 14px" class="input__label input__label--checkbox" for="chkbx1">Ik voldoe aan de <a
-                href="#"
-                data-toggle="modal"
-                data-target="#questionModal"
-                onclick="openQuestionModal()">vragen</a>
-            van de corona vragenlijst horeca</label>
+{% if error is defined %}
+    <div>
+        <p>{{ error }}</p>
     </div>
-</div>
+{% endif %}
+

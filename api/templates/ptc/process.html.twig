@@ -14,8 +14,10 @@
                 <div class="content">
 
                     <header class="content__header">
-                        <a class="backlink" href="{{ path('app_ptc_index') }}">{{ 'processes'|trans|capitalize }}</a>
-                        <header class="content__header">
+                        {% if process.showBackButton is defined and process.showBackButton %}
+                            <a class="backlink" href="{{ path('app_ptc_index') }}">{{ 'processes'|trans|capitalize }}</a>
+                        {% endif %}
+                        <header class="content__header" style="margin-top: 20px;">
                             {% if stage.name is defined %}
                                 <h1 class="content__header-title">
                                     {% if stage.icon is defined and stage.icon is not empty %}
@@ -115,7 +117,7 @@
                 {% if process.stages is defined and process.stages|length > 1 %}
                     <div class="col-md-4  col-sm-12">
                         {% if request.currentStage is not defined or request.currentStage is empty %}
-                            {% if app.user is not empty and process.requireLogin == 'true' %}
+                            {% if app.user is not empty %} {# and process.requireLogin in 'true'  why?#}
                                 {% include 'ptc/widgets/requests.html.twig' %}
                             {% endif %}
                         {% else %}

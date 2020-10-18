@@ -25,7 +25,7 @@
         </aside>
 
         <div class="col-md-8">
-            {% include 'chin/widgets/organization_node_table.html.twig' %}
+            {% include 'chin/widgets/checkin_usersettings.html.twig' %}
         </div>
         {% else %}
             <div class="col-md-12">
@@ -35,7 +35,7 @@
                             <h2 class="hint__title">{{ 'login required'|trans|capitalize}}</h2>
                             {{ 'you need to login before you can view this page'|trans|capitalize}}
                         </aside>
-                        <a data-toggle="modal" data-target="#myModal" onclick="openModal()" class="btn btn--icon">
+                        <a href="{{ path('app_user_login') }}?backUrl={{ absolute_url(path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params'))) }}" title="Login" class="btn btn--icon">
                             <i style="margin-right: 10px"  class="icon fas fa-lock"></i>
                             <span>{{ 'login'|trans|capitalize }}</span>
                         </a>

@@ -16,8 +16,6 @@
             {% if app.user.organization is defined and app.user.organization is not empty %}
                 {% if commonground_is_resource(app.user.organization) %}
                     {% set organization = commonground_resource(app.user.organization) %}
-                {% else %}
-                    {% set organization = commonground_resource({'component':'kvk','type':'companies', 'id': app.user.organization}) %}
                 {% endif %}
                 {% if organization.name is defined and organization.name is not empty %}
                     <li class="sidenav__item">
@@ -25,12 +23,12 @@
                     </li>
                 {% else %}
                     <li class="sidenav__item">
-                        <a href="#">{{ organization.name }}{{ 'personal'|trans|capitalize }}</a>
+                        <a href="#">{{ 'personal'|trans|capitalize }}</a>
                     </li>
                 {% endif %}
             {% else %}
                 <li class="sidenav__item">
-                <<a href="#">{{ organization.name }}{{ 'personal'|trans|capitalize }}</a>
+                <<a href="#">{{ 'personal'|trans|capitalize }}</a>
                 </li>
             {% endif %}
 
@@ -77,13 +75,13 @@
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.chin.node.write' in app.user.roles %}
-            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_nodesorganization' %}sidenav__item--active{% endif %}">
-                <a href="{{ path('app_chin_nodesorganization') }}">{{ 'codes'|trans|capitalize }}</a>
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_nodes' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_nodes') }}">{{ 'codes'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.lc.place.write' in app.user.roles %}
-            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_lc_organization' %}sidenav__item--active{% endif %}">
-                <a href="{{ path('app_lc_organization') }}">{{ 'places'|trans|capitalize }}</a>
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_lc_places' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_lc_places') }}">{{ 'places'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.chin.checkinstatistics.write' in app.user.roles %}
@@ -91,9 +89,14 @@
                 <a href="{{ path('app_chin_checkinstatistics') }}">{{ 'statistics'|trans|capitalize }}</a>
             </li>
         {% endif %}
+        {% if commonground_component_health("chin") and 'scope.chin.checkinreservations.write' in app.user.roles %}
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_checkinreservations' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_checkinreservations') }}">{{ 'reservations'|trans|capitalize }}</a>
+            </li>
+        {% endif %}
         {% if commonground_component_health("chin") and 'scope.wrc.organization.write' in app.user.roles %}
-            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_wrc_organization' %}sidenav__item--active{% endif %}">
-                <a href="{{ path('app_wrc_organization') }}">{{ 'organization'|trans|capitalize }}</a>
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_checkinorganization' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_checkinorganization') }}">{{ 'organization'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") and 'scope.wrc.organization.write' in app.user.roles %}
@@ -115,6 +118,11 @@
             <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_ptc_process' %}sidenav__item--active{% endif %}">
                 <a href="{{ path('app_ptc_process') }}">{{ 'data request'|trans|capitalize }}</a>
                 //Leid nog niet naar het goede process hier gaf deze een error maar wordt op moment ook nog niet getoond door te weinig rechten(geen roles aan de user)
+            </li>
+        {% endif %}
+        {% if commonground_component_health("chin") and 'scope.chin.checkinreservations.write' in app.user.roles %}
+            <li class="sidenav__item {% if app.request.attributes.get('_route') == 'app_chin_checkinreservations' %}sidenav__item--active{% endif %}">
+                <a href="{{ path('app_chin_checkinreservations') }}">{{ 'account settings'|trans|capitalize }}</a>
             </li>
         {% endif %}
         {% if commonground_component_health("chin") %}
