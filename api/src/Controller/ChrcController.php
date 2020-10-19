@@ -278,6 +278,24 @@ class ChrcController extends AbstractController
     }
 
     /**
+     * @Route("/challengeplaatsen")
+     * @Template
+     */
+    public function challengeplaatsenAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $variables = [];
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders'], $variables['query'])['hydra:member'];
+
+
+        return $variables;
+    }
+
+    /**
      * @Route("/proposals/{id}")
      * @Template
      */
