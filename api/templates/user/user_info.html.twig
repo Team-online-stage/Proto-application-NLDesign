@@ -1,0 +1,242 @@
+
+{% extends 'base.html.twig' %}
+
+{% block container %}
+
+
+    <div class="row">
+        <div class="container background--grijs-2">
+            <div class="col-md-12">
+                <div class="content">
+                    <header class="content__header">
+                        <a class="backlink" href="
+                {% if application.defaultConfiguration.configuration.userPage is defined %}/{{ application.defaultConfiguration.configuration.userPage }}{% else %}/{% endif %}">{{ 'back'|trans|capitalize }}</a>
+                        <header class="content__header">
+                            <h1 class="content__header-title">{{ 'personal'|trans|capitalize }}</h1>
+                        </header>
+                    </header>
+                </div><!-- ./content -->
+            </div><!-- ./col -->
+        </div><!-- .container -->
+    </div><!-- .row -->
+    <div class="row">
+        <div class="container background--grijs-2" style="min-height: 620px">
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <aside class="col-md-4 col-sm-modal">
+                    <nav class="sidenav">
+                        {% include 'uc/widgets/menu.html.twig' %}
+                    </nav>
+                </aside>
+
+                <div class="col-md-8">
+                    <ul class="tab tab--inline" role="tablist">
+                        <li style="background-color: white" class="tab__tab {% if wrongPassword is not defined %}tab__tab--active{% endif %}" role="tab" aria-controls="panel2-1" id="tab2-1"><a href="#panel2-1">{{ 'my info'|trans|capitalize }}</a></li>
+                        <li style="background-color: white" class="tab__tab {% if wrongPassword is defined %}tab__tab--active{% endif %}" role="tab" aria-controls="panel2-2" id="tab2-2"><a href="#panel2-2">{{ 'password'|trans|capitalize }}</a></li>
+                    </ul>
+
+                    <div class="tab__content tab__content--inline" style="background-color: white">
+                        <section style="padding: 10px" class="tab__pane tab__pane--active" id="panel2-1" role="tabpanel" aria-labelledby="tab2-1">
+                            <form method="post" action="{{ path('app_user_userinfo') }}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="firstName">{{ 'first name'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="firstName" name="firstName" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.givenName is defined and person.givenName is not empty %}value="{{ person.givenName }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="lastName">{{ 'last name'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="lastName" name="lastName" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.familyName is defined and person.familyName is not empty %}value="{{ person.familyName }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="birthday">{{ 'birthday'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="date" id="birthday" name="birthday" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.birthday is defined and person.birthday is not empty %}value="{{ person.birthday|date('Y-m-d') }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="telephone">{{ 'telephone'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="telephone" name="telephone" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.telephones.0.telephone is defined and person.telephones.0.telephone is not empty %}value="{{ person.telephones.0.telephone }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="email">{{ 'email'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="email" name="email" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.emails.0.email is defined and person.emails.0.email is not empty %}value="{{ person.emails.0.email }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="street">{{ 'street'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="street" name="street" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.adresses.0.street is defined and person.adresses.0.street is not empty %}value="{{ person.adresses.0.street }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="houseNumber">{{ 'house number'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="houseNumber" name="houseNumber" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.adresses.0.houseNumber is defined and person.adresses.0.houseNumber is not empty %}value="{{ person.adresses.0.houseNumber }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="houseNumberSuffix">{{ 'house number suffix'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="houseNumberSuffix" name="houseNumberSuffix" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.adresses.0.houseNumberSuffix is defined and person.adresses.0.houseNumberSuffix is not empty %}value="{{ person.adresses.0.houseNumberSuffix }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="postalCode">{{ 'postal code'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="postalCode" name="postalCode" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.adresses.0.postalCode is defined and person.adresses.0.postalCode is not empty %}value="{{ person.adresses.0.postalCode }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="input input--horizontal">
+                                            <div>
+                                                <label class="input__label" for="locality">{{ 'locality'|trans|capitalize }}</label>
+                                            </div>
+                                            <input type="text" id="locality" name="locality" aria-describedby="hint_name" class="input__control input__control--text input__control--l"
+                                                   {% if person.adresses.0.locality is defined and person.adresses.0.locality is not empty %}value="{{ person.adresses.0.locality }}" {% endif %}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <button name="info" value="true" class="btn btn-block">{{ 'edit'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                        <section style="padding: 10px" class="tab__pane" id="panel2-2" role="tabpanel" aria-labelledby="tab2-2">
+                            <form id="passwordForm" method="post" action="{{ path('app_user_userinfo') }}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div style="position: relative" class="input input--horizontal {% if wrongPassword is defined %}input--invalid{% endif %}">
+                                            <div>
+                                                <label class="input__label" for="currentPassword">{{ 'current password'|trans|capitalize }} <span style="color: red"><strong>*</strong></span> </label>
+                                            </div>
+                                            <div class="input__error">{{ 'wrong password entered, click <a href="/chin/reset">here</a> to reset your password'|trans|capitalize|raw }}</div>
+                                            <input required type="password" id="currentPassword" name="currentPassword" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="passError input input--horizontal {% if error is defined %}input--invalid{% endif %}">
+                                            <div>
+                                                <label class="input__label" for="newPassword">{{ 'new password'|trans|capitalize }} <span style="color: red"><strong>*</strong></span> </label>
+                                            </div>
+                                            <div class="input__error">{{ 'passwords dont match'|trans|capitalize }}</div>
+                                            <input required type="password" id="newPassword" name="newPassword" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="passError input input--horizontal {% if error is defined %}input--invalid{% endif %}">
+                                            <div>
+                                                <label class="input__label" for="repeatPassword">{{ 'repeat password'|trans|capitalize }} <span style="color: red"><strong>*</strong></span> </label>
+                                            </div>
+                                            <div class="input__error">{{ 'passwords dont match'|trans|capitalize }}</div>
+                                            <input required type="password" id="repeatPassword" name="repeatPassword" aria-describedby="hint_name" class="input__control input__control--text input__control--l">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <button name="password" value="true" class="btn btn-block">{{ 'edit'|trans|capitalize }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-md-12">
+                    <div class="content-background" >
+                        <div class="content">
+                            <aside class="hint">
+                                <h2 class="hint__title">{{ 'login required'|trans|capitalize}}</h2>
+                                {{ 'you need to login before you can view this page'|trans|capitalize}}
+                            </aside>
+                            <a data-toggle="modal" data-target="#myModal" onclick="openModal()" class="btn btn--icon">
+                                <i style="margin-right: 10px"  class="icon fas fa-lock"></i>
+                                <span>{{ 'login'|trans|capitalize }}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div><!-- .container -->
+    </div><!-- .row -->
+
+
+
+
+    <script>
+        /* Load tab component */
+        System.import('/uno/components/tabs/tabs.js').then(function (module) {
+            /* Select all .tab elements on the page */
+            var tabs = document.querySelectorAll('.tab');
+            /* Initialize all tabs */
+            for (var i = 0; i < tabs.length; i++) {
+                new module.Tabs(tabs.item(i));
+            }
+        });
+
+        $('#passwordForm').submit(function() {
+            let newPass = document.getElementById('newPassword');
+            let repeatPass = document.getElementById('repeatPassword');
+
+            if ( newPass.value === repeatPass.value){
+                return true;
+            } else {
+                let errors = document.getElementsByClassName('passError');
+
+                for (let i = 0; i < errors.length; i++) {
+                    errors[i].classList.add('input--invalid');
+                }
+
+                return false;
+            }
+
+        });
+    </script>
+{% endblock %}

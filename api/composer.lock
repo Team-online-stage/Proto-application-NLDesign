@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93ae773660d3153b6bf878ab866b31c3",
+    "content-hash": "636e03a618848f3f69316745a09e552b",
     "packages": [
         {
             "name": "api-platform/api-pack",
@@ -681,12 +681,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConductionNL/CommonGroundBundle.git",
-                "reference": "7180af7d992378d3cf039fc03fbaafad6fbdf8ae"
+                "reference": "fc4df5571aba8ac116c6df30a8ace865485360e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/7180af7d992378d3cf039fc03fbaafad6fbdf8ae",
-                "reference": "7180af7d992378d3cf039fc03fbaafad6fbdf8ae",
+                "url": "https://api.github.com/repos/ConductionNL/CommonGroundBundle/zipball/fc4df5571aba8ac116c6df30a8ace865485360e0",
+                "reference": "fc4df5571aba8ac116c6df30a8ace865485360e0",
                 "shasum": ""
             },
             "require": {
@@ -764,7 +764,7 @@
                 "postcode",
                 "rsin"
             ],
-            "time": "2020-10-06T15:24:29+00:00"
+            "time": "2020-10-15T09:34:53+00:00"
         },
         {
             "name": "dasprid/enum",

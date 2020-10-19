@@ -7,6 +7,7 @@ namespace App\Controller;
 use Conduction\CommonGroundBundle\Service\ApplicationService;
 //use App\Service\RequestService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -36,6 +37,7 @@ class OrcController extends AbstractController
 
     /**
      * @Route("/user")
+     * @Security("is_granted('ROLE_user')")
      * @Template
      */
     public function userAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -48,6 +50,7 @@ class OrcController extends AbstractController
 
     /**
      * @Route("/organization")
+     * @Security("is_granted('ROLE_scope.orc.organization.write')")
      * @Template
      */
     public function organizationAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -60,6 +63,7 @@ class OrcController extends AbstractController
 
     /**
      * @Route("/subscriptions/{id}")
+     * @Security("is_granted('ROLE_user')")
      * @Template
      */
     public function subscriptionAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $subscription = false, $id)
@@ -88,6 +92,7 @@ class OrcController extends AbstractController
     /**
      * @Route("/subscriptions")
      * @Route("/subscriptions/{subscription}", name="subscription")
+     * @Security("is_granted(ROLE_user)")
      * @Template
      */
     public function subscriptionsAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, $subscription = false)
@@ -107,6 +112,7 @@ class OrcController extends AbstractController
 
     /**
      * @Route("/order")
+     * @Security("is_granted('ROLE_scope.orc.order.write')")
      * @Template
      */
     public function orderAction(Session $session, Request $request, CommonGroundService $commonGroundService, ApplicationService $applicationService, ParameterBagInterface $params, string $slug = 'home')
@@ -186,6 +192,7 @@ class OrcController extends AbstractController
             $variables['order']['organization'] = $userOrg;
             $variables['order']['customer'] = $user;
 
+            //TODO: Dit moeten toch echt relatieve endpoints worden
             $variables['order'] = $commonGroundService->createResource($variables['order'], 'https://orc.dev.zuid-drecht.nl/orders');
 
             foreach ($variables['orderItems'] as $item) {
