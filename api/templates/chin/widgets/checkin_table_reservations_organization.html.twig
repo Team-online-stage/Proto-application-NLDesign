@@ -18,7 +18,7 @@
                 </thead>
                 <tbody>
                 {% for reservation in reservations %}
-                    <tr>
+                    <tr {% if reservation.event.status == 'cancelled' %} style="text-decoration: line-through; color: grey;" {% endif %}>
                         <td>{{ reservation.event.startDate|date("H:i d-m-Y") }}</td>
                         <td>{{ commonground_resource(reservation.underName).name }}</td>
                         <td>{{ reservation.numberOfParticipants }}</td>

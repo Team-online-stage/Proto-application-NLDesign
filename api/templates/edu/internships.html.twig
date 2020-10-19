@@ -34,6 +34,8 @@
         <section class="row">
             <div class="col-sm-8">
                 <header class="content__header">
+                    <a class="backlink"
+                       href="/{{ application.defaultConfiguration.configuration.studentenPage }}">Terug</a>
                     <h1 style="font-family: 'Lobster', cursive">Stages</h1>
                 </header>
             </div>
@@ -43,7 +45,7 @@
             <div class="col-xs-12 col-lg-4">
                 <div class="bluebox">
                     <div class="content">
-                        <h3>Over Stages</h3>
+                        <h3>Over stages</h3>
                         <p>Hier komt een introductie over de Stages.</p>
 
                         <p>
@@ -116,8 +118,7 @@
                                                             <p style="margin: 0;">
                                                                 startdatum: {{ jobposting.jobStartDate|date("d-m-Y", "Europe/Paris") }}</p>
                                                         {% endif %}
-                                                        <a href="{{ path('app_edu_internship', {id: jobposting.id}) }}">lees
-                                                            meer</a>
+                                                        <a href="{{ path('app_edu_internship', {id: jobposting.id}) }}">lees meer</a>
                                                     </div>
                                                 </div>
                                             </div>
