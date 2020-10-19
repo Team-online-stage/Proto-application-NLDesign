@@ -43,6 +43,15 @@
     "conduction/commongroundbundle": {
         "version": "dev-master"
     },
+    "conduction/landkitbundle": {
+        "version": "dev-main"
+    },
+    "conduction/nldesignbundle": {
+        "version": "dev-master"
+    },
+    "conduction/rocketbundle": {
+        "version": "dev-main"
+    },
     "dasprid/enum": {
         "version": "1.0.2"
     },
@@ -246,7 +255,7 @@
         "version": "v0.3.3"
     },
     "php": {
-        "version": "7.4"
+        "version": "7.3"
     },
     "php-cs-fixer/diff": {
         "version": "v1.3.0"
