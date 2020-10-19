@@ -133,25 +133,27 @@
                                             {% endif #}
                                     {% else %}
                                         {% if 'http' in property.value and commonground_is_resource(property.value) %}
-                                        {% if 'enkelvoudiginformatieobjecten' in property.value %}
-                                            {% set file = commonground_resource(property.value) %}
-                                            <a href="{{ path('app_drc_download',{'resource':file.id}) }}">{{ file.bestandsnaam }}</a>
+                                            {% if 'enkelvoudiginformatieobjecten' in property.value %}
+                                                {% set file = commonground_resource(property.value) %}
+                                                <a href="{{ path('app_drc_download',{'resource':file.id}) }}">{{ file.bestandsnaam }}</a>
                                             {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Cemetery' %}
-                                            {{ commonground_resource(property.value).reference }}<br>
+                                                {{ commonground_resource(property.value).reference }}<br>
                                             {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Ingeschrevenpersoon' %}
-                                            {{ commonground_resource(property.value).naam.voornamen }} {{ commonground_resource(property.value).naam.geslachtsnaam }}
-                                        <br>
-                                        {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Adres' %}
-                                            {{ commonground_resource(property.value).straat|capitalize }} {{ commonground_resource(property.value).huisnummer }}
+                                                {{ commonground_resource(property.value).naam.voornamen }} {{ commonground_resource(property.value).naam.geslachtsnaam }}
+                                                <br>
+                                            {% elseif commonground_resource(property.value)['@type'] is defined and commonground_resource(property.value)['@type'] == 'Adres' %}
+                                                {{ commonground_resource(property.value).straat|capitalize }} {{ commonground_resource(property.value).huisnummer }}
+                                            {% else %}
+                                                {{ commonground_resource(property.value).name|capitalize }}
+                                            {% endif %}
                                         {% else %}
-                                            {{ commonground_resource(property.value).name|capitalize }}
-                                        {% endif %}
-                                        {% else %}
-                                        {% if property.format == 'calendar' %}
-                                            {{ property.value|date('d-m-Y h:i','Europe/Paris') }}
-                                        {% else %}
-                                            {{ property.value|capitalize }}
-                                        {% endif %}
+                                            {% if property.format == 'calendar' %}
+                                                {% if property.value is not empty %}
+                                                    {{ property.value|date('d-m-Y h:i','Europe/Paris') }}
+                                                {% endif %}
+                                            {% else %}
+                                                {{ property.value|capitalize }}
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
                                     </p>
