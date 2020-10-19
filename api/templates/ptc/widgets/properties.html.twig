@@ -134,6 +134,10 @@
                                             {% else %}
                                                 {{ commonground_resource(property.value).name|capitalize }}
                                             {% endif %}
+                                        {% elseif property.format == 'calendar' %}
+                                            {% if property.value is not empty %}
+                                                {{ property.value|date('d-m-Y h:i','Europe/Paris') }}
+                                            {% endif %}
                                         {% else %}
                                             {{ property.value|capitalize }}
                                         {% endif %}
