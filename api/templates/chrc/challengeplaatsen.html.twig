@@ -1,0 +1,60 @@
+{% extends "base.html.twig" %}
+
+{% block container %}
+    <style>
+        main {
+            background-color: white;
+        }
+    </style>
+    <div class="container">
+        <section class="row">
+            <div class="col-sm-8">
+{#                <a class="backlink"#}
+{#                   href="/{{ application.defaultConfiguration.configuration.bedrijvenPage }}">Terug</a>#}
+                <header class="content__header">
+                    <h1 style="font-family: 'Lobster', cursive">Challenge plaatsen</h1>
+                </header>
+            </div>
+        </section>
+
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12">
+                <form action="{{ path('app_chrc_challengeplaatsen') }}" method="post">
+                    <div class="input">
+                        <label class="input__label" for="description">Beschrijving bedrijf:</label>
+                        <textarea placeholder=" Wie zijn wij:" type="text" class="input__control input__control--text" id="description"
+                                  name="description" required></textarea>
+                    </div>
+
+                    <div class="input">
+                        <label class="input__label" for="name">Challenge naam:</label>
+                        <input type="text" class="input__control input__control--text" id="name" name="name" required>
+                    </div>
+
+                    <div class="input">
+                        <label class="input__label" for="description">Wat houdt de challenge in:</label>
+                        <textarea placeholder="Wat ga je doen:" type="text" class="input__control input__control--text" id="description"
+                                  name="description" required></textarea>
+                    </div>
+
+                    <div class="input">
+                        <label class="input__label" for="submitters">Indiener:</label>
+                        <input type="text" class="input__control input__control--text" id="submitters"
+                               name="submitters" required>
+                    </div>
+
+                    {#        <div class="input">#}
+                    {#            <label class="input__label" for="file">Voeg hier uw challenge toe:</label>#}
+                    {#            <input type="file" class="input__control input__control--m input__control--file" id="file" name="file">#}
+                    {#        </div>#}
+
+                    <div class="input">
+                        <button type="submit" class="btn">Verzenden <i class="icon icon-arr-forward"></i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

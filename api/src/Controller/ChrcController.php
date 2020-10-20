@@ -278,6 +278,52 @@ class ChrcController extends AbstractController
     }
 
     /**
+     * @Route("/challengeplaatsen")
+     * @Template
+     */
+    public function challengeplaatsenAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $variables = [];
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $participant = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                $participant = $participants[0];
+                /*
+                                //add name, description and participant to the new job posting resource
+                                $resource['name'] = $variables['jobposting']['name'];
+                                $resource['description'] = $variables['jobposting']['description'];
+                                $resource['title'] = $variables['jobposting']['title'];
+                                $resource['employmentType'] = $variables['jobposting']['employmentType'];
+                                $resource['jobStartDate'] = $variables['jobposting']['jobStartDate'];
+                                $resource['validThrough'] = $variables['jobposting']['validThrough'];
+                                $resource['standardHours'] = $variables['jobposting']['standardHours'];
+                                $resource['hiringOrganization'] = $participant['person'];
+                */
+                //Komt dus een zelfde verhaal zoals uitgelegd bij marks voorbeeld alleen hier ga je naar chrc type tenders
+                //create the result for this participant
+                $commonGroundService->saveResource($resource, ['component' => 'chrc', 'type' => 'tenders']);
+            }
+
+            return $this->redirectToRoute('app_chrc_challenges');
+        }
+
+        return $variables;
+    }
+
+    /**
      * @Route("/proposals/{id}")
      * @Template
      */

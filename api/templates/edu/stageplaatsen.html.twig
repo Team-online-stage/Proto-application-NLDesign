@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block container %}
+    <style>
+        .bluebox {
+            color: white;
+            margin: 0;
+            height: auto;
+        }
+        .graycards {
+            height: auto;
+        }
+        .wrapper{
+            background-color: white;
+        }
+        form{
+            padding-left: 10%;
+        }
+        span{
+            display: inline-block;
+        }
+        textarea{
+            padding-left: 2%;
+        }
+        input text{
+            border: 1px solid black;
+        }
+    </style>
+     <div class="container">
+         <section class="row">
+             <div class="col-sm-8">
+                 <div class="content">
+                     <a class="backlink"
+                        href="/{{ application.defaultConfiguration.configuration.bedrijvenPage }}">Terug</a>
+                     <header class="content__header">
+                         <h1 style="font-family: 'Lobster', cursive">Stage plaatsen</h1>
+                     </header>
+                 </div>
+             </div>
+         </section>
+
+         <div class="row">
+             <div class=" col-lg-4 col-sm-12">
+                 <div class="content-background">
+                     <div class="bluebox">
+                         <div class="content">
+                             <h2>Over Stage plaatsen</h2>
+                             <p>Hier komt een Instructie over het plaatsen van een stage.</p>
+
+                             <p style="text-align: left">
+                                 Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
+                                 Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+                                 Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
+                                 Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut,
+                                 imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
+                                 Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula,
+                                 porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis,
+                                 feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet.
+                                 Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui.
+                             </p>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+
+             <div class="col-lg-8 col-sm-12">
+                 <form action="{{ path('app_edu_stageplaatsen') }}" method="post">
+                     <span>
+                        <label for="title" style="display:block">Naam van de stage? (max 100)</label>
+                        <textarea id="title" name="employmentType" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="De naam die studenten zien in hun zoekresultaten" maxlength="100"  required></textarea>
+
+
+                        <label for="hours" style="display:block">Stageuren van de student</label>
+                        <textarea id="hours" name="hoursBedrijf" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="Het aantal uren per week dat de student werkt" maxlength="10"  required></textarea>
+                     </span>
+
+                     <span>
+                        <label for="description" style="display:block">Wie zijn wij: (max 500)</label>
+                        <textarea id="description" name="descBedrijf" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="Een beschrijving van het bedrijf" maxlength="500"  required></textarea>
+
+                        <label for="offer" style="display:block">Wat bieden wij: (max 500)</label>
+                        <textarea id="offer" name="offerBedrijf" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="Wat biedt het bedrijf aan de stagair" maxlength="500"  required></textarea>
+                     </span>
+
+                     <span>
+                        <label for="expectation" style="display:block">Waar zijn we naar op zoek: (max 500)</label>
+                        <textarea id="expectation" name="expectBedrijf" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="Wat wordt er van de stagair verwacht" maxlength="500"  required></textarea>
+                     </span>
+
+                     <span>
+                        <label for="work" style="display:block">Wat zijn de werkzaamheden: (max 700)</label>
+                        <textarea id="work" name="workBedrijf" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="Beschrijf hier de werkzaamheden die de stagair gaat uitvoeren" maxlength="700"  required></textarea>
+                     </span>
+                     <span style="display: block">
+                         <label for="jobtype" style="display: block">Wat voor soort stage wordt er aangeboden</label>
+                         <input type="radio" id="ofline" name="stage" value="OflineStage">
+                         <label for="ofline">Ofline stage (bijv op kantoor)</label><br>
+                         <input type="radio" id="online" name="stage" value="OnlineStage">
+                         <label for="online">Online stage</label>
+                    </span>
+
+                     <div class="input" style="left: 54%">
+                         <button type="submit" class="btn" style="background-color: #263846">Stage plaatsen <i class="icon icon-arr-forward"></i></button>
+                     </div>
+                 </form>
+             </div>
+
+         </div>
+     </div>
+{% endblock %}
