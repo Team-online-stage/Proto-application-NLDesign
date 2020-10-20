@@ -9,6 +9,7 @@ use Conduction\CommonGroundBundle\Service\ApplicationService;
 use Conduction\CommonGroundBundle\Service\CommonGroundService;
 use DateTime;
 use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\Types\This;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -40,7 +41,7 @@ class ChrcController extends AbstractController
 //        $variables['post'] = $request->request->all();
 
         // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/new-pitch']); // Lets see if there is a post to procces
+        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id') . '/new-pitch']); // Lets see if there is a post to procces
 
         if ($request->isMethod('POST')) {
             $resource = $request->request->all();
@@ -97,7 +98,7 @@ class ChrcController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/pitches']); // Lets see if there is a post to procces;
+        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id') . '/pitches']); // Lets see if there is a post to procces;
 
         // Get resources
         $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'pitches']);
@@ -114,12 +115,12 @@ class ChrcController extends AbstractController
                         $date = $parameters['dateSubmitted'];
 
                         // Because you cant filter for 1 date we have to filter between 2 dates
-                        $date1 = date('Y-m-d', strtotime($date.' - 1 day'));
-                        $date2 = date('Y-m-d', strtotime($date.' + 1 day'));
+                        $date1 = date('Y-m-d', strtotime($date . ' - 1 day'));
+                        $date2 = date('Y-m-d', strtotime($date . ' + 1 day'));
 
-                        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'pitches'], ['name' => $parameters['name'], 'description' => $parameters['keywords'], 'requiredBudget[between]' => $parameters['minBudget'].'..'.$parameters['maxBudget'], 'created[strictly_after]' => $date1, 'created[strictly_before]' => $date2]);
+                        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'pitches'], ['name' => $parameters['name'], 'description' => $parameters['keywords'], 'requiredBudget[between]' => $parameters['minBudget'] . '..' . $parameters['maxBudget'], 'created[strictly_after]' => $date1, 'created[strictly_before]' => $date2]);
                     } else {
-                        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'pitches'], ['name' => $parameters['name'], 'description' => $parameters['keywords'], 'requiredBudget[between]' => $parameters['minBudget'].'..'.$parameters['maxBudget']]);
+                        $variables['resources'] = $commonGroundService->getResourceList(['component' => 'chrc', 'type' => 'pitches'], ['name' => $parameters['name'], 'description' => $parameters['keywords'], 'requiredBudget[between]' => $parameters['minBudget'] . '..' . $parameters['maxBudget']]);
                     }
 
                     unset($parameters);
@@ -165,9 +166,9 @@ class ChrcController extends AbstractController
 
         // Lets find an appoptiate slug
         if ($params->get('app_id') == 'be1fd311-525b-4408-beb1-012d27af1ff3') { //stage app
-            $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/solution']);
+            $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id') . '/solution']);
         } else {
-            $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/pitch']);
+            $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id') . '/pitch']);
         }
 
         // Get resource
@@ -180,7 +181,7 @@ class ChrcController extends AbstractController
                 $resource['author'] = $variables['user']['@id'];
                 $resource['resource'] = $variables['resource']['@id'];
                 $resource['review'] = $request->request->get('review');
-                $resource['organization'] = $commonGroundService->cleanUrl(['component'=>'wrc', 'type'=>'organizations', 'id'=>'4d1eded3-fbdf-438f-9536-8747dd8ab591']);
+                $resource['organization'] = $commonGroundService->cleanUrl(['component' => 'wrc', 'type' => 'organizations', 'id' => '4d1eded3-fbdf-438f-9536-8747dd8ab591']);
 
                 $resource = $commonGroundService->createResource($resource, ['component' => 'rc', 'type' => 'reviews']);
             } else {
@@ -195,11 +196,11 @@ class ChrcController extends AbstractController
             if (isset($_POST['like'])) {
 
                 // Check if author already liked this resource
-                $likeOfAuthor = $commonGroundService->getResource(['component'=>'rc', 'type'=>'likes'], ['author'=>$variables['user']['@id']])['hydra:member'];
+                $likeOfAuthor = $commonGroundService->getResource(['component' => 'rc', 'type' => 'likes'], ['author' => $variables['user']['@id']])['hydra:member'];
 
                 if (isset($likeOfAuthor) && !empty($likeOfAuthor)) {
                     foreach ($likeOfAuthor as $like) {
-                        $like = $commonGroundService->deleteResource($like, 'https://rc.dev.zuid-drecht.nl/likes/'.$like['id']);
+                        $like = $commonGroundService->deleteResource($like, 'https://rc.dev.zuid-drecht.nl/likes/' . $like['id']);
                     }
                 } else {
                     $resource['author'] = $variables['user']['@id'];
@@ -289,8 +290,25 @@ class ChrcController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Get resource
-        $variables['resources'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'tenders'], $variables['query'])['hydra:member'];
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
 
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $participant = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                $participant = $participants[0];
+
+                //create the result for this participant
+                $commonGroundService->saveResource($resource, ['component' => 'chrc', 'type' => 'tenders']);
+            }
+
+            return $this->redirectToRoute('app_chrc_challenges');
+        }
 
         return $variables;
     }
@@ -339,7 +357,7 @@ class ChrcController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/deal']);
+        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id') . '/deal']);
         $variables['resource'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'deals', 'id' => $id]);
 
         if ($template && array_key_exists('content', $template)) {
@@ -386,7 +404,7 @@ class ChrcController extends AbstractController
         $variables['post'] = $request->request->all();
 
         // Lets find an appoptiate slug
-        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id').'/question']);
+        $template = $commonGroundService->getResource(['component' => 'wrc', 'type' => 'applications', 'id' => $params->get('app_id') . '/question']);
         $variables['resource'] = $commonGroundService->getResource(['component' => 'chrc', 'type' => 'questions', 'id' => $id]);
 
         if ($template && array_key_exists('content', $template)) {

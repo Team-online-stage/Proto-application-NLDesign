@@ -9,16 +9,16 @@ settings:
   title: Proto Applicatie NL Design
   version: V1.0
   majorVersion: v1
-  id: 31a2ad29-ee03-4aa9-be81-abf1fda7bbcc
+  id: 5265828b-85fb-4ad5-acd5-ade4da3fc593
   description: 'Naast deze JSON rest API is er ook een [graphql](/graphql) interface beschikbaar.'
   type: application
   repro: https://github.com/ConductionNL/pan
-  demo: www.westfriesland.commonground.nu
+  demo: www.zuid-drecht.nl
   container: https://hub.docker.com/repository/docker/conduction/pc-php
-  domain: westfriesland.commonground.nu
-  subdomain: 
+  domain: zuid-drecht.nl
+  subdomain: false
   subpath: 
-  subpathRouting: false
+  subpathRouting: true
   organisationName: Conduction
   email: info@conduction.nl
   country: Netherlands
@@ -53,12 +53,12 @@ settings:
   archiveEnabled: false
 
 security:
-  commongroundId: "31a2ad29-ee03-4aa9-be81-abf1fda7bbcc"
+  commongroundId: "5265828b-85fb-4ad5-acd5-ade4da3fc593"
   commongroundKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   applicationKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
   userKey: "45c1a4b6-59d3-4a6e-86bf-88a872f35845"
-  authorisationProviderUser: https://uc.westfriesland.commonground.nu
-  authorisationProviderApplication: https://openzaak.dev.westfriesland.commonground.nu/authorizaties/api/v1
+  authorisationProviderUser: https://uc.zuid-drecht.nl
+  authorisationProviderApplication: https://openzaak.dev.zuid-drecht.nl/authorizaties/api/v1
 
 
 php:
@@ -153,6 +153,6 @@ resources: {}
 
 commonground:
     eherkenning:
-        location: https://westfriesland.commonground.nu/eherkenning
+        location: https://zuid-drecht.nl/eherkenning
     digispoof:
-        location: https://westfriesland.commonground.nu/digispoof
+        location: https://zuid-drecht.nl/digispoof
