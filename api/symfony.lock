@@ -43,6 +43,15 @@
     "conduction/commongroundbundle": {
         "version": "dev-master"
     },
+    "conduction/landkitbundle": {
+        "version": "dev-main"
+    },
+    "conduction/nldesignbundle": {
+        "version": "dev-master"
+    },
+    "conduction/rocketbundle": {
+        "version": "dev-main"
+    },
     "dasprid/enum": {
         "version": "1.0.2"
     },
