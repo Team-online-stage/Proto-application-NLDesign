@@ -3,10 +3,10 @@ publiccodeYmlVersion: "0.2"
 name: pan
 applicationSuite: commonground
 url: "https://github.com/ConductionNL/pan"
-landingURL: "www.westfriesland.commonground.nu" 
+landingURL: "www.zuid-drecht.nl" 
 isBasedOn: "https://github.com/ConductionNL/Proto-component-commonground.git" 
 softwareVersion: "V1.0"
-releaseDate: "2020-19-10"
+releaseDate: "2020-20-10"
 logo: www.zuid-drecht.nl 
 monochromeLogo: img/logo-mono.svg
 
@@ -67,7 +67,7 @@ description:
 #          is and why one should need it.
 
     documentation: "https://github.com/ConductionNL/pan/blob/master/README.md"
-    apiDocumentation: "www.westfriesland.commonground.nu"
+    apiDocumentation: "www.zuid-drecht.nl"
 #
 #    features:
 #       - Very important feature

@@ -91,16 +91,24 @@
                         <label for="work" style="display:block">Wat zijn de werkzaamheden: (max 700)</label>
                         <textarea id="work" name="workBedrijf" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="Beschrijf hier de werkzaamheden die de stagair gaat uitvoeren" maxlength="700"  required></textarea>
                      </span>
-                     <span style="display: block">
-                         <label for="jobtype" style="display: block">Wat voor soort stage wordt er aangeboden</label>
+                     <span>
+                         <label style="display: block">Wat voor soort stage wordt er aangeboden</label>
                          <input type="radio" id="ofline" name="stage" value="OflineStage">
                          <label for="ofline">Ofline stage (bijv op kantoor)</label><br>
                          <input type="radio" id="online" name="stage" value="OnlineStage">
                          <label for="online">Online stage</label>
-                    </span>
+                     </span>
 
-                     <div class="input" style="left: 54%">
-                         <button type="submit" class="btn" style="background-color: #263846">Stage plaatsen <i class="icon icon-arr-forward"></i></button>
+                     <div style="display: inherit">
+                         <label for="jobtype">Welk type werk wordt er aangeboden:</label>
+                         <select name="employmentType" id="jobtype" class="input__control input__control--m">
+                             <option value="full-time">Full-time</option>
+                             <option value="part-time">Part-time</option>
+                             <option value="temporary">Tijdelijk</option>
+                             <option value="seasonal">Seizoenswerk</option>
+                             <option value="internship">Stage</option>
+                         </select>
+                         <button type="submit" class="btn" style="margin-top: 2%; background-color: #263846">Stage plaatsen <i class="icon icon-arr-forward"></i></button>
                      </div>
                  </form>
              </div>

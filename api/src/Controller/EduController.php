@@ -593,8 +593,6 @@ class EduController extends AbstractController
         return $variables;
     }
 
-    //tijdelijke route?
-
     /**
      * @Route("/stageplaatsen")
      * @Template
