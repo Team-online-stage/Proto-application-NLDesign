@@ -602,14 +602,47 @@ class EduController extends AbstractController
      */
     public function stageplaatsenAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
-
-        $variables = [];
+        $content = false;
+        $variables = $applicationService->getVariables();
 
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
 
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
 
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $participant = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                $participant = $participants[0];
+            /*
+                //even voorbeeld voor hoe de resource opgebouwt is: dit kan weg.
+            /komt van name="" bij je input in je form
+                $resource['titleBedrijf']
+
+                $resource['description']
+                $resource['title'] =
+                $resource['employmentType']
+
+            /je kan ook waardes hier meegeven voor je de resource saved
+                $resource['jobStartDate'] = 'test';
+
+                $resource['hiringOrganization'] = $participant['person'];
+            */
+
+                //create the result for this participant
+                $commonGroundService->saveResource($resource, ['component' => 'mrc', 'type' => 'job_postings']);
+            }
+
+            return $this->redirectToRoute('app_edu_internships');
+        }
 
         return $variables;
     }
