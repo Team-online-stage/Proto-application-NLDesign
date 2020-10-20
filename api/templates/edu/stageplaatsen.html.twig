@@ -64,10 +64,10 @@
              </div>
 
              <div class="col-lg-8 col-sm-12">
-                 <form id="Jobposting">
+                 <form action="{{ path('app_edu_stageplaatsen') }}" method="post">
                      <span>
                         <label for="title" style="display:block">Naam van de stage? (max 100)</label>
-                        <textarea id="title" name="titleBedrijf" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="De naam die studenten zien in hun zoekresultaten" maxlength="100"  required></textarea>
+                        <textarea id="title" name="employmentType" class="input__control input__control--m input__control--text" form="Jobposting" placeholder="De naam die studenten zien in hun zoekresultaten" maxlength="100"  required></textarea>
 
 
                         <label for="hours" style="display:block">Stageuren van de student</label>
@@ -104,7 +104,7 @@
                      </div>
                  </form>
              </div>
-             
+
          </div>
      </div>
 {% endblock %}
