@@ -464,14 +464,12 @@ class EduController extends AbstractController
                 $resource['standardHours'] = $variables['jobposting']['standardHours'];
                 $resource['hiringOrganization'] = $participant['person'];
 
-
                 //create the result for this participant
                 $commonGroundService->createResource($resource, ['component' => 'mrc', 'type' => 'job_postings']);
             }
 
             return $this->redirectToRoute('app_edu_internship', ['id' => $variables['jobposting']['id']]);
         }
-
 
         return $variables;
     }
@@ -596,6 +594,7 @@ class EduController extends AbstractController
     }
 
     //tijdelijke route?
+
     /**
      * @Route("/stageplaatsen")
      * @Template
@@ -622,20 +621,20 @@ class EduController extends AbstractController
             $participant = [];
             if (count($participants) > 0) { //if this user is already a participant
                 $participant = $participants[0];
-            /*
-                //even voorbeeld voor hoe de resource opgebouwt is: dit kan weg.
-            /komt van name="" bij je input in je form
-                $resource['titleBedrijf']
+                /*
+                    //even voorbeeld voor hoe de resource opgebouwt is: dit kan weg.
+                /komt van name="" bij je input in je form
+                    $resource['titleBedrijf']
 
-                $resource['description']
-                $resource['title'] =
-                $resource['employmentType']
+                    $resource['description']
+                    $resource['title'] =
+                    $resource['employmentType']
 
-            /je kan ook waardes hier meegeven voor je de resource saved
-                $resource['jobStartDate'] = 'test';
+                /je kan ook waardes hier meegeven voor je de resource saved
+                    $resource['jobStartDate'] = 'test';
 
-                $resource['hiringOrganization'] = $participant['person'];
-            */
+                    $resource['hiringOrganization'] = $participant['person'];
+                */
 
                 //create the result for this participant
                 $commonGroundService->saveResource($resource, ['component' => 'mrc', 'type' => 'job_postings']);
