@@ -285,8 +285,7 @@ class EduController extends AbstractController
         CommonGroundService $commonGroundService,
         ParameterBagInterface $params,
         $id
-    )
-    {
+    ) {
         $variables = [];
 
         // Lets provide this data to the template
@@ -339,8 +338,7 @@ class EduController extends AbstractController
      */
     public function studentsAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
     {
-        $content = false;
-        $variables = $applicationService->getVariables();
+        $variables = [];
 
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
@@ -358,15 +356,14 @@ class EduController extends AbstractController
      */
     public function studentAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params, $id)
     {
-        $content = false;
-        $variables = $applicationService->getVariables();
-
+        $variables = [];
         // Lets provide this data to the template
         $variables['query'] = $request->query->all();
         $variables['post'] = $request->request->all();
 
         // Get Resource
         $variables['resource'] = $commonGroundService->getResource(['component' => 'edu', 'type' => 'participants', 'id' => $id]);
+        $variables['person'] = $commonGroundService->getResource($variables['resource']['person']);
 
         return $variables;
     }
@@ -445,6 +442,34 @@ class EduController extends AbstractController
         // Get resource
         $variables['jobposting'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings', 'id' => $id], $variables['query']);
         $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $participant = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                $participant = $participants[0];
+
+                //add name, description and participant to the new job posting resource
+                $resource['name'] = $variables['jobposting']['name'];
+                $resource['description'] = $variables['jobposting']['description'];
+                $resource['title'] = $variables['jobposting']['title'];
+                $resource['employmentType'] = $variables['jobposting']['employmentType'];
+                $resource['jobStartDate'] = $variables['jobposting']['jobStartDate'];
+                $resource['validThrough'] = $variables['jobposting']['validThrough'];
+                $resource['standardHours'] = $variables['jobposting']['standardHours'];
+                $resource['hiringOrganization'] = $participant['person'];
+
+                //create the result for this participant
+                $commonGroundService->createResource($resource, ['component' => 'mrc', 'type' => 'job_postings']);
+            }
+
+            return $this->redirectToRoute('app_edu_internship', ['id' => $variables['jobposting']['id']]);
+        }
 
         return $variables;
     }
@@ -564,6 +589,57 @@ class EduController extends AbstractController
 
         // Get Resource
         $variables['team'] = $commonGroundService->getResource(['component' => 'cc', 'type' => 'organizations', 'id' => $id]);
+
+        return $variables;
+    }
+
+    /**
+     * @Route("/stageplaatsen")
+     * @Template
+     */
+    public function stageplaatsenAction(Session $session, Request $request, ApplicationService $applicationService, CommonGroundService $commonGroundService, ParameterBagInterface $params)
+    {
+        $content = false;
+        $variables = $applicationService->getVariables();
+
+        // Lets provide this data to the template
+        $variables['query'] = $request->query->all();
+        $variables['post'] = $request->request->all();
+
+        // Get resource
+        $variables['resources'] = $commonGroundService->getResource(['component' => 'mrc', 'type' => 'job_postings'], $variables['query'])['hydra:member'];
+
+        // Lets see if there is a post to procces
+        if ($request->isMethod('POST')) {
+            $resource = $request->request->all();
+
+            //check if this user is already a participant
+            $participants = $commonGroundService->getResourceList(['component' => 'edu', 'type' => 'participants'], ['person' => $variables['user']['@id']])['hydra:member'];
+
+            $participant = [];
+            if (count($participants) > 0) { //if this user is already a participant
+                $participant = $participants[0];
+                /*
+                    //even voorbeeld voor hoe de resource opgebouwt is: dit kan weg.
+                /komt van name="" bij je input in je form
+                    $resource['titleBedrijf']
+
+                    $resource['description']
+                    $resource['title'] =
+                    $resource['employmentType']
+
+                /je kan ook waardes hier meegeven voor je de resource saved
+                    $resource['jobStartDate'] = 'test';
+
+                    $resource['hiringOrganization'] = $participant['person'];
+                */
+
+                //create the result for this participant
+                $commonGroundService->saveResource($resource, ['component' => 'mrc', 'type' => 'job_postings']);
+            }
+
+            return $this->redirectToRoute('app_edu_internships');
+        }
 
         return $variables;
     }
